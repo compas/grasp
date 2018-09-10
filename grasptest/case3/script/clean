@@ -1,0 +1,13 @@
+rm output
+rm hfs*
+rm trans*
+rm energy*
+rm even*
+rm odd*
+rm -r Z*
+rm DF*
+rm excitationdata
+rm rcsfexcitation.log
+rm rcsf*
+rm clist.new
+rm *.m

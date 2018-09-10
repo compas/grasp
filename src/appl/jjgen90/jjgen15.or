@@ -1,0 +1,13 @@
+      if (.NOT.advexp)
+     :   call Matbin(org,lock,closed,varmax,skal,second,anel,
+     :                      par,low,nmax,lim,dubbel,minJ,maxJ) 
+      if (second) then
+         call Fivelines(org,lock,closed,.FALSE.,posn,posl)
+         call Blanda(org,varmax,lock,minJ,maxJ,skal,nmax,low,
+     :                          posn,posl,lim,dubbel,.FALSE.) 
+         call Merge(.FALSE.,posn,posl)
+         write(*,200) 'The merged file is called clist.out.'
+      else
+         call Merge(.TRUE.,posn,posl)
+         write(*,200) 'The generated file is called clist.out.'
+      endif

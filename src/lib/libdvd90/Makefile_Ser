@@ -1,0 +1,36 @@
+.SUFFIXES: .f90 .mod
+
+LIBDIR = $(GRASP)/lib
+LIBA = $(LIBDIR)/libdvd90.a
+
+LIBOBJ = $(OBJ) 
+MODDIR = ../libmod
+MODL92 = ../lib9290
+VASTO = $(MODDIR)/vast_kind_param_M.o
+PARDEF = $(MODDIR)/parameter_def_M.o
+F90 = $(FC)
+F90_FLAGS = $(FC_FLAGS)
+
+RM= /bin/rm -f
+
+
+OBJ = \
+  mpi_C.o adds_I.o       gdvd_I.o        mgs_nrm_I.o     ovflow_I.o     \
+  dvdrvr_I.o     iniest_I.o      multbc_I.o      tstsel_I.o     \
+  dvdson_I.o     initdvd_I.o     newvec_I.o     \
+\
+   dvdson.o      gdvd.o         iniest.o
+
+
+install: $(LIBA)
+$(LIBA) : $(LIBOBJ)
+	@echo " Building " $(LIBA)
+	ar -curvs $(LIBA) $(LIBOBJ)
+	ranlib $(LIBA)
+
+.f90.o:
+	$(F90) -c $(F90_FLAGS) $< -I $(MODDIR) -I $(MODL92) -I .  -o $@ 
+
+clean:
+	rm -f *.o *.mod core 
+

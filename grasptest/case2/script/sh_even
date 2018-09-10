@@ -1,0 +1,73 @@
+for n in 3 4 5
+do
+   (
+for z in 6 7 8 9 10 11 12
+do
+   (if test $z -lt 7
+    then
+cd Z${z}
+cp ../even${n}.c rcsf.inp 
+#  Get angular data
+rangular <<S4
+y
+S4
+
+k=`expr $n - 1`
+#Get initial estimates of wave functions
+rwfnestimate <<S5
+y
+1
+even${k}.w
+*
+2
+*
+S5
+
+# Perform self-consistent field calculations
+rmcdhf > outeven_rmcdhf_${n} <<S6
+y
+1
+${n}*
+
+100
+S6
+
+rsave even${n}
+cd ..
+    else
+
+cd Z${z}
+cp ../even${n}.c rcsf.inp 
+#Move mcp files from previous directory
+m=`expr $z - 1`
+mv ../Z${m}/mcp* .
+
+k=`expr $n - 1`
+#Get initial estimates of wave functions
+rwfnestimate <<S5
+y
+1
+even${k}.w
+*
+2
+*
+S5
+
+# Perform self-consistent field calculations
+rmcdhf > outeven_rmcdhf_${n} <<S6
+y
+1
+${n}*
+
+100
+S6
+
+rsave even${n}
+
+cd ..
+
+    fi
+    echo)
+done
+)
+done

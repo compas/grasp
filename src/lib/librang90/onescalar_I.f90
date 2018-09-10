@@ -1,0 +1,14 @@
+      MODULE onescalar_I
+      INTERFACE
+!
+      SUBROUTINE ONESCALAR(JA,JB,IA1,IA2,VSHELL)
+      USE vast_kind_param, ONLY:  DOUBLE
+      USE parameter_def,   ONLY:  NNNW
+!GG      INTEGER NNNW
+!GG      PARAMETER (NNNW = 214)
+      INTEGER, INTENT(IN)  :: JA,JB
+      INTEGER, INTENT(OUT) :: IA1,IA2
+      REAL(DOUBLE), DIMENSION(NNNW), INTENT(OUT) :: VSHELL
+      END SUBROUTINE
+      END INTERFACE
+      END MODULE

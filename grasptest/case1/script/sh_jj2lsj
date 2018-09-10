@@ -1,0 +1,24 @@
+#!/bin/sh
+set -x
+
+#   5.  Get LSJ coupling
+
+n=3
+jj2lsj > out_jj2lsj_odd${n} <<S1
+odd${n}
+y
+y
+S1
+
+rlevels  odd${n}.cm > out_rlevels_odd${n} <<S2
+S2
+
+n=3
+jj2lsj > out_jj2lsj_even${n} <<S1
+even${n}
+y
+y
+S1
+
+rlevels  even${n}.cm > out_rlevels_even${n} <<S2
+S2

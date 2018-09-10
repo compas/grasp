@@ -1,0 +1,3 @@
+Edit the file disks for your directory structure!!!
+This run is for 4 processes (np = 4)
+Change np in sh_scf and in sc_tr if needed

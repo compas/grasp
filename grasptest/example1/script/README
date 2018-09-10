@@ -1,0 +1,7 @@
+To run the script
+
+./script_ex1 >& output &
+
+To clean
+
+./clean

@@ -1,0 +1,38 @@
+Orginalioje programoje Grasp2K yra klaidu !!!!
+
+         * * * 
+Panasiai kaip paprogrameje onescalar.f
+eilute
+
+         CALL ONESCALAR1(NS,JA,JB,JA1,JA2,TCOEFF)
+
+Buvo keiciama i
+
+         IF(JA .EQ. JB) THEN
+           CALL ONESCALAR1(NS,JA,JB,JA1,JA2,TCOEFF)
+         ELSE
+           TCOEFF = 0.0D 00 
+         END IF
+
+ Tai reiskia, kad kai viendalialinis skaliarinis operatorius i
+veikia i i ta pati sluoksni, tai konfiguracijos turi buti tos 
+pacios.
+
+
+         * * * 
+Panasiai, kaip paprogrameje rkco_gg.f
+ideti eilute
+
+CGG
+      IF(JA.NE.JB) RETURN
+CGG
+
+Negalima skaiciuoti kamieno ir kamieno ir valentiniu dvidalelinio
+fizikinio operatoriaus saveiku tarp skirtingu konfiguraciju.
+
+Programa blogai skaiciuoja, 
+kai skaiciavimuose budavo tokios dvi ar daugiau konfiguracijos,
+kuriose skirtumas susivesdavo tik i vyresniskumo kvantinio 
+skaiciaus verte.
+
+2009.11.22                   G.G.

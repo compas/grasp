@@ -1,0 +1,59 @@
+#!/bin/sh
+set -x
+
+# 3. For n=2, Get initial estimates for odd.
+
+cp odd2.c rcsf.inp
+rangular  <<S4
+y
+S4
+
+#  Get initial estimates of wave functions
+rwfnestimate <<S5
+y
+3
+*
+S5
+
+# Perform self-consistent field calculations
+rmcdhf > outodd_rmcdhf_initial <<S6
+y
+1
+1
+5
+*
+*
+100
+S6
+
+#  Save the result to odd2
+rsave odd2
+
+# 3. For n=2, Get initial estimates for even
+
+cp even2.c rcsf.inp
+rangular  <<S4
+y
+S4
+
+#  Get initial estimates of wave functions
+rwfnestimate <<S5
+y
+3
+*
+S5
+
+# Perform self-consistent field calculations
+rmcdhf > outeven_rmcdhf_initial <<S6
+y
+1,2,3
+1,2,3
+1,2
+5
+*
+*
+100
+S6
+
+#  Save the result to even2
+rsave even2

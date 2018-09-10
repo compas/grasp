@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -x
+
+#    Main script for iso-electronic sequence
+
+# 1.   Generate directories for the elements and nuclear data
+        ./sh_nuc_seq
+
+# 2.   Generate lists of CSFs in main directory
+
+        ./sh_files_c 
+
+# 3.   Start by doing the ground and excited reference states
+
+       ./sh_DF
+
+# 4.   
+       ./sh_even
+
+# 5.   
+       ./sh_odd
+
+# 6.   
+       ./sh_even_odd

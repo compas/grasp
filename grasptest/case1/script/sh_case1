@@ -1,0 +1,23 @@
+#!/bin/sh
+
+set -x
+
+#    Main script for 2s(2)2p and 2s2p(2)
+
+# 1.   Generate the expansions
+        ./sh_files_c
+
+# 2.   Get the nuclear data
+        ./sh_nuc
+
+# 3.   Get screened hydrogenic orbitals as initial estimates
+        ./sh_initial
+
+# 4.   Perform scf calculations and a final rci calculation that
+#      includes the Breit correction and QED. All calculations
+#      are transformed to LSJ-coupling. Files are created that 
+#      support creation of energy tables
+        ./sh_scf
+
+# 5.   Perform a transition calculation
+        ./sh_tr

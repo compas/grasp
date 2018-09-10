@@ -1,0 +1,12 @@
+for z in 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60
+do
+(cd Z${z}
+
+cp energy${z} ../.
+cp even5.odd5.ct ../trans${z}
+cp even5.ch ../hfs${z}
+
+cd ..
+echo)
+done
+

@@ -1,0 +1,10 @@
+      MODULE rmew1jj_I
+      INTERFACE
+!
+      SUBROUTINE RMEW1JJ(J1,J2,K1,K2,COEF)
+      USE vast_kind_param, ONLY:  DOUBLE
+      INTEGER,      INTENT(IN)  :: J1, J2, K1, K2
+      REAL(DOUBLE), INTENT(OUT) :: COEF
+      END SUBROUTINE
+      END INTERFACE
+      END MODULE

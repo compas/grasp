@@ -1,0 +1,15 @@
+rm e*
+rm Ni*
+rm mcp*
+rm *log
+rm rcsf.inp
+rm rcsf.out
+rm rwfn.inp
+rm rwfn.out
+rm isodata
+rm clist.new
+rm fort*
+rm rci.res
+rm rcsfmr.inp
+rm output
+rm y.sum

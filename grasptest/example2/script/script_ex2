@@ -1,0 +1,18 @@
+# 1: DF
+rnucleus < rnucleus_input
+rcsfgenerate < rcsfgenerate_input
+cp rcsfgenerate.log 2s2p_DF.exc
+cp rcsf.out rcsf.inp
+rangular < rangular_input
+hf < HF_input
+cp wfn.out wfn.inp
+rwfnmchfmcdf 
+cp rwfn.out rwfn.inp
+rmcdhf < rmcdhf_input
+rsave 2s2p_DF
+jj2lsj < jj2lsj_input
+# 2: PRODUCE ENERGY TABLE
+rlevels 2s2p_DF.m > energyDF 
+rtablevels < rtablevels_input 
+pdflatex energytablelatex.tex
+#

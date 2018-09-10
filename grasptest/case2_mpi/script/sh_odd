@@ -1,0 +1,77 @@
+for n in 3 4 5
+do
+   (
+for z in 6 7 8 9 10 11 12
+do
+   (if test $z -lt 7
+    then
+cd Z${z}
+cp ../odd${n}.c rcsf.inp 
+#  Get angular data
+mpirun -np 8 rangular_mpi <<S4
+y
+S4
+
+k=`expr $n - 1`
+#Get initial estimates of wave functions
+rwfnestimate <<S5
+y
+1
+odd${k}.w
+*
+2
+*
+S5
+
+# Perform self-consistent field calculations
+mpirun -np 8 rmcdhf_mpi > outodd_rmcdhf_${n} <<S6
+y
+1
+1
+5
+${n}*
+
+100
+S6
+
+rsave odd${n}
+cd ..
+    else
+
+cd Z${z}
+cp ../odd${n}.c rcsf.inp 
+#Move mcp files from previous directory: NOT NEEDED SINCE mcp IS IN TMP DIRECTORY
+#m=`expr $z - 1`
+#mv ../Z${m}/mcp* .
+
+k=`expr $n - 1`
+#Get initial estimates of wave functions
+rwfnestimate <<S5
+y
+1
+odd${k}.w
+*
+2
+*
+S5
+
+# Perform self-consistent field calculations
+mpirun -np 8 rmcdhf_mpi > outodd_rmcdhf_${n} <<S6
+y
+1
+1
+5
+${n}*
+
+100
+S6
+
+rsave odd${n}
+
+cd ..
+
+    fi
+    echo)
+done
+)
+done

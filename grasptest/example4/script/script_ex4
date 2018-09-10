@@ -1,0 +1,47 @@
+# NUCLEUS
+rnucleus < rnucleus_input
+# EVEN STATES
+rcsfgenerate < rcsfgenerate_input1
+cp rcsfgenerate.log evenmr.exc
+cp rcsf.out rcsf.inp
+rangular < rangular_input
+rwfnestimate < rwfnestimate_input1
+rmcdhf < rmcdhf_input
+rsave evenmr
+rcsfgenerate < rcsfgenerate_input2
+cp rcsfgenerate.log even4.exc
+cp rcsf.out rcsf.inp
+mpirun -np 4 rangular_mpi < rangular_input
+rwfnestimate < rwfnestimate_input2
+mpirun -np 4 rmcdhf_mpi < rmcdhf_mpi_input
+rsave even4
+mpirun -np 4 rci_mpi < rci_mpi_input
+jj2lsj < jj2lsj_input
+# ODD STATES
+rcsfgenerate < rcsfgenerate_input3
+cp rcsfgenerate.log oddmr.exc
+cp rcsf.out rcsf.inp
+rangular < rangular_input
+rwfnestimate < rwfnestimate_input1
+rmcdhf < rmcdhf_input2
+rsave oddmr
+rcsfgenerate < rcsfgenerate_input4
+cp rcsfgenerate.log odd4.exc
+cp rcsf.out rcsf.inp
+mpirun -np 4 rangular_mpi < rangular_input
+rwfnestimate < rwfnestimate_input2
+mpirun -np 4 rmcdhf_mpi < rmcdhf_mpi_input2
+rsave odd4
+mpirun -np 4 rci_mpi < rci_mpi_input2
+jj2lsj < jj2lsj_input2
+rlevels even4.cm odd4.cm
+mpirun -np 4 rbiotransform_mpi < rbiotransform_mpi_input
+mpirun -np 4 rtransition_mpi < rtransition_mpi_input
+# GENERATE TRANSITION AND LIFETIME TABLES
+rtabtrans1 < rtabtrans1_input
+rtabtrans2 < rtabtrans2_input
+pdflatex transitiontable.tex
+pdflatex lifetimetable.tex
+# GENERATE ENERGY TABLE WITH COMPOSITION
+perl lscomp.pl < lscomp_input
+pdflatex lscomp.tex

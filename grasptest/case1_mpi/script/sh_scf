@@ -1,0 +1,163 @@
+#!/bin/sh
+set -x
+
+#   4.  Get results for odd n=3,4,5,6
+
+for n in 3 4 5 6
+do
+   (cp odd${n}.c rcsf.inp
+
+#  Get angular data
+mpirun -np 4 rangular_mpi <<S4
+y
+S4
+
+# Get initial estimates of wave functions
+m=`expr $n - 1`
+echo m=$m n=$n
+rwfnestimate <<S5
+y
+1
+odd${m}.w
+*
+3
+*
+S5
+
+# Perform self-consistent field calculations
+mpirun -np 4 rmcdhf_mpi > outodd_rmcdhf_${n} <<S6
+y
+1
+1
+5
+${n}*
+
+100
+S6
+
+rsave odd${n}
+
+# transform to LSJ-coupling
+
+jj2lsj  <<S1
+odd${n}
+n
+y
+y
+S1
+
+   echo)
+done
+
+#  Perform Breit-correction using CI for n=6. First copy to otehr file names
+
+n=6
+cp odd${n}.c oddCI${n}.c
+cp odd${n}.w oddCI${n}.w
+
+mpirun -np 4 rci_mpi > outodd_rci <<S7
+y
+oddCI${n}
+y
+y
+1.d-6
+y
+n
+n
+y
+4
+1
+1
+S7
+
+# transform to LSJ-coupling
+
+jj2lsj  <<S1
+oddCI${n}
+y
+y
+y
+S1
+
+
+#   4.  Get results for even n=3,4,5,6
+
+for n in 3 4 5 6
+do
+   (cp even${n}.c rcsf.inp
+
+#  Get angular data
+mpirun -np 4 rangular_mpi <<S4
+y
+S4
+
+# Get initial estimates of wave functions
+m=`expr $n - 1`
+echo m=$m n=$n
+rwfnestimate <<S5
+y
+1
+even${m}.w
+*
+3
+*
+S5
+
+# Perform self-consistent field calculations
+mpirun -np 4 rmcdhf_mpi > outeven_rmcdhf_${n} <<S6
+y
+1,2,3
+1,2,3
+1,2
+5
+${n}*
+
+100
+S6
+
+rsave even${n}
+
+# transform to LSJ-coupling
+
+jj2lsj  <<S1
+even${n}
+n
+y
+y
+S1
+
+
+   echo)
+done
+
+#  Perform Breit-correction using CI for n=6
+
+n=6
+cp even${n}.c evenCI${n}.c
+cp even${n}.w evenCI${n}.w
+
+mpirun -np 4 rci_mpi > outeven_rci <<S7
+y
+evenCI${n}
+y
+y
+1.d-6
+y
+n
+n
+y
+4
+1,2,3
+1,2,3
+1,2
+S7
+
+# transform to LSJ-coupling
+
+jj2lsj  <<S1
+evenCI${n}
+y
+y
+y
+S1
+

@@ -1,0 +1,26 @@
+#!/bin/sh
+set -x
+
+#  6. Perform transition calculation for the n=6 CI results
+
+n=6
+
+#  First the biorthogonal transformations
+
+rbiotransform > out_rbiotransform <<EOF
+y
+y
+oddCI$n
+evenCI$n
+y
+EOF
+
+# Then the transition calculations
+
+rtransition > out_transition <<EOF
+y
+y
+oddCI$n
+evenCI$n
+E1
+EOF

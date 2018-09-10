@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#  Created by R. Sritharan on 16 June 1987
+#  Save results of an MCHF calculation using default names
+
+if [ $# -lt 1 ]
+then
+ echo File argument missing
+else
+ cp rwfn.out $1.w
+ cp rcsf.inp $1.c
+ mv rmix.out $1.m
+ mv rmcdhf.sum $1.sum
+ mv rmcdhf.log $1.log
+ mv rangular.log $1.alog
+ echo Created $1.w, $1.c, $1.m, $1.sum $1.alog and $1.log
+fi

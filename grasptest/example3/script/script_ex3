@@ -1,0 +1,37 @@
+# GENERATE WAVE FUNCTION
+rnucleus < rnucleus_input
+rcsfgenerate < rcsfgenerate_input1
+cp rcsfgenerate.log 2s22p3_2p5_DF.exc
+cp rcsf.out rcsf.inp
+cp rcsf.out rcsfmr.inp
+rangular < rangular_input
+rwfnestimate < rwfnestimate_input1
+rmcdhf < rmcdhf_input1
+rsave 2s22p3_2p5_DF
+rcsfgenerate < rcsfgenerate_input2
+cp rcsfgenerate.log 2s2p3_2p5_3.exc
+cp rcsf.out rcsf.inp
+rcsfinteract < rcsfinteract_input
+cp rcsf.out rcsf.inp
+rangular < rangular_input
+rwfnestimate < rwfnestimate_input2
+rmcdhf < rmcdhf_input2
+rsave 2s22p3_2p5_3
+rci < rci_input
+jj2lsj < jj2lsj_input
+# TRANSITIONS
+cp 2s22p3_2p5_3.w 2s22p3_2p5_3.bw
+cp 2s22p3_2p5_3.cm 2s22p3_2p5_3.cbm
+rtransition < rtransition_input
+# PRODUCE ENERGY TABLE
+rlevels 2s22p3_2p5_3.cm > energy3 
+rtablevels < rtablevels_input
+pdflatex energytablelatex.tex
+# PRODUCE TRANSITION TABLE
+rtabtrans1 < rtabtrans1_input
+rtabtrans2 < rtabtrans2_input
+pdflatex transitiontable.tex
+pdflatex lifetimetable.tex
+# PRODUCE COMPOSITION TABLE USING PERL
+perl lscomp.pl < lscomp_input
+pdflatex lscomp.tex

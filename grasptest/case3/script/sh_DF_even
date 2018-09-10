@@ -1,0 +1,74 @@
+for z in 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60
+do
+   (if test $z -lt 27
+    then
+cd Z${z}
+cp ../DFeven.c rcsf.inp 
+#  Get angular data
+rangular <<S4
+y
+S4
+
+#Get initial estimates of wave functions
+rwfnestimate <<S5
+y
+2
+*
+S5
+
+# Perform self-consistent field calculations
+rmcdhf > outeven_rmcdhf <<S6
+y
+1-5
+1-3
+1-7
+1-2
+1-2
+5
+*
+*
+100
+S6
+
+rsave DFeven
+cp DFeven.w even3.w
+
+cd ..
+    else
+
+cd Z${z}
+cp ../DFeven.c rcsf.inp 
+#Move mcp files from previous directory
+m=`expr $z - 1`
+mv ../Z${m}/mcp* .
+
+#Get initial estimates of wave functions
+rwfnestimate <<S5
+y
+2
+*
+S5
+
+
+# Perform self-consistent field calculations
+rmcdhf > outeven_rmcdhf <<S6
+y
+1-5
+1-3
+1-7
+1-2
+1-2
+5
+*
+*
+100
+S6
+
+rsave DFeven
+cp DFeven.w even3.w
+
+cd ..
+
+    fi
+    echo)
+done

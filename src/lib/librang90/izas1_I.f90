@@ -1,0 +1,10 @@
+      MODULE izas1_I
+      INTERFACE
+!
+      INTEGER FUNCTION IZAS1(IB,QB,IK,QK)
+      USE vast_kind_param, ONLY:  DOUBLE
+      INTEGER,      INTENT(IN) :: IB, IK
+      REAL(DOUBLE), INTENT(IN) :: QB, QK
+      END FUNCTION
+      END INTERFACE
+      END MODULE

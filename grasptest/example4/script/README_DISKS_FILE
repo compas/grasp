@@ -1,0 +1,9 @@
+Edit the disks file!!!
+
+To run the script
+
+./script_ex4 >& output &
+
+To clean
+
+./clean

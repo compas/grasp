@@ -1,0 +1,10 @@
+To run the script
+
+./script_ex3 >& output &
+
+To clean
+
+./clean
+
+We create pdf-tables over energies, transitiondata, lifetimes and eigenvalue composition.
+Note that the perl script lscomp.pl has ben copied from the bin file

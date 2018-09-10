@@ -1,0 +1,9 @@
+rm clist*
+rm D*
+rm e*
+rm o*
+rm r*
+rm -r Z*
+cd tmp_mpi
+rm */*
+cd ..

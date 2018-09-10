@@ -1,0 +1,40 @@
+#!/bin/sh
+
+set -x
+
+#    Main script for iso-electronic sequence
+
+# 1.   Generate directories for the elements and nuclear data
+        ./sh_nuc_seq
+
+# 2.   Generate lists of CSFs in main directory
+
+        ./sh_files_c 
+
+# 3.   Perform MCDHF calculations for the even reference states
+
+       ./sh_DF_even
+
+# 4.   Perform MCDHF calculations for the odd reference states
+
+       ./sh_DF_odd
+
+# 5.   Perform MCDHF calculations for even states 
+
+       ./sh_even
+
+# 6.   Perform MCDHF calculations for odd states
+
+       ./sh_odd
+
+# 7.   Perform RCI, transition and hfs calculations 
+
+       ./sh_even_odd
+
+# 8.   Transformation to LSJ, run rlevels and pipe to energyZ
+
+       ./sh_rlevels
+
+# 9.   Collect all data files to the main directory        
+
+       ./sh_collect

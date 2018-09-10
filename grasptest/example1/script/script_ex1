@@ -1,0 +1,46 @@
+# 1: Dirac-Fock
+rnucleus < rnucleus_input 
+rcsfgenerate < rcsfgenerate_input1
+cp rcsfgenerate.log 2s_2p_DF.exc
+cp rcsf.out rcsf.inp
+rangular < rangular_input
+rwfnestimate < rwfnestimate_input1
+rmcdhf < rmcdhf_input1
+rsave 2s_2p_DF
+# 2: 2S n = 3
+rcsfgenerate < rcsfgenerate_input2
+cp rcsfgenerate.log 2s_3.exc
+cp rcsf.out rcsf.inp
+rangular < rangular_input
+rwfnestimate < rwfnestimate_input2
+rmcdhf < rmcdhf_input2
+rsave 2s_3
+rci < rci_input2
+jj2lsj < jj2lsj_input2
+# 3: 2P n = 3
+rcsfgenerate < rcsfgenerate_input3
+cp rcsfgenerate.log 2p_3.exc
+cp rcsf.out rcsf.inp
+rangular < rangular_input
+rwfnestimate < rwfnestimate_input3
+rmcdhf < rmcdhf_input3
+rsave 2p_3
+rci < rci_input3
+jj2lsj < jj2lsj_input3
+rlevels 2s_3.cm 2p_3.cm
+# 4: RHFS for 2S and 2P n = 3
+rhfs < rhfs_input2S
+rhfs < rhfs_input2P
+# 5: RBIOTRANSFORM and RTRANSITION
+rbiotransform < rbiotransform_input
+rtransition < rtransition_input
+# 6: PRODUCE ENERGY TABLE
+rlevels 2s_3.cm 2p_3.cm > energy3 
+rtablevels < rtablevels_input
+pdflatex energytablelatex.tex
+# 7: PRODUCE TRANSITION TABLES
+rtabtrans1 < rtabtrans1_inp
+rtabtrans2 < rtabtrans2_inp
+pdflatex transitiontable.tex
+pdflatex lifetimetable.tex
+

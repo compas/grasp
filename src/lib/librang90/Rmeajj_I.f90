@@ -1,0 +1,10 @@
+      MODULE rmeajj_I
+      INTERFACE
+!
+      SUBROUTINE RMEAJJ(LL,IT,LQ,J,ITS,LQS,J1S,COEF)
+      USE vast_kind_param, ONLY:  DOUBLE
+      INTEGER,      INTENT(IN)  :: LL, IT, LQ, J, ITS, LQS, J1S
+      REAL(DOUBLE), INTENT(OUT) :: COEF
+      END SUBROUTINE
+      END INTERFACE
+      END MODULE

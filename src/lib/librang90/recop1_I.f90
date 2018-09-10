@@ -1,0 +1,11 @@
+      MODULE recop1_I
+      INTERFACE
+!
+      SUBROUTINE RECOP1(NS,JA1,KA,IRE,IAT,RECC)
+      USE vast_kind_param,  ONLY:  DOUBLE
+      INTEGER, INTENT(IN)       :: NS, JA1, KA, IRE
+      INTEGER, INTENT(OUT)      :: IAT
+      REAL(DOUBLE), INTENT(OUT) :: RECC
+      END SUBROUTINE
+      END INTERFACE
+      END MODULE

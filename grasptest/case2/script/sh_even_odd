@@ -1,0 +1,85 @@
+for z in 6 7 8  9 10 11 12
+do
+(cd Z${z}
+# RCI calculations for even5
+rci > outeven_rci <<S6
+y
+even5
+y
+y
+1.d-6
+y
+n
+n
+y
+3
+1
+S6
+
+# RCI calculations for odd5
+rci > outodd_rci <<S6
+y
+odd5
+y
+y
+1.d-6
+y
+n
+n
+y
+3
+1
+1
+S6
+
+    if test $z -lt 7
+    then
+
+#  Run rbiotransform ans save angular data
+rbiotransform <<S4
+y
+y
+even5
+odd5
+y
+S4
+
+#  Run rtransition save angular data
+rtransition <<S4
+y
+y
+even5
+odd5
+E1
+S4
+
+
+    else
+
+#Move angular files from previous directory
+m=`expr $z - 1`
+mv ../Z${m}/even5.TB .
+mv ../Z${m}/odd5.TB .
+mv ../Z${m}/even5.odd5.-1T .
+
+#  Run rbiotransform using available angular data
+rbiotransform <<S4
+y
+y
+even5
+odd5
+y
+S4
+
+#  Run rtransition using available angular data
+rtransition <<S4
+y
+y
+even5
+odd5
+E1
+S4
+    fi
+cd ..
+echo)
+done

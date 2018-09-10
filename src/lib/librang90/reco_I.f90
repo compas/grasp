@@ -1,0 +1,10 @@
+      MODULE reco_I
+      INTERFACE
+!
+      SUBROUTINE RECO(JA1,JA2,JA3,JA4,KA,IAT)
+      USE vast_kind_param, ONLY:  DOUBLE
+      INTEGER, INTENT(IN)  :: JA1, JA2, JA3, JA4, KA
+      INTEGER, INTENT(OUT) :: IAT
+      END SUBROUTINE
+      END INTERFACE
+      END MODULE
