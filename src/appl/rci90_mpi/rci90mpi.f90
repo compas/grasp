@@ -150,9 +150,10 @@
          isofile = permdir(1:lenperm) // '/isodata '
          NAME    = permdir(1:lenperm) // '/' // NAME(1:lenname) // ' '
          lenname = lenperm + lenname + 1
-         open(unit=734,file=trim(name)//'.clog',status='unknown')
-         write(734,'(a)') 'y            ! Default settings'
-         write(734,'(a)') trim(namesave)
+!CFF     .. already open
+!        open(unit=734,file=trim(name)//'.clog',status='unknown')
+!        write(734,'(a)') 'y            ! Default settings'
+!        write(734,'(a)') trim(namesave)
       ENDIF
 
 !=======================================================================
