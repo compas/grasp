@@ -73,6 +73,11 @@
       USE ispar_I 
       IMPLICIT NONE
 !-----------------------------------------------
+!  E x t e r n a l   F u n c t i o n s
+!-----------------------------------------------
+      REAL(DOUBLE) :: DLAMCH
+      EXTERNAL     :: DLAMCH
+!-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       INTEGER, INTENT(OUT) :: IATJPO 
@@ -82,7 +87,7 @@
 !-----------------------------------------------
 !cjb  INTEGER, PARAMETER      :: IOLPCK = 1000 
       INTEGER, PARAMETER      :: IOLPCK = 2000 
-      REAL(DOUBLE), PARAMETER :: ABSTOL = 1.0D-10 
+! GG      REAL(DOUBLE), PARAMETER :: ABSTOL = 1.0D-10 
 !cjb  NINCOR
 !cjb  INTEGER, PARAMETER      :: NINCOR = 1         ! To enforce DISK
       INTEGER, PARAMETER      :: NINCOR = 268435456 ! = 2 GB or  memory
@@ -95,12 +100,14 @@
          IMV, NDENSE_L, LIM, LWORK, LIWORK, MAXITR, MBLOCK, NEND, &
          ILOW, IHIGH, NIV, NLOOPS, NMV, IERR, J, IA 
       REAL(DOUBLE) :: ELSTO,  DUMMY, &
-          DIATMP, CRITE, CRITC, CRITR, ORTHO, DMUNGO, AMAX, WA 
+          DIATMP, CRITE, CRITC, CRITR, ORTHO, DMUNGO, AMAX, WA, ABSTOL
+! GG          DIATMP, CRITE, CRITC, CRITR, ORTHO, DMUNGO, AMAX, WA 
       LOGICAL :: HIEND, LDISC, SPARSE 
       CHARACTER(LEN=8) :: CNUM 
       REAL(DOUBLE), DIMENSION(:), pointer :: w, z, work, diag
       INTEGER, DIMENSION(:), pointer :: iwork, ifail, jwork
 !-----------------------------------------------------------------------
+      ABSTOL = 2*DLAMCH('S')
       MYID = 0 
       NPROCS = 1 
       !IF (MYID == 0) WRITE (6, *) 'Calling maneig...' 
@@ -208,7 +215,8 @@
             CALL ALLOC (Z, NCF*NVEX,'Z', 'MANEIG' ) 
             CALL ALLOC (WORK, NCF*8,'WORK', 'MANEIG' ) 
             CALL ALLOC (IWORK, NCF*5,'IWORK', 'MANEIG' ) 
-            CALL ALLOC (IFAIL, NVEX, 'IFAIL', 'MANEIG') 
+! GG            CALL ALLOC (IFAIL, NVEX, 'IFAIL', 'MANEIG') 
+            CALL ALLOC (IFAIL, NCF, 'IFAIL', 'MANEIG') 
             CALL DSPEVX ('V', 'I', 'U', NCF, EMT, DUMMY, DUMMY, NVECMN, NVECMX&
                , ABSTOL, M, W, Z, NCF, WORK, IWORK, IFAIL, INFO) 
             IF (INFO /= 0) STOP 'maneig: Failure in DSPEVX [LAPACK]' 

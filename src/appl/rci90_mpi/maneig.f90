@@ -1,6 +1,6 @@
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE MANEIG(IATJPO, IASPAR, NELMNT_a) 
+      SUBROUTINE MANEIG(IATJPO, IASPAR) 
 !                                                                      *
 !   This module  manages the  operation of the  eigensolvers and the   *
 !   storage of the eigenpairs.  There are two principal branches:      *
@@ -21,21 +21,6 @@
 !                 Different methods of storage and different           *
 !                 versions of the matrix-vector multiply are used      *
 !                 depending upon the order and density of the matrix   *
-!
-!cjb comments [re-introduced] from GRASP-2013
-!   iatjpo - Output. (2j+1) of the dominant coefficients
-!   iaspar - Output, Parity (1 or -1) of the dominant coefficients
-!   nelmnt - Number of non-zero matrix elements on the current process *
-!            stored in the common block                                *
-!   nelmnt_a - The maximum number of non-zero matrix elements for all  *
-!             nodes                                                    *
-!                                                                      *
-!     value  meaning  of  method used IV                               *
-!       1    LAPACK                  =>  ncf < IOLPCK                  * 
-!       2    Davidson, Dense-Memory  =>  dense requires less memory    *
-!       3    Davidson, Sparse-Memory =>  sparse requires less memory   *
-!       4    Davidson, Sparse-Disk   =>  memory requirement too large  *
-!                                        for at least one  process     *
 !                                                                      *
 !   Call(s) to: [LIB92]: ALLOC, DALLOC, ISPAR, ITJPO, posfile,         *
 !                        RALLOC.                                       *
@@ -71,7 +56,6 @@
       USE where_C
       USE WCHBLK_C 
       USE iounit_C
-      USE mpi_C
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -87,49 +71,46 @@
       USE iniestdm_I 
       USE itjpo_I 
       USE ispar_I 
-      USE spicmvmpi_I
       IMPLICIT NONE
+!-----------------------------------------------
+!  E x t e r n a l   F u n c t i o n s
+!-----------------------------------------------
+      REAL(DOUBLE) :: DLAMCH
+      EXTERNAL     :: DLAMCH
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       INTEGER, INTENT(OUT) :: IATJPO 
       INTEGER, INTENT(OUT) :: IASPAR 
-      INTEGER(LONG)        :: NELMNT_a
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
+!cjb  INTEGER, PARAMETER      :: IOLPCK = 1000 
       INTEGER, PARAMETER      :: IOLPCK = 2000 
-      REAL(DOUBLE), PARAMETER :: ABSTOL = 1.0D-10 
+! GG      REAL(DOUBLE), PARAMETER :: ABSTOL = 1.0D-10 
 !cjb  NINCOR
 !cjb  INTEGER, PARAMETER      :: NINCOR = 1         ! To enforce DISK
       INTEGER, PARAMETER      :: NINCOR = 268435456 ! = 2 GB or  memory
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-!cff   ... variable for deciding between sparse or dense
-!     Memory need:  
-!     sparse : nstore_s = nelmnt + (isize*(nelmnt + ncf+1))/8
-!     dense  : nstore_d = (ncf*ncf+1))/(2*nprocs)    (on average)
-!     Use Davidson (disk)  if nstore_s > NINCOR
-!     Use Davidson (memory, sparse) if nstore_s < nstore_d
-!     Use Davidson (memory, dense) if nstore_d < nstore_s
-!-----------------------------------------------
-      INTEGER(LONG) :: NSTORE_s, NSTORE_d
-      INTEGER :: NROWS, I, NDENSE, NCFDUM, ICCUTDUM, MYIDDUM, &
+      INTEGER(LONG) :: NSTORE
+      INTEGER :: MYID, NPROCS, NROWS, I, NDENSE, NCFDUM, ICCUTDUM, MYIDDUM, &
          NPROCSDUM, IOFSET, NELC, IR, NVECMN, NVEX, M, INFO, LOC, NBRKEV,   &
          IMV, NDENSE_L, LIM, LWORK, LIWORK, MAXITR, MBLOCK, NEND, &
-         ILOW, IHIGH, NIV, NLOOPS, NMV, J, IA,   &
-         idummy
+         ILOW, IHIGH, NIV, NLOOPS, NMV, IERR, J, IA 
       REAL(DOUBLE) :: ELSTO,  DUMMY, &
-          DIATMP, CRITE, CRITC, CRITR, ORTHO, DMUNGO, AMAX, WA 
+          DIATMP, CRITE, CRITC, CRITR, ORTHO, DMUNGO, AMAX, WA, ABSTOL
+! GG          DIATMP, CRITE, CRITC, CRITR, ORTHO, DMUNGO, AMAX, WA 
       LOGICAL :: HIEND, LDISC, SPARSE 
       CHARACTER(LEN=8) :: CNUM 
       REAL(DOUBLE), DIMENSION(:), pointer :: w, z, work, diag
       INTEGER, DIMENSION(:), pointer :: iwork, ifail, jwork
-!-----------------------------------------------
-!
 !-----------------------------------------------------------------------
-      IF (MYID == 0) WRITE (6, *) 'Calling maneig...' 
+      ABSTOL = 2*DLAMCH('S')
+      MYID = 0 
+      NPROCS = 1 
+      !IF (MYID == 0) WRITE (6, *) 'Calling maneig...' 
  
 !  (nrows+1) is the number of records of the present block's .res file
  
@@ -144,7 +125,7 @@
 ! (1) - Trivial    ncf = 1
 !
 !-------------------------------------------------------
-         IF (myid .EQ. 0) WRITE (24, *) 'Trivial eigenvalue problem.' 
+         WRITE (24, *) 'Trivial eigenvalue problem.' 
  
 !   Matrix of order 1: the trivial case; we assume that the value
 !   of EAV is available
@@ -168,7 +149,11 @@
 ! (2) - Non trivial
 !
 !-------------------------------------------------------
-         if(myid==0) write(*,*) "ncf=",ncf, " iolpck=", iolpck
+!
+!   Matrix of order greater than 1; how many elements in a triangle?
+!
+         NDENSE = (NCF*(NCF + 1))/2 
+ 
          IF (NCF <= IOLPCK) THEN 
 !-----------------------------------------------------------------------
 !
@@ -185,7 +170,6 @@
 !   Allocate storage for the dense representation of the matrix
 !   and initialize emt
  
-            NDENSE = (NCF*(NCF + 1))/2 
             CALL ALLOC (EMT, NDENSE, 'EMT', 'MANEIG') 
             CALL DINIT (NDENSE, 0.0D00, EMT, 1) 
  
@@ -213,10 +197,6 @@
  
             CALL DALLOC (WORK, 'WORK', 'MANEIG') 
             CALL DALLOC (IROW, 'IROW', 'MANEIG') 
-
-! Let each node have a complete copy of EMT
-
-            CALL gdsummpi (EMT, NDENSE)
  
 !   Find the eigenpairs
 !
@@ -235,11 +215,11 @@
             CALL ALLOC (Z, NCF*NVEX,'Z', 'MANEIG' ) 
             CALL ALLOC (WORK, NCF*8,'WORK', 'MANEIG' ) 
             CALL ALLOC (IWORK, NCF*5,'IWORK', 'MANEIG' ) 
-            CALL ALLOC (IFAIL, NVEX, 'IFAIL', 'MANEIG') 
+! GG            CALL ALLOC (IFAIL, NVEX, 'IFAIL', 'MANEIG') 
+            CALL ALLOC (IFAIL, NCF, 'IFAIL', 'MANEIG') 
             CALL DSPEVX ('V', 'I', 'U', NCF, EMT, DUMMY, DUMMY, NVECMN, NVECMX&
                , ABSTOL, M, W, Z, NCF, WORK, IWORK, IFAIL, INFO) 
-            IF (INFO /= 0)                                             &
-                CALL STOPMPI('maneig: Failure in DSPEVX [LAPACK]',myid) 
+            IF (INFO /= 0) STOP 'maneig: Failure in DSPEVX [LAPACK]' 
             CALL DALLOC (WORK, 'WORK', 'MANEIG') 
             CALL DALLOC (IWORK, 'IWORK', 'MANEIG')
             CALL DALLOC (IFAIL, 'IFAIL', 'MANEIG') 
@@ -247,7 +227,7 @@
  
 !   Store the eigenpairs in their proper positions EVAL() and EVEC()
 
-            CALL ALLOC (EVAL, NVEC,'EVAL', 'MANEIG') 
+            CALL ALLOC (EVAL, NVEC,'EVAL', 'MANEIG' ) 
             CALL ALLOC (EVEC, NCF*NVEC, 'EVEC', 'MANEIG')
 
             DO I = 1, NVEC 
@@ -266,70 +246,50 @@
 ! (2.2) - DVDSON --- preparation work
 !
 !-------------------------------------------------------
-            IF (myid == 0) WRITE (24,*)'DVDSON routine selected' &
-                                      //' for eigenvalue problem;' 
+           WRITE (24,*)'DVDSON routine selected for eigenvalue problem;' 
+ 
+!   Sparse or dense matrix multiply? On disc or in core?
+ 
+!GG            NBRKEV = (NCF + 1)*(NCF + 1)/3       ! Normal 
+            !NBRKEV =  1                      ! To enforce DENSE
+            !NBRKEV = (NCF*(NCF+1)) / 2 + 1   ! To enforde SPARSE
 !--------------------------------------------------------------
-            IF (myid == 0) print *,'zou: nelmnt',NELMNT
-!            print *, 'myid, nprocs,nincor', myid, nprocs, nincor
-
-!           If on any process more memory is needed than NINCOR, use disc.
-!           If not, should the matrix be sparse or dense (distributed)?
-!           sparse requires = nelmnt + (isize*(nelmnt+ncf+1))/8
-!           dense  storage = (ncf*(ncf+1)/2/nproc - on average
-!           (because of integer arithmetic nproc-1 is added to numerator
-
-!           This is a comparion of matrix elements only. 
+! Uncomment out the following to force sparse storage
 !
-            NSTORE_s = NELMNT_a 
-            NSTORE_d = ((ncf+nprocs-1)/nprocs)
-            NSTORE_d = NSTORE_d*((ncf+1)/2)
-            IF (myid .EQ. 0) write(*,*) "nstore_s=", nstore_s,   &
-                             "nstore_d=", nstore_d, 'nincor=', nincor
-            LDISC = .FALSE.
-            IF ( NSTORE_s > NINCOR) THEN
-!              .. we need to use disk
-               LDISC =.TRUE.
-               SPARSE=.TRUE.
-            ELSE
-
-               IF (NSTORE_s .LT. NSTORE_d ) THEN
-                  SPARSE = .TRUE.
-               ELSE
-                  SPARSE = .FALSE.
-               ENDIF
-            ENDIF
-
-            CALL ALLOC (DIAG,NCF,'DIAG', 'MANEIG')
-            CALL dinit (ncf, 0.d0, diag, 1)
-            IF (LDISC) THEN 
+!
+!--------------------------------------------------------------
+               SPARSE = .TRUE. 
+               NSTORE = NELMNT + NELMNT/2 + (NCF + 1)/2 
+ 
+            CALL ALLOC (DIAG, NCF, 'DIAG', 'MANEIG') 
+ 
+            IF (NSTORE > NINCOR) THEN 
 !-----------------------------------------------------------------------
 !
 ! (2.2.1) - DVDSON --- Disk, load diagonal
 !
 !-------------------------------------------------------
-               IF (myid == 0)  THEN
-                  WRITE (*, *) ' matrix stored on disc;' 
-                  WRITE (24, *) ' matrix stored on disc;' 
-               END IF
+               WRITE (24, *) ' matrix stored on disc;' 
  
 !   Disk storage; necessarily sparse; one column of the matrix in
 !   memory
  
+               LDISC = .TRUE. 
+               SPARSE = .TRUE. 
                IMV = 1 
  
 !   Load diagonal - Each node will have the same, complete copy
 !   after this if block
-               print *, myid, 'Reading diagonal, unit imcdf =', imcdf 
+ 
                READ (IMCDF) NCFDUM, ICCUTDUM, MYIDDUM, NPROCSDUM 
                IF (NCF/=NCFDUM .OR. MYID/=MYIDDUM .OR. NPROCSDUM/=NPROCS) STOP &
                   'maneig:2' 
  
                DO I = MYID + 1, NCF, NPROCS 
-                  READ (IMCDF) NELC, ELSTO, (dummy,IR=2,NELC), DIATMP, &
-                                            (idummy, ir=1,nelc)
+                  READ (IMCDF) NELC, ELSTO, (DUMMY,IR=2,NELC), DIATMP 
                   DIAG(I) = DIATMP - EAV 
                END DO 
-               print *, ' finished' 
+ 
             ELSE 
 !-----------------------------------------------------------------------
 !
@@ -346,10 +306,8 @@
 ! (2.2.2.1) - DVDSON --- Memory, load all, sparse
 !
 !-------------------------------------------------------
-                  IF (MYID == 0) THEN
-                     WRITE (24, *) ' sparse matrix stored in memory'
-                     WRITE ( *, *) ' sparse matrix stored in memory'
-                  END IF
+                  IF (MYID == 0) WRITE (24, *) &
+                     ' matrix stored in sparse representation in core;' 
  
                   IMV = 2 
                   WRITE (6, *) 'nelmnt = ', NELMNT 
@@ -369,6 +327,8 @@
                      DIAG(I) = EMT(NELC+IOFSET) 
                      IOFSET = IOFSET + NELC 
                      IENDC(I) = IOFSET 
+!                     WRITE (31 + MYID, *) I, IENDC(I), DIAG(I) 
+ 
                   END DO 
                ELSE 
 !-----------------------------------------------------------------------
@@ -376,10 +336,8 @@
 ! (2.2.2.2) - DVDSON --- Memory, load all, dense
 !
 !-------------------------------------------------------
-                  IF (myid .EQ. 0) THEN
-                     WRITE (24,*) ' full matrix stored in in memory'
-                     WRITE ( *,*) ' full matrix stored in in memory'
-                  END IF
+                  WRITE (24, *) &
+                     ' matrix stored in full representation in core;' 
  
                   IMV = 3 
  
@@ -423,10 +381,6 @@
 !-----------------------------------------------------------------------
 !  (2.2.3e)      *** E n d   o f   D V D S O N
 !-----------------------------------------------------------------------
-
-! Make diagonals global, no matter it is disk or memory mode
-
-            CALL gdsummpi (DIAG, NCF)
 !
 !   Allocate storage for workspace; see the header of DVDSON for
 !   the expression below; the value of LIM can be reduced to NVECMX
@@ -436,21 +390,17 @@
 !           lwork = 2*ncf*lim + lim*lim + (nvecmx+10)*lim + nvecmx
             LWORK = 2*NCF*LIM + LIM*LIM*2 + 11*LIM + NVECMX 
             CALL ALLOC (WORK, LWORK, 'WORK', 'MANEIG') 
-            work(1:lwork) = 0.0d0
             LIWORK = 6*LIM + NVECMX 
             CALL ALLOC (IWORK, LIWORK, 'IWORK', 'MANEIG') 
 !*changed by Misha 02/12/97
             CRITE = 1.0D-17 
-!GG            CRITC = 1.0D-08 
-!GG            CRITR = 1.0D-08 
-!GG            ORTHO = MAX(1D-8,CRITR) 
             CRITC = 1.0D-09 
             CRITR = 1.0D-09 
             ORTHO = MAX(1D-9,CRITR) 
 ! end of changes
  
 !            maxitr = MAX (nvecmx*100, ncf/10)
-            MAXITR = MAX(NVECMX*100,NCF/10) 
+            MAXITR = MAX(NVECMX*200,NCF/10) 
             !maxitr = MIN (nvect*100, ncf)  ! FROM RSCFVU !!!
             CALL ALLOC (JWORK, LIM,'JWORK', 'MANEIG' ) 
  
@@ -480,28 +430,31 @@
             SELECT CASE (IMV)  
             CASE (1)  
 !******************** sparse and matrix on disk **********************
-              IF (myid .EQ. 0) print *, ' Sparse - Disk, iniestsd'
+               WRITE (6, *) ' Sparse - Disk,  iniestsd' 
                CALL POSFILE (0, IMCDF, NPOSITION)! was within iniestsd before 
-               CALL INIESTSD (IOLPCK, NCF, MYID, NPROCS, NIV, WORK, IMCDF, EAV) 
-              print *, 'Returned from iniestsd '
-              if (ncf.gt. IOLPCK) then
-                print *, 'Calling GDVD'
-                CALL GDVD (SPODMV,NCF,LIM,DIAG,ILOW,IHIGH,            &
-                  JWORK,NIV,MBLOCK,CRITE,CRITC, CRITR,ORTHO,MAXITR,   &
-                  WORK,LWORK,IWORK,LIWORK,HIEND,NLOOPS,               &
-                  NMV,IERR)
-              end if 
+               CALL INIESTSD (2000, NCF, MYID, NPROCS, NIV, WORK, IMCDF, EAV) 
+ 
+               !NIV = 0   ! Why equal 0 ???
+               !WRITE (6, *) ' Calling gdvd(spodmv,...' 
+               CALL GDVD (SPODMV, NCF, LIM, DIAG, ILOW, IHIGH, JWORK, NIV, &
+                  MBLOCK, CRITE, CRITC, CRITR, ORTHO, MAXITR, WORK, LWORK, &
+                  IWORK, LIWORK, HIEND, NLOOPS, NMV, IERR) 
  
             CASE (2)  
 !******************** sparse and matrix in memory ********************
-               IF (myid .EQ. 0) print *, ' Sparse - Memory, iniestmpi'
-               CALL iniestmpi (IOLPCK, NCF,NIV,WORK,EMT,IENDC,IROW)
-               if(ncf.gt. IOLPCK) then
-                 CALL GDVD (SPICMVmpi,NCF,LIM,DIAG,ILOW,IHIGH,        &
-                  JWORK,NIV,MBLOCK,CRITE,CRITC, CRITR,ORTHO,MAXITR,   &
-                  WORK,LWORK,IWORK,LIWORK,HIEND,NLOOPS,               &
-                  NMV,IERR)
-               end if
+               WRITE (6, *) ' Sparse - Memory,  iniest2' 
+!            CALL INIEST2 (1000, NCF,NIV,WORK,EMT,IENDC,IROW)
+               CALL INIEST2 (2000, NCF, NIV, WORK, EMT, IENDC, IROW) 
+               !WRITE (*, *) NCF, NIV, (WORK(I),I=NCF*NIV + 1,NCF*NIV + NIV) 
+               !WRITE (*, *) LIM, ILOW, IHIGH, MBLOCK, MAXITR, LWORK, LIWORK 
+               !WRITE (*, *) IERR 
+               CALL GDVD (SPICMV2, NCF, LIM, DIAG, ILOW, IHIGH, JWORK, NIV, &
+                  MBLOCK, CRITE, CRITC, CRITR, ORTHO, MAXITR, WORK, LWORK, &
+                  IWORK, LIWORK, HIEND, NLOOPS, NMV, IERR) 
+               !WRITE (*, *) 'after gdvd...' 
+               !WRITE (*, *) NCF, NIV, (WORK(I),I=NCF*NIV + 1,NCF*NIV + NIV) 
+               !WRITE (*, *) LIM, ILOW, IHIGH, MBLOCK, MAXITR, LWORK, LIWORK 
+               !WRITE (*, *) HIEND, NLOOPS, NMV, IERR 
  
                CALL DALLOC (EMT, 'EMT', 'MANEIG') 
                CALL DALLOC (IROW, 'IROW', 'MANEIG') 
@@ -509,24 +462,22 @@
  
             CASE (3)  
 !*************************** dense and in memory **********************
-               IF (myid .EQ. 0) print *, ' Dense - Memory, iniestdm'
-              CALL INIESTDM (IOLPCK,NCF,NIV,WORK,EMT)
-              if (ncf.gt. IOLPCK) then
-                CALL GDVD (DNICMV,NCF,LIM,DIAG,ILOW,IHIGH,            &
-                    JWORK,NIV,MBLOCK,CRITE,CRITC, CRITR,ORTHO,MAXITR, &
-                    WORK,LWORK,IWORK,LIWORK,HIEND,NLOOPS,             &
-                    NMV,IERR)
-              end if
+               WRITE (6, *) ' Dense - Memory,  iniestdm' 
+!            CALL INIESTDM (1000,NCF,NIV,WORK,EMT)
+               CALL INIESTDM (2000, NCF, NIV, WORK, EMT) 
+               CALL GDVD (DNICMV, NCF, LIM, DIAG, ILOW, IHIGH, JWORK, NIV, &
+                  MBLOCK, CRITE, CRITC, CRITR, ORTHO, MAXITR, WORK, LWORK, &
+                  IWORK, LIWORK, HIEND, NLOOPS, NMV, IERR) 
                CALL DALLOC (EMT, 'EMT', 'MANEIG') 
             END SELECT 
 !************************************************************************
             CALL DALLOC (DIAG, 'DIAG', 'MANEIG') 
             CALL DALLOC (IWORK, 'IWORK', 'MANEIG') 
             CALL DALLOC (JWORK, 'JWORK', 'MANEIG') 
-            IF (myid .EQ. 0) THEN 
-               WRITE (24, *) ' ', NLOOPS, ' iterations;' 
-               WRITE (24, *) ' ', NMV, ' matrix-vector multiplies.' 
-            ENDIF
+ 
+            WRITE (24, *) ' ', NLOOPS, ' iterations;' 
+            WRITE (24, *) ' ', NMV, ' matrix-vector multiplies.' 
+ 
             IF (IERR /= 0) THEN 
                WRITE (ISTDE, *) 'MANEIG: Returned from DVDSON with' 
                WRITE (ISTDE, *) ' IERR = ', IERR, '.' 
