@@ -35,7 +35,7 @@ APP_OBJ= \
 	cxk_I.o            indtpi_I.o   setdbg_I.o     vac4_I.o \
 	klamaq_I.o   setmixmpi_I.o     vacpol_I.o \
 	dnicmv_I.o         lodres_I.o   setres_I.o     vinti_I.o \
-	maneig_I.o   setsum_I.o     zkf_I.o \
+	maneigmpi_I.o   setsum_I.o     zkf_I.o \
 	engout_I.o         mohr_I.o     setham_gg_I.o\
 	vpintf_I.o	   iniestdm_I.o iniestsd_I.o	wghtd5_I.o \
         matrix_I.o genintbreit1_I.o triangbreit1_I.o genintbreit2_I.o \
@@ -47,7 +47,7 @@ APP_OBJ= \
         setsum.o skint.o snrc.o talk.o triangrk.o vac2.o vac4.o vacpol.o \
         genintrkwrap.o vint.o vinti.o vpint.o vpintf.o wghtd5.o zkf.o \
         dnicmv.o genmat2.o getcid.o iniestdm.o iniestsd.o lodmixmpi.o lodres.o \
-        maneig.o  rci90mpi.o  setham_gg.o setmixmpi.o setres.o \
+        maneigmpi.o  rci90mpi.o  setham_gg.o setmixmpi.o setres.o \
         spodmv.o strsum.o qed_slfen.o matrix.o genintbreit1.o triangbreit1.o \
         genintbreit2.o triangbreit2.o genintbreit1wrap.o genintbreit2wrap.o
 
