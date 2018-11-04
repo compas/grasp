@@ -58,7 +58,7 @@
       USE genmat2_I
       USE hmout_I
       USE iq_I
-      USE maneig_I
+      USE maneigmpi_I
       USE engout_I
       USE wghtd5_I
       USE qed_I
