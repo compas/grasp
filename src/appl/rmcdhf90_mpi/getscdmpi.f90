@@ -88,7 +88,8 @@
          N = MIN(220,NNNP) 
       ELSE 
 !         default comes here
-         RNT = 2.D-6 
+!CFF     ... RNT should be Z-dependent
+         RNT = 2.0D-06/Z 
          H = 5.D-2 
          N = NNNP 
       ENDIF 
