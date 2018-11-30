@@ -29,7 +29,7 @@
 !-----------------------------------------------
       INTEGER :: I, NCSF, IOS, IERR 
       LOGICAL :: FOUND 
-      CHARACTER :: STR*15, CH*2, LINE3*100 
+      CHARACTER :: STR*15, CH*2, LINE3*200
 !-----------------------------------------------
 ! Locals
  
