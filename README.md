@@ -2,6 +2,8 @@
 
 **GRASP2018 - an F95  development version**
 
+[![][manual-badge]][manual-pdf]
+
 This version of GRASP is a major revision of the previous GRASP2K package by [P.
 Jonsson, G. Gaigalas, J. Bieron, C. Froese Fischer, and I.P. Grant Computer
 Physics Communication, 184, 2197 - 2203 (2013)][grasp2k-2013] written in FORTRAN
@@ -113,10 +115,10 @@ in the `appl` directory, libraries in the `lib` directory and tools in the
 
 ## Program Guide and Compilation
 
-The software is distributed with a practical guide to GRASP2018 in PDF-format.
-The guide, which is under Creative Commons Attribution 4.0 International (CC BY
-4.0) license, contains full information on how to compile and install the
-package.
+The software is distributed with a practical guide to [GRASP2018 in PDF-format
+(click here to download)][manual-pdf]. The guide, which is under Creative
+Commons Attribution 4.0 International (CC BY 4.0) license, contains full
+information on how to compile and install the package.
 
 
 ## Acknowledgements
@@ -137,6 +139,8 @@ The code in this repository is distributed under the [MIT license](LICENSE).
 The accompanying guide  "A practical guide to GRASP2018" is licensed separately
 under [the CC-BY-4.0 (Creative Commons Attribution 4.0 International) license][cc-by].
 
+[manual-pdf]: https://github.com/compas/grasp2018/releases/download/2018-12-03/GRASP2018-manual.pdf
+[manual-badge]: https://img.shields.io/badge/manual-pdf-blue.svg
 [grasp92-1996]: https://doi.org/10.1016/0010-4655(95)00136-0
 [grasp2k-2013]: https://doi.org/10.1016/j.cpc.2013.02.016
 [cc-by]: https://creativecommons.org/licenses/by/4.0/legalcode
