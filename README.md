@@ -15,9 +15,9 @@ efficiently.
 
 The previous package, was an extension and modification of GRASP92 by [Farid
 Parpia, Charlotte Froese Fischer, and Ian Grant. Computer Physics Communication,
-94, 249-271 (1996)][grasp92-1996]
+94, 249-271 (1996)][grasp92-1996].
 
-This version of GRASP has been published in
+This version of GRASP has been published in:
 
 > C. Froese Fischer, G. Gaigalas, P. Jönsson, J. Bieroń,
 > "GRASP2018 — a Fortran 95 version of the General Relativistic Atomic Structure Package",
@@ -33,7 +33,7 @@ Development of this package was performed largely by:
 | Per Jönsson               | per.jonsson@mau.se            |
 | Jacek Bieron              | jacek.bieron@uj.edu.pl        |
 
-Please contact one of these authors if you have questions
+Please contact one of these authors if you have questions.
 
 Supporters include:
 
