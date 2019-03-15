@@ -6,14 +6,14 @@
 !     and Lande g-factors. The program reads the LSJ classification    *
 !     file for labeling purposes.
 !                                                                      *
-!     Per Jonsson and Gediminas Gaigalas                               *    
+!     Per Jonsson and Gediminas Gaigalas                               *
 !                                               August 2011            *
 !                                                                      *
 !***********************************************************************
       IMPLICIT NONE
       INTEGER, PARAMETER:: JMax = 22      ! max J value, see JFraction !
       INTEGER, PARAMETER:: ndim = 20000   ! max number of states
-      INTEGER, PARAMETER:: maxFile = 1000 ! max number of files 
+      INTEGER, PARAMETER:: maxFile = 1000 ! max number of files
 !
       CHARACTER(LEN=80) strInFile(maxFile), strFile
       CHARACTER*1 iaspa(ndim), PlusMinus(-1:1),ans    ! Parity
@@ -64,16 +64,16 @@
       WRITE(*,*)
 
       WRITE(*,*) 'Name of the state'
-      READ(*,*) strFile 
+      READ(*,*) strFile
       K = INDEX(strFile,' ')
       WRITE(*,*) 'Hfs data from a CI calc?'
       READ(*,*) ans
       IF ((ans.eq.'y').or.(ans.eq.'Y')) THEN
          hfs_file = strFile(1:K-1)//'.ch'
-         output_file = strFile(1:K-1)//'.chlsj' 
+         output_file = strFile(1:K-1)//'.chlsj'
       ELSE
          hfs_file = strFile(1:K-1)//'.h'
-         output_file = strFile(1:K-1)//'.hlsj' 
+         output_file = strFile(1:K-1)//'.hlsj'
       END IF
       OPEN (30, FILE = hfs_file, FORM = 'FORMATTED', &
          STATUS = 'OLD', IOSTAT = IOS)
@@ -102,7 +102,7 @@
       ELSE
         nsort = 0
       END IF
-       
+
 
       CALL READHFS
       CALL LDLBL
@@ -113,7 +113,7 @@
       IZERO = 0
       DO I = 1,IMaxCount
          IF (Lev_J(I).EQ.'   0') IZERO = IZERO + 1
-      END DO       
+      END DO
 
       DUMMY0 = '                                '
       DUMMY = DUMMY0//DUMMY0
@@ -148,7 +148,7 @@
           Lev_Par(I+1) = SWAPP
           Lev_J(I+1) = SWAPJ
           string_CSF(I+1) = SWAPCSF
-        END DO        
+        END DO
       END IF
 
       DO I = IZERO + 1,IMaxCount
@@ -196,7 +196,7 @@
       CHARACTER*120 RECORD
       DOUBLE PRECISION A(ndim),B(ndim),GJ(ndim)
 !
-      COMMON/HFS/A,B,GJ 
+      COMMON/HFS/A,B,GJ
 
 ! Position yourself at the correct place in the file
 
@@ -204,7 +204,7 @@
          READ (30,'(A)') RECORD
          WRITE(80,'(1X,A)') TRIM(RECORD)
       END DO
-     
+
 
       DO
          READ (30,'(A)') RECORD
@@ -223,7 +223,7 @@
 !PJ         WRITE(*,'(1P,3D20.10)') A(I),B(I),GJ(I)
          I = I + 1
       END DO
-   20 CONTINUE 
+   20 CONTINUE
 
       RETURN
       END
@@ -259,7 +259,7 @@
       COMMON/JJ2LSJ/ Lev_POS,Lev_J,Lev_Par,RLev_ENER,string_CSF, &
                       IMaxCount, MAX_STRING_LENGTH
 !
-      MAX_STRING_LENGTH = 0 
+      MAX_STRING_LENGTH = 0
 
       READ (31,'(1A15)',IOSTAT = IOS) RECORD
       ICount = 0
@@ -273,7 +273,7 @@
       READ (31,'(7X,F12.8,17X,A)') WEIGHTS,string_CSF(ICount)
       K = INDEX(string_CSF(ICount),' ')
       IF (K.GT.MAX_STRING_LENGTH) MAX_STRING_LENGTH = K
-               
+
 !
     2 READ (31,'(1X,I2)',IOSTAT = IOS) ITEST
       IF (IOS .NE. 0) GO TO 1

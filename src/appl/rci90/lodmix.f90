@@ -11,8 +11,8 @@
 !   Block version by Xinghong He          Last revision:  9 Jun 1998   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -37,15 +37,15 @@
 !-----------------------------------------------
       INTEGER :: ncftot, noffset, nvecsiz, jb, j
 !-----------------------------------------------
- 
+
 ! lodstate generates
 !    nevblk(), ncmaxblk()
 !    ncmin, iccmin(1:ncmin) -- via items (memories allocated there)
 ! Thus we let node-0 do it and then broadcast here
- 
+
       CALL alloc (ncmaxblk, nblock, 'NCMAXBLK', 'LODMIX')
       CALL alloc (nevblk, nblock, 'NEVBLK', 'LODMIX')
- 
+
 !      print *, ' LODMIX: change lodstate arg-list - see rscf2/getold.f90 '
 !      stop
       CALL LODSTATE (IDBLK)

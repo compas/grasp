@@ -20,5 +20,3 @@ clean:
                         $(MAKE) $@ ; \
                 cd .. ; \
         done
-
-

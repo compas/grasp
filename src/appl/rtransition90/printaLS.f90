@@ -9,10 +9,10 @@
 !   NIST                                                  May 2011     *
 !                                                                      *
 !***********************************************************************
-!...Translated by Charlotte Froese Fischer 
+!...Translated by Charlotte Froese Fischer
 !                       Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  DOUBLE
       USE def_C
@@ -52,7 +52,7 @@
        print*, '                                                      '
        print*, ' INCORRECT INPUT, PROGRAM STOP!!!                     '
        print*, '                                                      '
-       print*, ' lsj.lbl files from the jj2lsj runs are inconsistent  ' 
+       print*, ' lsj.lbl files from the jj2lsj runs are inconsistent  '
        print*, ' with the files used in the bioscl calculation.       '
        print*, ' The bioscl calculation was for rci wave functions    '
        print*, ' but the jj2lsj run was for rscf wave functions or    '
@@ -67,8 +67,8 @@
        print*, ' Then rerun rtransition.                                   '
        STOP
       END IF
-      DD    = D*AUCM 
-      ANGS  =  1.0D08 / DD 
+      DD    = D*AUCM
+      ANGS  =  1.0D08 / DD
       ANGSA = ANGS
       IF(ANGS .GT. 2000.D0) THEN
          SIGMA = (1.D8/ANGS)**2
@@ -268,7 +268,7 @@
                END IF
                WRITE (32,40) DD,ANGS,ANGSA,                        &
                    IM,LK,SA,OSCM,AM*IATJPOFF(J)/IATJPOII(I)
-            END IF 
+            END IF
          ENDIF
       ENDIF
       RETURN

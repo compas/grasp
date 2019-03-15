@@ -180,13 +180,13 @@
         ELSE
           TCOEFF = ZERO
         END IF
-      ELSE IF (IDQ .EQ. 2) THEN 
+      ELSE IF (IDQ .EQ. 2) THEN
 !
 !   IDQ = 2 Case
 !
 !       Permutation factor for IDQ = 2
         CALL ONESCALAR2(JA,JB,JA1,JA2,TCOEFF)
-        VSHELL(1) = TCOEFF 
+        VSHELL(1) = TCOEFF
         RETURN
       END IF
 !

@@ -24,7 +24,7 @@ APP_OBJ= \
 
 $(EXE): $(APP_OBJ)
 	$(FC) -o $(BINFILE) $(FC_LD)  $(APP_OBJ) $(APP_LIBS) \
- 		$(APP_LIBS) 
+ 		$(APP_LIBS)
 
 .f90.o:
 	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I ${MODL9290} -I $(MODDIR) -o $@

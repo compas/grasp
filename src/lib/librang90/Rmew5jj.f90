@@ -55,7 +55,7 @@
            COEF=-DSQRT(DBLE(10))
         ELSEIF(J1 == 11) THEN
            COEF=-DSQRT(DBLE(18))
-        ENDIF 
+        ENDIF
       ELSEIF(K1 == 0 .AND. K2 == 1) THEN
         IF(J1 /= J2) RETURN
         COEF=-DSQRT(DBLE(I01(J1-5))/DBLE(7))

@@ -1,29 +1,29 @@
 !***********************************************************************
       SUBROUTINE lodcslmpiGG (nfile, ncore, jblock)
 
-! An MPI container of lodcsh2 which loads CSL list of the current block 
-! into memory. It forwards the call together with the same set of 
+! An MPI container of lodcsh2 which loads CSL list of the current block
+! into memory. It forwards the call together with the same set of
 ! parameters to lodcsh2 and then broadcasts the results to all nodes.
 !
 ! Note: Memories have been allocated/deallocated each block outside.
-! This subroutine calls lodcsh2 on node-0 to generate the data for the 
+! This subroutine calls lodcsh2 on node-0 to generate the data for the
 ! block; and then broadcasts to all other nodes. A new MPI data type
 ! of 4 byte-long is created to handle 64-bit machines whose MPI
 ! implementation does not support 4-byte integers. If jblock=-119,
-! then ALL blocks will be loaded instead of just one. This is 
+! then ALL blocks will be loaded instead of just one. This is
 ! implemented in lodcsh2.
 !
-! Currently used by rcimpivu, mcpmpi, rscfmpivu 
+! Currently used by rcimpivu, mcpmpi, rscfmpivu
 !
 ! Xinghong He 98-08-06
 !
 !***********************************************************************
-!************************************************************************     
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!************************************************************************
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: BYTE
       USE parameter_def,   ONLY: NNNW

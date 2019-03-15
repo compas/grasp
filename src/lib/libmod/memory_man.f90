@@ -24,7 +24,7 @@ MODULE memory_man
    END INTERFACE
 
    CONTAINS
-   SUBROUTINE alloc_0i(p, first, last, var, sub ) 
+   SUBROUTINE alloc_0i(p, first, last, var, sub )
      IMPLICIT NONE
      INTEGER, POINTER, DIMENSION(:) :: p
      INTEGER, INTENT(IN) :: first, last
@@ -48,7 +48,7 @@ MODULE memory_man
      END IF
    END SUBROUTINE alloc_0i
 
-   SUBROUTINE alloc_1i(p, n, var, sub) 
+   SUBROUTINE alloc_1i(p, n, var, sub)
      IMPLICIT NONE
      INTEGER, POINTER, DIMENSION(:) :: p
      INTEGER, INTENT(IN) :: n
@@ -72,7 +72,7 @@ MODULE memory_man
      END IF
    END SUBROUTINE alloc_1i
 
-   SUBROUTINE alloc_2i(p, n1, n2, var, sub) 
+   SUBROUTINE alloc_2i(p, n1, n2, var, sub)
      IMPLICIT NONE
      INTEGER, POINTER, DIMENSION(:,:) :: p
      INTEGER, INTENT(IN) :: n1, n2
@@ -143,8 +143,8 @@ MODULE memory_man
         END IF
      END IF
    END SUBROUTINE alloc_1iL
-   
-   SUBROUTINE alloc_1r(p, n, var, sub) 
+
+   SUBROUTINE alloc_1r(p, n, var, sub)
      IMPLICIT NONE
      real(double), POINTER, DIMENSION(:) :: p
      INTEGER, INTENT(IN) :: n
@@ -168,7 +168,7 @@ MODULE memory_man
      END IF
    END SUBROUTINE alloc_1r
 
-   SUBROUTINE alloc_2r(p, n1, n2, var, sub) 
+   SUBROUTINE alloc_2r(p, n1, n2, var, sub)
      IMPLICIT NONE
      REAL(double), POINTER, DIMENSION(:,:) :: p
      INTEGER, INTENT(IN) :: n1, n2
@@ -216,7 +216,7 @@ MODULE memory_man
      END IF
    END SUBROUTINE alloc_1rL
 
-   SUBROUTINE alloc_0b(p, first, last, var, sub ) 
+   SUBROUTINE alloc_0b(p, first, last, var, sub )
      IMPLICIT NONE
      INTEGER(BYTE), POINTER, DIMENSION(:) :: p
      INTEGER, INTENT(IN) :: first, last
@@ -240,7 +240,7 @@ MODULE memory_man
      END IF
    END SUBROUTINE alloc_0b
 
-   SUBROUTINE alloc_1b(p, n, var, sub) 
+   SUBROUTINE alloc_1b(p, n, var, sub)
      IMPLICIT NONE
      INTEGER(BYTE), POINTER, DIMENSION(:) :: p
      INTEGER, INTENT(IN) :: n
@@ -264,7 +264,7 @@ MODULE memory_man
      END IF
    END SUBROUTINE alloc_1b
 
-   SUBROUTINE alloc_2b(p, n1, n2, var, sub) 
+   SUBROUTINE alloc_2b(p, n1, n2, var, sub)
      IMPLICIT NONE
      INTEGER(BYTE), POINTER, DIMENSION(:,:) :: p
      INTEGER, INTENT(IN) :: n1, n2
@@ -312,7 +312,7 @@ MODULE memory_man
      END IF
    END SUBROUTINE alloc_3b
 
-   SUBROUTINE alloc_1c(p, n, var, sub) 
+   SUBROUTINE alloc_1c(p, n, var, sub)
      IMPLICIT NONE
 !CFF     CHARACTER(LEN=256), POINTER, DIMENSION(:) :: p
      CHARACTER(LEN=*), POINTER, DIMENSION(:) :: p
@@ -482,7 +482,7 @@ MODULE memory_man
    END SUBROUTINE ralloc_0i
 
 
-   SUBROUTINE ralloc_1i(p, n, var, sub) 
+   SUBROUTINE ralloc_1i(p, n, var, sub)
      IMPLICIT NONE
      INTEGER, POINTER, DIMENSION(:) :: p, pnew
      INTEGER, INTENT(IN) :: n
@@ -508,7 +508,7 @@ MODULE memory_man
      END IF
    END SUBROUTINE ralloc_1i
 
-   SUBROUTINE ralloc_2i(p, n1, n2, var, sub) 
+   SUBROUTINE ralloc_2i(p, n1, n2, var, sub)
      IMPLICIT NONE
      INTEGER, POINTER, DIMENSION(:,:) :: p, pnew
      INTEGER, INTENT(IN) :: n1, n2
@@ -535,8 +535,8 @@ MODULE memory_man
         p => pnew
      END IF
    END SUBROUTINE ralloc_2i
-   
-   SUBROUTINE ralloc_3i(p, n1, n2, n3, var, sub) 
+
+   SUBROUTINE ralloc_3i(p, n1, n2, n3, var, sub)
      IMPLICIT NONE
      INTEGER, POINTER, DIMENSION(:,:,:) :: p, pnew
      INTEGER, INTENT(IN) :: n1, n2, n3
@@ -564,8 +564,8 @@ MODULE memory_man
         p => pnew
      END IF
    END SUBROUTINE ralloc_3i
-   
-   SUBROUTINE ralloc_1r(p, n, var, sub) 
+
+   SUBROUTINE ralloc_1r(p, n, var, sub)
      IMPLICIT NONE
      real(double), POINTER, DIMENSION(:) :: p, pnew
      INTEGER, INTENT(IN) :: n
@@ -592,7 +592,7 @@ MODULE memory_man
      END IF
    END SUBROUTINE ralloc_1r
 
-   SUBROUTINE ralloc_2r(p, n1, n2, var, sub) 
+   SUBROUTINE ralloc_2r(p, n1, n2, var, sub)
      IMPLICIT NONE
      REAL(double), POINTER, DIMENSION(:,:) :: p, pnew
      INTEGER, INTENT(IN) :: n1, n2
@@ -616,7 +616,7 @@ MODULE memory_man
         n2_old = MIN(SIZE(p, DIM=2),n2)
         pnew(1:n1_old, 1:n2_old) = p(1:n1_old, 1:n2_old)
         DEALLOCATE(p)
-        p => pnew 
+        p => pnew
      END IF
    END SUBROUTINE ralloc_2r
 
@@ -647,7 +647,7 @@ MODULE memory_man
      END IF
    END SUBROUTINE ralloc_0b
 
-   SUBROUTINE ralloc_1b(p, n, var, sub) 
+   SUBROUTINE ralloc_1b(p, n, var, sub)
      IMPLICIT NONE
      INTEGER(BYTE), POINTER, DIMENSION(:) :: p, pnew
      INTEGER, INTENT(IN) :: n
@@ -673,7 +673,7 @@ MODULE memory_man
      END IF
    END SUBROUTINE ralloc_1b
 
-   SUBROUTINE ralloc_2b(p, n1, n2, var, sub) 
+   SUBROUTINE ralloc_2b(p, n1, n2, var, sub)
      IMPLICIT NONE
      INTEGER(BYTE), POINTER, DIMENSION(:,:) :: p, pnew
      INTEGER, INTENT(IN) :: n1, n2
@@ -700,8 +700,8 @@ MODULE memory_man
         p => pnew
      END IF
    END SUBROUTINE ralloc_2b
-   
-   SUBROUTINE ralloc_3b(p, n1, n2, n3, var, sub) 
+
+   SUBROUTINE ralloc_3b(p, n1, n2, n3, var, sub)
      IMPLICIT NONE
      INTEGER(BYTE), POINTER, DIMENSION(:,:,:) :: p, pnew
      INTEGER, INTENT(IN) :: n1, n2, n3
@@ -733,8 +733,8 @@ MODULE memory_man
         p => pnew
      END IF
    END SUBROUTINE ralloc_3b
-   
-   SUBROUTINE ralloc_1c(p, n, var, sub) 
+
+   SUBROUTINE ralloc_1c(p, n, var, sub)
      IMPLICIT NONE
      CHARACTER(LEN=256), POINTER, DIMENSION(:) :: p, pnew
      INTEGER, INTENT(IN) :: n

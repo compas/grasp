@@ -9,12 +9,12 @@
 !   Written by Per Jonsson                                             *
 !                                                                      *
 !***********************************************************************
-!...Translated by Charlotte Froese Fischer 
+!...Translated by Charlotte Froese Fischer
 !                       Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
-      USE orb_C, ONLY: NKL, NKJ 
+      USE orb_C, ONLY: NKL, NKJ
       IMPLICIT NONE
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s

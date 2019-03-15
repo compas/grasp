@@ -36,7 +36,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       INTEGER :: KK1, KK2, IE, IQ, IQ2, IQ3, IQM, IT, ITP, ITG, IBTT
-      INTEGER,      DIMENSION(7) :: IBT 
+      INTEGER,      DIMENSION(7) :: IBT
       REAL(DOUBLE)               :: ENQP, D1, SI1, W
       REAL(DOUBLE), DIMENSION(3) :: BT
 !-----------------------------------------------

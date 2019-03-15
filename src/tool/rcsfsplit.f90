@@ -18,12 +18,12 @@ write(*,*) 'Orbital sets are specified by giving the highest principal quantum n
 write(*,*) 'per l-symmetry, in a comma delimited list in s,p,d etc order, e.g. 5s,4p,3d'
 write(*,*) 'Input file: name.c'
 write(*,*) 'Output files: namelabel1.c, namelabel2.c, ...'
-write(*,*) 
+write(*,*)
 
 write(*,*) 'Name of state'
 read(*,'(a)') name
 
-! Open file 
+! Open file
 
 open(unit=36,file=trim(name)//'.c',status='old')
 
@@ -71,7 +71,7 @@ do k = 1,nlayer
          orbital(i) = " " // orbitalstring(jl:jr-1)
       else
          write(*,*) 'Orbitals should be given in comma delimited list, redo!'
-         goto 991      
+         goto 991
       end if
       jl = jr + 1
       i = i +1
@@ -81,15 +81,15 @@ do k = 1,nlayer
    if (len_trim(orbitalstring(jl:jr)).eq.3) then
       orbital(i) = orbitalstring(jl:jr)
    else if (len_trim(orbitalstring(jl:jr)).eq.2) then
-      orbital(i) = " " // orbitalstring(jl:jr)                                                                                
+      orbital(i) = " " // orbitalstring(jl:jr)
    else
       write(*,*) 'Orbitals should be given in comma delimited list, redo!'
-      goto 991      
+      goto 991
    end if
 
    norblayer = i
 
-! For current orbital layer find out the compliment orbitals 
+! For current orbital layer find out the compliment orbitals
 
    norbcomp = 0
    do i = 1,norb
@@ -106,9 +106,9 @@ do k = 1,nlayer
       if (nsymmetrymatch.eq.0) then
          norbcomp = norbcomp + 1
          orbcomp(norbcomp) =  orb(i)
-      end if 
-   end do 
-         
+      end if
+   end do
+
    rewind(36)
    read(36,'(a)') string1
    write(48+k,'(a)') trim(string1)
@@ -143,10 +143,10 @@ do k = 1,nlayer
    write(48+k,'(a)') trim(string1)
 
    ncsf = 0
-   do 
+   do
       read(36,'(a)',end=99) string1
       if (string1(2:2).eq.'*') then
-         write(48+k,'(a)') trim(string1) 
+         write(48+k,'(a)') trim(string1)
          read(36,'(a)') string1
       end if
       read(36,'(a)') string2
@@ -160,9 +160,9 @@ do k = 1,nlayer
          if (n.ne.0) exit
       end do
       if (n.eq.0) then
-         write(48+k,'(a)') trim(string1) 
-         write(48+k,'(a)') trim(string2) 
-         write(48+k,'(a)') trim(string3) 
+         write(48+k,'(a)') trim(string1)
+         write(48+k,'(a)') trim(string2)
+         write(48+k,'(a)') trim(string3)
          ncsf = ncsf + 1
       end if
    end do
@@ -181,4 +181,4 @@ do k = 1,nlayer
 end do
 
 end program rcsfsplit
-   
+

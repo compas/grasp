@@ -42,7 +42,7 @@ OBJ = \
    setcon.o
 
 install : $(LIBA)
-$(LIBA) : $(LIBOBJ) 
+$(LIBA) : $(LIBOBJ)
 	@echo " Building " $(LIBA)
 	ar -crvs $(LIBA)  $?
 

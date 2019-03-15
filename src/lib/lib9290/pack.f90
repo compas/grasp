@@ -1,6 +1,6 @@
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE PACK(IUNPKD, ISUBSH, IPACKD) 
+      SUBROUTINE PACK(IUNPKD, ISUBSH, IPACKD)
 !                                                                      *
 !   Subshell occupation numbers and all angular momenta 2J+1 are not   *
 !   likely to exceed 127 in any application of the GRASP92 suite. It   *
@@ -19,36 +19,36 @@
 !   Modified by G. Gaigalas                                 May 2011   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  10:50:08   2/14/04  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  10:50:08   2/14/04
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  BYTE
-      USE IOUNIT_C 
+      USE IOUNIT_C
       IMPLICIT NONE
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      INTEGER, INTENT(IN) :: IUNPKD 
-      INTEGER, INTENT(IN) :: ISUBSH 
+      INTEGER, INTENT(IN) :: IUNPKD
+      INTEGER, INTENT(IN) :: ISUBSH
       INTEGER(BYTE), DIMENSION(*), INTENT(INOUT) :: IPACKD
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
 !
-      IF (ABS(IUNPKD) > 127) THEN 
-         WRITE (ISTDE, *) 'PACK: Argument IUNPKD out of range.' 
-         STOP  
-      ENDIF 
-! 
-      IF (ISUBSH <= 0) THEN 
-         WRITE (ISTDE, *) 'PACK: ISUBSH=', ISUBSH, ' less than 1' 
-         STOP  
-      ENDIF 
+      IF (ABS(IUNPKD) > 127) THEN
+         WRITE (ISTDE, *) 'PACK: Argument IUNPKD out of range.'
+         STOP
+      ENDIF
 !
-      IPACKD(ISUBSH) = IUNPKD 
+      IF (ISUBSH <= 0) THEN
+         WRITE (ISTDE, *) 'PACK: ISUBSH=', ISUBSH, ' less than 1'
+         STOP
+      ENDIF
 !
-      RETURN  
-      END SUBROUTINE PACK 
+      IPACKD(ISUBSH) = IUNPKD
+!
+      RETURN
+      END SUBROUTINE PACK

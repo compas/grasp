@@ -1,14 +1,14 @@
 !
 !***********************************************************************
 !                                                                      *
-      MODULE jj2lsjbio_C 
+      MODULE jj2lsjbio_C
 !                                                                      *
 !                                                                      *
 !     Written by G. Gaigalas,                                          *
 !     NIST                                     last update: May 2017   *
 !                                                                      *
 !***********************************************************************
-      USE vast_kind_param, ONLY:  DOUBLE 
+      USE vast_kind_param, ONLY:  DOUBLE
 !
       REAL(DOUBLE), DIMENSION(:), pointer :: RLev_ENER_1,RLev_ENER_2
       CHARACTER(LEN=64), POINTER, DIMENSION(:) :: string_CSF1

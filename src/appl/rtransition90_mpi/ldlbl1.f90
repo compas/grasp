@@ -11,7 +11,7 @@
 !   NIST                                                  May 2011     *
 !                                                                      *
 !***********************************************************************
-!...Translated by Charlotte Froese Fischer 
+!...Translated by Charlotte Froese Fischer
 !                       Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -50,7 +50,7 @@
             CALL ALLOC (RLev_ENER_1,NVECTOTI,'RLev_ENER_1','LDLBL1')
 !CPJ        CALL ALLOC (string_CSF1,NVECTOTI,'string_CSF1','LDLBL1')
             allocate(string_CSF1(1:NVECTOTI))
-!  
+!
 
             ICount = 1
             READ (31,'(1X,I2,1X,A4,5X,A1,8X,F16.9)',IOSTAT = IOS)     &

@@ -16,8 +16,8 @@
 !   Block version Xinghong He             Last revision: 12 Jun 1998   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -39,10 +39,10 @@
       USE stat_C
       USE wave_C
       USE where_C
-      USE blim_C 
+      USE blim_C
       USE eigvec1_C
       !USE blk_C
-      USE iccu_C 
+      USE iccu_C
       USE cteilsrk_C
       USE coeils_C
       USE bilst_C
@@ -75,7 +75,7 @@
 !-----------------------------------------------
       REAL(DOUBLE), DIMENSION(NNNW) :: slfint
       CHARACTER(LEN=8) :: CNUM
-      REAL(DOUBLE) :: atwinv, elsto, eau, ecm, eev, elemnt  
+      REAL(DOUBLE) :: atwinv, elsto, eau, ecm, eev, elemnt
       REAL(DOUBLE), DIMENSION(:), pointer :: slf_en, ucf, etot
       INTEGER(LONG) :: nelmnt_a
       INTEGER :: myid, nprocs,  iiatjpo, iiaspar
@@ -87,12 +87,12 @@
 !***************************************************************
 !     ...Common to all blocks - place here to save CPU time
       CALL auxblk (j2max, atwinv)
- 
+
 !***************************************************************
 !      Loop over blocks
 !***************************************************************
       ncminpas = 0
- 
+
       DO 100 jblock = 1, nblock
          ncf    =   ncfblk(jblock)
          nvec   =   nevblk(jblock)
@@ -103,7 +103,7 @@
           do ic=1,ncf
                SLF_EN(IC) = 0.0
           enddo
- 
+
          nposition = 7 + nw + nw  ! File position of the previous block
                                   ! in the .res file
          DO i = 1, jblock - 1
@@ -111,11 +111,11 @@
             IF (ncfblk(i) .LT. nprocs) j = ncfblk(i) / (myid+1)
             nposition = nposition + j + 1
          ENDDO
- 
+
          !.. SETHAM does not handle this extrem case
          IF (nprocs .GT. NCF)                                          &
                  STOP 'matrix: too many nodes'
- 
+
 !        ...Obtain ivec() from iccmin()
          IF (nvec .GT. 0) THEN
             CALL alloc (ivec, nvec, 'IVEC', 'MATRIX')
@@ -124,7 +124,7 @@
             ENDDO
             ncminpas = ncminpas + nvec
          ENDIF
- 
+
 !        ...These 3 were allocated in lodcsh2 and deallocated at the end
 !        ... of this routine and in the setham. In this block version,
 !        ... both allocation and deallocation are placed here. See the
@@ -132,14 +132,14 @@
          CALL ALLOC (IQA, NNNW, ncf, 'IQA', 'MATRIX')
          CALL ALLOC (JQSA, NNNW, 3, ncf, 'JQSA', 'MATRIX')
          CALL ALLOC (JCUPA, NNNW, ncf, 'JCUPA', 'MATRIX')
- 
+
 !      ...Load CSF list of the current block
         CALL lodcsh2 (21, ncore, jblock)
 ! zou
- 
+
          IF (LSE) THEN
             PRINT *, 'Entering QED ...'
- 
+
             WRITE (24,*)
             WRITE (24,*) ' Self Energy Corrections: '
             WRITE (24,*)
@@ -153,7 +153,7 @@
 !              print *,ic, elemnt
                SLF_EN(IC) = ELEMNT
             ENDDO
- 
+
             WRITE (24,*)
             WRITE (24,*) 'Self-energy corrections estimated'           &
                     //' --- these will influence the data'
@@ -195,15 +195,15 @@
 ! added to EAV which was later substracted from H. Thus at
 ! this point, EAV is correct (it has ELSTO added), EVAL()
 ! need ELSTO and the correct EAV.
-      IF (NCF > 1) then 
+      IF (NCF > 1) then
          DO i = 1, NVEC
              EVAL(i) = EVAL(i) + ELSTO
          ENDDO
       END IF
- 
+
       CALL ENGOUT (EAV,EVAL,IiATJPO,iIASPAR,IVEC,NVEC,3)
       CALL WGHTD5 (iiatjpo, iiaspar)
- 
+
 !     ...Write ASF symmetries, eigenvalues, and eigenvectors to RCI92
 !     ...MIXing coefficients File; close the file; print a report
       WRITE (25) jblock, ncf, nvec, iiatjpo, iiaspar
@@ -233,7 +233,7 @@
          IF (.not.LSE) THEN
             PRINT *, 'Entering QED ...'
             CALL ALLOC (ETOT,NVEC,'ETOT', 'MATRIX')
- 
+
             WRITE (24,*)
             WRITE (24,*) ' Self Energy Corrections: '
             WRITE (24,*)
@@ -259,7 +259,7 @@
            WRITE (24,302) j,LABJ(IiATJPO),LABP(IP),EAU,ECM,EEV
 !
             ENDDO
- 
+
             WRITE (24,*)
             WRITE (24,*) 'Self-energy corrections estimated'           &
                     //' --- these do not influence the data'
@@ -268,22 +268,22 @@
 ! zou       CALL ENGOUT (EAV+elsto,ETOT,IiATJPO,iIASPAR,IVEC,NVEC,MODE)
             CALL dalloc (ETOT, 'ETOT', 'MATRIX')
          ENDIF
- 
+
 !        ...Locals
          CALL dalloc (ivec, 'IVEC', 'MATRIX')
 !        ...Allocated in maneig
          CALL dalloc (eval, 'EVAL', 'MATRIX')
          CALL dalloc (evec, 'EVEC', 'MATRIX')
- 
+
    80    CONTINUE
- 
+
 !        ...Locals
          CALL dalloc (IQA, 'IQA', 'MATRIX')
          CALL dalloc (JQSA, 'JQSA', 'MATRIX')
          CALL dalloc (JCUPA, 'JCUPA', 'MATRIX')
          CALL dalloc (SLF_EN, 'SLF_EN', 'MATRIX')
          CALL dalloc (UCF, 'UCF', 'MATRIX')
- 
+
   100 CONTINUE
 !
 !   Close the restart files; nothing will be added to them now
@@ -295,7 +295,7 @@
       CALL dalloc (ncmaxblk, 'NCMAXBLK', 'MATRIX')
       CALL dalloc (iccutblk, 'ICUTTBLK', 'MATRIX')
       CALL dalloc (iccmin, 'ICCMIN', 'MATRIX') ! allocated in items as pnccmin
- 
+
       CALL dalloc (VALTEIRK, 'VALTEIRK', 'MATRIX') ! allocated in genintrk
       CALL dalloc (INDTEIRK, 'INDTEIRK', 'MATRIX') ! allocated in genintrk
 !
@@ -364,10 +364,10 @@
             CALL DALLOC (VALVPI, 'VALVPI', 'MATRIX')
          ENDIF
       ENDIF
- 
+
       CALL dalloc (PF, 'PF', 'MATRIX') ! lodrwf or lodres
       CALL dalloc (QF, 'QF', 'MATRIX') ! lodrwf or lodres
- 
+
       RETURN
- 
+
       END

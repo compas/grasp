@@ -12,10 +12,10 @@
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE memory_man
-      USE default_C 
+      USE default_C
       USE BLK_C,            only:  NBLOCK,NCFBLK
       USE orb_C
       USE STAT_C
@@ -24,10 +24,10 @@
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
       USE Interact_MR_I
-      USE set_CSF_list_I 
+      USE set_CSF_list_I
       USE lodcsl_MR_I
       USE lodcsl_CSF_I
-      USE factt_I 
+      USE factt_I
       IMPLICIT NONE
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -50,15 +50,15 @@
       print *, 'Dirac-Coulomb-Breit (2) Hamiltonian?'
       READ(*,*) ICOLBREI
 !
-      NBLOCK = 0 
-      CALL FACTT 
+      NBLOCK = 0
+      CALL FACTT
       CALL SET_CSF_list (NCORE,NPEEL)
       WRITE (6, *) " Block    MR NCSF   Before NCSF   After NCSF"
       DO
          I_Count = 0
          CALL LODCSL_MR (NCORE,NPEEL,NCFD,NEXT_BLOCK)
          CSF_Number = 0
-         DO 
+         DO
             CSF_Number = CSF_Number + 1
             CALL LODCSL_CSF (NCFD,CSF_Number,NCORE,NPEEL,NEXT_CSF)
             IF(.NOT. NEXT_CSF) EXIT
@@ -72,14 +72,14 @@
          deallocate (C_shell)
          deallocate (C_quant)
          deallocate (C_coupl)
-         deallocate (iqa) 
-         deallocate (jqsa) 
+         deallocate (iqa)
+         deallocate (jqsa)
          deallocate (jcupa)
 !
          IF(.NOT. NEXT_BLOCK) EXIT
-         WRITE(22,'(A2)') ' *' 
+         WRITE(22,'(A2)') ' *'
       END DO
-      CLOSE(24) 
+      CLOSE(24)
       call stoptime (ncount1, 'RCSFinteract')
-      STOP  
+      STOP
       END PROGRAM RCSFinteract

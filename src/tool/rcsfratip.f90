@@ -1,9 +1,9 @@
 program rcsfratip
 
-! Program to convert output format from grasp format to the 
+! Program to convert output format from grasp format to the
 ! format used by RATIP
 
-! Written by Jorgen Ekman and Per Jonsson, December 2013 
+! Written by Jorgen Ekman and Per Jonsson, December 2013
 
 character(len=1000):: line1,line2,line3,line4,blankline
 integer :: i,m,ncorr
@@ -38,7 +38,7 @@ do
   do
     do i = m,m-5,-1
       if (line3(i:i).eq.' ') then
-        ncorr = 9*nint(real(i)/real(9))         ! Correct position of blank 
+        ncorr = 9*nint(real(i)/real(9))         ! Correct position of blank
         line4(ncorr+1:ncorr+m-i) = line3(i+1:m) ! Move to correct position
         exit
        end if

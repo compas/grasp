@@ -11,12 +11,12 @@
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  DOUBLE
       implicit none
 !-----------------------------------------------
-!   R o u t i n e s 
+!   R o u t i n e s
 !-----------------------------------------------
       public  :: asf2ls
 !               Expands an atomic state function, which is represented
@@ -25,7 +25,7 @@
 !               Returns the value of the LS-jj transformation matrix
 !               for a given set of quantum numbers.
       private :: coefLSjj2
-!               Returns the value of the LS-jj transformation matrix 
+!               Returns the value of the LS-jj transformation matrix
 !               (l^2 LSJ| j_1 j_2 J).
       private :: coefLSjjs
 !               Returns the value of the LS-jj transformation matrix
@@ -34,15 +34,15 @@
 !               Dellocates the storage of asf_set_LS.
       public  :: getchLS
 !               A spectroscopic notation of shell in LS coupling is return.
-      public  :: getxj 
+      public  :: getxj
 !
       public  :: gettermLS
-!               This procedure return all allowed subshell terms 
-!               (l, w, Q, L, S) for given l^N which must be 0, 1, 2 or 3. 
+!               This procedure return all allowed subshell terms
+!               (l, w, Q, L, S) for given l^N which must be 0, 1, 2 or 3.
       public  :: inscreen
 !               The input from the screen.
       public  :: inscreenlev
-!               Attempts to interpret the serial level numbers from a 
+!               Attempts to interpret the serial level numbers from a
 !               string.
       public  :: jj2lsj
 !               Controls the transformation of atomic states from a jj-
@@ -61,16 +61,16 @@
 !               with data generated using the one from asf_set%csf_set
 !               .....................................................
 !               This subroutine contains the following internal routines:
-!                * subroutine setLS_action 
-!                  The subroutine defines the "action" of subroutine 
+!                * subroutine setLS_action
+!                  The subroutine defines the "action" of subroutine
 !                  setLS_job_count: whether it counts
 !                  the number of csfs_LS (asf_set_LS%csf_set_LS%novcsf)
 !                  or fills the arrays of wave functions in LS coupling
 !                  with asf_set_LS%csf_set_LS%csf(...) with
 !                  the corresponding quantum nubers.
-!                * subroutine setLS_add_quantum_numbers 
-!                  The subroutine adds quantum numbers stored 
-!                  in temprorary arrays Li, Si, L_i, S_i, w, Q to 
+!                * subroutine setLS_add_quantum_numbers
+!                  The subroutine adds quantum numbers stored
+!                  in temprorary arrays Li, Si, L_i, S_i, w, Q to
 !                  the corresponding arrays of asf_set_LS%csf_set_LS%csf().
 !                  private :: setLS_job_count
 !                * recursive subroutine setLS_job_count
@@ -82,17 +82,17 @@
 !                  number of csfs_LS and corresponding quantum numbers.
 !               .....................................................
       public  :: traLSjj
-!               Return the value of the transformation matrix 
-!               from jj- to LS-coupling scheme in the case of any 
+!               Return the value of the transformation matrix
+!               from jj- to LS-coupling scheme in the case of any
 !               number of open shells.
       public  :: traLSjjmp
-!               Return the value of main part of the transformation 
-!               matrix from jj- to LS-coupling scheme in the 
+!               Return the value of main part of the transformation
+!               matrix from jj- to LS-coupling scheme in the
 !               case of any number of open shells.
       private :: uniquelsj
 !               Subroutine defines a unique labels for energy levels
 !-----------------------------------------------
-!   D e f i n i t i o n   o f   A S F 
+!   D e f i n i t i o n   o f   A S F
 !   i n   L S -   C o u p l i n g
 !-----------------------------------------------
       type, public :: nl
@@ -181,7 +181,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
       USE EIGV_C,          ONLY: EVEC
@@ -203,23 +203,23 @@ CONTAINS
 !-----------------------------------------------
       integer, intent(in) :: iw1, levmax,IBLKNUM
       integer, intent(in) :: NCFMIN, NCFMAX
-      integer, dimension(:), intent(in) :: ithresh 
+      integer, dimension(:), intent(in) :: ithresh
       integer, dimension(Blocks_number,Vectors_number), intent(in) :: levels
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer      :: jj_number, lev, level, LS_number
       integer      :: LOC, IMINCOMP
-      real(DOUBLE) :: wa_transformation 
-      real(DOUBLE), dimension(Vectors_number) :: wa 
+      real(DOUBLE) :: wa_transformation
+      real(DOUBLE), dimension(Vectors_number) :: wa
       real(DOUBLE), dimension(Vectors_number) :: wb
 !-----------------------------------------------
       wb = zero
-      do LS_number = 1, asf_set_LS%csf_set_LS%nocsf             
+      do LS_number = 1, asf_set_LS%csf_set_LS%nocsf
          if ((asf_set_LS%csf_set_LS%csf(LS_number)%parity == "+" &
             .and.  ISPAR(iw1) == 1)  .or.                        &
             (asf_set_LS%csf_set_LS%csf(LS_number)%parity  == "-" &
-            .and.  ISPAR(iw1) == -1)) then               
+            .and.  ISPAR(iw1) == -1)) then
             wa = zero
             do jj_number = NCFMIN, NCFMAX
                if(ithresh(jj_number) == 1 .and.                  &
@@ -243,8 +243,8 @@ CONTAINS
             end do
             if(IMINCOMPOFF == 1 ) THEN
                if(IMINCOMP == 1) GO TO 1
-            end if                                          
-         end if                                          
+            end if
+         end if
       end do
     1 continue
       return
@@ -270,7 +270,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
       USE CONS_C,          ONLY: ZERO, ONE
@@ -353,7 +353,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
       USE CONS_C,          ONLY: ZERO, ONE
@@ -414,7 +414,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
       USE jj2lsj_C
@@ -439,7 +439,7 @@ CONTAINS
          select case(N)
          case(3)
 !     Use data from the array LS_jj_p_3
-            do  i = 1,LS_jj_number_p3 
+            do  i = 1,LS_jj_number_p3
                if(w  ==LS_jj_p_3(i)%w  .and. Q  ==LS_jj_p_3(i)%Q  .and. &
                   L  ==LS_jj_p_3(i)%L  .and. S  ==LS_jj_p_3(i)%S  .and. &
                   J  ==LS_jj_p_3(i)%J  .and. Nm ==LS_jj_p_3(i)%Nm .and. &
@@ -452,7 +452,7 @@ CONTAINS
             end do
          case(4)
 !     Use data from the array LS_jj_p_4
-            do  i = 1,LS_jj_number_p4 
+            do  i = 1,LS_jj_number_p4
                if(w  ==LS_jj_p_4(i)%w  .and. Q  ==LS_jj_p_4(i)%Q  .and. &
                   L  ==LS_jj_p_4(i)%L  .and. S  ==LS_jj_p_4(i)%S  .and. &
                   J  ==LS_jj_p_4(i)%J  .and. Nm ==LS_jj_p_4(i)%Nm .and. &
@@ -465,7 +465,7 @@ CONTAINS
             end do
          case(5)
 !     Use data from the array LS_jj_p_5
-            do  i = 1,LS_jj_number_p5 
+            do  i = 1,LS_jj_number_p5
                if(w  ==LS_jj_p_5(i)%w  .and. Q  ==LS_jj_p_5(i)%Q  .and. &
                   L  ==LS_jj_p_5(i)%L  .and. S  ==LS_jj_p_5(i)%S  .and. &
                   J  ==LS_jj_p_5(i)%J  .and. Nm ==LS_jj_p_5(i)%Nm .and. &
@@ -478,7 +478,7 @@ CONTAINS
             end do
          case(6)
 !     Use data from the array LS_jj_p_6
-            do  i = 1,LS_jj_number_p6 
+            do  i = 1,LS_jj_number_p6
                if(w  ==LS_jj_p_6(i)%w  .and. Q  ==LS_jj_p_6(i)%Q  .and. &
                   L  ==LS_jj_p_6(i)%L  .and. S  ==LS_jj_p_6(i)%S  .and. &
                   J  ==LS_jj_p_6(i)%J  .and. Nm ==LS_jj_p_6(i)%Nm .and. &
@@ -496,7 +496,7 @@ CONTAINS
          select case(N)
          case(3)
 !     Use data from the array LS_jj_d_3
-            do  i = 1,LS_jj_number_d3 
+            do  i = 1,LS_jj_number_d3
                if(w  ==LS_jj_d_3(i)%w  .and. Q  ==LS_jj_d_3(i)%Q  .and. &
                   L  ==LS_jj_d_3(i)%L  .and. S  ==LS_jj_d_3(i)%S  .and. &
                   J  ==LS_jj_d_3(i)%J  .and. Nm ==LS_jj_d_3(i)%Nm .and. &
@@ -509,7 +509,7 @@ CONTAINS
             end do
          case(4)
 !     Use data from the array LS_jj_d_4
-            do  i = 1,LS_jj_number_d4 
+            do  i = 1,LS_jj_number_d4
                if(w  ==LS_jj_d_4(i)%w  .and. Q  ==LS_jj_d_4(i)%Q  .and. &
                   L  ==LS_jj_d_4(i)%L  .and. S  ==LS_jj_d_4(i)%S  .and. &
                   J  ==LS_jj_d_4(i)%J  .and. Nm ==LS_jj_d_4(i)%Nm .and. &
@@ -522,7 +522,7 @@ CONTAINS
             end do
          case(5)
 !     Use data from the array LS_jj_d_5
-            do  i = 1,LS_jj_number_d5 
+            do  i = 1,LS_jj_number_d5
                if(w  ==LS_jj_d_5(i)%w  .and. Q  ==LS_jj_d_5(i)%Q  .and. &
                   L  ==LS_jj_d_5(i)%L  .and. S  ==LS_jj_d_5(i)%S  .and. &
                   J  ==LS_jj_d_5(i)%J  .and. Nm ==LS_jj_d_5(i)%Nm .and. &
@@ -535,7 +535,7 @@ CONTAINS
             end do
          case(6)
 !     Use data from the array LS_jj_d_6
-            do  i = 1,LS_jj_number_d6 
+            do  i = 1,LS_jj_number_d6
                if(w  ==LS_jj_d_6(i)%w  .and. Q  ==LS_jj_d_6(i)%Q  .and. &
                   L  ==LS_jj_d_6(i)%L  .and. S  ==LS_jj_d_6(i)%S  .and. &
                   J  ==LS_jj_d_6(i)%J  .and. Nm ==LS_jj_d_6(i)%Nm .and. &
@@ -548,7 +548,7 @@ CONTAINS
             end do
          case(7)
 !     Use data from the array LS_jj_d_7
-            do  i = 1,LS_jj_number_d7 
+            do  i = 1,LS_jj_number_d7
                if(w  ==LS_jj_d_7(i)%w  .and. Q  ==LS_jj_d_7(i)%Q  .and. &
                   L  ==LS_jj_d_7(i)%L  .and. S  ==LS_jj_d_7(i)%S  .and. &
                   J  ==LS_jj_d_7(i)%J  .and. Nm ==LS_jj_d_7(i)%Nm .and. &
@@ -561,7 +561,7 @@ CONTAINS
             end do
          case(8)
 !     Use data from the array LS_jj_d_8
-            do  i = 1,LS_jj_number_d8 
+            do  i = 1,LS_jj_number_d8
                if(w  ==LS_jj_d_8(i)%w  .and. Q  ==LS_jj_d_8(i)%Q  .and. &
                   L  ==LS_jj_d_8(i)%L  .and. S  ==LS_jj_d_8(i)%S  .and. &
                   J  ==LS_jj_d_8(i)%J  .and. Nm ==LS_jj_d_8(i)%Nm .and. &
@@ -574,7 +574,7 @@ CONTAINS
             end do
          case(9)
 !     Use data from the array LS_jj_d_9
-            do  i = 1,LS_jj_number_d9 
+            do  i = 1,LS_jj_number_d9
                if(w  ==LS_jj_d_9(i)%w  .and. Q  ==LS_jj_d_9(i)%Q  .and. &
                   L  ==LS_jj_d_9(i)%L  .and. S  ==LS_jj_d_9(i)%S  .and. &
                   J  ==LS_jj_d_9(i)%J  .and. Nm ==LS_jj_d_9(i)%Nm .and. &
@@ -587,7 +587,7 @@ CONTAINS
             end do
          case(10)
 !     Use data from the array LS_jj_d_10
-            do  i = 1,LS_jj_number_d10 
+            do  i = 1,LS_jj_number_d10
                if(w ==LS_jj_d_10(i)%w  .and. Q ==LS_jj_d_10(i)%Q  .and. &
                   L ==LS_jj_d_10(i)%L  .and. S ==LS_jj_d_10(i)%S  .and. &
                   J ==LS_jj_d_10(i)%J  .and. Nm==LS_jj_d_10(i)%Nm .and. &
@@ -605,7 +605,7 @@ CONTAINS
          select case(N)
          case(3)
 !     Use data from the array LS_jj_f_3
-            do  i = 1,LS_jj_number_f3 
+            do  i = 1,LS_jj_number_f3
                if(w  ==LS_jj_f_3(i)%w  .and. Q  ==LS_jj_f_3(i)%Q  .and. &
                   L  ==LS_jj_f_3(i)%L  .and. S  ==LS_jj_f_3(i)%S  .and. &
                   J  ==LS_jj_f_3(i)%J  .and. Nm ==LS_jj_f_3(i)%Nm .and. &
@@ -618,7 +618,7 @@ CONTAINS
             end do
          case(4)
 !     Use data from the array LS_jj_f_4
-            do  i = 1,LS_jj_number_f4 
+            do  i = 1,LS_jj_number_f4
                if(w  ==LS_jj_f_4(i)%w  .and. Q  ==LS_jj_f_4(i)%Q  .and. &
                   L  ==LS_jj_f_4(i)%L  .and. S  ==LS_jj_f_4(i)%S  .and. &
                   J  ==LS_jj_f_4(i)%J  .and. Nm ==LS_jj_f_4(i)%Nm .and. &
@@ -631,7 +631,7 @@ CONTAINS
             end do
          case(5)
 !     Use data from the array LS_jj_f_5
-            do  i = 1,LS_jj_number_f5 
+            do  i = 1,LS_jj_number_f5
                if(w  ==LS_jj_f_5(i)%w  .and. Q  ==LS_jj_f_5(i)%Q  .and. &
                   L  ==LS_jj_f_5(i)%L  .and. S  ==LS_jj_f_5(i)%S  .and. &
                   J  ==LS_jj_f_5(i)%J  .and. Nm ==LS_jj_f_5(i)%Nm .and. &
@@ -644,7 +644,7 @@ CONTAINS
             end do
          case(6)
 !     Use data from the array LS_jj_f_6
-            do  i = 1,LS_jj_number_f6 
+            do  i = 1,LS_jj_number_f6
                if(w  ==LS_jj_f_6(i)%w  .and. Q  ==LS_jj_f_6(i)%Q  .and. &
                   L  ==LS_jj_f_6(i)%L  .and. S  ==LS_jj_f_6(i)%S  .and. &
                   J  ==LS_jj_f_6(i)%J  .and. Nm ==LS_jj_f_6(i)%Nm .and. &
@@ -659,7 +659,7 @@ CONTAINS
 !     Use data from the array LS_jj_f_7
             do  i = 1, LS_jj_number_f7, 1
                if (w == LS_jj_f_7(i)%w) then
-                  if(Q == LS_jj_f_7(i)%Q) then 
+                  if(Q == LS_jj_f_7(i)%Q) then
                      if(L == LS_jj_f_7(i)%L) then
                         if(S == LS_jj_f_7(i)%S) then
                            if(J == LS_jj_f_7(i)%J) then
@@ -701,7 +701,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param,    ONLY: DOUBLE
       USE PRNT_C,             ONLY: NVEC
@@ -790,7 +790,7 @@ CONTAINS
 !
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE getxj 
+      SUBROUTINE getxj
 !                                                                      *
 !                                                                      *
 !     Calls: jcup, jqs, ichop.                                         *
@@ -800,17 +800,17 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
-      USE vast_kind_param, ONLY: DOUBLE 
+      USE vast_kind_param, ONLY: DOUBLE
       USE M_C,             ONLY: NCORE
-      USE ORB_C,           ONLY: NCF, NW 
+      USE ORB_C,           ONLY: NCF, NW
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      USE jqs_I 
-      USE ichop_I 
-      USE jcup_I 
+      USE jqs_I
+      USE ichop_I
+      USE jcup_I
       IMPLICIT NONE
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -819,67 +819,67 @@ CONTAINS
 !-----------------------------------------------
       Jcoup = 0
       DO JNCF = 1, NCF
-         JCNT = 1 
-         JCNTOP = 0 
+         JCNT = 1
+         JCNTOP = 0
          DO JNW = NCORE+1, NW
             IF(JNW == 1) THEN
-               IF(ICHOP(JNW,JNCF) /= 0) THEN 
+               IF(ICHOP(JNW,JNCF) /= 0) THEN
                   IF(NW == 1) THEN
                       Jcoup(JNW,JNCF) = 0
-                  ELSE 
+                  ELSE
                       IF(ICHOP(JNW+1,JNCF) /= 0) THEN
                          Jcoup(JNW,JNCF)   = 0
                          Jcoup(JNW+1,JNCF) = 0
                       ELSE
-                         Jcoup(JNW,JNCF)   = 0 
-                         Jcoup(JNW+1,JNCF) = JQS(3,JNW+1,JNCF) - 1 
-                         JCNTOP = 1 
+                         Jcoup(JNW,JNCF)   = 0
+                         Jcoup(JNW+1,JNCF) = JQS(3,JNW+1,JNCF) - 1
+                         JCNTOP = 1
                      END IF
                   END IF
-               ELSE 
-                  JCNTOP = 1 
+               ELSE
+                  JCNTOP = 1
                   IF(NW > 1) THEN
-                     IF (ICHOP(JNW+1,JNCF) == 0) THEN 
+                     IF (ICHOP(JNW+1,JNCF) == 0) THEN
 !GG 2015_06_21 Gediminas Gaigalas
 !GG                        Jcoup(JNW,JNCF)   = JCUP(JCNT,JNCF) - 1
                         Jcoup(JNW,JNCF)   = JQS(3,JNW,JNCF) - 1
                         Jcoup(JNW+1,JNCF) = JCUP(JCNT,JNCF) - 1
-                        JCNT = JCNT + 1 
-                     ELSE 
+                        JCNT = JCNT + 1
+                     ELSE
                         Jcoup(JNW,JNCF)   = JQS(3,JNW,JNCF) - 1
-                        Jcoup(JNW+1,JNCF) = JQS(3,JNW,JNCF) - 1 
+                        Jcoup(JNW+1,JNCF) = JQS(3,JNW,JNCF) - 1
                      ENDIF
                   ELSE
                      Jcoup(JNW,JNCF) = JCUP(JCNT,JNCF) - 1
-                  ENDIF 
-               ENDIF 
+                  ENDIF
+               ENDIF
             ELSE IF(JNW == 2 .AND. NCORE+1 .EQ. 2) THEN
-               IF(ICHOP(JNW,JNCF) /= 0) THEN 
+               IF(ICHOP(JNW,JNCF) /= 0) THEN
                   Jcoup(JNW,JNCF) = 0
-               ELSE 
-                  JCNTOP = 1 
+               ELSE
+                  JCNTOP = 1
                   Jcoup(JNW,JNCF)   = JQS(3,JNW,JNCF) - 1
-               ENDIF 
+               ENDIF
             ELSE IF(JNW > 2) THEN
-               IF (ICHOP(JNW,JNCF) /= 0) THEN 
+               IF (ICHOP(JNW,JNCF) /= 0) THEN
                   IF(JNW == NCORE+1) THEN
                      Jcoup(JNW,JNCF) = JQS(3,JNW,JNCF) - 1
                   ELSE
                      Jcoup(JNW,JNCF) = Jcoup(JNW-1,JNCF)
                   END IF
-               ELSE 
-                  IF (JCNTOP /= 0) THEN 
-                     Jcoup(JNW,JNCF) = JCUP(JCNT,JNCF)  - 1 
-                     JCNT = JCNT + 1 
-                  ELSE 
+               ELSE
+                  IF (JCNTOP /= 0) THEN
+                     Jcoup(JNW,JNCF) = JCUP(JCNT,JNCF)  - 1
+                     JCNT = JCNT + 1
+                  ELSE
                      Jcoup(JNW,JNCF) = JQS(3,JNW,JNCF) - 1
-                  ENDIF 
-                  JCNTOP = JCNTOP + 1 
-               END IF 
-            END IF 
-         END DO 
-      END DO 
-      RETURN  
+                  ENDIF
+                  JCNTOP = JCNTOP + 1
+               END IF
+            END IF
+         END DO
+      END DO
+      RETURN
       END SUBROUTINE  getxj
 !
 !***********************************************************************
@@ -896,7 +896,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE jj2lsj_C
       IMPLICIT NONE
@@ -919,7 +919,7 @@ CONTAINS
                if (abs(M_Q) <= term_LS_s(i)%Q) then
                   j = j + 1
                   LS(j)%l_shell  = term_LS_s(i)%l_shell
-                  LS(j)%w        = term_LS_s(i)%w 
+                  LS(j)%w        = term_LS_s(i)%w
                   LS(j)%Q        = term_LS_s(i)%Q
                   LS(j)%LL       = term_LS_s(i)%LL
                   LS(j)%S        = term_LS_s(i)%S
@@ -932,7 +932,7 @@ CONTAINS
                if (abs(M_Q) <= term_LS_p(i)%Q) then
                   j = j + 1
                   LS(j)%l_shell  = term_LS_p(i)%l_shell
-                  LS(j)%w        = term_LS_p(i)%w 
+                  LS(j)%w        = term_LS_p(i)%w
                   LS(j)%Q        = term_LS_p(i)%Q
                   LS(j)%LL       = term_LS_p(i)%LL
                   LS(j)%S        = term_LS_p(i)%S
@@ -945,7 +945,7 @@ CONTAINS
                if (abs(M_Q) <= term_LS_d(i)%Q) then
                   j = j + 1
                   LS(j)%l_shell  = term_LS_d(i)%l_shell
-                  LS(j)%w        = term_LS_d(i)%w 
+                  LS(j)%w        = term_LS_d(i)%w
                   LS(j)%Q        = term_LS_d(i)%Q
                   LS(j)%LL       = term_LS_d(i)%LL
                   LS(j)%S        = term_LS_d(i)%S
@@ -958,7 +958,7 @@ CONTAINS
                if (abs(M_Q) <= term_LS_f(i)%Q) then
                   j = j + 1
                   LS(j)%l_shell  = term_LS_f(i)%l_shell
-                  LS(j)%w        = term_LS_f(i)%w 
+                  LS(j)%w        = term_LS_f(i)%w
                   LS(j)%Q        = term_LS_f(i)%Q
                   LS(j)%LL       = term_LS_f(i)%LL
                   LS(j)%S        = term_LS_f(i)%S
@@ -970,7 +970,7 @@ CONTAINS
          case (1)
             i = 1;       j = 1
             LS(j)%l_shell  = term_LS_g1(i)%l_shell
-            LS(j)%w        = term_LS_g1(i)%w 
+            LS(j)%w        = term_LS_g1(i)%w
             LS(j)%Q        = term_LS_g1(i)%Q
             LS(j)%LL       = term_LS_g1(i)%LL
             LS(j)%S        = term_LS_g1(i)%S
@@ -978,7 +978,7 @@ CONTAINS
             do i = 1,9
                j = j + 1
                LS(j)%l_shell  = term_LS_g2(i)%l_shell
-               LS(j)%w        = term_LS_g2(i)%w 
+               LS(j)%w        = term_LS_g2(i)%w
                LS(j)%Q        = term_LS_g2(i)%Q
                LS(j)%LL       = term_LS_g2(i)%LL
                LS(j)%S        = term_LS_g2(i)%S
@@ -991,7 +991,7 @@ CONTAINS
          case (1)
             i = 1;       j = 1
             LS(j)%l_shell  = term_LS_h1(i)%l_shell
-            LS(j)%w        = term_LS_h1(i)%w 
+            LS(j)%w        = term_LS_h1(i)%w
             LS(j)%Q        = term_LS_h1(i)%Q
             LS(j)%LL       = term_LS_h1(i)%LL
             LS(j)%S        = term_LS_h1(i)%S
@@ -999,7 +999,7 @@ CONTAINS
             do i = 1,11
                j = j + 1
                LS(j)%l_shell  = term_LS_h2(i)%l_shell
-               LS(j)%w        = term_LS_h2(i)%w 
+               LS(j)%w        = term_LS_h2(i)%w
                LS(j)%Q        = term_LS_h2(i)%Q
                LS(j)%LL       = term_LS_h2(i)%LL
                LS(j)%S        = term_LS_h2(i)%S
@@ -1012,7 +1012,7 @@ CONTAINS
          case (1)
             i = 1;       j = 1
             LS(j)%l_shell  = term_LS_i1(i)%l_shell
-            LS(j)%w        = term_LS_i1(i)%w 
+            LS(j)%w        = term_LS_i1(i)%w
             LS(j)%Q        = term_LS_i1(i)%Q
             LS(j)%LL       = term_LS_i1(i)%LL
             LS(j)%S        = term_LS_i1(i)%S
@@ -1020,7 +1020,7 @@ CONTAINS
             do i = 1,13
                j = j + 1
                LS(j)%l_shell  = term_LS_i2(i)%l_shell
-               LS(j)%w        = term_LS_i2(i)%w 
+               LS(j)%w        = term_LS_i2(i)%w
                LS(j)%Q        = term_LS_i2(i)%Q
                LS(j)%LL       = term_LS_i2(i)%LL
                LS(j)%S        = term_LS_i2(i)%S
@@ -1033,7 +1033,7 @@ CONTAINS
          case (1)
             i = 1;       j = 1
             LS(j)%l_shell  = term_LS_k1(i)%l_shell
-            LS(j)%w        = term_LS_k1(i)%w 
+            LS(j)%w        = term_LS_k1(i)%w
             LS(j)%Q        = term_LS_k1(i)%Q
             LS(j)%LL       = term_LS_k1(i)%LL
             LS(j)%S        = term_LS_k1(i)%S
@@ -1041,7 +1041,7 @@ CONTAINS
             do i = 1,15
                j = j + 1
                LS(j)%l_shell  = term_LS_k2(i)%l_shell
-               LS(j)%w        = term_LS_k2(i)%w 
+               LS(j)%w        = term_LS_k2(i)%w
                LS(j)%Q        = term_LS_k2(i)%Q
                LS(j)%LL       = term_LS_k2(i)%LL
                LS(j)%S        = term_LS_k2(i)%S
@@ -1054,7 +1054,7 @@ CONTAINS
          case (1)
             i = 1;       j = 1
             LS(j)%l_shell  = term_LS_l1(i)%l_shell
-            LS(j)%w        = term_LS_l1(i)%w 
+            LS(j)%w        = term_LS_l1(i)%w
             LS(j)%Q        = term_LS_l1(i)%Q
             LS(j)%LL       = term_LS_l1(i)%LL
             LS(j)%S        = term_LS_l1(i)%S
@@ -1062,7 +1062,7 @@ CONTAINS
             do i = 1,17
                j = j + 1
                LS(j)%l_shell  = term_LS_l2(i)%l_shell
-               LS(j)%w        = term_LS_l2(i)%w 
+               LS(j)%w        = term_LS_l2(i)%w
                LS(j)%Q        = term_LS_l2(i)%Q
                LS(j)%LL       = term_LS_l2(i)%LL
                LS(j)%S        = term_LS_l2(i)%S
@@ -1075,7 +1075,7 @@ CONTAINS
          case (1)
             i = 1;       j = 1
             LS(j)%l_shell  = term_LS_m1(i)%l_shell
-            LS(j)%w        = term_LS_m1(i)%w 
+            LS(j)%w        = term_LS_m1(i)%w
             LS(j)%Q        = term_LS_m1(i)%Q
             LS(j)%LL       = term_LS_m1(i)%LL
             LS(j)%S        = term_LS_m1(i)%S
@@ -1083,7 +1083,7 @@ CONTAINS
             do i = 1,19
                j = j + 1
                LS(j)%l_shell  = term_LS_m2(i)%l_shell
-               LS(j)%w        = term_LS_m2(i)%w 
+               LS(j)%w        = term_LS_m2(i)%w
                LS(j)%Q        = term_LS_m2(i)%Q
                LS(j)%LL       = term_LS_m2(i)%LL
                LS(j)%S        = term_LS_m2(i)%S
@@ -1102,7 +1102,7 @@ CONTAINS
       SUBROUTINE inscreen(THRESH,levels,number_of_levels,ioutC,ioutj, &
                                                                 UNIQUE)
 !                                                                      *
-!     The input from the screen.                                       * 
+!     The input from the screen.                                       *
 !                                                                      *
 !     Calls: sercsla, getxj, getmixblock, inscreenlev, openfl.         *
 !     inscreenlev.                                                     *
@@ -1112,11 +1112,11 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
       USE ORB_C,           ONLY: NCF, NW
-      USE PRNT_C,          ONLY: NVEC   
+      USE PRNT_C,          ONLY: NVEC
       USE IOUNIT_C,        ONLY: ISTDI, ISTDE
       USE CONS_C,          ONLY: EPS, ZERO
       USE BLK_C,           ONLY: NEVINBLK, NBLOCK
@@ -1153,7 +1153,7 @@ CONTAINS
 !   Open, check, load data from, and close, the  .csl  file
       CALL SETCSLA(NAME,NCORE)
       allocate(Jcoup(1:NW,1:NCF))
-      CALL GETXJ 
+      CALL GETXJ
       WRITE (ISTDE,*)
       WRITE (ISTDE,*) 'Mixing coefficients from a CI calc.?'
       YES = GETYN ()
@@ -1224,12 +1224,12 @@ CONTAINS
             call inscreenlev(record,levels_tmp,number_of_levels_tmp,fail)
             if (fail) then
                WRITE (ISTDE,*) "Unable to interprete the serial level numbers; redo ..."
-               goto 2 
+               goto 2
             end if
             number_of_levels(IBLOCK) = number_of_levels_tmp
             if (NVEC < number_of_levels(IBLOCK)) then
                WRITE (ISTDE,*) "There are to much ASF:", number_of_levels(IBLOCK)
-               go to 2 
+               go to 2
             end if
             DO I = 1,number_of_levels_tmp
                levels(IBLOCK,I) = posi(IBLOCK) + levels_tmp(I)
@@ -1237,7 +1237,7 @@ CONTAINS
             WRITE (ISTDE,*) ""
             WRITE (ISTDE,*) "Do you need to include more levels?  (y/n)"
             YES = GETYN ()
-            IF (YES) go to 2 
+            IF (YES) go to 2
          END IF
     3    WRITE (ISTDE,*) 'Maximum % of omitted composition'
          READ *, MINCOMP
@@ -1247,7 +1247,7 @@ CONTAINS
             ioutC = 1
             ioutj = 1
          ELSE IF( MINCOMP > ZERO) THEN
-            IMINCOMPOFF = 1 
+            IMINCOMPOFF = 1
             WRITE (ISTDE,*) 'What is the value below which an eigenvector component'
             WRITE (ISTDE,*) 'is to be neglected in the determination of the LSJ expansion:'
             WRITE (ISTDE,'(A,F8.5)') ' should be smaller than:',MINCOMP*0.01
@@ -1266,14 +1266,14 @@ CONTAINS
                ioutC = 1
             ELSE
                ioutC = 0
-            END IF 
+            END IF
             WRITE (ISTDE,*) "Do you need the output file *.lsj.j?  (y/n)"
             YES = GETYN ()
             IF (YES) THEN
                ioutj = 1
             ELSE
                ioutj = 0
-            END IF 
+            END IF
          END IF
       ENDIF
 !
@@ -1320,10 +1320,10 @@ CONTAINS
             STOP
          ENDIF
       END IF
-!GG-2017 end 
+!GG-2017 end
       write(57,'(A53)') " Pos   J   Parity      Energy Total      Comp. of ASF"
 !
-!     Opening the files   *.lsj.j and 
+!     Opening the files   *.lsj.j and
 !
       IF(ioutj == 1) THEN
          util_csl_file = NAME(1:K-1)//'.lsj'//'.j'
@@ -1360,13 +1360,13 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
-      USE vast_kind_param, ONLY: DOUBLE 
+      USE vast_kind_param, ONLY: DOUBLE
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      USE idigit_I 
+      USE idigit_I
       IMPLICIT NONE
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -1441,7 +1441,7 @@ CONTAINS
 !                                                                      *
       SUBROUTINE jj2lsj
 !                                                                      *
-!     Controls the transformation of atomic states from a jj-          * 
+!     Controls the transformation of atomic states from a jj-          *
 !     to a LS-coupled CSF basis.                                       *
 !                                                                      *
 !     Calls: asf2LS, convrt_double, dallocASFLS, inscreen, ispar,      *
@@ -1453,7 +1453,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
       USE EIGV_C,          ONLY: EAV, EVAL, EVEC
@@ -1490,7 +1490,7 @@ CONTAINS
       integer, dimension(:), pointer       :: iw
 !GG      real(DOUBLE), dimension(1:100)  :: weights, weights2
       real(DOUBLE), dimension(:), pointer  :: weights, weights2
-      integer, dimension(:), pointer  :: ithresh 
+      integer, dimension(:), pointer  :: ithresh
 !GG      character(LEN=64), dimension(1:Vectors_number) :: string_CSF
       character(LEN=164), dimension(1:Vectors_number) :: string_CSF
 !-----------------------------------------------
@@ -1500,16 +1500,16 @@ CONTAINS
       do  IBLKNUM = 1, NBLOCK
          if(IBLKNUM == 1) THEN
             NCFMIN = 1
-            NCFMAX = NCFINBLK(IBLKNUM)     
+            NCFMAX = NCFINBLK(IBLKNUM)
          else
             NCFMIN = NCFMAX + 1
             NCFMAX = NCFMIN + NCFINBLK(IBLKNUM) - 1
          end if
-         if(number_of_levels(IBLKNUM) == 0) GO TO 1 
+         if(number_of_levels(IBLKNUM) == 0) GO TO 1
          ithresh = 0
          do  i = NCFMIN, NCFMAX
             sumthrsh = ZERO
-            do  lev = 1, number_of_levels(IBLKNUM) 
+            do  lev = 1, number_of_levels(IBLKNUM)
                 level = levels(IBLKNUM,lev)
                 LOC = (level-1)*NCF
                 sumthrsh = sumthrsh + dabs(EVEC(i+LOC))
@@ -1537,13 +1537,13 @@ CONTAINS
          allocate (weights(NCF_LS_jj_MAX))
          allocate (weights2(NCF_LS_jj_MAX))
          allocate (iw(NCF_LS_jj_MAX))
-         do  lev = 1, number_of_levels(IBLKNUM) 
+         do  lev = 1, number_of_levels(IBLKNUM)
             level = levels(IBLKNUM,lev)
-            weights = ZERO;    iw = 0;    wb = ZERO 
+            weights = ZERO;    iw = 0;    wb = ZERO
             do  i = NCFMIN, NCFMAX
                if(ithresh(i) == 1) then
                   LOC = (level-1)*NCF
-                  wa = EVEC(i+LOC) * EVEC(i+LOC) 
+                  wa = EVEC(i+LOC) * EVEC(i+LOC)
                   wb = wb + wa
                   do  j = 1,999
                      if (wa > weights(j)) then
@@ -1559,7 +1559,7 @@ CONTAINS
             if(lev == 1) then
                print *, " "
                WRITE(*,'(A,A)') " .  .  .  .  .  .  .  .  .  .  .  .  .  .  .",&
-               "  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  ." 
+               "  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  ."
                WRITE(*, '(A,2X,I4,16X,A,I3)')                            &
                " Under investigation is the block:",IBLKNUM,             &
                " The number of eigenvectors:", number_of_levels(IBLKNUM)
@@ -1568,7 +1568,7 @@ CONTAINS
                " The number of CSF (in LS-coupling):",asf_set_LS%csf_set_LS%nocsf
             else
                print *, " "
-               WRITE(*,'(A)') " .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  ." 
+               WRITE(*,'(A)') " .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  ."
                WRITE(*,'(A)') " The new level is under investigation."
             end if
 !
@@ -1584,7 +1584,7 @@ CONTAINS
             print *, " "
             if (level > 1   .and.   dabs(wb) > 1.0001) then
                print *, "level, wb = ",level,wb
-               stop "JJ2LSJ(): program stop A." 
+               stop "JJ2LSJ(): program stop A."
             end if
             nocsf_min = 5
             do j = 1,5
@@ -1621,7 +1621,7 @@ CONTAINS
             sum_nocsf_min = 0
             weights = ZERO;  weights2 = ZERO;  iw = 0;  wb = ZERO
             do  i = 1,asf_set_LS%csf_set_LS%nocsf
-               wa = asf_set_LS%asf(level)%eigenvector(i) 
+               wa = asf_set_LS%asf(level)%eigenvector(i)
                wb = wb + wa*wa
 !GG NIST
                if(i == 1) then
@@ -1700,14 +1700,14 @@ CONTAINS
 !
 !     output to *.lsj.lbl
             IF(Before_J == 0) THEN
-               Before_J = 1 
+               Before_J = 1
             ELSE IF(lev == 1 .and. Before_J == 1) THEN
                write(57,'(A1)') ' '
             END IF
             DO j = 1,nocsf_min
                CALL packlsCSF(asf_set_LS%csf_set_LS,iw(j),string_CSF_ONE)
                IF(J == 1) THEN
-                  write(57,'(1X,I2,1X,A4,5X,A1,8X,F16.9,5X,F7.3,A)')     &  
+                  write(57,'(1X,I2,1X,A4,5X,A1,8X,F16.9,5X,F7.3,A)')     &
                   asf_set_LS%asf(level)%level_No,string_CNUM(1:string_l),&
                   asf_set_LS%csf_set_LS%csf(iw(1))%parity,               &
                   asf_set_LS%asf(level)%energy,wb*100,"%"
@@ -1716,7 +1716,7 @@ CONTAINS
                string_length = Len_Trim(string_CSF_ONE)
                write(57,'(7X,F12.8,3X,F11.8,3X,A)') weights(j),weights2(j),string_CSF_ONE(1:string_length)
             END DO
-!     output  *.lsj.j and 
+!     output  *.lsj.j and
             IF(ioutj == 1) THEN
                IF(lev == 1) THEN
                   WRITE (58, '(//A8,I4,2X,A8,I4)' ) '  2*J = ',       &
@@ -1805,7 +1805,7 @@ CONTAINS
       allocate(occupation(csf_set_LS%nwshells))
       allocate(string_LS(csf_set_LS%nwshells))
       allocate(string_XLS(csf_set_LS%nwshells))
-      do j = csf_set_LS%nwcore+1, csf_set_LS%nwshells     
+      do j = csf_set_LS%nwcore+1, csf_set_LS%nwshells
          if (csf_set_LS%csf(csf_number)%occupation(j) > 0) then
             counter = counter +1;        occupation(counter) = j
             call getchLS(csf_number,j,LS,XLS)
@@ -1830,7 +1830,7 @@ CONTAINS
             COUPLE(I+counter-1)(1:3) = string_XLS(I)(1:3)
          END IF
          Q(I) = csf_set_LS%csf(csf_number)%occupation(occupation(I))
-         ELC(I)(1:3) = String_NL(I)(1:3) 
+         ELC(I)(1:3) = String_NL(I)(1:3)
       END DO
       CALL PACKLS(counter,ELC,Q,COUPLE,string_CSF_pack)
       string_CSF = string_CSF_pack
@@ -1854,7 +1854,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
       USE ORB_C,           ONLY: NW, NP, NAK
@@ -1911,8 +1911,8 @@ CONTAINS
          write(String,'(I2)')NP(occupation(I))
          String_NL(I)(1:2) = String(1:2)
          J = ((IABS(NAK(occupation(I)))*2)-1+    &
-             NAK(occupation(I))/IABS(NAK(occupation(I))))/2 
-         String_NL(I)(3:3) = L1(J) 
+             NAK(occupation(I))/IABS(NAK(occupation(I))))/2
+         String_NL(I)(3:3) = L1(J)
          IF(NAK(occupation(I)) <= 0) THEN
          String_NL(I)(4:4) = " "
          ELSE
@@ -1972,7 +1972,7 @@ CONTAINS
       allocate(occupation(csf_set_LS%nwshells))
       allocate(string_LS(csf_set_LS%nwshells))
       allocate(string_XLS(csf_set_LS%nwshells))
-      do j = csf_set_LS%nwcore+1, csf_set_LS%nwshells     
+      do j = csf_set_LS%nwcore+1, csf_set_LS%nwshells
          if (csf_set_LS%csf(csf_number)%occupation(j) > 0) then
             counter = counter +1;        occupation(counter) = j
             call getchLS(csf_number,j,LS,XLS)
@@ -2023,7 +2023,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
       IMPLICIT NONE
@@ -2036,7 +2036,7 @@ CONTAINS
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer                                  :: I, J 
+      integer                                  :: I, J
       CHARACTER (LEN=2)                        :: String
       CHARACTER (LEN=3), DIMENSION(:), POINTER :: String_NL
       CHARACTER (LEN=1), DIMENSION(0:20)       :: L1
@@ -2083,7 +2083,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
       USE DEF_C,           ONLY: NELEC
@@ -2098,8 +2098,8 @@ CONTAINS
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      integer, dimension(:), intent(in)  :: ithresh 
-      integer, intent(in)  :: NCFMIN, NCFMAX 
+      integer, dimension(:), intent(in)  :: ithresh
+      integer, intent(in)  :: NCFMIN, NCFMAX
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -2108,14 +2108,14 @@ CONTAINS
       type(lsj_list)                  :: nonequiv_csfs_jj
 !
       integer :: isubc, isubc2, icsf_jj, icsf_jj2, icsf_jj_real, icsf_LS
-      integer :: N, action_type 
+      integer :: N, action_type
       logical :: new_one, found_parent_minus, found_parent_plus
 !
       integer, dimension(:), pointer :: all_occupation
       integer, dimension(:), pointer :: Li, Si, L_i, S_i, w, Q
       integer                        :: J
 !-----------------------------------------------
-      asf_set_LS%csf_set_LS%number_of_electrons = NELEC 
+      asf_set_LS%csf_set_LS%number_of_electrons = NELEC
 !
 !     1. define  nl, parent
       allocate(shell_temp(NW));  allocate(nlLSval(NW));  allocate(nljjval(NW))
@@ -2133,7 +2133,7 @@ CONTAINS
             asf_set_LS%csf_set_LS%nwshells = asf_set_LS%csf_set_LS%nwshells + 1
             shell_temp(asf_set_LS%csf_set_LS%nwshells)%n = NP(isubc)
             shell_temp(asf_set_LS%csf_set_LS%nwshells)%l=                &
-            ((IABS(NAK(isubc))*2)-1+NAK(isubc)/IABS(NAK(isubc)))/2 
+            ((IABS(NAK(isubc))*2)-1+NAK(isubc)/IABS(NAK(isubc)))/2
             nlLSval(asf_set_LS%csf_set_LS%nwshells) = nljjval(isubc)
          end if
       end do
@@ -2151,7 +2151,7 @@ CONTAINS
       do isubc = 1, asf_set_LS%csf_set_LS%nwshells, 1
          found_parent_minus = .false.;  found_parent_plus = .false.
          do isubc2 = 1, NW, 1
-            if(nlLSval(isubc) == nljjval(isubc2)) then 
+            if(nlLSval(isubc) == nljjval(isubc2)) then
                if(NAK(isubc2) > 0) then
                   found_parent_minus = .true.
                   asf_set_LS%csf_set_LS%parent(isubc)%parent_minus = isubc2
@@ -2161,7 +2161,7 @@ CONTAINS
                end if
             end if
          end do
-         if(.not.found_parent_plus)  & 
+         if(.not.found_parent_plus)  &
             asf_set_LS%csf_set_LS%parent(isubc)%parent_plus = 0
          if(.not.found_parent_minus)  &
             asf_set_LS%csf_set_LS%parent(isubc)%parent_minus = 0
@@ -2170,7 +2170,7 @@ CONTAINS
 !     end find parent  --------------------
 !
 !     2. define the number of "core" shells
-!        (the LS shell is supposed to be "core" if: 
+!        (the LS shell is supposed to be "core" if:
 !        1. l=0 and corresponding jj subshell is "core"
 !        2. l<>0 l+ and l - "core" subshells            )
       asf_set_LS%csf_set_LS%nwcore=0
@@ -2181,20 +2181,20 @@ CONTAINS
             asf_set_LS%csf_set_LS%nwcore = asf_set_LS%csf_set_LS%nwcore+1
       end do
 !
-!     3. form the list of "nonequivalent" csfs_jj 
+!     3. form the list of "nonequivalent" csfs_jj
 !        (i.e. csfs_jj different in J,parity, or
 !         some l's occupation numbers Ni = N_(i+) + N_(i-))
       allocate(nonequiv_csfs_jj%items(NCF))
       nonequiv_csfs_jj%list_size = 0
       do icsf_jj = NCFMIN, NCFMAX
          new_one = .true.
-         if(ithresh(icsf_jj) == 1) then 
+         if(ithresh(icsf_jj) == 1) then
             do icsf_jj2 = NCFMIN , icsf_jj - 1
-               if(ithresh(icsf_jj2) == 1) then 
+               if(ithresh(icsf_jj2) == 1) then
                   if(setLS_equivalent_csfs(icsf_jj,icsf_jj2)) then
                      new_one = .false.
                      exit
-                  end if 
+                  end if
                end if
             end do
             if(new_one) then
@@ -2204,10 +2204,10 @@ CONTAINS
          end if
       end do
 !
-!     4. for each nonequivalent csf_jj find all the csfs_LS 
-!   
-!	  To avoid the dependency on the number of subshells 
-!         the recursive subroutine is used 
+!     4. for each nonequivalent csf_jj find all the csfs_LS
+!
+!	  To avoid the dependency on the number of subshells
+!         the recursive subroutine is used
       allocate(Li(asf_set_LS%csf_set_LS%nwshells))
       allocate(L_i(asf_set_LS%csf_set_LS%nwshells))
       allocate(Si(asf_set_LS%csf_set_LS%nwshells))
@@ -2231,7 +2231,7 @@ CONTAINS
             all_occupation(isubc) = 0
             do isubc2 = 1, NW, 1
                if(nlLSval(isubc) == nljjval(isubc2))       &
-               all_occupation(isubc)=all_occupation(isubc)+IQ(isubc2,icsf_jj_real) 
+               all_occupation(isubc)=all_occupation(isubc)+IQ(isubc2,icsf_jj_real)
             end do  !isubc2
 !
          end do  !isubc
@@ -2265,7 +2265,7 @@ CONTAINS
             all_occupation(isubc)=0
             do isubc2 = 1, NW, 1
                if(nlLSval(isubc) == nljjval(isubc2))            &
-               all_occupation(isubc)=all_occupation(isubc)+IQ(isubc2,icsf_jj_real) 
+               all_occupation(isubc)=all_occupation(isubc)+IQ(isubc2,icsf_jj_real)
             end do  !isubc2
          end do  !isubc
          action_type = 2
@@ -2328,7 +2328,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  DOUBLE
 !-----------------------------------------------
@@ -2342,16 +2342,16 @@ CONTAINS
       integer :: isubcx
 !-----------------------------------------------
       icsf_LS = icsf_LS + 1
-! 
+!
       if(icsf_LS  .gt.  asf_set_LS%csf_set_LS%nocsf) then
          stop 'setLS_add_quantum_numbers(): program stop A.'
       end if
 !
-      asf_set_LS%csf_set_LS%csf(icsf_LS)%totalJ = J               
+      asf_set_LS%csf_set_LS%csf(icsf_LS)%totalJ = J
 !
-      IF (ISPAR(icsf_jj_real) == 1) THEN 
-         asf_set_LS%csf_set_LS%csf(icsf_LS)%parity = "+" 
-      ELSE IF (ISPAR(icsf_jj_real) == -1) THEN               
+      IF (ISPAR(icsf_jj_real) == 1) THEN
+         asf_set_LS%csf_set_LS%csf(icsf_LS)%parity = "+"
+      ELSE IF (ISPAR(icsf_jj_real) == -1) THEN
          asf_set_LS%csf_set_LS%csf(icsf_LS)%parity = "-"
       END IF
 !
@@ -2360,13 +2360,13 @@ CONTAINS
                                              all_occupation(isubcx)
          asf_set_LS%csf_set_LS%csf(icsf_LS)%shellL(isubcx)  = Li(isubcx)
          asf_set_LS%csf_set_LS%csf(icsf_LS)%shellS(isubcx)  = Si(isubcx)
-         asf_set_LS%csf_set_LS%csf(icsf_LS)%shellLX(isubcx) = L_i(isubcx)  
+         asf_set_LS%csf_set_LS%csf(icsf_LS)%shellLX(isubcx) = L_i(isubcx)
          asf_set_LS%csf_set_LS%csf(icsf_LS)%shellSX(isubcx) = S_i(isubcx)
          asf_set_LS%csf_set_LS%csf(icsf_LS)%w(isubcx)       = w(isubcx)
          asf_set_LS%csf_set_LS%csf(icsf_LS)%seniority(isubcx) =         &
               2*asf_set_LS%csf_set_LS%shell(isubcx)%l + 1 - Q(isubcx)
       end do
-      END SUBROUTINE setLS_add_quantum_numbers 
+      END SUBROUTINE setLS_add_quantum_numbers
 !
 !***********************************************************************
 !                                                                      *
@@ -2382,7 +2382,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  DOUBLE
       USE jj2lsj_C
@@ -2421,7 +2421,7 @@ CONTAINS
                else
                   if(ittk(S_i(isubc),L_i(isubc),J).eq.1)          &
                      call setLS_action(action_type, rez) !rez=rez+1
-               end if 
+               end if
             else
                Li(isubc)  = 0;          L_i(isubc) = 0
                Si(isubc)  = 0;          S_i(isubc) = 0
@@ -2445,7 +2445,7 @@ CONTAINS
                   S_i(isubc) = LS_terms(iterm)%S
                   if(asf_set_LS%csf_set_LS%nwshells.gt.1) then
                      call setLS_job_count(isubc + 1, rez)
-                  else 
+                  else
                      if(ittk(S_i(isubc),L_i(isubc),J).eq.1)          &
                         call setLS_action(action_type, rez) !rez=rez+1
                   end if
@@ -2487,7 +2487,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
       USE ORB_C,           ONLY: NW
@@ -2511,16 +2511,16 @@ CONTAINS
       rez= .true.
       IF(ITJPO(ncsf1) /= ITJPO(ncsf2)) THEN
          rez = .false.
-      ELSE IF (ISPAR(ncsf1) /= ISPAR(ncsf2)) THEN 
+      ELSE IF (ISPAR(ncsf1) /= ISPAR(ncsf2)) THEN
          rez = .false.
       ELSE
          do isubc_LS = asf_set_LS%csf_set_LS%nwcore + 1,  &
                        asf_set_LS%csf_set_LS%nwshells, 1
             NLS1 = 0;   NLS2 = 0
             do isubc_jj = 1, NW, 1
-               if(nlLSval(isubc_LS) == nljjval(isubc_jj)) then 
+               if(nlLSval(isubc_LS) == nljjval(isubc_jj)) then
                    NLS1 = NLS1 + IQ(isubc_jj,ncsf1)
-                   NLS2 = NLS2 + IQ(isubc_jj,ncsf2) 
+                   NLS2 = NLS2 + IQ(isubc_jj,ncsf2)
                end if
             end do
             if(NLS1.ne.NLS2) then
@@ -2548,7 +2548,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
       USE ORB_C,           ONLY: NAK
@@ -2605,7 +2605,7 @@ CONTAINS
       l_shell=asf_set_LS%csf_set_LS%shell(shell_number)%l
       N_LS   =asf_set_LS%csf_set_LS%csf(LS_number)%occupation(shell_number)
       W_1    =asf_set_LS%csf_set_LS%csf(LS_number)%w(shell_number)
-      Q_1    =2*l_shell+1-                                              & 
+      Q_1    =2*l_shell+1-                                              &
               asf_set_LS%csf_set_LS%csf(LS_number)%seniority(shell_number)
 !
       L_1     = asf_set_LS%csf_set_LS%csf(LS_number)%shellL(shell_number)
@@ -2649,7 +2649,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
       USE ORB_C,           ONLY: NAK
@@ -2780,7 +2780,7 @@ CONTAINS
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
 !-----------------------------------------------

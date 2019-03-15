@@ -1,6 +1,6 @@
 program rseqtrans
 
-! Per Jönsson, Malmö University, June 2015   
+! Per Jönsson, Malmö University, June 2015
 
 implicit none
 logical :: ex
@@ -19,10 +19,10 @@ character(len=100) :: label
 write(*,*) 'RSEQTRANS'
 write(*,*) 'This program reads output from rtransition for several'
 write(*,*) 'ions and produces a Matlab/Octave file that plots'
-write(*,*) 'A, gf, or S as a function of Z'  
+write(*,*) 'A, gf, or S as a function of Z'
 write(*,*) 'Input files: transZ1, transZ2, .., transZn'
 write(*,*) 'Output file: seqtransplot.m'
-write(*,*) 
+write(*,*)
 
 !--- Define Z range --------------------------
 
@@ -45,13 +45,13 @@ elseif (mp.eq.'M2') then
 end if
 
 write(*,*) 'How many transitions do you want to plot?'
-read(*,*) nplot 
+read(*,*) nplot
 do i = 1,nplot
    write(*,*) 'Give number within symmetry,2*J and parity (+/-)'
    write(*,*) 'for upper and lower state'
    read(*,*) numplotu(i),j2u,pplotu(i),numplotl(i),j2l,pplotl(i)
 
-   if (mod(j2u,2).eq.0) then 
+   if (mod(j2u,2).eq.0) then
       if (j2u.le.18) then
          write(jplotu(i),'(a3,i1)') '   ',j2u/2
       else
@@ -63,8 +63,8 @@ do i = 1,nplot
       else
          write(jplotu(i),'(i2,a2)') j2u,'/2'
       end if
-   end if   
-   if (mod(j2l,2).eq.0) then 
+   end if
+   if (mod(j2l,2).eq.0) then
       if (j2l.le.18) then
          write(jplotl(i),'(a3,i1)') '   ',j2l/2
       else
@@ -76,7 +76,7 @@ do i = 1,nplot
       else
          write(jplotl(i),'(i2,a2)') j2l,'/2'
       end if
-   end if   
+   end if
 
 !   write(*,*) pplotu(i),jplotu(i),numplotu(i)
 !   write(*,*) pplotl(i),jplotl(i),numplotl(i)
@@ -150,25 +150,25 @@ do k = 1,nions
    do
       read(100+k,300,iostat=readerr) f1,posu,jvalu,paru,f2,posl, &
 !      read(100+k,300) f1,posu,jvalu,paru,f2,posl, &
-                     jvall,parl,elev,gauge,A,gf,S 
+                     jvall,parl,elev,gauge,A,gf,S
       if (readerr.ne.0) then
          exit
-      end if 
+      end if
       if ((mp.eq.'E1').or.(mp.eq.'E2')) then
-         read(100+k,301) gauge,A,gf,S            
+         read(100+k,301) gauge,A,gf,S
       end if
 !      write(*,300) f1,posu,jvalu,paru,f2,posl, &
-!                     jvall,parl,elev,gauge,A,gf,S 
-!      write(*,301) gauge,A,gf,S         
+!                     jvall,parl,elev,gauge,A,gf,S
+!      write(*,301) gauge,A,gf,S
 
       do j = 1,nplot
          if ((pplotu(j).eq.paru).and.(jplotu(j).eq.jvalu).and.(numplotu(j).eq.posu).and. &
-             (pplotl(j).eq.parl).and.(jplotl(j).eq.jvall).and.(numplotl(j).eq.posl)) then 
+             (pplotl(j).eq.parl).and.(jplotl(j).eq.jvall).and.(numplotl(j).eq.posl)) then
             if (nform.eq.1) then
                transplot(j) = A
             elseif (nform.eq.2) then
                transplot(j) = gf
-            else 
+            else
                transplot(j) = S
             end if
             nfound = nfound + 1
@@ -176,7 +176,7 @@ do k = 1,nions
       end do
    end do
 
-98 continue   
+98 continue
 
    if (nfound.ne.nplot) then
       write(*,*) 'Specified states not found in all lists'
@@ -210,20 +210,20 @@ do i = 1,nplot
          write(12,'(a)') 'AD = [z.^(-2) z.^(-1) z.^0 z.^1 z.^2 z.^3];'
          write(12,'(a,i2,a)') 'y = A(:,',i+1,');'
          write(12,'(a)') 'm = mean(y); s = std(y);'
-         write(12,'(a)') 'a = AD\(y-m)/s'         
+         write(12,'(a)') 'a = AD\(y-m)/s'
          write(12,'(a)') 'aiplsq = a(1)./zip.^2 + a(2)./zip + a(3) + a(4)*zip + a(5)*zip.^2 + a(6)*zip.^3;'
          write(12,'(a)') 'aiplsq = s*aiplsq + m;'
-         write(12,'(a)') "plot(zip,aiplsq,'r')" 
+         write(12,'(a)') "plot(zip,aiplsq,'r')"
          write(12,*)
       else
          write(12,'(a)') 'z = A(:,1);'
          write(12,'(a)') 'AD = [z.^0 z.^1 z.^2 z.^3];'
          write(12,'(a,i2,a)') 'y = A(:,',i+1,');'
          write(12,'(a)') 'm = mean(y); s = std(y);'
-         write(12,'(a)') 'a = AD\(y-m)/s'         
+         write(12,'(a)') 'a = AD\(y-m)/s'
          write(12,'(a)') 'aiplsq =  a(1) + a(2)*zip + a(3)*zip.^2 + a(4)*zip.^3;'
          write(12,'(a)') 'aiplsq = s*aiplsq + m;'
-         write(12,'(a)') "plot(zip,aiplsq,'r')" 
+         write(12,'(a)') "plot(zip,aiplsq,'r')"
          write(12,*)
       end if
    else
@@ -237,4 +237,4 @@ end do
 301 FORMAT(42X,A2,1P,3D13.5)
 
 end program rseqtrans
-   
+

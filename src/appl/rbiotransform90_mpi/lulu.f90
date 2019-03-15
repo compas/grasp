@@ -4,7 +4,7 @@
 !     L U L U
 !     ------------------------------------------------------------------
 !
-      SUBROUTINE LULU(A, L, U, NDIM) 
+      SUBROUTINE LULU(A, L, U, NDIM)
 !
 ! LU DECOMPOSITION OF MATRIX A
 !
@@ -38,55 +38,55 @@
 ! JEPPE OLSEN , OCTOBER 1988
 !
 !************************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:08:49   1/ 6/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:08:49   1/ 6/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  DOUBLE 
+      USE vast_kind_param, ONLY:  DOUBLE
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      USE inprod_I 
-      USE prsym_I 
+      USE inprod_I
+      USE prsym_I
       IMPLICIT NONE
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      INTEGER  :: NDIM 
-      REAL(DOUBLE), INTENT(IN) :: A(NDIM,NDIM) 
-      REAL(DOUBLE)  :: L(*) 
-      REAL(DOUBLE)  :: U(*) 
+      INTEGER  :: NDIM
+      REAL(DOUBLE), INTENT(IN) :: A(NDIM,NDIM)
+      REAL(DOUBLE)  :: L(*)
+      REAL(DOUBLE)  :: U(*)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      INTEGER :: R, J, I, NTEST 
-      REAL(DOUBLE) :: XFACI 
+      INTEGER :: R, J, I, NTEST
+      REAL(DOUBLE) :: XFACI
 !-----------------------------------------------
 !
-      DO R = 1, NDIM 
+      DO R = 1, NDIM
 !
-         DO J = R, NDIM 
-            U(J*(J-1)/2+R) = A(R,J) - INPROD(L(R*(R-1)/2+1),U(J*(J-1)/2+1),R-1) 
-         END DO 
+         DO J = R, NDIM
+            U(J*(J-1)/2+R) = A(R,J) - INPROD(L(R*(R-1)/2+1),U(J*(J-1)/2+1),R-1)
+         END DO
 !
-         XFACI = 1.0D0/U(R*(R+1)/2) 
-         L(R*(R+1)/2) = 1.0D0 
-         DO I = R + 1, NDIM 
+         XFACI = 1.0D0/U(R*(R+1)/2)
+         L(R*(R+1)/2) = 1.0D0
+         DO I = R + 1, NDIM
             L(I*(I-1)/2+R) = (A(I,R)-INPROD(L(I*(I-1)/2+1),U(R*(R-1)/2+1),R-1))&
-               *XFACI 
-         END DO 
+               *XFACI
+         END DO
 !
-      END DO 
+      END DO
 !
-      NTEST = 0 
-      IF (NTEST /= 0) THEN 
-         WRITE (6, *) ' L MATRIX ' 
-         CALL PRSYM (L, NDIM) 
-         WRITE (6, *) ' U MATRIX ( TRANSPOSED ) ' 
-         CALL PRSYM (U, NDIM) 
-      ENDIF 
+      NTEST = 0
+      IF (NTEST /= 0) THEN
+         WRITE (6, *) ' L MATRIX '
+         CALL PRSYM (L, NDIM)
+         WRITE (6, *) ' U MATRIX ( TRANSPOSED ) '
+         CALL PRSYM (U, NDIM)
+      ENDIF
 !
-      RETURN  
-      END SUBROUTINE LULU 
+      RETURN
+      END SUBROUTINE LULU

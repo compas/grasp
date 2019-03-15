@@ -47,7 +47,7 @@
         IF(J1 == 3 .AND. J2 == 3) THEN
            COEF=DSQRT(DBLE(60))
         ELSEIF(J1 == 5 .AND. J2 == 4) THEN
-           COEF=DSQRT(DBLE(30))    
+           COEF=DSQRT(DBLE(30))
         ELSEIF(J1 == 4 .AND. J2 == 5) THEN
            COEF=-DSQRT(DBLE(30))
         ENDIF

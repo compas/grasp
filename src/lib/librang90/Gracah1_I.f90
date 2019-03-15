@@ -1,7 +1,7 @@
       MODULE gracah1_I
       INTERFACE
 !
-      SUBROUTINE GRACAH1(I,J,K,L,M,N,RAC) 
+      SUBROUTINE GRACAH1(I,J,K,L,M,N,RAC)
       USE vast_kind_param, ONLY:  DOUBLE
       INTEGER MFACT
       PARAMETER (MFACT = 500)

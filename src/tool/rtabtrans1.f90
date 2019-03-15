@@ -24,16 +24,16 @@
 !                                                                      *
 !     Xinghong He  98-10-16                                            *
 !                                                                      *
-!     Rewritten by  G. Gaigalas                                        *    
-!     for LSJ calssification of levels                                 *    
+!     Rewritten by  G. Gaigalas                                        *
+!     for LSJ calssification of levels                                 *
 !     NIST                                                 May 2011    *
-!     Adapted by Per Jonsson for producing latex tables November 2014  *      
+!     Adapted by Per Jonsson for producing latex tables November 2014  *
 !                                                                      *
 !***********************************************************************
       IMPLICIT NONE
       INTEGER, PARAMETER:: JMax = 22      ! max J value, see JFraction !
       INTEGER, PARAMETER:: ndim = 20000   ! max number of states
-      INTEGER, PARAMETER:: maxFile = 1000 ! max number of files 
+      INTEGER, PARAMETER:: maxFile = 1000 ! max number of files
       DOUBLE PRECISION, PARAMETER:: Rydberg = 109737.31568508D0
 !
       CHARACTER(LEN=20) strInFile(maxFile), strFile, strFile2
@@ -60,7 +60,7 @@
       DOUBLE PRECISION eav, eval(ndim), evec, RLev_ENER(ndim),ZERO
 !
       COMMON/JJ2LSJ/ Lev_POS,Lev_J,Lev_Par,RLev_ENER,string_CSF, &
-                      IMaxCount 
+                      IMaxCount
 !
       DATA PlusMinus/'-', ' ', '+'/
       DATA JFraction/'  0 ', ' 1/2', '  1 ', ' 3/2', '  2 ', ' 5/2',  &
@@ -83,7 +83,7 @@
       WRITE(*,*) '      functions that are used to compute the    '
       WRITE(*,*) '      transition data                           '
       WRITE(*,*) ' Output file: energylabel.latex(ascii)          '
-      WRITE(*,*) 
+      WRITE(*,*)
 
       labelchar(:) = ' '
 
@@ -116,7 +116,7 @@
                EXIT
             ENDIF
          ENDDO
-         mFile = i 
+         mFile = i
       ELSEIF (mFile .GT. 0 .AND. mFile .LE. maxFile) THEN
          DO i = 1, mFile
             CALL getarg (i, strInFile(i))
@@ -128,13 +128,13 @@
 
       write(*,*) 'mFile',mFile
 
-      write(*,*)      
+      write(*,*)
       write(*,*) ' Inspect the labels of the states and '
       write(*,*) ' determine how many positions should be skipped in '
       write(*,*) ' the string that determines the label. For example'
       write(*,*) ' if all the states have a common core 1s(2) in the '
       write(*,*) ' label then 6 positions should be skipped'
-      write(*,*) 
+      write(*,*)
       write(*,*) ' How many positions should be skipped?'
       read(*,*) NSKIP
       write(*,*) ' Output labels in LaTeX or ASCII format (0/1)? '
@@ -180,7 +180,7 @@
             if (strFile2(i:i).eq.'/') then
                nfound = i
                exit
-            end if 
+            end if
          END DO
          if (nfound.ne.0) then
             do i = 1,nfound
@@ -194,7 +194,7 @@
                then
                nfound = i
                exit
-            end if 
+            end if
          END DO
          if (nfound.ne.0) then
             do i = 1,3
@@ -213,7 +213,7 @@
             READ (3) nb, ncfblk, nevblk, iiatjp, iiaspa
             IF (jblock .NE. nb) THEN
 !
-!     This error can occur anywhere and therefore cannot 
+!     This error can occur anywhere and therefore cannot
 !     be simply skipped - stop instead.
 !
                WRITE (0,*) 'jblock .NE. nb, stopping...'
@@ -252,7 +252,7 @@
          OPEN (31, FILE = util_lbl_file, FORM = 'FORMATTED',   &
             STATUS = 'OLD', IOSTAT = IOS)
          IF (IOS .NE. 0) THEN
-!GG            WRITE (0,*) 'Failed to open file "', 
+!GG            WRITE (0,*) 'Failed to open file "',
 !GG     &      util_lbl_file(1:LEN_TRIM (util_lbl_file)), '", skipping...'
             CLOSE (31)
             CYCLE
@@ -278,13 +278,13 @@
 !     The output of the levels
 !
       WRITE (9,*)
-      WRITE (9,1) 
+      WRITE (9,1)
       WRITE (9,2) Rydberg
       if(Iprint .eq. 1) then
          WRITE (9,5)
          WRITE (9,*) 'No - Serial number of the state; ',     &
                      'Pos - Position of the state within the '
-         WRITE (9,*) 'J/P block;' 
+         WRITE (9,*) 'J/P block;'
          WRITE (9,5)
          WRITE (9,*) 'No Pos  J Parity Energy Total    Levels', &
                      '   File          Configuration'
@@ -295,7 +295,7 @@
 
          inputstring = blankstring
          inputstring(1:64-NSKIP) = string_PRN(i)(1 + NSKIP:64)
-         if (ascii.eq.1) then 
+         if (ascii.eq.1) then
            latexstring = inputstring
          else
            call latexconvert(inputstring,latexstring)
@@ -327,7 +327,7 @@
             end if
             WRITE (9,3) j,ivec(i),iatjp(i),iaspa(i),eval(i),   &
             (eval(i)-eval(indx(1)))*Rydberg*2,                 &
-            string_file(i),Trim(latexstring) 
+            string_file(i),Trim(latexstring)
          END DO
 !         WRITE (6,5)
       ELSE
@@ -361,11 +361,11 @@
 !     character at the end of the label
 
       REWIND(9)
-      NFOUND = 0 
+      NFOUND = 0
       DO
          READ(9,'(A)') STRING
          IF (STRING(1:5).EQ.'-----') THEN
-            NFOUND = NFOUND + 1 
+            NFOUND = NFOUND + 1
          END IF
          IF (NFOUND.EQ.3) EXIT
       END DO
@@ -391,21 +391,21 @@
                   labelchar(k) = '~c'
                else if (nsame.eq.2) then
                   labelchar(k) = '~d'
-               else 
+               else
                   write(*,*) 'Too many states with the same label'
                   stop
                end if
             end if
-         end do 
+         end do
          if (nsame.gt.0) labelchar(j) = '~a'
       end do
 
       REWIND(9)
-      NFOUND = 0 
+      NFOUND = 0
       DO
          READ(9,'(A)') STRING
          IF (STRING(1:5).EQ.'-----') THEN
-            NFOUND = NFOUND + 1 
+            NFOUND = NFOUND + 1
          END IF
          IF (NFOUND.EQ.3) EXIT
       END DO
@@ -424,7 +424,7 @@
                          labelchar(j)//finallatex(j)(i:i+3)
          end if
       END DO
-       
+
       CLOSE(9)
 
 
@@ -529,7 +529,7 @@
       DOUBLE PRECISION RLev_ENER(ndim)
 !
       COMMON/JJ2LSJ/ Lev_POS,Lev_J,Lev_Par,RLev_ENER,string_CSF,       &
-                      IMaxCount 
+                      IMaxCount
 !
       READ (31,'(1A15)',IOSTAT = IOS) RECORD
       ICount = 0
@@ -563,7 +563,7 @@
       subroutine latexconvert(labelstring,latexstring)
 
 ! This subroutine converts a label string to latex
-! It is basically the same routine as in renergytable.f90      
+! It is basically the same routine as in renergytable.f90
 ! Per Jonssson, Malmo University, November 2014
 
       implicit none
@@ -591,7 +591,7 @@
             labelstring(1:i-1) = dummystring(1:i-1)
             labelstring(i:i) = '\'
             labelstring(i+1:i+1) = ','
-            labelstring(i+2:64) = dummystring(i+1:62) 
+            labelstring(i+2:64) = dummystring(i+1:62)
          end if
       end do
 
@@ -608,7 +608,7 @@
          ncase = 0
          do i = 1,61
             do j = 48,57
-               do k = 48,57 
+               do k = 48,57
                   char1 = labelstring(i:i)
                   char2 = labelstring(i+1:i+1)
                   char3 = labelstring(i+2:i+2)
@@ -629,10 +629,10 @@
 
       end do
 
-!  If integer1 and S, P, D, F, G, H, I, K, L, M, N and not integer2 replace with ^integer1S, ^integer1P, etc 
+!  If integer1 and S, P, D, F, G, H, I, K, L, M, N and not integer2 replace with ^integer1S, ^integer1P, etc
 
       do i = 1,61
-!  
+!
          if (labelstring(i:i).eq.'~') then
             dummystring = labelstring
             labelstring(1:i) = dummystring(1:i)
@@ -644,6 +644,6 @@
       latexstring = trim(labelstring)
 
       return
-      end subroutine    
+      end subroutine
 
       END  PROGRAM

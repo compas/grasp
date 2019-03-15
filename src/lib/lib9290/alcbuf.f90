@@ -1,6 +1,6 @@
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE ALCBUF(MODE) 
+      SUBROUTINE ALCBUF(MODE)
 !                                                                      *
 !   The arrays in  MODULE BUFFER_C are allocated (MODE = 1), realloca-   *
 !   ted (MODE = 2), and deallocated (MODE = 3) in this routine.        *
@@ -11,8 +11,8 @@
 !   Editted after translation by C. Froese Fischer       29 Apr 2007   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  16:02:30   2/14/04 
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  16:02:30   2/14/04
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !====================================================================
 
@@ -25,47 +25,47 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      INTEGER, INTENT(IN) :: MODE 
+      INTEGER, INTENT(IN) :: MODE
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      INTEGER :: NEWSIZ, IERR 
+      INTEGER :: NEWSIZ, IERR
 !
 !
-      SELECT CASE (MODE)  
-      CASE (1)  
+      SELECT CASE (MODE)
+      CASE (1)
 !
 !   Allocation
 !
-         NBDIM = 10 
+         NBDIM = 10
          CALL ALLOC (LABEL, 6,NBDIM, 'LABEL', 'ALCBUF')
-         CALL ALLOC (COEFF, NBDIM, 'COEFF', 'ALCBUF') 
+         CALL ALLOC (COEFF, NBDIM, 'COEFF', 'ALCBUF')
 !
-      CASE (2)  
+      CASE (2)
 !
 !   Reallocation to double storage
 !
-         NEWSIZ = NBDIM + NBDIM 
+         NEWSIZ = NBDIM + NBDIM
          CALL RALLOC(LABEL,6,NEWSIZ, 'LABEL', 'ALCBUF')
          CALL RALLOC(COEFF,NEWSIZ, 'COEFF', 'ALCBUF')
-         NBDIM = NEWSIZ 
+         NBDIM = NEWSIZ
 !
-      CASE (3)  
+      CASE (3)
 !
 !   Deallocation
 !
           CALL DALLOC(label, 'LABEL', 'ALCBUF')
           CALL DALLOC(coeff, 'COEFF', 'ALCBUF')
 !
-      CASE DEFAULT 
+      CASE DEFAULT
 !
 !   Argument error
 !
-         WRITE (6, *) 'ALCBUF: Invalid argument MODE = ', MODE 
-         STOP  
+         WRITE (6, *) 'ALCBUF: Invalid argument MODE = ', MODE
+         STOP
 !
-      END SELECT 
+      END SELECT
 !
-      RETURN  
+      RETURN
 !
-      END SUBROUTINE ALCBUF 
+      END SUBROUTINE ALCBUF

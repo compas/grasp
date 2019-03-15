@@ -1,6 +1,6 @@
 !***********************************************************************
 !                                                                      *
-      INTEGER FUNCTION IDIGIT (CST) 
+      INTEGER FUNCTION IDIGIT (CST)
 !                                                                      *
 !                                                                      *
 !                                                                      *
@@ -10,21 +10,21 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      CHARACTER , INTENT(IN) :: CST 
+      CHARACTER , INTENT(IN) :: CST
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      INTEGER :: I 
-      CHARACTER, DIMENSION(0:9) :: CDGT 
+      INTEGER :: I
+      CHARACTER, DIMENSION(0:9) :: CDGT
 !-----------------------------------------------
 !
-      DATA CDGT/ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'/  
+      DATA CDGT/ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'/
 !
-      DO I = 0, 9 
-         IF (CST /= CDGT(I)) CYCLE  
+      DO I = 0, 9
+         IF (CST /= CDGT(I)) CYCLE
          IDIGIT = I
          EXIT
-      END DO 
+      END DO
 !
-      RETURN  
-      END FUNCTION IDIGIT 
+      RETURN
+      END FUNCTION IDIGIT

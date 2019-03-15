@@ -91,7 +91,7 @@ end if
 nblock     = 0
 nblockodd  = 0
 nblockeven = 0
-do 
+do
    string1 = string2
    read(36,'(a)',end=99) string2
    if (string2(2:2).eq.'*') then
@@ -153,7 +153,7 @@ do i = 1,5
 end do
 
 i = 1
-do 
+do
    read(36,'(a)',end=999) string1
    if (string1(2:2).eq.'*') then
       i = i + 1
@@ -169,7 +169,7 @@ close(36)
 ! Now open the name.(c)m files
 
 do l = 1,2
-   if (l.eq.1) then 
+   if (l.eq.1) then
       open(unit=36,file=trim(name)//'.m',status='old',form='unformatted',iostat=ios)
    else
       open(unit=36,file=trim(name)//'.cm',status='old',form='unformatted',iostat=ios)
@@ -180,7 +180,7 @@ do l = 1,2
       else
          write(*,*) 'File ',trim(name)//'.cm ','available'
       end if
-      write(*,*) 
+      write(*,*)
       read(36,iostat=ios) G92MIX
       read(36) nelec, ncftot, nw, nvectot, nvecsize, nblock
       write(*,*) '  nelec    = ', nelec
@@ -207,7 +207,7 @@ do l = 1,2
          else
             open(unit=36+i,file=trim(name)//trim(blockstring(i))//'.cm',status='unknown',form='unformatted')
          end if
-! Write the first two lines 
+! Write the first two lines
          write(36+i) G92MIX
          write(36+i) nelec, ncfblk(i), nw, nevblk(i), ncfblk(i)*nevblk(i), 1
 ! Write the data for the block
@@ -226,7 +226,7 @@ do l = 1,2
       do i = 1,nblock
          close(36+i)
       end do
- 
+
       deallocate(ncfblk)
       deallocate(evec)
 

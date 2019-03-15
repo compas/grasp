@@ -5,8 +5,8 @@
 !      permdir  - path where node-0 performs serial i/o.
 !      tmpdir   - path where the current node goes to.
 !
-!   This version reads (by node-0) the paths from a disk file under the 
-!   starting directory of the node-0, determine the length and do 
+!   This version reads (by node-0) the paths from a disk file under the
+!   starting directory of the node-0, determine the length and do
 !   sending/receiving. Only if the paths defined here do not exist will
 !   C functions be called to create them.
 !
@@ -16,10 +16,10 @@
 !   has/have to be created with call sys_mkdir
 !                                               Jacek Bieron 2017-10-31
 !
-!   cpath makes a sequence of attempts to create tmpdir directories 
+!   cpath makes a sequence of attempts to create tmpdir directories
 !   at local disks of all nodes, in the following order:
-!   (1) 'disks' file 
-!   (2) env variable MPI_TMP 
+!   (1) 'disks' file
+!   (2) env variable MPI_TMP
 !   (3) directory /scratch/$USER
 !     if file 'disks' exists, cpath reads it
 !     if file 'disks' does not exist, cpath uses env variable MPI_TMP
@@ -37,7 +37,7 @@
 !cjb                                            Jacek Bieron 2018 June 18
 !
 !***********************************************************************
-! 
+!
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
@@ -76,7 +76,7 @@
 !     print *, ' in cpath myid = ', myid, ' startdir = ', startdir
 
 !=======================================================================
-!  Open disks file, read paths and send/receive them. Each node will have 
+!  Open disks file, read paths and send/receive them. Each node will have
 !  its preliminary path stored in variable disk. In addition, node-0 will
 !  have the current working directory stored in permdir
 !=======================================================================
@@ -91,14 +91,14 @@
             open (unit=1001, file='disks', status='old')
             !...paths for serial i/o, node-0 only
             read (1001,*) permdir  ! paths for serial i/o, node-0 only
-            read (1001,*) tmpdir   ! temporary for local disk of node-0 
-            !...paths for slaves, read and send; 
+            read (1001,*) tmpdir   ! temporary for local disk of node-0
+            !...paths for slaves, read and send;
             do i = 1, nprocs - 1
                read (1001,*) disk
                call MPI_Send (disk, lendisk0, MPI_CHARACTER, i, i, &
                               MPI_COMM_WORLD, ierr2m)
             enddo
-            disk = tmpdir           ! local disk of node-0 
+            disk = tmpdir           ! local disk of node-0
             close (1001)
          else
             permdir = startdir
@@ -159,7 +159,7 @@
 !=======================================================================
 ! step 08 MPI_Send/MPI_Recv tmpdir
 !=======================================================================
-            tmpdir = mpi_tmp(1:lstring) 
+            tmpdir = mpi_tmp(1:lstring)
             disk = tmpdir(1:lstring)
             do i = 1, nprocs - 1
                call MPI_Send (disk, lendisk0, MPI_CHARACTER, i, i, &
@@ -186,16 +186,16 @@
 !
 !  sequentially call sys_mkdir (to avoid simultaneous sys_mkdir)
 !=======================================================================
-! 
+!
 !=======================================================================
-! step 14 mkdir tmpdir 
+! step 14 mkdir tmpdir
 !=======================================================================
 !
       call sys_chdir (disk, lendisk, ierr)
 !     print *, ' in cpath myid = ', myid, ' disk = ', disk
       if (ierr.ne.0) call sys_mkdir (disk, lendisk, ierr)
       if (ierr.ne.0) then
-! error141 failed to mkdir tmpdir 
+! error141 failed to mkdir tmpdir
 ! step14 try mkdir twice more
         do itry = 1, 2
 ! get some sleep -- different loop times depending on myid
@@ -219,7 +219,7 @@
         enddo
 !      if (ierr.ne.0) call exit(1)
         if (ierr .ne. 0) then
-! 
+!
 ! error141 failed to mkdir tmpdir
         print *, ' error141 cpath failed at sys_mkdir(disk), myid = ',&
                                                              myid
@@ -231,12 +231,12 @@
       endif
 !
 !=======================================================================
-! step 16 cd tmpdir 
+! step 16 cd tmpdir
 !=======================================================================
 !
       call sys_chdir (disk, lendisk, ierr)
       if (ierr .ne. 0) then
-! error161 failed to chdir tmpdir 
+! error161 failed to chdir tmpdir
 ! step16 try chdir twice more
         do itry = 1, 2
 ! get some sleep -- different loop times depending on myid
@@ -260,8 +260,8 @@
         enddo
 !      if (ierr.ne.0) call exit(1)
         if (ierr .ne. 0) then
-! 
-! error161 failed to chdir tmpdir 
+!
+! error161 failed to chdir tmpdir
        print *, ' error161 cpath failed at sys_chdir(disk); myid = ',&
                                                             myid
 !         stop
@@ -290,7 +290,7 @@
 !         stop
           goto 999
         endif
-        call sys_chdir (idstring, lenidstring, ierr) 
+        call sys_chdir (idstring, lenidstring, ierr)
         if (ierr .ne. 0) then
 !
 ! error183 failed to chdir tmpdir/myid
@@ -316,7 +316,7 @@
                           MPI_INTEGER, MPI_SUM, MPI_COMM_WORLD, ierr2m)
 ! step20 ierr_all_nodes
 !       if (myid .eq. 0) then
-!        print *, ' step20 cpath ierr_all_nodes = ', ierr_all_nodes, & 
+!        print *, ' step20 cpath ierr_all_nodes = ', ierr_all_nodes, &
 !                 ' myid = ', myid
 !       endif
 !
@@ -337,7 +337,7 @@
       endif
 
 !=======================================================================
-! step 2222 all nodes succeeded 
+! step 2222 all nodes succeeded
 ! cpath succeeded
 !=======================================================================
 

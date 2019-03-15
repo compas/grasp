@@ -10,7 +10,7 @@ MODL92 = ${SRCLIBDIR}/lib9290
 MODDVD = ${SRCLIBDIR}/libdvd90
 GRASPLIBS =-l9290 -lmod -ldvd90
 
-APP_LIBS = -L${GRASPLIB} ${GRASPLIBS} 
+APP_LIBS = -L${GRASPLIB} ${GRASPLIBS}
 
 
 APP_OBJ= mpi_s.o \
@@ -36,7 +36,7 @@ APP_OBJ= mpi_s.o \
 
 $(EXE): $(APP_OBJ)
 	$(FC) -o $(BINFILE) $(FC_LD)  $(APP_OBJ) $(APP_LIBS)  \
-	${LAPACK_LIBS} 
+	${LAPACK_LIBS}
 
 .f90.o:
 	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I ${MODL92} -I ${MODDVD} \
@@ -46,5 +46,4 @@ $(EXE): $(APP_OBJ)
 	$(FC) -c $(FC_FLAGS) $< -o $@
 
 clean:
-	-rm -f *.o *.mod core 
-
+	-rm -f *.o *.mod core

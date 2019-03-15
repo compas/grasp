@@ -1,6 +1,6 @@
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE DAMPCK(IPR, J, ED1, ED2) 
+      SUBROUTINE DAMPCK(IPR, J, ED1, ED2)
 !                                                                      *
 !   This subroutine determines the damping factor appropriate to the   *
 !   present  orbital. The algorithm is taken from C Froese Fischer's   *
@@ -10,33 +10,33 @@
 !   Modified by C. Froese Fischer           Last update: 07 Apr 2009   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  DOUBLE 
+      USE vast_kind_param, ONLY:  DOUBLE
       USE damp_C
       USE orb_C
       IMPLICIT NONE
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      INTEGER, INTENT(INOUT) :: IPR 
-      INTEGER, INTENT(IN) :: J 
-      REAL(DOUBLE), INTENT(INOUT) :: ED1 
-      REAL(DOUBLE), INTENT(INOUT) :: ED2 
+      INTEGER, INTENT(INOUT) :: IPR
+      INTEGER, INTENT(IN) :: J
+      REAL(DOUBLE), INTENT(INOUT) :: ED1
+      REAL(DOUBLE), INTENT(INOUT) :: ED2
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      LOGICAL :: ADAPTV 
+      LOGICAL :: ADAPTV
 !-----------------------------------------------
 !
 !   The damping is adaptive (i.e., can be modified by this SUBROUTINE)
 !   if and only if ODAMP(J) .GE. 0.0
 !
-      ADAPTV = ODAMP(J) >= 0.0D00 
+      ADAPTV = ODAMP(J) >= 0.0D00
 !
       IF (IPR /= J) THEN
          IF (ADAPTV) ODAMP(J) = 0.75D00*ODAMP(J)
@@ -58,5 +58,5 @@
       ENDIF
 !
       IPR = J
-      RETURN  
-      END SUBROUTINE DAMPCK 
+      RETURN
+      END SUBROUTINE DAMPCK

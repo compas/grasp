@@ -3,7 +3,7 @@ program renergytable
 ! This program makes ASCII and LaTeX tables over energies as a function of
 ! increasing active sets
 
-! Give the energy lists from rlevels. Start with list corresponding 
+! Give the energy lists from rlevels. Start with list corresponding
 ! to the smallest active set and end with the one corresponding to the
 ! largest. Labels and order of energy levels are according to the last
 ! energy list. A maximum of 1000 levels in 15 files are allowed.
@@ -31,14 +31,14 @@ open(unit=20,file='energytableascii.txt',status='unknown')
 
 write(*,*)
 write(*,*) ' RTABLEVELS'
-write(*,*) ' Makes LaTeX and ASCII tables of energy files produced by' 
+write(*,*) ' Makes LaTeX and ASCII tables of energy files produced by'
 write(*,*) ' rlevels (in ljs format)                       '
 write(*,*) ' Multiple energy files can be used as input'
 write(*,*) ' Energies from file 1 fills column 1, energies from file 2'
 write(*,*) ' fills column 2 etc.  Checks are done to see if the labels'
 write(*,*) ' if the labels in the files are consistent'
 write(*,*) ' Input file: name1, name2, ...'
-write(*,*) ' Output files: energylabellatex.tex, energylabelascii.txt' 
+write(*,*) ' Output files: energylabellatex.tex, energylabelascii.txt'
 write(*,*)
 write(*,*) ' Inspect energy files and determine how many positions'
 write(*,*) ' should be skipped in the string that determines the label '
@@ -75,10 +75,10 @@ do i = 1,nfile
 
    open(unit=20+i,file=trim(filename),status='old')
 
-! Start reading the file 
+! Start reading the file
 
    k = 0
-   do 
+   do
       read(20+i,'(a)') fileline
       if (fileline(1:3).eq.'---') then
          k = k + 1
@@ -100,13 +100,13 @@ do i = 1,nfile
 
       select case (label(i,nlevels)(lastpos:lastpos))
       case ('S','P','D','F','G','H','I','K','L','M','N')
-         extra(i,nlevels) = ' ' 
+         extra(i,nlevels) = ' '
       case default
          extra(i,nlevels) = label(i,nlevels)(lastpos:lastpos)
           label(i,nlevels)(lastpos:lastpos) = ' '
       end select
 !      write(*,*) 'Label, jparity',trim(label(i,nlevels)),trim(jparity(i,nlevels)),extra(i,nlevels)
-   end do 
+   end do
 
 ! Check if any levels have the same J, parity and label
 
@@ -122,11 +122,11 @@ do i = 1,nfile
 end do
 
 if (nsame.gt.0) then
-   write(*,*) 
+   write(*,*)
    write(*,*)
    write(*,*) 'There are levels with the same labels extra character added'
    write(*,*) 'at the end to get unique labels'
-   
+
    i = nfile
    do j = 1,nlevels
       nsame = 0
@@ -174,7 +174,7 @@ do h = 1,nlevels
          labelstring(1:i-1) = dummystring(1:i-1)
          labelstring(i:i) = '\'
          labelstring(i+1:i+1) = ','
-         labelstring(i+2:145) = dummystring(i+1:143) 
+         labelstring(i+2:145) = dummystring(i+1:143)
       end if
    end do
 
@@ -192,7 +192,7 @@ do h = 1,nlevels
       ncase = 0
       do i = 1,142
          do j = 48,57
-            do k = 48,57 
+            do k = 48,57
                char1 = labelstring(i:i)
                char2 = labelstring(i+1:i+1)
                char3 = labelstring(i+2:i+2)
@@ -211,10 +211,10 @@ do h = 1,nlevels
 !      write(*,'(a)') trim(labelstring)
    end do
 
-!  If integer1 and S, P, D, F, G, H, I, K, L, M, N and not integer2 replace with ^integer1S, ^integer1P, etc 
+!  If integer1 and S, P, D, F, G, H, I, K, L, M, N and not integer2 replace with ^integer1S, ^integer1P, etc
 
    do i = 1,142
-!  
+!
       if (labelstring(i:i).eq.'~') then
          dummystring = labelstring
          labelstring(1:i) = dummystring(1:i)
@@ -223,12 +223,12 @@ do h = 1,nlevels
       end if
    end do
 
-   if  (jparity(nfile,h)(7:7).eq.'-') then 
+   if  (jparity(nfile,h)(7:7).eq.'-') then
       latexstring(h) = '$'//trim(labelstring)//'_{'//jparity(nfile,h)(1:5)//labelchar(h)//'}^o$'
    else
       latexstring(h) = '$'//trim(labelstring)//'_{'//jparity(nfile,h)(1:5)//labelchar(h)//'}$'
    end if
-   
+
 !  write(19,'(a)') trim(latexstring(h))
 
 end do
@@ -270,8 +270,8 @@ do i = 1,nlevels
       end if
    end do
 !   write(19,'(a)') latexstring(i)(1:maxlengthlatex)//trim(energystring)//' & '//energy(nfile,i)//' \\'
-   write(20,'(a)') jparity(nfile,i)//' '//label(nfile,i)(1:maxlengthascii)//extra(nfile,i)//trim(energystring)//' '//energy(nfile,i) 
-!   write(20,'(a)') label(nfile,i)(1:maxlengthascii)//extra(nfile,i)//' '//jparity(nfile,i)//trim(energystring)//' '//energy(nfile,i) 
+   write(20,'(a)') jparity(nfile,i)//' '//label(nfile,i)(1:maxlengthascii)//extra(nfile,i)//trim(energystring)//' '//energy(nfile,i)
+!   write(20,'(a)') label(nfile,i)(1:maxlengthascii)//extra(nfile,i)//' '//jparity(nfile,i)//trim(energystring)//' '//energy(nfile,i)
    write(19,'(a)') latexstring(i)(1:maxlengthlatex)//'~'//extra(nfile,i)//trim(energystring)//' & '//energy(nfile,i)//' \\'
 end do
 
@@ -281,5 +281,3 @@ write(19,'(a)') '\end{longtable}'
 write(19,'(a)') '\end{document}'
 
 end program renergytable
-
-

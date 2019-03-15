@@ -17,7 +17,7 @@
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE memory_man
 !-----------------------------------------------
@@ -40,7 +40,7 @@
       INTEGER :: JA, JB, int_CSF
 !-----------------------------------------------
 !
-      DO JA = 1, NCFBLK(NBLOCK) 
+      DO JA = 1, NCFBLK(NBLOCK)
          JB = NCFBLK(NBLOCK) + 1
          CALL Interact_CSF(JA,JB,ICOLBREI,int_CSF)
          if(int_CSF .NE. 0) THEN
@@ -50,6 +50,6 @@
             WRITE(22,'(A)') TRIM(C_coupl(JB))
             RETURN
          END IF
-      END DO 
-      RETURN  
+      END DO
+      RETURN
       END SUBROUTINE Interact_MR

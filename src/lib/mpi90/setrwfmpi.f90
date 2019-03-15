@@ -11,11 +11,11 @@
 !   MPI version by Xinghong He            Last revision: 06 Aug 1998   *
 !
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE mpi_C
       USE iounit_C
@@ -35,7 +35,7 @@
       INTEGER :: IOS, IERROR
       CHARACTER (LEN = 6) :: G92RWF
 !-----------------------------------------------
-      IF (myid .EQ. 0) THEN 
+      IF (myid .EQ. 0) THEN
          CALL openfl (23, name, 'UNFORMATTED', 'OLD', ierror)
          IF (ierror .EQ. 1) THEN
             WRITE (istde,*) 'Error opening', name(1:LEN_TRIM (name))

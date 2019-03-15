@@ -50,21 +50,21 @@ lmaxcore = 0
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-write(*,*) 
+write(*,*)
 write(*,*) 'RCSFGENERATE'
 write(*,*) 'This program generates a list of CSFs'
-write(*,*) 
+write(*,*)
 write(*,*) 'Configurations should be entered in spectroscopic notation'
 write(*,*) 'with occupation numbers and indications if orbitals are'
 write(*,*) 'closed (c), inactive (i), active (*) or has a minimal'
 write(*,*) 'occupation e.g. 1s(2,1)2s(2,*)'
 write(*,*) 'Outputfiles: rcsf.out, rcsfgenerate.log'
-write(*,*) 
+write(*,*)
 write(*,*) 'Default, reverse, symmetry or user specified ordering? (*/r/s/u)'
 read(*,*) ans
 write(11,'(a)') ans
 write(12,*) ans, ' ! Orbital order'
-write(*,*) 
+write(*,*)
 write(*,*) 'Select core '
 write(*,*) '       0: No core'
 write(*,*) '       1: He (       1s(2)                  =  2 electrons)'
@@ -77,9 +77,9 @@ read(*,*) ncore
 write(12,*) ncore, ' ! Selected core'
 
 ! Due to restrictions in the underlying jjgen we have do use the following "trick"
-! if ncore == 5 then we redefine the core to ncore = 4 and add 
+! if ncore == 5 then we redefine the core to ncore = 4 and add
 ! 4d(10,c)5s(2,c)5p(6,c) to each of the configuration strings
-! if ncore == 6 then we redefine the core to ncore = 5 and add 
+! if ncore == 6 then we redefine the core to ncore = 5 and add
 ! 4f(14,c)5d(10,c)6s(2,c)6p(6,c) to each of the configuration strings
 ! Per J Feb 2017
 
@@ -107,12 +107,12 @@ write(*,*)
 select case(ncore)
    case(1)
       ncoreorbitals = 1   ! 1 core orbital
-      lmaxcore = 0        ! 
+      lmaxcore = 0        !
       nc(1) = 1           ! 1s
       lc(1) = 0           ! 1s
    case(2)
       ncoreorbitals = 3   ! 3  core orbitals
-      lmaxcore = 1        ! 
+      lmaxcore = 1        !
       nc(1) = 1           ! 1s
       lc(1) = 0           ! 1s
       nc(2) = 2           ! 2s
@@ -121,7 +121,7 @@ select case(ncore)
       lc(3) = 1           ! 2p
    case(3)
       ncoreorbitals = 5   ! 5 core orbitals
-      lmaxcore = 1        ! 
+      lmaxcore = 1        !
       nc(1) = 1           ! 1s
       lc(1) = 0           ! 1s
       nc(2) = 2           ! 2s
@@ -134,7 +134,7 @@ select case(ncore)
       lc(5) = 1           ! 3p
    case(4)
       ncoreorbitals = 8   ! 8 core orbitals
-      lmaxcore = 2        ! 
+      lmaxcore = 2        !
       nc(1) = 1           ! 1s
       lc(1) = 0           ! 1s
       nc(2) = 2           ! 2s
@@ -153,7 +153,7 @@ select case(ncore)
       lc(8) = 1           ! 4p
    case(5)
       ncoreorbitals = 11  ! 11 core orbitals
-      lmaxcore = 2        ! 
+      lmaxcore = 2        !
       nc(1) = 1           ! 1s
       lc(1) = 0           ! 1s
       nc(2) = 2           ! 2s
@@ -178,7 +178,7 @@ select case(ncore)
       lc(11) = 1          ! 5p
    case(6)
       ncoreorbitals = 15  ! 15 core orbitals
-      lmaxcore = 3        ! 
+      lmaxcore = 3        !
       nc(1) = 1           ! 1s
       lc(1) = 0           ! 1s
       nc(2) = 2           ! 2s
@@ -222,7 +222,7 @@ occ = 0
 ! Input the mutireference for later processing
 
 write(*,*) 'Enter list of (maximum 100) configurations. End list with a blank line or an asterisk (*)'
-write(*,*) 
+write(*,*)
 
 do j = 1,100
 
@@ -233,7 +233,7 @@ do j = 1,100
       mr = j-1
       write(12,'(a)') '*'
       goto 99
-   end if   
+   end if
 
 !  Initial check, each orbital need to be closed, inactive, or minimal
 
@@ -241,8 +241,8 @@ do j = 1,100
    number1 = 0
    number2 = 0
    do k = 1,conflength
-      if (configvect(j)(k:k).eq.'(') number1 = number1 + 1 
-      if (configvect(j)(k:k).eq.',') number2 = number2 + 1 
+      if (configvect(j)(k:k).eq.'(') number1 = number1 + 1
+      if (configvect(j)(k:k).eq.',') number2 = number2 + 1
    end do
    if (number1.ne.number2) then
       write(*,*)  'Each orbital must be closed (c), inactive (i), active (*)'
@@ -251,7 +251,7 @@ do j = 1,100
    end if
    write(12,'(a)') trim(configvect(j))
 
-! Here we append string if we have redefined core Per J Feb 2017   
+! Here we append string if we have redefined core Per J Feb 2017
 
    if (ncore5to4.eq.1) then
       configvect(j) = trim(corestring5//configvect(j))
@@ -306,7 +306,7 @@ if (ncore6to5.eq.1) then
          nfoundf = 1
       end if
    end do
-   if (nfoundf.eq.0) then  
+   if (nfoundf.eq.0) then
    ! Did not find f. Insert 3f either after d symmetry or before g symmetry
       nfoundd = 0
       do i = 1,len_trim(orbitalstring)
@@ -316,17 +316,17 @@ if (ncore6to5.eq.1) then
                orbitalstring = orbitalstring(1:i)//',3f'//orbitalstring(i+1:len_trim(orbitalstring))
             else
                orbitalstring = orbitalstring(1:i)//',3f'
-            end if   
+            end if
             exit
          end if
       end do
-      if (nfoundd.eq.0) then  
+      if (nfoundd.eq.0) then
          orbitalstring = '3f,'//trim(orbitalstring)
       end if
    end if
 !   write(*,'(a)') trim(orbitalstring)
 !   pause
-end if   
+end if
 
 ! De-code orbital string
 
@@ -344,7 +344,7 @@ do while ( index(orbitalstring(jl:len_trim(orbitalstring)),',').gt.0 )
       orbital(k) = " " // orbitalstring(jl:jr-1)
    else
       write(*,*) 'Orbitals should be given in comma delimited list, redo!'
-      goto 99      
+      goto 99
    end if
    jl = jr + 1
    k = k +1
@@ -357,9 +357,9 @@ else if (len_trim(orbitalstring(jl:jr)).eq.2) then
    orbital(k) = " " // orbitalstring(jl:jr)
 else
    write(*,*) 'Orbitals should be given in comma delimited list, redo!'
-   goto 99      
+   goto 99
 end if
-write(12,'(a)') trim(orbitalstring)  
+write(12,'(a)') trim(orbitalstring)
 
 norbstrings = k
 
@@ -513,7 +513,7 @@ do j = 1,mr
    flag(:) = 0
    do k = 1,norb
       i = 1+orbstart(k-1)
-      if(config(i+4:i+4).eq.',') flag(k) = 1 ! Flag to facilitate determination if  
+      if(config(i+4:i+4).eq.',') flag(k) = 1 ! Flag to facilitate determination if
                                              ! occupation/type indicator occupies one/two positions
       select case(config(i:i))
          case('1')
@@ -650,7 +650,7 @@ do j = 1,mr
       else
          write(11,'(a)') 'c'
          write(11,*) ncore
-      end if 
+      end if
    end if
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -692,12 +692,12 @@ do j = 1,mr
           end do
           if (nclose.eq.1) cycle
 
-! Find out if orbital is closed then add it to core orbitals 
+! Find out if orbital is closed then add it to core orbitals
 ! In for the next reference configuration there will be no question for this
 
           do k = 1, norb
              if ((nr.eq.n(k)).and.(lr.eq.l(k))) then
-                if (trim(adjustl(sel(k))).eq.'c') then 
+                if (trim(adjustl(sel(k))).eq.'c') then
                    ncoreorbitals = ncoreorbitals + 1
                    nc(ncoreorbitals) = n(k)
                    lc(ncoreorbitals) = l(k)
@@ -723,7 +723,7 @@ do j = 1,mr
                 if (ndouble.eq.1) then
                    write(11,'(a)') 'd'
                 else
-                   write(11,'(a)') '*'   
+                   write(11,'(a)') '*'
                 end if
              else
                 write(11,'(a)') 'i'
@@ -741,7 +741,7 @@ do j = 1,mr
          do lr = 0,min(nr-1,lmax)
             if (nr.le.nl(lr)) then
                if (ndouble.eq.1) then
-                  write(11,'(a)') 'd'    
+                  write(11,'(a)') 'd'
                else
                   write(11,'(a)') '*'
                end if
@@ -777,5 +777,3 @@ end do
 close(11)
 
 end subroutine rcsfexcitation
-
-

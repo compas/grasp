@@ -24,8 +24,8 @@
 !                               2) for sorting in the memory.          *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -47,7 +47,7 @@
 !-----------------------------------------------
 !   C O M M O N  B L O C K S
 !-----------------------------------------------
-      USE BUFFER_C,  ONLY: NVCOEF, LABEL, COEFF 
+      USE BUFFER_C,  ONLY: NVCOEF, LABEL, COEFF
       USE DEBUG_C,   ONLY: LDBPA
       USE DEFAULT_C, ONLY: NDEF
       USE iccu_C,    ONLY: ICCUT
@@ -187,7 +187,7 @@
                         TCOEFF(LLISTT,1) = TSHELL(1)
                       ELSE
 !GG                        print*,"LLISTT =",LLISTT
-!GG                        print*, 
+!GG                        print*,
 !GG     :             "The program switches to the disk version of
 !sorting"
                         CALL SETTMPGG (nb, 31, 'tmp')
@@ -279,7 +279,7 @@
                         TCOEFF(LLISTV(K),K+2) = VCOEFF
                       ELSE
 !GG                        print*,"K=",K," LLISTV =",LLISTV(K)
-!GG                        print*, 
+!GG                        print*,
 !GG     :             "The program switches to the disk version of
 !sorting"
                         CALL SETTMPGG (nb, 32+K, 'tmp')

@@ -20,7 +20,7 @@
 !   Bug corrected 2005-10-18                                           *
 !                                                                      *
 !***********************************************************************
-!...Translated by Charlotte Froese Fischer 
+!...Translated by Charlotte Froese Fischer
 !                       Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -68,11 +68,11 @@
       INTEGER, PARAMETER :: KEY = KEYORB, KEYSQ = KEY*KEY, nvmax=100
       REAL(DOUBLE), PARAMETER :: CUTOFF = 1.0D-10
       INTEGER, PARAMETER :: NF = 200
- 
+
       LOGICAL ::  F0INT,LINCR,RESTRT,COMP,AVAIL
       CHARACTER(LEN=20) :: CNUM
       CHARACTER(LEN=2)  :: CK
-! 
+!
       REAL(DOUBLE), DIMENSION(NNNW) :: tshell
       REAL(DOUBLE), DIMENSION(NVMAX) ::SC
       INTEGER, DIMENSION(NNNW) :: nakinv
@@ -87,7 +87,7 @@
       NTESTL = 00
       NTEST = MAX(NTESTG,NTESTL)
       NTEST = 00
- 
+
 !
 !   Set up data for the initial and final state case respectively
 !
@@ -96,55 +96,55 @@
           NSHL(I) = NSHLII(I)
           NINL(I) = NINII(I)
         ENDDO
- 
+
         DO I = 1,NNNW
           NAKINV(I) = NAKINVII(I)
         ENDDO
- 
+
         DO J = 1,NLMAX
           DO I = 1,NLMAX
             NSHLP(I,J) = NSHLPII(I,J)
           ENDDO
         ENDDO
- 
+
         DO J = 1,NNNW
           DO I = 1,NLMAX
             NSHLPP(I,J) = NSHLPPII(I,J)
           ENDDO
         ENDDO
- 
+
         DO I = 1,20*NLMAX*NLMAX
           CIROT(I) = CICI(I)
         ENDDO
- 
+
       ELSEIF (IK.EQ.2) THEN
- 
+
         DO I = 1,NLMAX
           NSHL(I) = NSHLFF(I)
           NINL(I) = NINFF(I)
         ENDDO
- 
+
         DO I = 1,NNNW
           NAKINV(I) = NAKINVFF(I)
         ENDDO
- 
+
         DO J = 1,NLMAX
           DO I = 1,NLMAX
             NSHLP(I,J) = NSHLPFF(I,J)
           ENDDO
         ENDDO
- 
+
         DO J = 1,NNNW
           DO I = 1,NLMAX
             NSHLPP(I,J) = NSHLPPFF(I,J)
           ENDDO
         ENDDO
- 
+
         DO I = 1,20*NLMAX*NLMAX
           CIROT(I) = CFCI(I)
         ENDDO
       ENDIF
- 
+
       REWIND (NF)
       DO 1000 IBLK = 1, NBLOCK
 !
@@ -162,7 +162,7 @@
 !
       READ(NF) NCFD,NWD,KAMAXD
       DO L = 1,KAMAX
- 
+
 !************
 !
 !. Offset for given L in shell matrices
@@ -173,9 +173,9 @@
             IIOFF = IIOFF + NSHL(L-1)** 2
           END IF
 !  Corrected PER J
- 
+
 !**************
- 
+
           READ(NF) NINTG,NCOEFF
           IF(NCOEFF*NINTG.EQ.0) CYCLE
 !
@@ -188,7 +188,7 @@
           CALL ALLOC (INTGRL,NINTG, 'INTGRL', 'MCPIN')
           CALL ALLOC (CNN,NCOEFF, 'CNN', 'MCPIN')
           CALL ALLOC (INTPTR,NINTG, 'INTPTR', 'MCPIN')
- 
+
           DO I = 1,NINTG
             READ(NF) INTGRL(I),INTPTR(I)
           ENDDO
@@ -219,15 +219,15 @@
         CALL DALLOC (INTGRL, 'INTGRL', 'MCPIN')
         CALL DALLOC (CNN, 'CNN', 'MCPIN')
         CALL DALLOC (INTPTR, 'INTPRT', 'MCPIN')
- 
+
       ENDDO
- 
+
       CALL dalloc (scr, 'SCR', 'MCPIN')
       CALL dalloc (ciout, 'CIOUT', 'MCPIN')
 !
 !   Write the rotated CI vectors on file
 !
-      IF(myid .eq. 0) THEN 
+      IF(myid .eq. 0) THEN
       IF(IBLK.EQ.1) THEN
         J = INDEX(NAME,' ')
         IF (INPCI.EQ.0) THEN
@@ -246,7 +246,7 @@
          WRITE(31) EAV,(EVAL(I),I = 1,NVEC)
          WRITE(31) ((EVEC(I+(J-1)*NCF),I = 1,NCF),J = 1,NVEC)
       endif !myid=0
- 
+
       CALL DALLOC (EVAL, 'EVAL', 'MCPIN')
       CALL DALLOC (EVEC, 'EVEC', 'MCPIN')
       CALL DALLOC (IVEC, 'IVEC', 'MCPIN')

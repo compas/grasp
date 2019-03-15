@@ -3,7 +3,7 @@
 LIBDIR = $(GRASP)/lib
 LIBA = $(LIBDIR)/libdvd90.a
 
-LIBOBJ = $(OBJ) 
+LIBOBJ = $(OBJ)
 MODDIR = ../libmod
 MODL92 = ../lib9290
 MODLMPIU90 = ../mpi90
@@ -26,8 +26,7 @@ $(LIBA) : $(LIBOBJ)
 	ranlib $(LIBA)
 
 .f90.o:
-	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I $(MODL92) -I $(MODLMPIU90) -I .  -o $@ 
+	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I $(MODL92) -I $(MODLMPIU90) -I .  -o $@
 
 clean:
-	rm -f *.o *.mod core 
-
+	rm -f *.o *.mod core

@@ -16,7 +16,7 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      INTEGER, INTENT(IN)  :: JA, JB, JC 
+      INTEGER, INTENT(IN)  :: JA, JB, JC
       INTEGER, INTENT(OUT) :: JAA, JBB, JCC
 !-----------------------------------------------
       JAA=JA

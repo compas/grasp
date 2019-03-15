@@ -1,9 +1,9 @@
 !***********************************************************************
 !                                                                      *
-      PROGRAM TRANSTABLE 
+      PROGRAM TRANSTABLE
 !                                                                      *
 !   This program reads the output from biotra2 together with spectral  *
-!   designation and energies to produce a latex table                  * 
+!   designation and energies to produce a latex table                  *
 !                                                                      *
 !   Written by Per Jonsson, Malmo University, November 2010            *
 !                                                                      *
@@ -32,31 +32,31 @@
       REAL*8 DTMEAN,FRAC
 !
 
-      WRITE(*,*) 
-      WRITE(*,*) ' RTABTRANS2    '   
-      WRITE(*,*) ' This program reads energy label data and transition'         
-      WRITE(*,*) ' data and creates transition and lifetime tables in '   
-      WRITE(*,*) ' LaTeX or ASCII format. An Octave file with a       '   
+      WRITE(*,*)
+      WRITE(*,*) ' RTABTRANS2    '
+      WRITE(*,*) ' This program reads energy label data and transition'
+      WRITE(*,*) ' data and creates transition and lifetime tables in '
+      WRITE(*,*) ' LaTeX or ASCII format. An Octave file with a       '
       WRITE(*,*) ' scatterplot of dT and 10log(A) is also produced    '
-      WRITE(*,*) 
+      WRITE(*,*)
       WRITE(*,*) ' Energy label data are given in the file energylabel'
       WRITE(*,*) ' created by the rtabtrans1 program                  '
       WRITE(*,*) ' Transition data file can be conctenated *.t or *.ct'
       WRITE(*,*) ' files. '
-      WRITE(*,*) 
+      WRITE(*,*)
       WRITE(*,*) ' Input files: energylabel.latex(ascii),             '
       WRITE(*,*) ' transitiondatafile                                 '
       WRITE(*,*) ' Output files: transitiontable.tex(txt),            '
       WRITE(*,*) '               lifetimetable.tex(txt),              '
-      WRITE(*,*) '               scatterplot.m                        '               
-      WRITE(*,*)    
+      WRITE(*,*) '               scatterplot.m                        '
+      WRITE(*,*)
       WRITE(*,*) ' Give the name of the transition data file          '
       READ(*,*) FILENAME1
 
       WRITE(*,*) ' Energy label file in LaTeX or ASCII format (0/1)?  '
       READ(*,*) ASCII
       IF (ASCII.EQ.1) THEN
-         WRITE(*,*) ' Left column string to denote the ion, e.g. Fe X' 
+         WRITE(*,*) ' Left column string to denote the ion, e.g. Fe X'
          READ(*,'(A)') LC
       END IF
 
@@ -95,7 +95,7 @@
 !---- Read energylabelfile --------------------
 
        NFOUND = 0
-       DO 
+       DO
           READ(37,'(A)') STRING
           IF (STRING(1:5).EQ.'-----') THEN
              NFOUND = NFOUND + 1
@@ -108,14 +108,14 @@
       NLEN = 0
       DO
         READ(37,200,END=91) NO,ILAB(I),JLAB(I),PAR,ENERGY(I), &
-              DENER,FILE(I),LATEX(I) 
+              DENER,FILE(I),LATEX(I)
         P(I) = '   '
         P(I)(2:2) = PAR
-        IF (LEN_TRIM(LATEX(I)).GT.NLEN) NLEN = LEN_TRIM(LATEX(I))  
+        IF (LEN_TRIM(LATEX(I)).GT.NLEN) NLEN = LEN_TRIM(LATEX(I))
         JLAB(I) = ADJUSTR(JLAB(I))
         I = I + 1
       END DO
-      
+
    91 CONTINUE
       N = I - 1
 
@@ -139,7 +139,7 @@
 
 !---- Read transition files ---------------------------------------
 
-      K = 1   
+      K = 1
       DO
    98   CONTINUE
 
@@ -160,7 +160,7 @@
 
         DO
   101     CONTINUE
- 
+
 !---- Find out if electric or magnetic case
 
           DO I = 1,3
@@ -189,7 +189,7 @@
             READ(36,300) FU(K),IU(K),JU(K),PU(K),FL(K),IL(K),JL(K), &
       	                PL(K),DELTAE(K),GAUGE(K),AV(K),GF(K),S(K)
 
-!---- If magnetic then save rate both in AV(K) and AL(K) 
+!---- If magnetic then save rate both in AV(K) and AL(K)
 !     If electric AL(K) will be overwritten as the next line is read
 
             AL(K) = AV(K)
@@ -200,7 +200,7 @@
               R(K) = dabs(AL(K)-AV(K))/maxval([AL(K),AV(K)])
             END IF
             IF (FU(K).EQ.'f1') THEN
-              FILEU(K) = FILE1 
+              FILEU(K) = FILE1
               FILEL(K) = FILE2
 	    ELSE IF (FU(K).EQ.'f2') THEN
 	      FILEU(K) = FILE2
@@ -208,7 +208,7 @@
 	    ELSE
 	      FILEU(K) = FILE1
               FILEL(K) = FILE1
-	    END IF 
+	    END IF
 
 !-----Set polarity for case
 
@@ -267,7 +267,7 @@
       ELSE
          write(39,'(A)') '\documentclass[10pt]{article}'
          write(39,'(A)') '\usepackage{longtable}'
-         write(39,'(A)') '\begin{document}'      
+         write(39,'(A)') '\begin{document}'
 	      WRITE(39,'(A)') '\begin{longtable}{lll} \hline'
          WRITE(39,'(A)') 'State & $\tau_l$ & $\tau_v$  \\ \hline'
       END IF
@@ -297,10 +297,10 @@
                                          ' & ',1.D0/TV(J),'\\'
           END IF
         END IF
-      END DO 
+      END DO
 
       IF (ASCII.EQ.0) THEN
-         write(39,'(A)') '\hline\\'                                                      
+         write(39,'(A)') '\hline\\'
          write(39,'(A)') '\caption{Lifetimes in s.}'
          write(39,'(A)') '\end{longtable}'
          write(39,'(A)') '\end{document}'
@@ -314,12 +314,12 @@
       ELSE
          write(38,'(A)') '\documentclass[10pt]{article}'
          write(38,'(A)') '\usepackage{longtable}'
-         write(38,'(A)') '\begin{document}'      
+         write(38,'(A)') '\begin{document}'
 	      WRITE(38,'(A)') '\begin{longtable}{lllrllll} \hline'
 	      WRITE(38,'(A)') 'Upper & Lower & EM & ',                   &
          '$\Delta E$ (cm$^{-1}$) & $\lambda$ (\AA) & ',                  &
          '$A$ (s$^{-1}$) & $gf$ & $dT$                                   &
-               \\ \hline'          
+               \\ \hline'
       END IF
 
 !---- Write header to scatterplot file -------------------------
@@ -338,15 +338,15 @@
                 .AND.(JU(L) == JLAB(J)).AND.(FILEU(L) == FILE(J))) THEN
                 DELTAEEXP = ENERGY(J)-ENERGY(I)
                 DELTAA(L) = 1.0E+8/DELTAE(L)
-	         END IF              
+	         END IF
           END DO
         END DO
-      END DO	    
+      END DO
 
       call HPSORT(K,DELTAA,indx)
 
-      DTMEAN = 0.D0                                                                                                                                               
-      DTCOUNT = 0.D0      
+      DTMEAN = 0.D0
+      DTCOUNT = 0.D0
 
       IF (NSORT.EQ.0) THEN
 
@@ -363,7 +363,7 @@
 	             IF ((AL(L).GT.CUTOFF).OR.(AL(L).GT.FRAC*TL(J))) THEN
 !               IF (AL(L).GT.CUTOFF) THEN
                 DELTAA(L) = 1.0E+8/DELTAE(L)
-                IF (EM(L) .EQ. 'M1' .OR.  EM(L) .EQ. 'M2') THEN 
+                IF (EM(L) .EQ. 'M1' .OR.  EM(L) .EQ. 'M2') THEN
                  IF (ASCII.EQ.1) THEN
                   IF(IDIGITS .EQ. 6) THEN
                     WRITE(38,526)TRIM(LC),'  ',JLAB(J),P(J),   &
@@ -409,7 +409,7 @@
                   IF(IDIGITS .EQ. 6) THEN
                     WRITE(38,426)LATEX(J)(1:NLEN),' & ',LATEX(I)(1:NLEN) &
                     ,' & ',EM(L),' & ',INT(DELTAE(L)),' &',              &
-                    DELTAA(L),' &',AL(L),' &',GF(L),' &','\\'            
+                    DELTAA(L),' &',AL(L),' &',GF(L),' &','\\'
                   ELSEIF (IDIGITS .EQ. 5) THEN
                     WRITE(38,425)LATEX(J)(1:NLEN),' & ',LATEX(I)(1:NLEN) &
                     ,' & ',EM(L),' & ',INT(DELTAE(L)),' &',              &
@@ -427,7 +427,7 @@
                     ,' & ',EM(L),' & ',INT(DELTAE(L)),' &',              &
                     DELTAA(L),' &',AL(L),' &',GF(L),' &','\\'
                   ELSEIF (IDIGITS .EQ. 1) THEN
-                    WRITE(38,421)LATEX(J)(1:NLEN),' & ',LATEX(I)(1:NLEN) & 
+                    WRITE(38,421)LATEX(J)(1:NLEN),' & ',LATEX(I)(1:NLEN) &
                     ,' & ',EM(L),' & ',INT(DELTAE(L)),' &',              &
                     DELTAA(L),' &',AL(L),' &',GF(L),' &','\\'
                   ELSE
@@ -436,7 +436,7 @@
                   END IF
                  END IF
                 ELSE
-                 WRITE(40,*) AL(L), R(L)                  
+                 WRITE(40,*) AL(L), R(L)
                  DTMEAN = DTMEAN + R(L)
                  DTCOUNT = DTCOUNT + 1.D0
                  IF (ASCII.EQ.1) THEN
@@ -511,11 +511,11 @@
                   END IF
                  END IF
                 END IF
-	       END IF              
-	      END IF              
+	       END IF
+	      END IF
             END DO
           END DO
-        END DO	    
+        END DO
 
       ELSE
 
@@ -532,7 +532,7 @@
                 DELTAEEXP = ENERGY(J)-ENERGY(I)
 	       IF ((AL(L).GT.CUTOFF).OR.(AL(L).GT.FRAC*TL(J))) THEN
                   DELTAA(L) = 1.0E+8/DELTAE(L)
-                IF (EM(L) .EQ. 'M1' .OR.  EM(L) .EQ. 'M2') THEN 
+                IF (EM(L) .EQ. 'M1' .OR.  EM(L) .EQ. 'M2') THEN
                  IF (ASCII.EQ.1) THEN
                   IF(IDIGITS .EQ. 6) THEN
                     WRITE(38,526)TRIM(LC),'  ',JLAB(J),P(J), &
@@ -603,9 +603,9 @@
                     WRITE(*,*) ' Number of decimals must be 1,...6 '
                     STOP
                   END IF
-                 END IF 
+                 END IF
                 ELSE
-                 WRITE(40,*) AL(L), R(L)               
+                 WRITE(40,*) AL(L), R(L)
                  DTMEAN = DTMEAN + R(L)
                  DTCOUNT = DTCOUNT + 1.D0
                  IF (ASCII.EQ.1) THEN
@@ -649,9 +649,9 @@
                     WRITE(*,*) ' Number of decimals must be 1,...6 '
                     STOP
                   END IF
-                 ELSE 
+                 ELSE
                   IF(IDIGITS .EQ. 6) THEN
-                    WRITE(38,416)LATEX(J)(1:NLEN),' & ',LATEX(I)(1:NLEN)& 
+                    WRITE(38,416)LATEX(J)(1:NLEN),' & ',LATEX(I)(1:NLEN)&
                     ,' & ',EM(L),' & ',INT(DELTAE(L)),' &',             &
                     DELTAA(L),' &',AL(L),' &',GF(L),' &',0.1*R(L),'\\'
                   ELSEIF (IDIGITS .EQ. 5) THEN
@@ -681,7 +681,7 @@
                  END IF
 	             END IF
 	            END IF
-	           END IF              
+	           END IF
             END DO
           END DO
         END DO
@@ -689,10 +689,10 @@
       END IF
 
       WRITE(*,*)
-      WRITE(*,*) ' Mean dT',DTMEAN/DTCOUNT       
+      WRITE(*,*) ' Mean dT',DTMEAN/DTCOUNT
 
       IF (ASCII.EQ.0) THEN
-         write(38,'(A)') '\hline\\'                                                      
+         write(38,'(A)') '\hline\\'
          write(38,'(A)') '\caption{Transition data}'
          write(38,'(A)') '\end{longtable}'
          write(38,'(A)') '\end{document}'
@@ -708,10 +708,10 @@
       WRITE(*,*) ' Program finished. The transition tables in latex'
       WRITE(*,*) ' have been written to file '
 
- 200  FORMAT(2I3,1X,A4,1x,A1,2X,F14.7,F12.2,2X,A14,6X,A)      
+ 200  FORMAT(2I3,1X,A4,1x,A1,2X,F14.7,F12.2,2X,A14,6X,A)
 !cjb  format for highly charged ions in rtransition90/printa.f90 changed
 !cjb  format for highly charged ions in rtransition90/printa.f90 F11.2 -> F13.2
-!cjb  format for highly charged ions here 1D12.6 -> 1D14.6 
+!cjb  format for highly charged ions here 1D12.6 -> 1D14.6
 !300  FORMAT(1X,A2,I3,1X,2A4,A2,I3,1X,2A4,1D12.6,A2,1P,   &
  300  FORMAT(1X,A2,I3,1X,2A4,A2,I3,1X,2A4,1D14.6,A2,1P,   &
            D13.5,2D12.4)
@@ -748,7 +748,7 @@
  521  FORMAT(12A,I11,A,F20.1,A,1P,E11.3,A,E11.3)
 
       CONTAINS
-      
+
       SUBROUTINE HPSORT(N,RA,IND)
       double precision RA(N)
       integer IND(N)
@@ -759,7 +759,7 @@
       end do
 
   !The index L will be decremented from its initial value during the
-  !"hiring" (heap creation) phase. Once it reaches 1, the index IR 
+  !"hiring" (heap creation) phase. Once it reaches 1, the index IR
   !will be decremented from its initial value down to 1 during the
   !"retirement-and-promotion" (heap selection) phase.
 10    continue
@@ -792,11 +792,11 @@
          else
             J=IR+1
          end if
-     
+
          goto 20
       end if
       RA(I)=RRA
       IND(I)=IRRA
       goto 10
       END SUBROUTINE
-      END PROGRAM TRANSTABLE 
+      END PROGRAM TRANSTABLE

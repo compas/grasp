@@ -9,7 +9,7 @@
 !                                                                      *
 !                                                                      *
 !***********************************************************************
-!...Translated by Charlotte Froese Fischer 
+!...Translated by Charlotte Froese Fischer
 !                       Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -44,7 +44,7 @@
       J = INDEX(NAME,' ')
       OPEN (UNIT = 21,FILE=NAME(1:J-1)//'.c',FORM='FORMATTED',          &
      &     STATUS='OLD')
- 
+
       READ (21,'(1A15)',IOSTAT = IOS) RECORD
       IF ((IOS .NE. 0) .OR.                                             &
      &    (RECORD(1:15) .NE. 'Core subshells:')) THEN
@@ -117,6 +117,6 @@
       CALL DALLOC (JCUPA, 'JCUPA', 'LDCSL1')
 !
       CLOSE (21)
- 
+
       RETURN
       END

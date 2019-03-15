@@ -24,7 +24,7 @@
 !***********************************************************************
 !***********************************************************************
 !                                                                      *
-      PROGRAM ERWF 
+      PROGRAM ERWF
 !                                                                      *
 !   Entry routine for RCI92. Controls the entire computation.          *
 !                                                                      *
@@ -37,37 +37,37 @@
 !                                                                      *
 !***********************************************************************
 !
-!...Translated by Pacific-Sierra Research 77to90  4.3E  11:06:21   1/ 2/07  
+!...Translated by Pacific-Sierra Research 77to90  4.3E  11:06:21   1/ 2/07
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  DOUBLE 
-      USE DEFAULT_C 
-      USE CONS_C 
-      USE IOUNIT_C 
+      USE vast_kind_param, ONLY:  DOUBLE
+      USE DEFAULT_C
+      USE CONS_C
+      USE IOUNIT_C
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      USE getyn_I 
-      USE setdbg_I 
-      USE setmc_I 
-      USE setcon_I 
-      USE setsum_I 
-      USE setcsh_I 
-      USE screenpar_I 
-      USE getinf_I 
-      USE strsum_I 
-      USE genrwf_I 
-      USE orthsc_I 
-      USE wrtrwf_I 
+      USE getyn_I
+      USE setdbg_I
+      USE setmc_I
+      USE setcon_I
+      USE setsum_I
+      USE setcsh_I
+      USE screenpar_I
+      USE getinf_I
+      USE strsum_I
+      USE genrwf_I
+      USE orthsc_I
+      USE wrtrwf_I
       IMPLICIT NONE
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      INTEGER :: NCORE 
-      LOGICAL :: YES 
+      INTEGER :: NCORE
+      LOGICAL :: YES
 !-----------------------------------------------
- 
+
 !   Startup message
 !
       WRITE (ISTDE, *) 'RWFNESTIMATE'
@@ -78,63 +78,63 @@
 
 
 !
-      WRITE (ISTDE, *) 'Default settings ?' 
-      YES = GETYN() 
-      IF (YES) THEN 
-         NDEF = 0 
-      ELSE 
-         NDEF = 1 
-      ENDIF 
- 
+      WRITE (ISTDE, *) 'Default settings ?'
+      YES = GETYN()
+      IF (YES) THEN
+         NDEF = 0
+      ELSE
+         NDEF = 1
+      ENDIF
+
 !
 !   Determine if there is to be any debug printout; this will be
 !   made on the  .dbg  file
 !
-      CALL SETDBG 
+      CALL SETDBG
 !
 !   Perform machine- and installation-dependent setup
 !
-      CALL SETMC 
+      CALL SETMC
 !
 !   Set up the physical constants
 !
-      CALL SETCON 
+      CALL SETCON
 !
 !   Open the  .sum  file
 !
-      IF (NDEF /= 0) CALL SETSUM 
+      IF (NDEF /= 0) CALL SETSUM
 !
 !   Open, check, load data from, and close the  .csl  file
 !
-      CALL SETCSH (21, 'rcsf.inp', NCORE) 
+      CALL SETCSH (21, 'rcsf.inp', NCORE)
 !
 !   Hydrogenic screen parameters for all orbitals
 !
-      CALL SCREENPAR (NCORE) 
+      CALL SCREENPAR (NCORE)
 !
 !   Determine other relevant information
 !
-      CALL GETINF 
+      CALL GETINF
 !
 !   Write the first part of the  .sum  file
 !
-      IF (NDEF /= 0) CALL STRSUM 
+      IF (NDEF /= 0) CALL STRSUM
 !
 !   Generate the subshell radial wavefunctions
 !
-      CALL GENRWF 
+      CALL GENRWF
 !
 !   Orthogonalize the radial orbitals
 !
-      CALL ORTHSC 
+      CALL ORTHSC
 !
 !   Write the subshell radial wavefunctions out
 !
-      CALL WRTRWF 
+      CALL WRTRWF
 !
 !   Print completion message
 !
-      WRITE (ISTDE, *) 'RWFNESTIMATE: Execution complete.' 
+      WRITE (ISTDE, *) 'RWFNESTIMATE: Execution complete.'
 !
-      STOP  
-      END PROGRAM ERWF 
+      STOP
+      END PROGRAM ERWF

@@ -109,7 +109,7 @@
                     IF(INTERACT .NE. 0) THEN
                        int_CSF = 1
                        RETURN
-                    END IF 
+                    END IF
                  END IF
                ELSE
 !
@@ -119,7 +119,7 @@
                  IF(INTERACT .NE. 0) THEN
                     int_CSF = 1
                     RETURN
-                 END IF 
+                 END IF
                END IF
             END DO
          END DO
@@ -295,7 +295,7 @@
               IF(INTERACT .NE. 0) THEN
                 int_CSF = 1
                 RETURN
-              END IF 
+              END IF
             ELSE
 !
 !     TARP TU PACIU KONFIGURACIJU
@@ -304,7 +304,7 @@
               IF(INTERACT .NE. 0) THEN
                 int_CSF = 1
                 RETURN
-              END IF 
+              END IF
             END IF
          END DO
          IF ((IDQ .EQ. 0) .AND. (NCORE .EQ. 0)) CYCLE
@@ -378,7 +378,7 @@
                   IF(INTERACT .NE. 0) THEN
                     int_CSF = 1
                     RETURN
-                  END IF 
+                  END IF
                 END IF
               ELSE
                 WRITE(99,994)
@@ -392,7 +392,7 @@
             IF(INTERACT .NE. 0) THEN
               int_CSF = 1
               RETURN
-            END IF 
+            END IF
             NPEEL = NPEEL-1
             NPEELM = NPEEL-1
             DO I = 1,NPEEL

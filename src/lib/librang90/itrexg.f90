@@ -2,7 +2,7 @@
 !                                                                  *
       INTEGER FUNCTION ITREXG(I1,I2,I3,I4,K)
 !
-!   Written by G. Gaigalas,                                        * 
+!   Written by G. Gaigalas,                                        *
 !   Vanderbilt University,  Nashville               October  1996  *
 !   Transform to fortran 90/95 by G. Gaigalas       December 2012  *
 !   The last modification made by G. Gaigalas       October  2017  *

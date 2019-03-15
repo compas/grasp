@@ -42,7 +42,7 @@
             READ (21, '(A)') S_orbitals
 !     Read the X, J, and (sign of) P quantum numbers
             READ (21, '(A)') S_orbitals
-            CYCLE 
+            CYCLE
          END IF
          EXIT
       END DO
@@ -58,5 +58,5 @@
 !     Peel orbitals
       READ (21, '(A)') S_orbitals
       READ (21, '(1A7)') RECORD
-      RETURN  
+      RETURN
       END SUBROUTINE SET_CSF_number

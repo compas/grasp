@@ -18,7 +18,7 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      USE openfl_I 
+      USE openfl_I
       USE prsrsl_I
       USE convrt_I
       USE Set_CSF_number_I
@@ -36,35 +36,35 @@
       print *,                                                          &
       "Give the full name of the list that contains the zero-order space"
       read(*,'(a)') FILNAM
-      FORM = 'FORMATTED' 
-      STATUS = 'OLD' 
-      CALL OPENFL (21, FILNAM, FORM, STATUS, IERR) 
-      IF (IERR == 1) THEN 
-         WRITE (6, *) 'Error when opening', FILNAM 
-         STOP  
-      ENDIF 
+      FORM = 'FORMATTED'
+      STATUS = 'OLD'
+      CALL OPENFL (21, FILNAM, FORM, STATUS, IERR)
+      IF (IERR == 1) THEN
+         WRITE (6, *) 'Error when opening', FILNAM
+         STOP
+      ENDIF
       READ (21, '(1A15)', IOSTAT=IOS) RECORD_1
-      IF (IOS/=0 .OR. RECORD_1(1:15)/='Core subshells:') THEN 
-         WRITE (6, *) 'Not a Configuration Symmetry List File;' 
-         CLOSE(21) 
-      ENDIF 
+      IF (IOS/=0 .OR. RECORD_1(1:15)/='Core subshells:') THEN
+         WRITE (6, *) 'Not a Configuration Symmetry List File;'
+         CLOSE(21)
+      ENDIF
 !
       print *,                                                           &
       "Give the full name of the list that should be partitioned"
       read(*,'(a)') FILNAM
       WRITE (6, *) 'Loading Configuration Symmetry List File ...'
-      FORM = 'FORMATTED' 
-      STATUS = 'OLD' 
-      CALL OPENFL (20, FILNAM, FORM, STATUS, IERR) 
-      IF (IERR == 1) THEN 
-         WRITE (6, *) 'Error when opening', FILNAM 
-         STOP  
-      ENDIF 
+      FORM = 'FORMATTED'
+      STATUS = 'OLD'
+      CALL OPENFL (20, FILNAM, FORM, STATUS, IERR)
+      IF (IERR == 1) THEN
+         WRITE (6, *) 'Error when opening', FILNAM
+         STOP
+      ENDIF
       READ (20, '(1A15)', IOSTAT=IOS) RECORD_2
-      IF (IOS/=0 .OR. RECORD_2(1:15)/='Core subshells:') THEN 
-         WRITE (6, *) 'Not a Configuration Symmetry List File;' 
-         CLOSE(20) 
-      ENDIF 
+      IF (IOS/=0 .OR. RECORD_2(1:15)/='Core subshells:') THEN
+         WRITE (6, *) 'Not a Configuration Symmetry List File;'
+         CLOSE(20)
+      ENDIF
 !
       READ (21, '(A)') S_closed_1
       READ (20, '(A)') S_closed_2
@@ -72,10 +72,10 @@
          STOP "Diffeent close shells"
       end if
 !
-      FILNAM = 'rcsf.out' 
-      FORM = 'FORMATTED' 
-      STATUS = 'OLD' 
-      CALL OPENFL (22, FILNAM, FORM, STATUS, IERR) 
+      FILNAM = 'rcsf.out'
+      FORM = 'FORMATTED'
+      STATUS = 'OLD'
+      CALL OPENFL (22, FILNAM, FORM, STATUS, IERR)
       WRITE (22, '(1A15)') RECORD_1
       I = LEN_TRIM(S_closed_1)
       WRITE (22,'(A)') S_closed_1(1:I)
@@ -102,44 +102,44 @@
 !
 !   Get the list of subshells
 !
-      NW = 0 
+      NW = 0
 !
 !   Read the list of core subshells; set up the arrays NP, NAK,
 !   NKL, NKJ, NH for these subshells
 !
-      CALL PRSRSL (20, 1) 
-      NCORE = NW 
+      CALL PRSRSL (20, 1)
+      NCORE = NW
 !
 !   Skip the peel subshell identification header; read the list of
 !   peel subshells; set up the arrays NP, NAK, NKL, NKJ, NH for
 !   these subshells
 !
-      READ (20, *) 
-      CALL PRSRSL (20, 2) 
+      READ (20, *)
+      CALL PRSRSL (20, 2)
 !
 !   Ensure that the sets of core and peel subshell are disjoint
 !
-      DO J = NCORE + 1, NW 
-         NPJ = NP(J) 
-         NAKJ = NAK(J) 
-         DO I = 1, NCORE 
-            IF (NP(I)/=NPJ .OR. NAK(I)/=NAKJ) CYCLE  
+      DO J = NCORE + 1, NW
+         NPJ = NP(J)
+         NAKJ = NAK(J)
+         DO I = 1, NCORE
+            IF (NP(I)/=NPJ .OR. NAK(I)/=NAKJ) CYCLE
             WRITE (ISTDE, *) 'SET_CSF_list: The lists of core and', &
-               ' peel subshells must form disjoint sets.' 
-            STOP  
-         END DO 
-      END DO 
+               ' peel subshells must form disjoint sets.'
+            STOP
+         END DO
+      END DO
 !
 !   Print the number of relativistic subshells
 !
-      IF (NW > 1) THEN 
-         CALL CONVRT (NW, RECORD, LENTH) 
+      IF (NW > 1) THEN
+         CALL CONVRT (NW, RECORD, LENTH)
          WRITE (6, *) 'There are '//RECORD(1:LENTH)// &
-                      ' relativistic subshells;' 
-      ELSE 
-         WRITE (6, *) 'There is 1 relativistic subshell;' 
-      ENDIF 
+                      ' relativistic subshells;'
+      ELSE
+         WRITE (6, *) 'There is 1 relativistic subshell;'
+      ENDIF
       READ (20, *)
 !
-      RETURN  
+      RETURN
       END SUBROUTINE SET_CSF_ZFlist

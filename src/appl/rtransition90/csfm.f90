@@ -9,8 +9,8 @@
 !   Modified for different initial and final state orbitals            *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -62,7 +62,7 @@
       JPAR = (IASPARFF(LEV2)+3)/2
       JPARI = LABP(IPAR)
       JPARJ = LABP(JPAR)
- 
+
       IF (LDBPR(18)) THEN
           WRITE (*,302) IVECFF(LEV2), JLABJ, JPARJ, IVECII(LEV1),    &
        JLABI, JPARI

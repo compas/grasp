@@ -23,21 +23,21 @@ character(len=7) :: dTstring(ntrans)
 open(unit=19,file='transitiontable.tex',status='unknown')
 open(unit=20,file='transitiontableascii.txt',status='unknown')
 
-write(*,*) 
+write(*,*)
 write(*,*) ' RTABTRANSE1'
 write(*,*) ' Makes LaTeX tables of transition data from transition files'
 write(*,*) ' name1.name2.ct.lsj '
 write(*,*) ' Input file: name1.name2.ct.lsj'
 write(*,*) ' Output file: transitiontable.tex'
-write(*,*) 
+write(*,*)
 
 write(*,*) ' Specify table format '
-write(*,*) ' (1). Lower & Upper & Energy diff. & wavelength & S & gf & A & dT '   
-write(*,*) ' (2). Lower & Upper & Energy diff. & wavelength & gf & A & dT '   
-write(*,*) ' (3). Lower & Upper & Energy diff. & wavelength & gf & A '   
-write(*,*) ' (4). Lower & Upper & Energy diff. & S & gf & A & dT '   
-write(*,*) ' (5). Lower & Upper & Energy diff. & gf & A & dT '   
-write(*,*) ' (6). Lower & Upper & Energy diff. & gf & A '   
+write(*,*) ' (1). Lower & Upper & Energy diff. & wavelength & S & gf & A & dT '
+write(*,*) ' (2). Lower & Upper & Energy diff. & wavelength & gf & A & dT '
+write(*,*) ' (3). Lower & Upper & Energy diff. & wavelength & gf & A '
+write(*,*) ' (4). Lower & Upper & Energy diff. & S & gf & A & dT '
+write(*,*) ' (5). Lower & Upper & Energy diff. & gf & A & dT '
+write(*,*) ' (6). Lower & Upper & Energy diff. & gf & A '
 read(*,*) nformat
 
 write(*,*) ' Inspect the name1.name2.ct.lsj file and determine how many positions'
@@ -45,7 +45,7 @@ write(*,*) ' should be skipped in the string that determines the label '
 write(*,*) ' e.g. if the string is 1s(2).2s_2S.2p(2)3P2_4P and 1s(2) is a core'
 write(*,*) ' then you would like to skip 1s(2). i.e. 6 positions and determine'
 write(*,*) ' the label from 2s_2S.2p(2)3P2_4P'
-write(*,*) 
+write(*,*)
 write(*,*) ' How many positions should be skipped?'
 read(*,*) nskip
 
@@ -62,7 +62,7 @@ if (nformat.eq.1) then
    write(19,'(a)') 'Lower state & Upper state & $\Delta E$ (cm$^{-1}$) & $\lambda$ (\AA) &$S$&$gf$& $A$ (s$^{-1}$)&$dT$ \\ \hline'
 elseif (nformat.eq.2) then
    write(19,'(a)') '\begin{longtable}{llrrrrr}'
-   write(19,'(a)') ' Lower state & Upper state & $\Delta E$ (cm$^{-1}$) & $\lambda$ (\AA) & $gf$ & $A$ (s$^{-1}$)&$dT$ \\ \hline' 
+   write(19,'(a)') ' Lower state & Upper state & $\Delta E$ (cm$^{-1}$) & $\lambda$ (\AA) & $gf$ & $A$ (s$^{-1}$)&$dT$ \\ \hline'
 elseif (nformat.eq.3) then
    write(19,'(a)') '\begin{longtable}{llrrrr}'
    write(19,'(a)') ' Lower state & Upper state & $\Delta E$ (cm$^{-1}$) & $\lambda$ (\AA) & $gf$ & $A$ (s$^{-1}$) \\ \hline'
@@ -87,7 +87,7 @@ do h = 1,nfile
 
    open(unit=20+h,file=trim(filename),status='old')
 
-! Start reading the file 
+! Start reading the file
 
    do j = 1,3
       read(20+h,'(a)') linedummy
@@ -163,7 +163,7 @@ do h = 1,nfile
       dTstring(nt) = line4(70:76)
 !      write(*,*) labelstring1
 !      write(*,*) labelstring2
-  
+
 
 ! Convert quantum labels
 ! to LaTeX
@@ -192,14 +192,14 @@ do h = 1,nfile
             labelstring1(1:i-1) = dummystring(1:i-1)
             labelstring1(i:i) = '\'
             labelstring1(i+1:i+1) = ','
-            labelstring1(i+2:145) = dummystring(i+1:143) 
+            labelstring1(i+2:145) = dummystring(i+1:143)
          end if
          if (labelstring2(i:i).eq.'.') then
             dummystring = labelstring2
             labelstring2(1:i-1) = dummystring(1:i-1)
             labelstring2(i:i) = '\'
             labelstring2(i+1:i+1) = ','
-            labelstring2(i+2:145) = dummystring(i+1:143) 
+            labelstring2(i+2:145) = dummystring(i+1:143)
          end if
       end do
 
@@ -219,7 +219,7 @@ do h = 1,nfile
          ncase = 0
          do i = 1,177
             do j = 48,57
-               do k = 48,57 
+               do k = 48,57
                   char1 = labelstring1(i:i)
                   char2 = labelstring1(i+1:i+1)
                   char3 = labelstring1(i+2:i+2)
@@ -242,7 +242,7 @@ do h = 1,nfile
          ncase = 0
          do i = 1,177
             do j = 48,57
-               do k = 48,57 
+               do k = 48,57
                   char1 = labelstring2(i:i)
                   char2 = labelstring2(i+1:i+1)
                   char3 = labelstring2(i+2:i+2)
@@ -261,10 +261,10 @@ do h = 1,nfile
 !         write(*,'(a)') trim(labelstring2)
       end do
 
-!  If integer1 and S, P, D, F, G, H, I, K, L, M, N and not integer2 replace with ^integer1S, ^integer1P, etc 
+!  If integer1 and S, P, D, F, G, H, I, K, L, M, N and not integer2 replace with ^integer1S, ^integer1P, etc
 
       do i = 1,177
-!  
+!
          if (labelstring1(i:i).eq.'~') then
             dummystring = labelstring1
             labelstring1(1:i) = dummystring(1:i)
@@ -279,49 +279,49 @@ do h = 1,nfile
          end if
       end do
 
-      if (j1.eq.' 0') labelstring1 = '$'//trim(labelstring1)//'_{0}$' 
-      if (j2.eq.' 0') labelstring2 = '$'//trim(labelstring2)//'_{0}$' 
-      if (j1.eq.' 1') labelstring1 = '$'//trim(labelstring1)//'_{1/2}$' 
-      if (j2.eq.' 1') labelstring2 = '$'//trim(labelstring2)//'_{1/2}$' 
-      if (j1.eq.' 2') labelstring1 = '$'//trim(labelstring1)//'_{1}$' 
-      if (j2.eq.' 2') labelstring2 = '$'//trim(labelstring2)//'_{1}$' 
-      if (j1.eq.' 3') labelstring1 = '$'//trim(labelstring1)//'_{3/2}$' 
-      if (j2.eq.' 3') labelstring2 = '$'//trim(labelstring2)//'_{3/2}$' 
-      if (j1.eq.' 4') labelstring1 = '$'//trim(labelstring1)//'_{2}$' 
-      if (j2.eq.' 4') labelstring2 = '$'//trim(labelstring2)//'_{2}$' 
-      if (j1.eq.' 5') labelstring1 = '$'//trim(labelstring1)//'_{5/2}$' 
-      if (j2.eq.' 5') labelstring2 = '$'//trim(labelstring2)//'_{5/2}$' 
-      if (j1.eq.' 6') labelstring1 = '$'//trim(labelstring1)//'_{3}$' 
-      if (j2.eq.' 6') labelstring2 = '$'//trim(labelstring2)//'_{3}$' 
-      if (j1.eq.' 7') labelstring1 = '$'//trim(labelstring1)//'_{7/2}$' 
-      if (j2.eq.' 7') labelstring2 = '$'//trim(labelstring2)//'_{7/2}$' 
-      if (j1.eq.' 8') labelstring1 = '$'//trim(labelstring1)//'_{4}$' 
-      if (j2.eq.' 8') labelstring2 = '$'//trim(labelstring2)//'_{4}$' 
-      if (j1.eq.' 9') labelstring1 = '$'//trim(labelstring1)//'_{9/2}$' 
-      if (j2.eq.' 9') labelstring2 = '$'//trim(labelstring2)//'_{9/2}$' 
-      if (j1.eq.'10') labelstring1 = '$'//trim(labelstring1)//'_{5}$' 
-      if (j2.eq.'10') labelstring2 = '$'//trim(labelstring2)//'_{5}$' 
-      if (j1.eq.'11') labelstring1 = '$'//trim(labelstring1)//'_{11/2}$' 
-      if (j2.eq.'11') labelstring2 = '$'//trim(labelstring2)//'_{11/2}$' 
-      if (j1.eq.'12') labelstring1 = '$'//trim(labelstring1)//'_{6}$' 
-      if (j2.eq.'12') labelstring2 = '$'//trim(labelstring2)//'_{6}$' 
-      if (j1.eq.'13') labelstring1 = '$'//trim(labelstring1)//'_{13/2}$' 
-      if (j2.eq.'13') labelstring2 = '$'//trim(labelstring2)//'_{13/2}$' 
-      if (j1.eq.'14') labelstring1 = '$'//trim(labelstring1)//'_{7}$' 
-      if (j2.eq.'14') labelstring2 = '$'//trim(labelstring2)//'_{7}$' 
-      if (j1.eq.'15') labelstring1 = '$'//trim(labelstring1)//'_{15/2}$' 
-      if (j2.eq.'15') labelstring2 = '$'//trim(labelstring2)//'_{15/2}$' 
-      if (j1.eq.'16') labelstring1 = '$'//trim(labelstring1)//'_{8}$' 
-      if (j2.eq.'16') labelstring2 = '$'//trim(labelstring2)//'_{8}$' 
-      if (j1.eq.'17') labelstring1 = '$'//trim(labelstring1)//'_{17/2}$' 
-      if (j2.eq.'17') labelstring2 = '$'//trim(labelstring2)//'_{17/2}$' 
-      if (j1.eq.'18') labelstring1 = '$'//trim(labelstring1)//'_{9}$' 
-      if (j2.eq.'18') labelstring2 = '$'//trim(labelstring2)//'_{9}$' 
-      if (j1.eq.'19') labelstring1 = '$'//trim(labelstring1)//'_{19/2}$' 
-      if (j2.eq.'19') labelstring2 = '$'//trim(labelstring2)//'_{19/2}$' 
+      if (j1.eq.' 0') labelstring1 = '$'//trim(labelstring1)//'_{0}$'
+      if (j2.eq.' 0') labelstring2 = '$'//trim(labelstring2)//'_{0}$'
+      if (j1.eq.' 1') labelstring1 = '$'//trim(labelstring1)//'_{1/2}$'
+      if (j2.eq.' 1') labelstring2 = '$'//trim(labelstring2)//'_{1/2}$'
+      if (j1.eq.' 2') labelstring1 = '$'//trim(labelstring1)//'_{1}$'
+      if (j2.eq.' 2') labelstring2 = '$'//trim(labelstring2)//'_{1}$'
+      if (j1.eq.' 3') labelstring1 = '$'//trim(labelstring1)//'_{3/2}$'
+      if (j2.eq.' 3') labelstring2 = '$'//trim(labelstring2)//'_{3/2}$'
+      if (j1.eq.' 4') labelstring1 = '$'//trim(labelstring1)//'_{2}$'
+      if (j2.eq.' 4') labelstring2 = '$'//trim(labelstring2)//'_{2}$'
+      if (j1.eq.' 5') labelstring1 = '$'//trim(labelstring1)//'_{5/2}$'
+      if (j2.eq.' 5') labelstring2 = '$'//trim(labelstring2)//'_{5/2}$'
+      if (j1.eq.' 6') labelstring1 = '$'//trim(labelstring1)//'_{3}$'
+      if (j2.eq.' 6') labelstring2 = '$'//trim(labelstring2)//'_{3}$'
+      if (j1.eq.' 7') labelstring1 = '$'//trim(labelstring1)//'_{7/2}$'
+      if (j2.eq.' 7') labelstring2 = '$'//trim(labelstring2)//'_{7/2}$'
+      if (j1.eq.' 8') labelstring1 = '$'//trim(labelstring1)//'_{4}$'
+      if (j2.eq.' 8') labelstring2 = '$'//trim(labelstring2)//'_{4}$'
+      if (j1.eq.' 9') labelstring1 = '$'//trim(labelstring1)//'_{9/2}$'
+      if (j2.eq.' 9') labelstring2 = '$'//trim(labelstring2)//'_{9/2}$'
+      if (j1.eq.'10') labelstring1 = '$'//trim(labelstring1)//'_{5}$'
+      if (j2.eq.'10') labelstring2 = '$'//trim(labelstring2)//'_{5}$'
+      if (j1.eq.'11') labelstring1 = '$'//trim(labelstring1)//'_{11/2}$'
+      if (j2.eq.'11') labelstring2 = '$'//trim(labelstring2)//'_{11/2}$'
+      if (j1.eq.'12') labelstring1 = '$'//trim(labelstring1)//'_{6}$'
+      if (j2.eq.'12') labelstring2 = '$'//trim(labelstring2)//'_{6}$'
+      if (j1.eq.'13') labelstring1 = '$'//trim(labelstring1)//'_{13/2}$'
+      if (j2.eq.'13') labelstring2 = '$'//trim(labelstring2)//'_{13/2}$'
+      if (j1.eq.'14') labelstring1 = '$'//trim(labelstring1)//'_{7}$'
+      if (j2.eq.'14') labelstring2 = '$'//trim(labelstring2)//'_{7}$'
+      if (j1.eq.'15') labelstring1 = '$'//trim(labelstring1)//'_{15/2}$'
+      if (j2.eq.'15') labelstring2 = '$'//trim(labelstring2)//'_{15/2}$'
+      if (j1.eq.'16') labelstring1 = '$'//trim(labelstring1)//'_{8}$'
+      if (j2.eq.'16') labelstring2 = '$'//trim(labelstring2)//'_{8}$'
+      if (j1.eq.'17') labelstring1 = '$'//trim(labelstring1)//'_{17/2}$'
+      if (j2.eq.'17') labelstring2 = '$'//trim(labelstring2)//'_{17/2}$'
+      if (j1.eq.'18') labelstring1 = '$'//trim(labelstring1)//'_{9}$'
+      if (j2.eq.'18') labelstring2 = '$'//trim(labelstring2)//'_{9}$'
+      if (j1.eq.'19') labelstring1 = '$'//trim(labelstring1)//'_{19/2}$'
+      if (j2.eq.'19') labelstring2 = '$'//trim(labelstring2)//'_{19/2}$'
 
-      if (len_trim(labelstring1).gt.maxlengthlatex1) maxlengthlatex1 = len_trim(labelstring1)   
-      if (len_trim(labelstring2).gt.maxlengthlatex2) maxlengthlatex2 = len_trim(labelstring2)   
+      if (len_trim(labelstring1).gt.maxlengthlatex1) maxlengthlatex1 = len_trim(labelstring1)
+      if (len_trim(labelstring2).gt.maxlengthlatex2) maxlengthlatex2 = len_trim(labelstring2)
 
       latexstring1(nt) = labelstring1
       latexstring2(nt) = labelstring2
@@ -367,8 +367,8 @@ do h = 1,nfile
       if (j1.eq.'19') asciistring1(nt) = trim(asciistring1(nt))//' 19/2'
       if (j2.eq.'19') asciistring2(nt) = trim(asciistring2(nt))//' 19/2'
 
-      if (len_trim(asciistring1(nt)).gt.maxlengthascii1) maxlengthascii1 = len_trim(asciistring1(nt))   
-      if (len_trim(asciistring2(nt)).gt.maxlengthascii2) maxlengthascii2 = len_trim(asciistring2(nt))   
+      if (len_trim(asciistring1(nt)).gt.maxlengthascii1) maxlengthascii1 = len_trim(asciistring1(nt))
+      if (len_trim(asciistring2(nt)).gt.maxlengthascii2) maxlengthascii2 = len_trim(asciistring2(nt))
 
    end do
 999 continue

@@ -1,16 +1,16 @@
 !
 !***********************************************************************
 !                                                                      *
-      MODULE terms_C 
+      MODULE terms_C
 !                                                                      *
 !***********************************************************************
-!...Created by Pacific-Sierra Research 77to90  4.3E  06:16:25   2/14/04  
-!...Modified by Charlotte Froese Fischer 
+!...Created by Pacific-Sierra Research 77to90  4.3E  06:16:25   2/14/04
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
       implicit none
-      INTEGER, DIMENSION(31) :: ITAB 
-      INTEGER, DIMENSION(32) :: JTAB 
-      INTEGER, DIMENSION(327) :: NTAB 
+      INTEGER, DIMENSION(31) :: ITAB
+      INTEGER, DIMENSION(32) :: JTAB
+      INTEGER, DIMENSION(327) :: NTAB
       INTEGER :: NROWS
       INTEGER, PRIVATE :: i
       DATA NROWS/ 31/
@@ -101,4 +101,4 @@
       DATA (JTAB(I),I=30,32)/ 300, 303, 328/
       DATA (NTAB(I),I=301,327)/ 1, 0, 16, 0, 0, 1, 2, 0, 5, 2, 0, 9, 2, 0, 13, &
          2, 0, 17, 2, 0, 21, 2, 0, 25, 2, 0, 29/
-      END MODULE terms_C 
+      END MODULE terms_C

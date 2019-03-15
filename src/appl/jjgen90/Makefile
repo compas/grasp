@@ -31,5 +31,4 @@ $(EXE): $(MOD_OBJ) $(APP_OBJ)
 	$(FC) -c $< -I .  -o $@
 
 clean:
-	-rm -f *.o *.mod  core 
-
+	-rm -f *.o *.mod  core

@@ -8,9 +8,9 @@
       write(*,*) '****************************************************'
       write(*,*) 'Program wfnplot writes HF/MCHF radial wave functions'
       write(*,*) 'to following output files:'
-      write(*,*)      
+      write(*,*)
       write(*,*) 'Matlab/GNU Octave file "octave_name.m"'
-      write(*,*) 'Xmgrace file "xmgrace_name.agr"'      
+      write(*,*) 'Xmgrace file "xmgrace_name.agr"'
       write(*,*)
       write(*,*) 'Input file:  name.w'
       write(*,*)
@@ -26,12 +26,12 @@
       READ(*,*) name
       OPEN(3,FILE=trim(name)//'.w',STATUS='OLD',FORM='UNFORMATTED')
       OPEN(4,FILE='octave_'//trim(name)//'.m',STATUS='UNKNOWN')
-      OPEN(8,FILE='xmgrace_'//trim(name)//'.agr',STATUS='UNKNOWN')      
+      OPEN(8,FILE='xmgrace_'//trim(name)//'.agr',STATUS='UNKNOWN')
       write(*,*)
       write(*,*) 'To have r on x-axis: type "y" otherwise "n" for sqrt(r '
-      write(*,*)      
+      write(*,*)
       read(*,*) XA
-      
+
       IUF=3
       nwf=1
       MM = 0
@@ -67,15 +67,15 @@
       NWF = NWF -1
       write(4,*) '% sqrt(r)    P(nl;r)'
       write(4,*) 'clf'
-      
+
       if(XA.eq.'y  ') then
          write(8,*) '@    xaxis  label "r"'
       else
          write(8,*) '@    xaxis  label "sqrt(r)"'
       end if
-      write(8,*) '@    yaxis  label "P(r)"'      
+      write(8,*) '@    yaxis  label "P(r)"'
       write(8,*) '# sqrt(r)    P(nl;r)'
-      
+
       DO 20 I = 1,NWF
 
          if(I-1.lt.10) then
@@ -87,23 +87,23 @@
              '@    s',I-1,'  legend  "',EL(I),'"'
          write(8,*) trim(leg)
          write(8,*) '# ',EL(I)
-         
+
 	 write(4,*) 'P = ['
 	 DO 21 J = 1,MM,inc
 	    Pwave = P(J,I)*R2(J)
             IF(XA.EQ.'y  ') THEN
                IF (abs(Pwave) .gt. 0.0005 .OR. J.EQ.1) 	&
                    WRITE(4,'(F10.4,F12.3)') R(J),Pwave
-               WRITE(8,'(F10.4,F12.3)') R(J),Pwave               
+               WRITE(8,'(F10.4,F12.3)') R(J),Pwave
             ELSE
                IF (abs(Pwave) .gt. 0.0005 .OR. J.EQ.1) 	&
                    WRITE(4,'(F10.4,F12.3)') R2(J),Pwave
-               WRITE(8,'(F10.4,F12.3)') R2(J),Pwave               
+               WRITE(8,'(F10.4,F12.3)') R2(J),Pwave
             END IF
  21      CONTINUE
          write(8,*)
 	 write(4,*) '];'
-         write(4,*) 'plot(P(:,1), P(:,2))'         
+         write(4,*) 'plot(P(:,1), P(:,2))'
          write(4,*) 'hold all'
  20   CONTINUE
       IF(XA.EQ.'y  ') THEN
@@ -111,16 +111,16 @@
       ELSE
          write(4,*) 'xlabel (''sqrt(r)'', ''fontsize'', 12)'
       END IF
-      write(4,*) 'ylabel (''P(r)'', ''fontsize'', 12)' 
+      write(4,*) 'ylabel (''P(r)'', ''fontsize'', 12)'
       write(4,*) 'grid on'
-      write(4,101,advance='no') 'legend('         
+      write(4,101,advance='no') 'legend('
       DO 22 I = 1,NWF
          IF(I.LT.NWF) THEN
             write(4,102,advance='no') '''',EL(I),''','
          ELSE
-            write(4,102,advance='no') '''',EL(I),''')'            
+            write(4,102,advance='no') '''',EL(I),''')'
          END IF
  22   CONTINUE
  101  format(a)
- 102  format(3a)      
+ 102  format(3a)
       END

@@ -10,7 +10,7 @@
 !                                          Last updated: 02 Nov 1992   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Charlotte Froese Fischer 
+!...Translated by Charlotte Froese Fischer
 !                       Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -34,7 +34,7 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-                                                          
+
       INTEGER, DIMENSION(5) :: ICONF
 !      REAL(DOUBLE), DIMENSION(5) :: WGHT(5)
       REAL(DOUBLE), DIMENSION(5) :: WT(5)

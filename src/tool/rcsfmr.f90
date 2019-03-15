@@ -15,7 +15,7 @@ write(*,*) 'configuartions that give rise to LSJ coupled CSFs with absolute weig
 write(*,*) 'larger than a specified cut-off'
 write(*,*) 'Input file: namel.lsj.lbl'
 write(*,*) 'Ouput is written to screen'
-write(*,*) 
+write(*,*)
 write(*,*) 'Name of state'
 read(*,'(a)') filename
 write(*,*) 'Give cut-off for weight'
@@ -54,9 +54,9 @@ do i = 1,n
    end do
 end do
 
-write(*,*) 
+write(*,*)
 write(*,*) 'Configurations in the MR'
-write(*,*) 
+write(*,*)
 
 do i = 1,n
    if (len(trim(string_vec(i))).gt.0) then
@@ -116,7 +116,7 @@ do i = 2,nstring
    end if
 end do
 
-! Now remove digits unless digit in parenthesis or if 
+! Now remove digits unless digit in parenthesis or if
 ! first or second character to the right is 's','p',....
 
 string1 = ' '
@@ -215,7 +215,7 @@ do i = 3,nstring
 end do
 
 !write(*,'(a)') trim(string2)
-      
 
 
-end 
+
+end

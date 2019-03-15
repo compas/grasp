@@ -1,19 +1,19 @@
 !***********************************************************************
-! 
+!
       function relci_qed_F_Klarsfeld(n,kappa,Z)                   result(F)
 !--------------------------------------------------------------------
 ! Estimates the function  F (Z*\alpha) by using a series expansion
 ! from S Klarsfeld and A Maquet, Physics Letters  43B (1973) 201,
-! Eqs (1) and (2) and the table of Bethe logarithms. The 
-! vacuum-polarization contribution in Eq (2) is omitted. 
+! Eqs (1) and (2) and the table of Bethe logarithms. The
+! vacuum-polarization contribution in Eq (2) is omitted.
 ! This procedure is adapted from RCI92 of GRASP92, written
 ! by Farid A Parpia, to the Fortran 95 standard.
 !-----------------------------------------------
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  DOUBLE
       IMPLICIT NONE
@@ -31,7 +31,7 @@
            -0.0004079_dp,   2.7324291_dp,  -0.0461552_dp,  -0.0085192_dp, &
            -0.0027091_dp,  -0.0010945_dp,  -0.0004997_dp,  -0.0002409_dp, &
             2.7302673_dp,  -0.0467413_dp,  -0.0087850_dp,  -0.0028591_dp, &
-           -0.0011904_dp,  -0.0005665_dp,  -0.0002904_dp,  -0.0001539_dp /) 
+           -0.0011904_dp,  -0.0005665_dp,  -0.0002904_dp,  -0.0001539_dp /)
       !
       real(double), parameter :: C401 = 11.0_dp/24.0_dp,                 &
                                C402 = 3.0_dp/8.0_dp, ovlfac = 4.0_dp/3.0_dp

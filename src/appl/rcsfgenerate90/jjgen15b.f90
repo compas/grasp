@@ -98,26 +98,26 @@
                                     low,minJ,maxJ,lim,dubbel)
          call Fivelines(org,lock,closed,.TRUE.,posn,posl)
          call Blanda(org,varmax,lock,minJ,maxJ,skal,nmax,low,   &
-                                  posn,posl,lim,dubbel,.TRUE.) 
+                                  posn,posl,lim,dubbel,.TRUE.)
          second = .FALSE.
       endif
            ii=0
       if(.not.second) then
          call Merge(.TRUE.,posn,posl,ii)
          if(advexp) ii=ii+1
-         call open79(ii)   
+         call open79(ii)
       endif
 
-      do  
+      do
          call Matbin(org,lock,closed,varmax,skal,second,anel,   &
-                            par,low,nmax,lim,dubbel,minJ,maxJ) 
+                            par,low,nmax,lim,dubbel,minJ,maxJ)
          if(.not.second) exit
          call Fivelines(org,lock,closed,.FALSE.,posn,posl)
          call Blanda(org,varmax,lock,minJ,maxJ,skal,nmax,low,   &
-                                posn,posl,lim,dubbel,.FALSE.) 
+                                posn,posl,lim,dubbel,.FALSE.)
          call Merge(.false.,posn,posl,ii)
          ii=ii+1
-         call open79(ii) 
+         call open79(ii)
          second = .false.
       enddo
 !      write(*,200) 'The merged file is called rcsf.out.'

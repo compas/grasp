@@ -14,7 +14,7 @@
 !                                                                      *
 !***********************************************************************
 !...Translated by Pacific-Sierra Research 77to90  4.3E  11:11:16  12/23/06
-!...Modified by Charlotte Froese Fischer 
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -55,7 +55,7 @@
       IF (NDEF .EQ. 0) THEN
          RETURN
       ENDIF
- 
+
       WRITE (istde,*) 'Generate debug printout?'
       DEBUG = GETYN ()
       IF (DEBUG) THEN
@@ -97,7 +97,7 @@
          LDBPA(3) = GETYN ()
          WRITE (istde,*) ' Print out sparse matrix definition arrays?'
          LDBPA(4) = GETYN ()
- 
+
       ENDIF
 !
       RETURN

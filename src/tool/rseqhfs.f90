@@ -1,6 +1,6 @@
 program rseqhfs
 
-! Per Jönsson, Malmö University, June 2015   
+! Per Jönsson, Malmö University, June 2015
 
 implicit none
 logical :: ex
@@ -17,10 +17,10 @@ character(len=100) :: label,dummy
 write(*,*) 'RSEQHFS'
 write(*,*) 'This program reads output from rhfs for several'
 write(*,*) 'ions and produces a Matlab/Octave file that '
-write(*,*) 'plots hfs parameters as functions of Z'  
+write(*,*) 'plots hfs parameters as functions of Z'
 write(*,*) 'Input files: hfsZ1, hfsZ2, .., hfsZn or'
 write(*,*) 'Output file: seqhfsplot.m'
-write(*,*) 
+write(*,*)
 
 !--- Define Z range --------------------------
 
@@ -30,12 +30,12 @@ read(*,*) Zmin,Zmax
 !--- Give parity, J and number for state -----
 
 write(*,*) 'How many states do you want to plot?'
-read(*,*) nplot 
+read(*,*) nplot
 do i = 1,nplot
    write(*,*) 'Give number within symmetry,2*J and parity (+/-)'
    read(*,*) numplot(i),j2,pplot(i)
 
-   if (mod(j2,2).eq.0) then 
+   if (mod(j2,2).eq.0) then
       if (j2.le.18) then
          write(jplot(i),'(a3,i1)') '   ',j2/2
       else
@@ -47,7 +47,7 @@ do i = 1,nplot
       else
          write(jplot(i),'(i2,a2)') j2,'/2'
       end if
-   end if    
+   end if
 !   write(*,*) pplot(i),jplot(i),numplot(i)
 end do
 
@@ -96,17 +96,17 @@ do k = 1,nions
 !--- Read header information ---------------
 
    do i = 1,9
-      read(100+k,'(a)') 
+      read(100+k,'(a)')
    end do
 
 !--- Read and xxxx
 
    nfound = 0
-   do 
+   do
       read(100+k,3,iostat=readerr) pos,jval,par,A,B,gJ
        if (readerr.ne.0) then
          exit
-      end if    
+      end if
 !      write(*,3) pos,jval,par,A,B,gJ
       do j = 1,nplot
          if ((pplot(j).eq.par).and.(jplot(j).eq.jval).and.(numplot(j).eq.pos)) then
@@ -141,7 +141,7 @@ elseif (nform.eq.2) then
 else
    write(12,'(a)') "ylabel('g_J')"
 end if
-   
+
 do i = 1,nplot
    write(12,'(a,i2,a)') "plot(A(:,1),A(:,",i+1,"),'+')"
    write(12,*)
@@ -151,20 +151,20 @@ do i = 1,nplot
          write(12,'(a)') 'AD = [z.^(-2) z.^(-1) z.^0 z.^1 z.^2 z.^3];'
          write(12,'(a,i2,a)') 'y = A(:,',i+1,');'
          write(12,'(a)') 'm = mean(y); s = std(y);'
-         write(12,'(a)') 'a = AD\(y-m)/s'         
+         write(12,'(a)') 'a = AD\(y-m)/s'
          write(12,'(a)') 'eiplsq = a(1)./zip.^2 + a(2)./zip + a(3) + a(4)*zip + a(5)*zip.^2 + a(6)*zip.^3;'
          write(12,'(a)') 'eiplsq = s*eiplsq + m;'
-         write(12,'(a)') "plot(zip,eiplsq,'r')" 
+         write(12,'(a)') "plot(zip,eiplsq,'r')"
          write(12,*)
       else
          write(12,'(a)') 'z = A(:,1);'
          write(12,'(a)') 'AD = [z.^0 z.^1 z.^2 z.^3];'
          write(12,'(a,i2,a)') 'y = A(:,',i+1,');'
          write(12,'(a)') 'm = mean(y); s = std(y);'
-         write(12,'(a)') 'a = AD\(y-m)/s'         
+         write(12,'(a)') 'a = AD\(y-m)/s'
          write(12,'(a)') 'eiplsq =  a(1) + a(2)*zip + a(3)*zip.^2 + a(4)*zip.^3;'
          write(12,'(a)') 'eiplsq = s*eiplsq + m;'
-         write(12,'(a)') "plot(zip,eiplsq,'r')" 
+         write(12,'(a)') "plot(zip,eiplsq,'r')"
          write(12,*)
       end if
    else
@@ -174,6 +174,6 @@ do i = 1,nplot
    end if
 end do
 
-3  format(i4,5x,a4,1x,a1,2x,1P,3D20.10)   
+3  format(i4,5x,a4,1x,a1,2x,1P,3D20.10)
 
 end program rseqhfs

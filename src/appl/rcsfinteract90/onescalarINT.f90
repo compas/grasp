@@ -172,7 +172,7 @@
         ELSE
           INTERACT = 0
         END IF
-      ELSE IF (IDQ .EQ. 2) THEN 
+      ELSE IF (IDQ .EQ. 2) THEN
 !
 !   IDQ = 2 Case
 !
