@@ -1,9 +1,9 @@
-      MODULE settmpgg_I   
+      MODULE settmpgg_I
       INTERFACE
-      SUBROUTINE settmpgg (NB, K, FILEHEAD) 
-      INTEGER, INTENT(IN) :: NB 
+      SUBROUTINE settmpgg (NB, K, FILEHEAD)
+      INTEGER, INTENT(IN) :: NB
       INTEGER, INTENT(IN) :: K
-      CHARACTER (LEN = *), INTENT(IN) :: FILEHEAD 
-      END SUBROUTINE  
-      END INTERFACE 
-      END MODULE 
+      CHARACTER (LEN = *), INTENT(IN) :: FILEHEAD
+      END SUBROUTINE
+      END INTERFACE
+      END MODULE

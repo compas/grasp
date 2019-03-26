@@ -4,9 +4,9 @@ BIN = ${GRASP}/bin
 
 UTIL = hf
 
-install: EXE 
+install: EXE
 
-EXE :        $(BIN)/hf 
+EXE :        $(BIN)/hf
 
 OBJ : hf .o
 
@@ -18,6 +18,3 @@ $(BIN)/hf: HF.o
 
 clean:
 	-rm -f *.o core *.mod
-
-
-

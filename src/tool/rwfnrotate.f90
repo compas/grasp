@@ -1,6 +1,6 @@
 !***********************************************************************
 !                                                                      *
-      PROGRAM RWFNROTATE                   
+      PROGRAM RWFNROTATE
 !                                                                      *
 !   This program rotate orbitals with the same kappa                   *
 !                                                                      *
@@ -41,17 +41,17 @@
       INTEGER :: i, j, k, MFmax, ncore_not_used
       REAL(double) :: dummy1, dummy2
 !
-      
+
 !
-      WRITE(*,*) 
+      WRITE(*,*)
       WRITE(*,*) 'RWFNROTATE'
       WRITE(*,*) 'This program rotates selected pairs of orbitals'
       WRITE(*,*) 'It is only meaningful to rotate pairs of orbitals'
       WRITE(*,*) 'of the same symmetry'
-      WRITE(*,*) 
+      WRITE(*,*)
       WRITE(*,*) 'Inputfile : name.w'
       WRITE(*,*) 'Outputfile: name_rot.w'
-      WRITE(*,*) 
+      WRITE(*,*)
 
       NDEF = 0
 
@@ -62,7 +62,7 @@
          PRINT *, 'Names may not start with a blank'
          GOTO 10
       ENDIF
-      FILNAM = NAME(1:K-1)//'_rot.w' 
+      FILNAM = NAME(1:K-1)//'_rot.w'
       OPEN(36,FILE=FILNAM,FORM='UNFORMATTED',STATUS = 'UNKNOWN')
       WRITE(36) 'G92RWF'
 
@@ -98,14 +98,14 @@
 !
 !   Rotate the orbital pair
 !
-    
+
          MFMAX = MAX(MF(IFIRST(1)),MF(IFIRST(2)))
          DO K = 1,MFMAX
             DUMMY1 = PF(K,IFIRST(1))
             DUMMY2 = PF(K,IFIRST(2))
             PF(K,IFIRST(1)) = (DUMMY1 + DUMMY2)/DSQRT(2.d0)
             PF(K,IFIRST(2)) = (DUMMY2 - DUMMY1)/DSQRT(2.d0)
-      
+
             DUMMY1 = QF(K,IFIRST(1))
             DUMMY2 = QF(K,IFIRST(2))
             QF(K,IFIRST(1)) = (DUMMY1 + DUMMY2)/DSQRT(2.d0)
@@ -123,7 +123,7 @@
          IF (YES .eqv. .FALSE.) EXIT
       ENDDO
 
- 
+
 !
       DO I = 1,NW
          WRITE(36) NP(I),NAK(I),E(I),MF(I)
@@ -150,7 +150,7 @@
 !                                                                      *
 !***********************************************************************
 !
-      USE vast_kind_param, ONLY: DOUBLE 
+      USE vast_kind_param, ONLY: DOUBLE
       USE parameter_def,   ONLY: NNNW
       USE decide_C
       USE def_C

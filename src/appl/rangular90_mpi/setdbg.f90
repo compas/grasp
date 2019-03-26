@@ -53,7 +53,7 @@
       IF (NDEF .EQ. 0) THEN
          RETURN
       ENDIF
- 
+
       WRITE (istde,*) 'Generate debug printout?'
       DEBUG = GETYN ()
       IF (DEBUG) THEN
@@ -95,7 +95,7 @@
          LDBPA(3) = GETYN ()
          WRITE (istde,*) ' Print out sparse matrix definition arrays?'
          LDBPA(4) = GETYN ()
- 
+
       ENDIF
 !
       RETURN

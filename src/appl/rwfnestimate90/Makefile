@@ -35,4 +35,3 @@ $(EXE): ${APP_IOBJ} $(APP_OBJ)
 
 clean:
 	-rm -f *.o core *.mod
-

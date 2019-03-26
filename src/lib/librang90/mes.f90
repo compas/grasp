@@ -25,7 +25,7 @@
 !-----------------------------------------------
       IF(I > 50) THEN
         J=I-50
-        WRITE(6,'(A)') ' error in func./sub. ' 
+        WRITE(6,'(A)') ' error in func./sub. '
         WRITE(6,'(20X,A10)') STRING5(J)
         WRITE(6,'(A)') ' susimaise f sluoksnio termu kodavimas  '
       ELSE

@@ -12,8 +12,8 @@
 !   Block version by Xinghong He          Last revision: 15 Jun 1998   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -87,23 +87,23 @@
       ELSE
          LFORDR = .FALSE.
       ENDIF
- 
+
 ! Get iccutblk() from the user-input
- 
+
       IF (.NOT. LFORDR) THEN
          !...Default first
          DO i = 1, nblock
            iccutblk(i) = ncfblk(i)
          ENDDO
       ELSE
- 
+
       ! Let master do the i/o, then broadcast
             WRITE (istde,*) 'There are ', nblock, 'blocks. They are:'
             WRITE (istde,*) '  block     J Parity     No of CSFs'
             DO i = 1, nblock
                WRITE (istde,*) i, idblk(i)(1:5), ncfblk(i)
             ENDDO
- 
+
             WRITE (istde,*)
             WRITE (istde,*) 'Enter iccut for each block'
             DO jblock = 1, nblock
@@ -120,16 +120,16 @@
                write(734,*) ntmp,'! ICCUT for block',jblock
             ENDDO
       ENDIF
- 
+
 !*****************************************************************
 !
 ! Pre-run ?
 !
 !     IF (IPRERUN .EQ. 0) THEN
- 
+
 !        WRITE (istde,*) ' Prerun with limited interaction?'
 !        YES = GETYN ()
- 
+
 !        IF (YES) THEN
 !           IPRERUN = 1
 !           LTRANS = .FALSE.
@@ -137,7 +137,7 @@
 !           LNMS = .FALSE.
 !           LSMS = .FALSE.
 !           LSE = .FALSE.
- 
+
 !           WRITE (istde,*)  ' Give CSL cut'
 !           READ *, NCSFPRE
 !           WRITE (istde,*)  ' Give coefficient cut for H_0'
@@ -167,13 +167,13 @@
 !
       WRITE (istde,*) 'Include H (Vacuum Polarisation)?'
       LVP = GETYN ()
- 
+
       WRITE (istde,*) 'Include H (Normal Mass Shift)?'
       LNMS = GETYN ()
- 
+
       WRITE (istde,*) 'Include H (Specific Mass Shift)?'
       LSMS = GETYN ()
- 
+
       WRITE (istde,*) 'Estimate self-energy?'
       LSE = GETYN ()
       IF (LSE.EQV..TRUE.) THEN
@@ -244,7 +244,7 @@
 !        WRITE (istde,*) ' N = ',N,';'
 !        WRITE (istde,*) ' revise these values?'
 !        YES = GETYN ()
-! 
+!
 !        IF (YES) THEN
 !           WRITE (istde,*) 'Enter RNT:'
 !           READ *, RNT

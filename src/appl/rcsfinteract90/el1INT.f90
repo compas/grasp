@@ -44,14 +44,14 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      INTEGER, INTENT(IN) :: JJA,JJB,JA,JB,IIRE,ICOLBREI 
+      INTEGER, INTENT(IN) :: JJA,JJB,JA,JB,IIRE,ICOLBREI
       INTEGER, INTENT(OUT) :: INTERACT
 !      DIMENSION CONE(7,20),S(12),IS(4),KAPS(4),KS(4)
 !      DIMENSION PMGG(30),RAGG(30),J(2)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      INTEGER :: II,IA,IB,IAT,IP1,IP2,IP3,IG1,IG2,IG3,IKK,I1,I2,I3,I4,& 
+      INTEGER :: II,IA,IB,IAT,IP1,IP2,IP3,IG1,IG2,IG3,IKK,I1,I2,I3,I4,&
                  IFAZ,J12,IBRD,IBRE,KRA,KRA1,L1,L2,MU,N,NU,ND1,ND2,   &
                  NE1,NE2,NUP1
       INTEGER :: INTERACT1, INTERACT2
@@ -62,7 +62,7 @@
 !      REAL(DOUBLE), DIMENSION(12)   :: S
 !      REAL(DOUBLE), DIMENSION(30)   :: PMGG,RAGG
       REAL(DOUBLE), DIMENSION(30)   :: PMGG
-!      REAL(DOUBLE), DIMENSION(7,20) :: CONE 
+!      REAL(DOUBLE), DIMENSION(7,20) :: CONE
 !-----------------------------------------------
       INTERACT = 0
       IF(JA.NE.JB)GO TO 9
@@ -102,7 +102,7 @@
         KS(3)=IABS(KAPS(3))
         KS(4)=IABS(KAPS(4))
         CALL SNRC(IS,KAPS,KS,ND1,ND2,NE1,NE2,IBRD,IBRE)
-        IF(IBRD .LE. 0)RETURN 
+        IF(IBRD .LE. 0)RETURN
       END IF
       DO I2=IP1,IG1,2
         KRA=(I2-1)/2
@@ -216,8 +216,8 @@
 !           CONE(6,II)=ZERO
 !           CONE(7,II)=ZERO
 !        END DO
-        IF(IBRD .EQ. 0 .AND. IBRE .EQ.0)RETURN 
-!        IF(IBRD .LE. 0 .AND. IBRE .LE. 0)RETURN 
+        IF(IBRD .EQ. 0 .AND. IBRE .EQ.0)RETURN
+!        IF(IBRD .LE. 0 .AND. IBRE .LE. 0)RETURN
       END IF
       DO I1=IP1,IG1,2
         KRA=(I1-1)/2
@@ -289,7 +289,7 @@
         ELSE IF (ICOLBREI .EQ. 2) THEN
           INTERACT = 1
           RETURN
-!          NU=KRA 
+!          NU=KRA
 !          IF(((NU-NE1)/2)*2 .EQ. (NU-NE1)) THEN
 !            IF((ITRIG(KS(1),KS(4),NU+NU+1).NE.0) .AND.  &
 !               (ITRIG(KS(2),KS(3),NU+NU+1).NE.0)) THEN

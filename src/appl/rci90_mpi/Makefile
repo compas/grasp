@@ -15,7 +15,7 @@ MODLMPIU90 = ${SRCLIBDIR}/mpi90
 GRASPLIBS =-l9290 -lmod  -lrang90 -lmcp90 -ldvd90 -lmpiu90 -l9290
 
 
-APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS} 
+APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS}
 
 #   Define data types
 VASTO = ${MODDIR}/vast_kind_param_M.o
@@ -53,7 +53,7 @@ APP_OBJ= \
 
 $(EXE): $(APP_OBJ)
 	$(FC_MPI) -o $(BINFILE) $(FC_MPILD) $(APP_OBJ) $(APP_LIBS) \
-		$(APP_LIBS)  $(LAPACK_LIBS) 
+		$(APP_LIBS)  $(LAPACK_LIBS)
 
 .f90.o:
 	$(FC_MPI) -c $(FC_MPIFLAGS) $< -I $(MODDIR) -I ${MODL92} -I $(MODLRANG90) -I $(MODLMCP90) \
@@ -64,4 +64,3 @@ $(EXE): $(APP_OBJ)
 
 clean:
 	-rm -f *.o core  *.mod
-

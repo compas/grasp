@@ -12,14 +12,14 @@
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE BLK_C,            only: NBLOCK,NCFBLK
       USE rang_Int_C
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      USE set_CSF_ZFlist_I 
+      USE set_CSF_ZFlist_I
       USE lodcsl_Zero_I
       USE lodcsl_Part_I
       IMPLICIT NONE
@@ -42,7 +42,7 @@
       print *, "                                            the zero-order space"
       print *, "               Output file:     rcsf.out"
       print *, ""
-      NBLOCK = 0 
+      NBLOCK = 0
       CALL SET_CSF_ZFlist
       WRITE (6, *) "  Block    Zero-order Space   Complete Space"
       DO
@@ -55,8 +55,8 @@
          deallocate (C_quant)
          deallocate (C_coupl)
          IF(.NOT. NEXT_BLOCK) EXIT
-         WRITE(22,'(A2)') ' *' 
+         WRITE(22,'(A2)') ' *'
       END DO
       call stoptime (ncount1, 'RCSFzerofirst')
-      STOP  
+      STOP
       END PROGRAM RCSFzerofirst

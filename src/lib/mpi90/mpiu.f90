@@ -247,12 +247,12 @@
       CHARACTER(LEN=*), INTENT(OUT) :: msg
 
 !-----------------------------------------------
-!   L o c a l  V a r i a b l e s   
+!   L o c a l  V a r i a b l e s
 !-----------------------------------------------
       INTEGER :: inID, istat(MPI_STATUS_SIZE), ierr, msgLength
 
       msgLength = len_trim (msg)
-      
+
       if (myid .ne. 0) then
          call MPI_Send (msgLength, 1, MPI_INTEGER, 0, myid, &
                         MPI_COMM_WORLD, ierr)   ! Send nsgLength
@@ -310,7 +310,7 @@
 !-----------------------------------------------
       IMPLICIT NONE
       include 'mpif.h'
-      INTEGER, INTENT(IN) :: n 
+      INTEGER, INTENT(IN) :: n
       INTEGER, INTENT(out) :: newtype, ierr
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -368,4 +368,4 @@
       CALL icopy (n, iy, 1, ix, 1)
 
       RETURN
-      END   
+      END

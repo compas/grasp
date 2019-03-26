@@ -1,6 +1,6 @@
 !***********************************************************************
 !                                                                      *
-      PROGRAM RWFNRELABEL                   
+      PROGRAM RWFNRELABEL
 !                                                                      *
 !   This program relabels orbitals                                     *
 !                                                                      *
@@ -37,10 +37,10 @@
 !
       WRITE(*,*) ' RWFNRELABEL'
       WRITE(*,*) ' This program relabels radial orbitals'
-      WRITE(*,*) 
+      WRITE(*,*)
       WRITE(*,*) ' Input file: name.w'
       WRITE(*,*) ' Output file: name_relabel.w'
-      WRITE(*,*) 
+      WRITE(*,*)
 
       NDEF = 0
 
@@ -51,7 +51,7 @@
          PRINT *, 'Names may not start with a blank'
          GOTO 10
       ENDIF
-      FILNAM = NAME(1:K-1)//'_relabel.w' 
+      FILNAM = NAME(1:K-1)//'_relabel.w'
       OPEN(36,FILE=FILNAM,FORM='UNFORMATTED',STATUS = 'UNKNOWN')
       WRITE(36) 'G92RWF'
 
@@ -88,7 +88,7 @@
          NP(IFIRST) = NEWNP
       ENDDO
 
- 
+
 !
       DO I = 1,NW
          WRITE(36) NP(I),NAK(I),E(I),MF(I)
@@ -101,7 +101,7 @@
 
 
 1000  FORMAT(I4,I4,A2)
-   
+
       CONTAINS
 
 !***********************************************************************

@@ -1,6 +1,6 @@
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE STRSUM(NAME, INPCI, ILBL) 
+      SUBROUTINE STRSUM(NAME, INPCI, ILBL)
 !                                                                      *
 !   Generates the first part of  oscl92.sum  (on stream 24).           *
 !                                                                      *
@@ -9,13 +9,13 @@
 !   Written by Farid A. Parpia            Last revision: 28 Dec 1992   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  13:35:54   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  13:35:54   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  DOUBLE 
+      USE vast_kind_param, ONLY:  DOUBLE
       USE biorb_C
       USE decide_C
       USE def_C
@@ -32,27 +32,27 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      INTEGER, INTENT(IN) :: INPCI 
-      INTEGER :: ILBL 
-      CHARACTER, INTENT(IN) :: NAME(2)*24 
+      INTEGER, INTENT(IN) :: INPCI
+      INTEGER :: ILBL
+      CHARACTER, INTENT(IN) :: NAME(2)*24
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      INTEGER :: I, J 
-      CHARACTER :: RECORD*15, CTIME*8, CDATE*8 
+      INTEGER :: I, J
+      CHARACTER :: RECORD*15, CTIME*8, CDATE*8
 !-----------------------------------------------
- 
- 
-      I = INDEX(NAME(1),' ') 
-      J = INDEX(NAME(2),' ') 
+
+
+      I = INDEX(NAME(1),' ')
+      J = INDEX(NAME(2),' ')
       IF(ILBL == 0) THEN
-         IF (INPCI == 0) THEN 
+         IF (INPCI == 0) THEN
             OPEN(UNIT=24,FILE=NAME(1)(1:I-1)//'.'//NAME(2)(1:J-1)//'.ct',FORM=&
-            'FORMATTED', STATUS='UNKNOWN',POSITION='asis') 
-         ELSE 
+            'FORMATTED', STATUS='UNKNOWN',POSITION='asis')
+         ELSE
             OPEN(UNIT=24,FILE=NAME(1)(1:I-1)//'.'//NAME(2)(1:J-1)//'.t',FORM=&
-            'FORMATTED',STATUS='UNKNOWN',POSITION='asis') 
-         ENDIF 
+            'FORMATTED',STATUS='UNKNOWN',POSITION='asis')
+         ENDIF
       ELSE IF(ILBL == 1) THEN
          IF(IOPEN_STATUS1.EQ.0 .AND. IOPEN_STATUS2 .EQ.0) THEN
             IF (INPCI == 0) THEN
@@ -167,7 +167,7 @@
 !     WRITE (24,*)
 !     CALL ENGOUT1 (EAVFF,EVALFF,IATJPOFF,IASPARFF,IVECFF,NVECFF,3,2)
 !
-      RETURN  
+      RETURN
 !
   300 FORMAT ('The atomic number is ',1F14.10,';')
   301 FORMAT ('  c =',1P,1D19.12,' Bohr radii,'            &
@@ -191,6 +191,6 @@
               'gamma',19X,'P(2)',18X,'Q(2)',10X,'MTP')
   310 FORMAT (3X,1I2,1A2,1X,1P,5(3X,1D19.12),3X,1I3)
 
-      RETURN  
+      RETURN
 !
-      END SUBROUTINE STRSUM 
+      END SUBROUTINE STRSUM

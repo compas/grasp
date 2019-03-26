@@ -1,6 +1,6 @@
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE SETCON 
+      SUBROUTINE SETCON
 !                                                                      *
 !   This  subprogram  sets the values of the fundamental and derived   *
 !   physical constants, and other useful constants.                    *
@@ -8,29 +8,29 @@
 !   Written by Farid A Parpia, at Oxford   Last updated: 06 Oct 1992   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  10:50:28   2/14/04  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  10:50:28   2/14/04
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  DOUBLE 
-      USE DEBUG_C 
-      USE DEF_C 
+      USE vast_kind_param, ONLY:  DOUBLE
+      USE DEBUG_C
+      USE DEF_C
       IMPLICIT NONE
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
-      REAL(DOUBLE), PARAMETER :: AINFCM = 0.52917721067D-08 
-      REAL(DOUBLE), PARAMETER :: ALFAI  = 137.035999139D00 
-      REAL(DOUBLE), PARAMETER :: CCMPS  = 2.99792458D10 
-      REAL(DOUBLE), PARAMETER :: EESU   = 4.803204673D-10 
-      REAL(DOUBLE), PARAMETER :: EMEG   = 9.10938356D-28 
-      REAL(DOUBLE), PARAMETER :: EMEAMU = 5.48579909070D-04 
-      REAL(DOUBLE), PARAMETER :: EMPAMU = 1.007276466879D00 
-      REAL(DOUBLE), PARAMETER :: HBARES = 1.054571800D-27 
-      REAL(DOUBLE), PARAMETER :: RINFEV = 13.605693009D00 
-      REAL(DOUBLE), PARAMETER :: RINFK  = 109737.31568508D00 
+      REAL(DOUBLE), PARAMETER :: AINFCM = 0.52917721067D-08
+      REAL(DOUBLE), PARAMETER :: ALFAI  = 137.035999139D00
+      REAL(DOUBLE), PARAMETER :: CCMPS  = 2.99792458D10
+      REAL(DOUBLE), PARAMETER :: EESU   = 4.803204673D-10
+      REAL(DOUBLE), PARAMETER :: EMEG   = 9.10938356D-28
+      REAL(DOUBLE), PARAMETER :: EMEAMU = 5.48579909070D-04
+      REAL(DOUBLE), PARAMETER :: EMPAMU = 1.007276466879D00
+      REAL(DOUBLE), PARAMETER :: HBARES = 1.054571800D-27
+      REAL(DOUBLE), PARAMETER :: RINFEV = 13.605693009D00
+      REAL(DOUBLE), PARAMETER :: RINFK  = 109737.31568508D00
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -69,8 +69,8 @@
 !
 !   Calculate constants for /DEF3/:
 !
-      EMPAM = EMPAMU 
-      RBCM = AINFCM 
+      EMPAM = EMPAMU
+      RBCM = AINFCM
 !
 !   Calculate constants for  /DEF11/:
 !
@@ -78,8 +78,8 @@
 !      B1 is the conversion factor between the amu and the atomic
 !         unit of mass
 !
-      CVAC = ALFAI 
-      AUMAMU = EMEAMU 
+      CVAC = ALFAI
+      AUMAMU = EMEAMU
 !
 !   Calculate constants for  /DEF10/:
 !
@@ -94,26 +94,26 @@
 !      FBSI converts the Einstein B coefficients from atomic to SI
 !            units
 !
-      AUCM = 2.0D00*RINFK 
-      AUEV = 2.0D00*RINFEV 
-      CCMS = CCMPS 
-      FASI = (EMEG/HBARES)*(EESU*EESU/HBARES)**2 
-      FBSI = (10.0D00*AINFCM**3/HBARES)*FASI 
+      AUCM = 2.0D00*RINFK
+      AUEV = 2.0D00*RINFEV
+      CCMS = CCMPS
+      FASI = (EMEG/HBARES)*(EESU*EESU/HBARES)**2
+      FBSI = (10.0D00*AINFCM**3/HBARES)*FASI
 !
 !   Calculate conversion factor for Fermis to Bohr radii
 !
-      FMTOAU = 1.0D-13/AINFCM 
+      FMTOAU = 1.0D-13/AINFCM
 !
 !   Calculate \pi from FORTRAN function
 !
-      PI = 4.0D00*ATAN(1.0D00) 
+      PI = 4.0D00*ATAN(1.0D00)
 !
 !   Printouts
 !
       IF (LDBPG(2)) WRITE (99, 300) AINFCM, ALFAI, CCMPS, EESU, EMEG, EMEAMU, &
-         EMPAMU, HBARES, RINFEV, RINFK 
+         EMPAMU, HBARES, RINFEV, RINFK
 !
-      RETURN  
+      RETURN
 !
   300 FORMAT(/,'From SUBROUTINE SETCON:'/,' AINFCM (Bohr radius in cm): ',0P,1D&
          16.9,','/,' ALFAI (Inverse of the fine-structure constant): ',3P,1D&
@@ -124,7 +124,7 @@
          ' EMPAMU (Proton mass in u): ',1P,1D16.9,','/,&
          ' HBARES (Rationalized Planck constant in erg s): ',1P,1D15.8,','/,&
          ' RINFEV (Rydberg in eV): ',2P,1D15.8,','/,&
-         ' RINFK (Rydberg in Kaysers): ',6P,1D17.10,'.') 
-      RETURN  
+         ' RINFK (Rydberg in Kaysers): ',6P,1D17.10,'.')
+      RETURN
 !
-      END SUBROUTINE SETCON 
+      END SUBROUTINE SETCON

@@ -1,7 +1,6 @@
 program wrapper
 
-call rcsfexcitation   
+call rcsfexcitation
 call jjgen15
 
 end program wrapper
-

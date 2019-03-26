@@ -103,7 +103,7 @@
       if (nmax.LT.10) then
          write(*,200)                                                  &
            'Highest n-number in reference configuration? (1..', nmax,')'
-      else                                                              
+      else
          write(*,202)                                                  &
            'Highest n-number in reference configuration? (1..', nmax,')'
       endif
@@ -256,7 +256,7 @@
                            dubbel(i,j) = Y(1:1).EQ.'d' .OR.            &
                                          Y(1:1).EQ.'D'
                         endif
-                        lock(i,j)   = Y(1:1).EQ.'i' .OR. Y(1:1).EQ.'I' 
+                        lock(i,j)   = Y(1:1).EQ.'i' .OR. Y(1:1).EQ.'I'
                         closed(i,j) = .FALSE.
                      endif
                      if (Y(1:1).GE.'0' .AND. Y(1:1).LE.'9') then
@@ -286,7 +286,7 @@
                   read(193,1000) X
                   write(logfil,*) X,i,orb(j),' inactive, active, etc...'
                   dubbel(i,j) = X.EQ.'d' .OR. X.EQ.'D'
-                  lock(i,j)   = X.EQ.'i' .OR. X.EQ.'I' 
+                  lock(i,j)   = X.EQ.'i' .OR. X.EQ.'I'
                endif
             elseif (org(i,j).NE.0) then
                write(*,204) i,orb(j),' is part of the predefined core.'
@@ -318,7 +318,7 @@
                         endif
                      endif
                   endif
-                  if (.NOT. lock(i,j)) anela = anela + org(i,j) 
+                  if (.NOT. lock(i,j)) anela = anela + org(i,j)
                else
                   lock(i,j) = closed(i,j)
                endif
@@ -336,7 +336,7 @@
   160 continue
  1100 write(*,400) 'Resulting 2*J-number? lower, higher ',             &
                     '(J=1 -> 2*J=2 etc.)'
-      read(193,*,ERR=1100) minJ,maxJ 
+      read(193,*,ERR=1100) minJ,maxJ
       if (anel .EQ. 2*(anel/2)) then
          if (minJ .NE. 2*(minJ/2) .OR. maxJ .NE. 2*(maxJ/2)) then
             write(*,*) 'The resulting 2*J-numbers should be even'
@@ -375,4 +375,4 @@
  2000 format(I1,2A)
  3000 format(A,I2,2A)
       return
-      end                       
+      end

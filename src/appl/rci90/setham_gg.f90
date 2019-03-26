@@ -15,8 +15,8 @@
 !   Block version by Xinghong He          Last revision: 15 Jun 1998   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -85,19 +85,19 @@
 
       REAL(DOUBLE), DIMENSION(NNNW) :: tshell
       REAL(DOUBLE) :: tgrl1, tgrl2, tegral
- 
+
       INTEGER, PARAMETER :: KEY = KEYORB
 !
 !     Matrix elements smaller than CUTOFF are not accumulated
 !
-!cjb cutoff is use associated and cannot be redeclared 
+!cjb cutoff is use associated and cannot be redeclared
 !     REAL(DOUBLE), PARAMETER :: CUTOFF = 1.0D-20
 !cjb CUTOFF = 1.0D-12 below
 !cjb
       INTEGER :: ipi, ipj, inc1, inc2, kt, ipt, incor, ncoec, nctec, &
                  i, j, nmcbp, ncore, ic, nelc, irstart, ir, ia, ib,  &
                  itype, nctei, iia
-       REAL(DOUBLE) :: elemnt, precoeff, tcoeff, vcoeff, contr 
+       REAL(DOUBLE) :: elemnt, precoeff, tcoeff, vcoeff, contr
 !-----------------------------------------------------------------------
       PRINT *, 'Calling setham ...'
 !cjb
@@ -109,7 +109,7 @@
       !Per Bug fix 30/4-2013
       ATWINV = 1.D0/EMN
       !Per Bug fix 30/4-2013
- 
+
       IF (IPRERUN .EQ. 2) THEN
          DO IPI = 1,NVEC
             DO IPJ = 1,NCF
@@ -122,7 +122,7 @@
 !   used for the Coulomb and transverse two-electron integrals
 !
       CALL ALCBUF (1)
- 
+
 !     ...Locals
       CALL alloc (emt, ncf, 'EMT','SETHAM' )
       CALL alloc (irow, ncf, 'IROW', 'SETHAM')
@@ -137,13 +137,13 @@
       IPT = 1
 !
       INCOR = 1
- 
+
       NCOEC = 0
 !
       NCTEC   = 0
- 
+
       IF (LTRANS) THEN
- 
+
 !        ...Initialisations for transverse interaction correction
          DO 2 I = 1, NW
             ICORE(I) = 0
@@ -152,30 +152,30 @@
             ENDDO
             ICORE(I) = 1
     2    CONTINUE
- 
+
          NMCBP = 0
          NCORE = 0
       ENDIF
- 
+
 ! Loop over rows of the Hamiltonian matrix - distributed
- 
+
       DO 10 ic = icstrt, ncf, nprocs
- 
+
          NELC = 0    ! counter - Number of non-zeros of this row
- 
+
 ! Loop over columns of the current row
- 
+
          irstart = 1
          DO 85 IR = irstart, IC
- 
+
 ! PER
             IF (LFORDR .AND. (IR .GT. ICCUT(1))) THEN
                IF (IR.NE.IC) CYCLE
             END IF
 ! PER
- 
+
             ELEMNT = 0.D0     ! accumulates various contributions to H
- 
+
 !
 !   Generate the integral list for the matrix element of the
 !   one-body operators
@@ -187,7 +187,7 @@
                   INC1 = 1
                ENDIF
             ENDIF
- 
+
             IF (IPRERUN .EQ. 2) THEN
 !
 !   Diagonal elements are always included
@@ -209,10 +209,10 @@
                   IF (PRECOEFF .GT. COEFFCUT2) INC2 = 1
                ENDDO
             ENDIF
- 
+
 !            ...INC1.EQ.1 ------------>
          IF (INC1 .EQ. 1) THEN   !inc1 is always 1 without PRE-RUN
-           CALL ONESCALAR(IC,IR,IA,IB,TSHELL) 
+           CALL ONESCALAR(IC,IR,IA,IB,TSHELL)
 !
 !   Accumulate the contribution from the one-body operators:
 !   kinetic energy, electron-nucleus interaction; update the
@@ -291,7 +291,7 @@
     7    CONTINUE
 !
          IBUG1 = 0
- 
+
          ENDIF  !inc1 is always 1 without PRE-RUN
 !            ...INC1.EQ.1 <------------
 !***********************************************************************
@@ -400,11 +400,11 @@
 !   Deallocate storage for the arrays in /BUFFER/
 !
       CALL ALCBUF (3)
- 
+
 !     ...Locals
       CALL DALLOC (EMT, 'EMT', 'SETHAM')
       CALL DALLOC (IROW, 'IROW', 'SETHAM')
- 
+
 !  Fill the common block /setham_to_genmat2/ for use in genmat2
 
       CUTOFFtmp = CUTOFF
@@ -420,6 +420,6 @@
       NVINTItmp = NVINTI
       NELMNTtmp = NELMNT
       NCFtmp = NCF
- 
+
       RETURN
       END SUBROUTINE SETHAM

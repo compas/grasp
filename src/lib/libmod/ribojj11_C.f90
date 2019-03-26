@@ -1,6 +1,6 @@
 !*******************************************************************
 !                                                                  *
-      MODULE ribojj11_C 
+      MODULE ribojj11_C
 !                                                                  *
 !   This module is need for librang90.                             *
 !                                                                  *
@@ -8,7 +8,7 @@
 !   Transform to fortran 90/95 by G. Gaigalas       December 2012  *
 !                                                                  *
 !*******************************************************************
-! 
+!
       IMPLICIT NONE
       INTEGER, DIMENSION(189) :: IMPTJJ11, IMGTJJ11, IMPNJJ11, IMGNJJ11
       DATA IMPTJJ11/1,6*2,8,7*9,16,8*17,25,9*26,35,10*36,  &
@@ -23,4 +23,4 @@
       DATA IMGNJJ11/7,6*1,15,7*8,24,8*16,34,9*25,45,10*35, &
       57,11*46,70,12*58,84,13*71,99,14*85,115,15*100,      &
       132,16*116,150,17*133,169,18*151,189,19*100/
-      END MODULE ribojj11_C 
+      END MODULE ribojj11_C

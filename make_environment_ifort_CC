@@ -4,7 +4,7 @@
 # --------------------------------------------------------------------------------------
 #
 # Define the following global variables according to your environment and
-# source this script or add these definitions to your terminal configuration 
+# source this script or add these definitions to your terminal configuration
 # file, eg. ~/.cshrc, ~/.bashrc or ~/.profile.
 #
 # Current version: Linux, gfortran gcc version 4.8.2
@@ -16,7 +16,7 @@
 # --------------------------------------------------------------------------------------
 # Set up main flags
 # --------------------------------------------------------------------------------------
-export   FC=ifort                       # Fortran compiler 
+export   FC=ifort                       # Fortran compiler
 export   FC_FLAGS="-O2 -save "          # Serial code compiler flags
 #export  FC_FLAGS="-O0 -check all"      # Options for check for runtime errors
 export   FC_LD="-mkl=sequential"        # Serial linker flags

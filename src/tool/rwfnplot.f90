@@ -21,20 +21,20 @@
       write(*,*) 'To remove orbital: type "d" or "D" and press enter'
       write(*,*)
       write(*,*) '                             Jorgen Ekman Jun 2015'
-      write(*,*) 
+      write(*,*)
 
       WRITE(*,*) 'Name of state:'
       READ(*,*) name
       OPEN(3,FILE=trim(name)//'.w',STATUS='OLD',FORM='UNFORMATTED')
       OPEN(4,FILE='octave_'//trim(name)//'.m',STATUS='UNKNOWN')
       OPEN(8,FILE='xmgrace_'//trim(name)//'.agr',STATUS='UNKNOWN')
-      
+
       write(*,*)
       write(*,*) 'To have r on x-axis: type "y" otherwise "n" for sqrt(r)'
       read(*,*) xa
       write(*,*)
       i = 1
-      
+
       write(4,*) '%     r                   P(r)                   Q(r)'
 
 ! Xmgrace stuff
@@ -43,16 +43,16 @@
       else
          write(8,*) '@    xaxis  label "sqrt(r)"'
       end if
-      write(8,*) '@    yaxis  label "P(r)"'      
+      write(8,*) '@    yaxis  label "P(r)"'
       write(8,*) '#     r                   P(r)                   Q(r)'
-      
+
       write(4,*) 'clf'
       READ(3) title
       IF (title .NE. 'G92RWF') THEN   ! Extra safety
          PRINT *, 'title = ', title, 'does not match G92RWF'
          STOP
       ENDIF
-      
+
       DO
          READ(3, END = 20) nn, laky, energy, npts
          write(nnstr,'(I2)') nn
@@ -107,13 +107,13 @@
             if(i-1.lt.10) then
                format_string = "(A,I1,3A)"
             else
-               format_string = "(A,I2,3A)"               
+               format_string = "(A,I2,3A)"
             end if
             write (leg,format_string)   &
                  '@    s',i-1,'  legend  "',el(i),'"'
             write(8,*) trim(leg)
             write(8,*) '# ',el(i)
-            
+
             i = i + 1
             write(4,*) 'P = ['
             DO j = 1, npts
@@ -121,17 +121,17 @@
                if(xa.eq.'y  ') then
                   if (abs(pg(j)) .gt. 0.0005 .OR. j.EQ.1) 	&
                        WRITE (4, '(3D20.10)') rg(j), pg(j), qg(j)
-                  WRITE (8, '(3D20.10)') rg(j), pg(j), qg(j)                  
+                  WRITE (8, '(3D20.10)') rg(j), pg(j), qg(j)
                else
                   if (abs(pg(j)) .gt. 0.0005 .OR. j.EQ.1) 	 &
                   WRITE (4, '(3D20.10)') rg2(j), pg(j), qg(j)
-                  WRITE (8, '(3D20.10)') rg2(j), pg(j), qg(j)                  
+                  WRITE (8, '(3D20.10)') rg2(j), pg(j), qg(j)
                end if
             ENDDO
-            write(8,*)            
+            write(8,*)
             write(4,*) '];'
             write(4,*) 'plot(P(:,1), P(:,2))'
-            write(4,*) 'hold all'            
+            write(4,*) 'hold all'
          ENDIF
       ENDDO
  20   CONTINUE
@@ -143,19 +143,19 @@
 !         write(4,*) 'xlabel (''sqrt(r)'', ''fontsize'', 12)'
          write(4,*) 'xlabel (''sqrt(r)'')'
       end if
-!      write(4,*) 'ylabel (''P(r)'', ''fontsize'', 12)' 
-      write(4,*) 'ylabel (''P(r)'')' 
+!      write(4,*) 'ylabel (''P(r)'', ''fontsize'', 12)'
+      write(4,*) 'ylabel (''P(r)'')'
       write(4,*) 'grid on'
-      write(4,101,advance='no') 'legend('      
+      write(4,101,advance='no') 'legend('
       DO i = 1,nwf
          IF(i.LT.nwf) THEN
             write(4,102,advance='no') '''',el(i),''','
          ELSE
-            write(4,102,advance='no') '''',el(i),''')'            
+            write(4,102,advance='no') '''',el(i),''')'
          END IF
       ENDDO
  101  format(a)
- 102  format(3a)            
+ 102  format(3a)
       PRINT *, ' FINISHED .....'
       STOP
       END

@@ -23,11 +23,11 @@ Commons = jj2lsj_data_1_C.o jj2lsj_data_2_C.o jj2lsj_data_3_C.o
 Memory = ${MODDIR}/memory_man.o
 
 #  Define interface to routines from the library
-Interface = packLS_I.o getmixblock_I.o idigit_I.o lval_I.o 
+Interface = packLS_I.o getmixblock_I.o idigit_I.o lval_I.o
 
 APP_OBJ = \
    packLS.o getmixblock.o idigit.o lval.o \
-   jj2lsj_code.o jj2lsj2K.o 
+   jj2lsj_code.o jj2lsj2K.o
 
 $(EXE): ${VASTO} ${Commons} ${Memory} ${Interface} $(APP_OBJ)
 	$(FC) -o $(BINFILE) $(FC_LD) $(Commons) ${Interface} $(APP_OBJ) $(APP_LIBS)

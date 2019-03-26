@@ -62,7 +62,7 @@
         ENDIF
       END DO
       IF(IAT == 0)RETURN
-      IF(NPEELGG <= 2)RETURN      
+      IF(NPEELGG <= 2)RETURN
       IF(JA1 <= 2)RETURN
       DO J=3,JA1
         JJ=J-2

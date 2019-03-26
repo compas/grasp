@@ -1,6 +1,6 @@
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE LODCSL_Zero(NEXT_BLOCK) 
+      SUBROUTINE LODCSL_Zero(NEXT_BLOCK)
 !                                                                      *
 !   Loads the data from the  .csl  file. A number of checks are made   *
 !   to ensure correctness and consistency.                             *
@@ -10,7 +10,7 @@
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE BLK_C,            only: NBLOCK,NCFBLK
       USE rang_Int_C
@@ -21,12 +21,12 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      LOGICAL,  INTENT(OUT) :: NEXT_BLOCK 
+      LOGICAL,  INTENT(OUT) :: NEXT_BLOCK
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       INTEGER            :: IOS, NCF, NCFD
-      CHARACTER(LEN=256) :: RECORD 
+      CHARACTER(LEN=256) :: RECORD
 !-----------------------------------------------
 !
 !   Initial allocation for arrays with a dimension dependent
@@ -39,23 +39,23 @@
       allocate (C_shell(NCFD))
       allocate (C_quant(NCFD))
       allocate (C_coupl(NCFD))
-      NCF = 0 
+      NCF = 0
       DO
-         NCF = NCF + 1 
-         READ (21, '(A)', IOSTAT=IOS) RECORD 
-         IF (IOS == 0) THEN 
-            IF (RECORD(1:2) == ' *') THEN 
-               NBLOCK = NBLOCK + 1 
-               NCFBLK(NBLOCK) = NCF - 1 
+         NCF = NCF + 1
+         READ (21, '(A)', IOSTAT=IOS) RECORD
+         IF (IOS == 0) THEN
+            IF (RECORD(1:2) == ' *') THEN
+               NBLOCK = NBLOCK + 1
+               NCFBLK(NBLOCK) = NCF - 1
                NotFound = NCFBLK(NBLOCK)
                Found(1:NotFound) = 0
                RETURN
-            ENDIF 
+            ENDIF
             C_shell(NCF) = RECORD
 !
 !   Read the J_sub and v quantum numbers
 !
-            READ (21, '(A)', IOSTAT=IOS) RECORD 
+            READ (21, '(A)', IOSTAT=IOS) RECORD
             C_quant(NCF) = RECORD
 !
 !   Read the X, J, and (sign of) P quantum numbers
@@ -69,11 +69,11 @@
             EXIT
          ENDIF
       END DO
-      NBLOCK = NBLOCK + 1 
+      NBLOCK = NBLOCK + 1
       NCFBLK(NBLOCK) = NCF - 1
       NotFound = NCFBLK(NBLOCK)
       Found(1:NotFound) = 0
       NEXT_BLOCK = .FALSE.
-      RETURN  
+      RETURN
 !
       END SUBROUTINE LODCSL_Zero

@@ -12,7 +12,7 @@ MODLMCP90 = ${SRCLIBDIR}/libmcp90
 GRASPLIBS =-l9290 -lmod  -lrang90 -lmcp90
 
 
-APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS} 
+APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS}
 
 APP_OBJ= sms1_C.o teilst_C.o dvpot_C.o\
         sms_I.o      getmixblock_I.o  rintiso_I.o  smsmcp_I.o \
@@ -28,7 +28,7 @@ APP_OBJ= sms1_C.o teilst_C.o dvpot_C.o\
 
 $(EXE): $(APP_OBJ)
 	$(FC) -o $(BINFILE) $(FC_LD) $(APP_OBJ) $(APP_LIBS) \
-		 $(APP_LIBS) ${LAPACK_LIBS} 
+		 $(APP_LIBS) ${LAPACK_LIBS}
 .f90.o:
 	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I ${MODL92} -I $(MODLRANG90) -I $(MODLMCP90) \
 	        -I $(MODDIR) -o $@
@@ -38,4 +38,3 @@ $(EXE): $(APP_OBJ)
 
 clean:
 	-rm -f *.o core  *.mod
-

@@ -2,7 +2,7 @@
       INTERFACE
 !
       SUBROUTINE cslhmpi (NAME, NCORE, NBLKIN, IDBLK)
-!...Modified by Charlotte Froese Fischer 
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
       CHARACTER (LEN = *) :: NAME
       INTEGER :: NCORE

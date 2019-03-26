@@ -1,7 +1,7 @@
       PROGRAM extmix
 !
 ! Extract mixing coefficients and the CSF from files
-!   <name>.c, <name>.m / <name>.cm 
+!   <name>.c, <name>.m / <name>.cm
 
       USE iounit_C
 
@@ -146,8 +146,8 @@
 
          IF (nevblk .LE. 0) GOTO 432
 
-         
-         Allocate (eval(1:nevblk), stat=ierr) 
+
+         Allocate (eval(1:nevblk), stat=ierr)
          IF  (ierr /= 0) STOP " not enough memory for eval"
          Allocate (evec(1:nevblk*ncfblk), stat=ierr)
          IF  (ierr /= 0) STOP " not enough memory for evec"
@@ -234,7 +234,7 @@
   321    CONTINUE
 
          IF (jblock .LT. nblock) WRITE (nfout,'(A)') ' *'
- 
+
          deallocate(iset)
          deallocate(eval)
          deallocate(evec)

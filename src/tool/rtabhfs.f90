@@ -4,7 +4,7 @@
 
 !                                                                      *
 !   This program reads the output from rhfs_lsj and ris_lsj            *
-!   and produces LaTeX tables of hfs and isdata                        * 
+!   and produces LaTeX tables of hfs and isdata                        *
 !                                                                      *
 !   Written by Per Jonsson, Malmo University, May 2015                 *
 !                                                                      *
@@ -45,9 +45,9 @@
          BLANKSTRING(I:I) = ' '
       END DO
 
-!---- Define input files ---------------------------------------------      
+!---- Define input files ---------------------------------------------
 
-      write(*,*) 
+      write(*,*)
 !      WRITE(*,'(A)') '  HFS data (1), IS data (2), HFS and IS data (3)'
 !      READ(*,*) N
       N = 1
@@ -84,21 +84,21 @@
          END DO
       END IF
 
-      write(*,*) 
+      write(*,*)
       write(*,*) ' Inspect the name.(c)hlsj files and '
       write(*,*) ' determine how many positions should be skipped in '
       write(*,*) ' the string that determines the label. For example'
       write(*,*) ' if the string is 1s(2).2s_2S.2p(2)3P2_4P and 1s(2) '
       write(*,*) ' is a core then you want to skip 1s(2). i.e. 6'
       write(*,*) ' positions'
-      write(*,*) 
+      write(*,*)
       write(*,*) ' How many positions should be skipped?'
       read(*,*) NSKIP
 
-!----- See write up for RIS for units ------------------------------      
+!----- See write up for RIS for units ------------------------------
 
 
-!---- Start by analyzing all the RIS files to see that if they contain 
+!---- Start by analyzing all the RIS files to see that if they contain
 !     consistent data: DENS or F0CORR
 
       NF0CORR = 0
@@ -107,8 +107,8 @@
          DO I = 1,M
             DO
                READ(80+I,'(A)',END=97) RECORD
-               IF (INDEX(RECORD,'F0CORR').GT.0) THEN        
-                  NF0CORR = NF0CORR + 1 
+               IF (INDEX(RECORD,'F0CORR').GT.0) THEN
+                  NF0CORR = NF0CORR + 1
                END IF
             END DO
 
@@ -128,7 +128,7 @@
 
       write(12,'(A)') '\documentclass[10pt]{article}'
       write(12,'(A)') '\usepackage{longtable}'
-      write(12,'(A)') '\begin{document}'          
+      write(12,'(A)') '\begin{document}'
       IF (N.EQ.1) THEN
          WRITE(12,'(A)') '\begin{longtable}{lrrrr} \hline'
          WRITE(12,'(A)') 'State & $E$(a.u.) & $A$(MHz) & $B$(MHz) & '
@@ -172,7 +172,7 @@
                READ(NUNIT+I,*)
                READ(NUNIT+I,*)
             END IF
-            READ(NUNIT+I,'(A)') STRINGANALYZE 
+            READ(NUNIT+I,'(A)') STRINGANALYZE
 !            WRITE(*,*) TRIM(STRINGANALYZE)
             K = 1
             DO
@@ -222,7 +222,7 @@
 
 !            WRITE(*,*) NUNIT,'PPOS',PPOS
 
-            DO 
+            DO
                READ(NUNIT+I,405,IOSTAT=IEND) ENERGY1(J),STRING1(J)
                PSTRING1(J) = STRING1(J)(PPOS:PPOS)
 !               WRITE(*,*) PSTRING1(J),PPOS !
@@ -240,7 +240,7 @@
             END DO
 99          CONTINUE
          END DO
-      
+
          NCOUNT1 = J - 1
 
 !         WRITE(*,*) NCOUNT1
@@ -290,7 +290,7 @@
                READ(NUNIT+I,*)
                READ(NUNIT+I,*)
             END IF
-            READ(NUNIT+I,'(A)') STRINGANALYZE 
+            READ(NUNIT+I,'(A)') STRINGANALYZE
 !            WRITE(*,*) TRIM(STRINGANALYZE)
             K = 1
             DO
@@ -338,7 +338,7 @@
 !            WRITE(*,*) 'BPOS',BPOS
             BPOS = BPOS - 17
 
-            DO 
+            DO
                READ(NUNIT+I,405,IOSTAT=IEND) ENERGY1(J),STRING1(J)
                PSTRING1(J) = STRING1(J)(PPOS:PPOS)
                JSTRING1(J) = STRING1(J)(JPOS-3:JPOS)
@@ -368,7 +368,7 @@
             READ(NUNIT+I,*)
             READ(NUNIT+I,*)
             READ(NUNIT+I,*)
-            READ(NUNIT+I,'(A)') STRINGANALYZE 
+            READ(NUNIT+I,'(A)') STRINGANALYZE
 !            WRITE(*,*) TRIM(STRINGANALYZE)
             K = 1
             DO
@@ -416,7 +416,7 @@
 !            WRITE(*,*) 'BPOS',BPOS
             BPOS = BPOS - 17
 
-            DO 
+            DO
                READ(NUNIT+I,405,IOSTAT=IEND) ENERGY2(J),STRING2(J)
                PSTRING2(J) = STRING2(J)(PPOS:PPOS)
                JSTRING2(J) = STRING2(J)(JPOS-3:JPOS)
@@ -433,7 +433,7 @@
          NCOUNT2 = J - 1
 
 !         WRITE(*,*) NCOUNT2
-         
+
 
 !---- Now, sort all the energies from the iso file ----------------
 
@@ -478,7 +478,7 @@
       END IF
 
       WRITE(12,'(A)') '\hline\\'
-      IF (N.EQ.1) THEN         
+      IF (N.EQ.1) THEN
          WRITE(12,'(A)') '\caption{Hyperfine interaction constants}'
       ELSEIF (N.EQ.2) THEN
          WRITE(12,'(A)') '\caption{Isotope shift parameters}'
@@ -488,8 +488,8 @@
       WRITE(12,'(A)') '\end{longtable}'
       WRITE(12,'(A)') '\end{document}'
 
-  405 FORMAT (1X,F14.7,2X,A) 
-  406 FORMAT (1X,F14.7,A) 
+  405 FORMAT (1X,F14.7,2X,A)
+  406 FORMAT (1X,F14.7,A)
   600 FORMAT (1X,2A,1X,F14.7,7A)
   700 FORMAT (1X,2A,1X,F14.7,13A)
 
@@ -561,7 +561,7 @@
       subroutine latexconvert(labelstring,latexstring)
 
 ! This subroutine converts a label string to latex
-! It is basically the same routine as in renergytable.f90      
+! It is basically the same routine as in renergytable.f90
 ! Per Jonssson, Malmo University, November 2014
 
       implicit none
@@ -589,7 +589,7 @@
             labelstring(1:i-1) = dummystring(1:i-1)
             labelstring(i:i) = '\'
             labelstring(i+1:i+1) = ','
-            labelstring(i+2:64) = dummystring(i+1:62) 
+            labelstring(i+2:64) = dummystring(i+1:62)
          end if
       end do
 
@@ -606,7 +606,7 @@
          ncase = 0
          do i = 1,61
             do j = 48,57
-               do k = 48,57 
+               do k = 48,57
                   char1 = labelstring(i:i)
                   char2 = labelstring(i+1:i+1)
                   char3 = labelstring(i+2:i+2)
@@ -627,10 +627,10 @@
 
       end do
 
-!  If integer1 and S, P, D, F, G, H, I, K, L, M, N and not integer2 replace with ^integer1S, ^integer1P, etc 
+!  If integer1 and S, P, D, F, G, H, I, K, L, M, N and not integer2 replace with ^integer1S, ^integer1P, etc
 
       do i = 1,61
-!  
+!
          if (labelstring(i:i).eq.'~') then
             dummystring = labelstring
             labelstring(1:i) = dummystring(1:i)
@@ -642,7 +642,7 @@
       latexstring = trim(labelstring)
 
       return
-      end subroutine 
+      end subroutine
 
 
       END PROGRAM RTABHFS

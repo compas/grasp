@@ -1,4 +1,4 @@
-.SUFFIXES: .f90   .mod  
+.SUFFIXES: .f90   .mod
 
 EXE = rcsfgenerate
 BINDIR = ${GRASP}/bin
@@ -24,10 +24,10 @@ APP_OBJ= \
        genb.o jjgen15b.o kopp1.o kopp2.o lasa1.o lasa2.o lika.o \
        lockad.o matain.o matcin.o matbin.o merge.o mergeb.o \
        reada.o reffa.o slug.o sluggo.o test.o copy7t9.o open79.o \
-       rcsfblock.o rcsfexcitation.o wrapper.o 
+       rcsfblock.o rcsfexcitation.o wrapper.o
 
 $(EXE): $(MOD_OBJ)  $(APP_OBJ)
-	$(FC) -o $(BINFILE) $(LD_FLAGS) $(APP_OBJ) -L$(GRASPLIB) $(GRASPLIBS) 
+	$(FC) -o $(BINFILE) $(LD_FLAGS) $(APP_OBJ) -L$(GRASPLIB) $(GRASPLIBS)
 
 .f90.o:
 	$(FC) -c $(FC_FLAGS) $< -I .  -I ${MODDIR} -I $(MODL9290)  -o $@
@@ -38,4 +38,3 @@ $(EXE): $(MOD_OBJ)  $(APP_OBJ)
 
 clean:
 	-rm -f *.o core *.mod
-

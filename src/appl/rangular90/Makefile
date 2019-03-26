@@ -11,7 +11,7 @@ MODLRANG90 = ${SRCLIBDIR}/librang90
 MODLMCP90 = ${SRCLIBDIR}/libmcp90
 GRASPLIBS =  -l9290 -lrang90 -l9290 -lmcp90 -lmod
 
-APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS} 
+APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS}
 
 
 #   Define data types
@@ -39,4 +39,3 @@ $(EXE): $(APP_OBJ)
 
 clean:
 	-rm -f *.o core *.mod
-

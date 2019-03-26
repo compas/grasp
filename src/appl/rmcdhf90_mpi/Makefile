@@ -45,7 +45,7 @@ APP_OBJ= \
 
 $(EXE): $(APP_OBJ)
 	$(FC_MPI) -o $(BINFILE) $(FC_MPILD) $(APP_OBJ) $(APP_LIBS) \
-		$(APP_LIBS) ${LAPACK_LIBS} 
+		$(APP_LIBS) ${LAPACK_LIBS}
 
 .f90.o:
 	$(FC_MPI) -c $(FC_MPIFLAGS) $< -I $(MODDIR) -I ${MODL92} -I $(MODLMPIU90) -I ${MODDVD} \
@@ -55,5 +55,4 @@ $(EXE): $(APP_OBJ)
 	$(FC) -c $(FC_FLAGS) $< -o $@
 
 clean:
-	-rm -f *.o *.mod core 
-
+	-rm -f *.o *.mod core

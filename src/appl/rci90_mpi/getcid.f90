@@ -12,8 +12,8 @@
 !   Block version by Xinghong He          Last revision: 15 Jun 1998   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -98,16 +98,16 @@
       ELSE
          LFORDR = .FALSE.
       ENDIF
- 
+
 ! Get iccutblk() from the user-input
- 
+
       IF (.NOT. LFORDR) THEN
          !...Default first
          DO i = 1, nblock
            iccutblk(i) = ncfblk(i)
          ENDDO
       ELSE
- 
+
       ! Let master do the i/o, then broadcast
          IF (myid .EQ. 0) THEN
             WRITE (istde,*) 'There are ', nblock, 'blocks. They are:'
@@ -115,7 +115,7 @@
             DO i = 1, nblock
                WRITE (istde,*) i, idblk(i)(1:5), ncfblk(i)
             ENDDO
- 
+
             WRITE (istde,*)
             WRITE (istde,*) 'Enter iccut for each block'
             DO jblock = 1, nblock
@@ -136,16 +136,16 @@
          CALL MPI_Bcast (iccutblk,nblock,MPI_INTEGER,0,            &
                                                MPI_COMM_WORLD,ierr)
       ENDIF ! .NOT. LFORDR
- 
+
 !*****************************************************************
 !
 ! Pre-run ?
 !
 !     IF (IPRERUN .EQ. 0) THEN
- 
+
 !        WRITE (istde,*) ' Prerun with limited interaction?'
 !        YES = GETYN ()
- 
+
 !        IF (YES) THEN
 !           IPRERUN = 1
 !           LTRANS = .FALSE.
@@ -153,7 +153,7 @@
 !           LNMS = .FALSE.
 !           LSMS = .FALSE.
 !           LSE = .FALSE.
- 
+
 !           WRITE (istde,*)  ' Give CSL cut'
 !           READ *, NCSFPRE
 !           WRITE (istde,*)  ' Give coefficient cut for H_0'
@@ -189,13 +189,13 @@
       IF (myid .EQ. 0) THEN
          WRITE (istde,*) 'Include H (Vacuum Polarisation)?'
          LVP = GETYN ()
- 
+
          WRITE (istde,*) 'Include H (Normal Mass Shift)?'
          LNMS = GETYN ()
- 
+
          WRITE (istde,*) 'Include H (Specific Mass Shift)?'
          LSMS = GETYN ()
- 
+
          WRITE (istde,*) 'Estimate self-energy?'
          LSE = GETYN ()
          IF (LSE.EQV..TRUE.) THEN
@@ -274,7 +274,7 @@
 !           WRITE (istde,*) ' revise these values?'
 !           YES = GETYN ()
 !        ENDIF
-! 
+!
 !         ...To prevent subsequent BCAST when YES is false
 !        CALL MPI_Bcast (YES, 1, MPI_LOGICAL, 0, MPI_COMM_WORLD, ierr)
 

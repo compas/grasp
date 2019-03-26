@@ -24,15 +24,15 @@
 !                                                                      *
 !     Xinghong He  98-10-16                                            *
 !                                                                      *
-!     Rewritten by  G. Gaigalas                                        *    
-!     for LSJ calssification of levels                                 *    
+!     Rewritten by  G. Gaigalas                                        *
+!     for LSJ calssification of levels                                 *
 !     NIST                                                 May 2011    *
 !                                                                      *
 !***********************************************************************
       IMPLICIT NONE
       INTEGER, PARAMETER:: JMax = 22      ! max J value, see JFraction !
       INTEGER, PARAMETER:: ndim = 20000   ! max number of states
-      INTEGER, PARAMETER:: maxFile = 1000 ! max number of files 
+      INTEGER, PARAMETER:: maxFile = 1000 ! max number of files
       DOUBLE PRECISION, PARAMETER:: Rydberg = 109737.31568508d0
 !
       CHARACTER(LEN=80) strInFile(maxFile), strFile
@@ -53,7 +53,7 @@
       DOUBLE PRECISION eav, eval(ndim), evec, RLev_ENER(ndim),ZERO
 !
       COMMON/JJ2LSJ/ Lev_POS,Lev_J,Lev_Par,RLev_ENER,string_CSF,     &
-                      IMaxCount 
+                      IMaxCount
 !
       DATA PlusMinus/'-', ' ', '+'/
       DATA JFraction/'  0 ', ' 1/2', '  1 ', ' 3/2', '  2 ', ' 5/2', &
@@ -95,7 +95,7 @@
                EXIT
             ENDIF
          ENDDO
-         mFile = i 
+         mFile = i
       ELSEIF (mFile .GT. 0 .AND. mFile .LE. maxFile) THEN
          DO i = 1, mFile
             CALL getarg (i, strInFile(i))
@@ -116,7 +116,7 @@
             , IOSTAT = IOS)
          IF (IOS .NE. 0) THEN
            WRITE (0,*) 'Failed to open file "',                   &
-                strFile(1:LEN_TRIM (strFile)), '", skipping...'    
+                strFile(1:LEN_TRIM (strFile)), '", skipping...'
             CLOSE (3)
             CYCLE
          ENDIF
@@ -136,7 +136,7 @@
             READ (3) nb, ncfblk, nevblk, iiatjp, iiaspa
             IF (jblock .NE. nb) THEN
 !
-!     This error can occur anywhere and therefore cannot 
+!     This error can occur anywhere and therefore cannot
 !     be simply skipped - stop instead.
 !
                WRITE (0,*) 'jblock .NE. nb, stopping...'
@@ -174,7 +174,7 @@
          OPEN (31, FILE = util_lbl_file, FORM = 'FORMATTED',  &
             STATUS = 'OLD', IOSTAT = IOS)
          IF (IOS .NE. 0) THEN
-!GG            WRITE (0,*) 'Failed to open file "', 
+!GG            WRITE (0,*) 'Failed to open file "',
 !GG     &      util_lbl_file(1:LEN_TRIM (util_lbl_file)), '", skipping...'
             CLOSE (31)
             CYCLE
@@ -200,7 +200,7 @@
 !     The output of the levels
 !
       PRINT *
-      WRITE (6,1) 
+      WRITE (6,1)
       WRITE (6,2) Rydberg
       if(Iprint .eq. 1) then
          WRITE (6,*) 'Splitting is the energy difference ',  &
@@ -215,13 +215,13 @@
          i = indx(j)
          WRITE (6,3) j,ivec(i),iatjp(i),iaspa(i),eval(i), &
             ZERO,ZERO,                                    &
-            Trim(string_PRN(i)) 
+            Trim(string_PRN(i))
          DO j = 2, ncountState
             i = indx(j)
             WRITE (6,3) j,ivec(i),iatjp(i),iaspa(i),eval(i),  &
             (eval(i)-eval(indx(1)))*Rydberg*2,                &
             (eval(i)-eval(indx(j-1)))*Rydberg*2,              &
-            Trim(string_PRN(i)) 
+            Trim(string_PRN(i))
          END DO
          WRITE (6,5)
       ELSE
@@ -345,7 +345,7 @@
       DOUBLE PRECISION RLev_ENER(ndim)
 !
       COMMON/JJ2LSJ/ Lev_POS,Lev_J,Lev_Par,RLev_ENER,string_CSF, &
-                      IMaxCount 
+                      IMaxCount
 !
       READ (31,'(1A15)',IOSTAT = IOS) RECORD
       ICount = 0

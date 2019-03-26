@@ -31,7 +31,7 @@ MODOBJ = \
 \
    decide_C.o ncdist_C.o coeils_C.o bilst_C.o keilst_C.o vinlst_C.o vpilst_C.o stor_C.o bess_C.o \
    bcore_C.o cteilsrk_C.o kkstart_C.o horb_C.o blim_C.o fposition_C.o sacoef_C.o \
-   kkstartbreit_C.o  #   mpi_C.o   delete  for serial code only, delte mpi_C.i  
+   kkstartbreit_C.o  #   mpi_C.o   delete  for serial code only, delte mpi_C.i
 
 
 install : $(LIBA)

@@ -15,8 +15,8 @@
 !   MPI version by Xinghong He            Last revision: 22 Jun 1998   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -43,7 +43,7 @@
       LOGICAL :: GEN,TRIANGRK
       INTEGER :: key, i, k, ia, ib, ic, id
 !-----------------------------------------------------------------------
- 
+
       KEY = NW + 1
       KSTART(0) = 1
 !
@@ -53,7 +53,7 @@
       DO I = 2, NW
          IF (NKJ(I) .GT. J2MAX) J2MAX = NKJ(I)
       ENDDO
- 
+
       IF (J2MAX .GT. KMAX) THEN
          STOP 'genintrk: KMAX too small'
       ENDIF
@@ -62,7 +62,7 @@
 !   When GEN is false, sweep through to find dimension
 !
       GEN = .FALSE.
- 
+
   999 N = 0
       DO K = 0, J2MAX
          DO IA = 1, NW
@@ -90,20 +90,20 @@
       IF (.NOT. GEN) THEN
          CALL ALLOC (INDTEIRK,N,'INDTEIRK', 'GENINTRK')
          CALL ALLOC (VALTEIRK,N,'VALTEIRK', 'GENINTRK')
- 
+
 ! Initialization is necessary in the mpi version
- 
+
          DO i = 1, N
             INDTEIRK(i) = 0
             VALTEIRK(i) = 0.d0
          ENDDO
- 
+
          IF (myid .EQ. 0)                                          &
             PRINT *, 'Allocating space for ',N,' Rk integrals'
- 
+
          GEN = .TRUE.
          GOTO 999
       ENDIF
- 
+
       RETURN
       END

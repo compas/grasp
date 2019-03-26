@@ -49,7 +49,7 @@
 !        DIAG = GETYN ()
 !     ELSE
 !        DIAG = .FALSE.
-!     ENDIF 
+!     ENDIF
       DIAG = .FALSE.
       IF (DIAG) THEN
          LFORDR = .FALSE.

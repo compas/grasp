@@ -2,8 +2,8 @@
 !
       SUBROUTINE CSLHMPI(NAME, NCORE, NBLKIN, IDBLK)
 !
-!  A container which calls setcsll to open, read <name> file to get 
-!     nblock, ncfblk(), idblk(), ncftot. 
+!  A container which calls setcsll to open, read <name> file to get
+!     nblock, ncfblk(), idblk(), ncftot.
 !  It then calls lib92/lodcsh to get
 !     ncore, nelec, nw, np(), nak(), nkl(), nkj(), nh()
 !  The file pointer points to the first CSL record after this routine.
@@ -13,11 +13,11 @@
 !  Xinghong He 98-06-23
 !
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE memory_man
       use mpi_C

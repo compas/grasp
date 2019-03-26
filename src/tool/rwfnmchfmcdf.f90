@@ -16,7 +16,7 @@
       CHARACTER hfcr*4,line*3,atom*6,term*6
       integer max(nwf),nl(nwf),l(nwf)
 
-!b 
+!b
 !b alpha constant from lib/lib92/setcon.f
 !b
 !      COMMON/DEF9/CVAC,PI
@@ -41,8 +41,8 @@
       do 1 j=1,no+1
          pff(j,i)=0.d0
 1     continue
-     
- 
+
+
       do 2 i=0,230
          pg(i)=0.d0
          qg(i)=0.d0
@@ -90,7 +90,7 @@
 
 !  *****  construct MCHF grid:
 !  *****  GENERATE ARRAYS FOR R WITH A CONSTANT MESH
-!  *****  SIZE IN THE LOG(Z*R) VARIABLE 
+!  *****  SIZE IN THE LOG(Z*R) VARIABLE
 
       rho = -4.d0
       hff   = 1.d0/16.d0
@@ -102,7 +102,7 @@
 
 !  *****  construct MCDF grid:
 !  *****  GENERATE ARRAYS FOR R WITH A CONSTANT MESH
-!  *****  SIZE IN THE LOG(Z*R) VARIABLE 
+!  *****  SIZE IN THE LOG(Z*R) VARIABLE
 
       call grid(z,rg)
       h = rg(2)/1000.d0
@@ -140,7 +140,7 @@
          if (l(m) .ne. 0) then
 
 !****************************
-!** first lower j-value:  ***  
+!** first lower j-value:  ***
 !****************************
 
             pqj=real(l(m)-0.5)
@@ -180,7 +180,7 @@
          write (9) az(m),(pg(i),i=1,myg),(qg(i),i=1,myg)
          write (9) (rg(i),i=1,myg)
 
-7     continue   
+7     continue
       close (1)
       close (9)
       stop
@@ -193,7 +193,7 @@
 !
       character line*3,irrel*8
       data irrel/' ()/\,;:'/
- 
+
    10 if(index(irrel,line(i:i)) .ne.  0 .and. i .lt. 80) then
         i=i+1
         goto 10
@@ -207,11 +207,11 @@
 !
       integer rdnum
       character*3 line
- 
+
 ! ICHAR('I')-ICHAR('0') RETURNS THE integer VALUE OF A character
 ! ICHAR('0')=48 or 33 DEPendENT ON THE character SET USED, BUT then
 ! ICHAR('3')=51 or 36, THE FINAL ANSWER BEING CorRECT
- 
+
    10 if(line(2:2).GE.'0'.and.line(2:2).LE.'?')then
          rdnum=ICHAR(line(2:2))-ICHAR('0')
          I=3
@@ -222,17 +222,17 @@
       end function
 
       function rdorb(i,line)
- 
+
 !
 ! converts character to orbital angular momentum
 !
       integer rdorb
       character lorbu*1,lorbl*1,line*3
- 
+
       dimension lorbu(0:10),lorbl(0:10)
       data lorbu/'S','P','D','F','G','H','I','K','L','M','N'/
       data lorbl/'s','p','d','f','g','h','i','k','l','m','n'/
- 
+
       rdorb=0
       do 1 ii=0,10
 1     if (line (i:i) .eq. lorbl(ii) .or.      &
@@ -243,7 +243,7 @@
 
       subroutine GRID(z,rr)
 !
-      IMPLICIT REAL*8(A-H,O-Z) 
+      IMPLICIT REAL*8(A-H,O-Z)
       DIMENSION RR(230)
 
       RNT = EXP (-65.0D00/16.0D00) / Z
@@ -281,7 +281,7 @@
         sig=(x(i)-x(i-1))/(x(i+1)-x(i-1))
         p=sig*y2(i-1)+2.d0
         y2(i)=(sig-1.d0)/p
-        u(i)=(6.d0*((y(i+1)-y(i))/(x(i+ 1)                        &                   
+        u(i)=(6.d0*((y(i+1)-y(i))/(x(i+ 1)                        &
        -x(i))-(y(i)-y(i-1))/(x(i)-x(i-1)))/(x(i+1)-x(i-1))-sig*   &
         u(i-1))/p
 11    continue

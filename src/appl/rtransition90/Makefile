@@ -34,7 +34,7 @@ APP_OBJ= \
 
 $(EXE): $(APP_OBJ)
 	$(FC) -o $(BINFILE) $(FC_LD) $(APP_OBJ) $(APP_LIBS) \
-		$(APP_LIBS) ${LAPACK_LIBS} 
+		$(APP_LIBS) ${LAPACK_LIBS}
 
 .f90.o:
 	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I . -I ${MODL92} -I ${MODLRANG90} -I $(MODLMCP90) -o $@
@@ -44,4 +44,3 @@ $(EXE): $(APP_OBJ)
 
 clean:
 	-rm -f *.o core *.mod
-

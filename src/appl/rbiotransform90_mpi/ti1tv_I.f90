@@ -1,6 +1,6 @@
-      MODULE ti1tv_I   
+      MODULE ti1tv_I
       INTERFACE
-!...Translated by Charlotte Froese Fischer 
+!...Translated by Charlotte Froese Fischer
 !                       Gediminas Gaigalas  10/05/17
       SUBROUTINE TI1TV(CIIN,NCSF,NCIV,I,L,T,NSHL,CIOUT,NTESTG)
       USE vast_kind_param, ONLY:  DOUBLE
@@ -9,6 +9,6 @@
       REAL(DOUBLE), DIMENSION(ncsf, nciv), INTENT(IN) :: ciin
       REAL(DOUBLE), DIMENSION(nshl), INTENT(IN) :: t
       REAL(DOUBLE), DIMENSION(ncsf, nciv), INTENT(OUT) :: ciout
-      END SUBROUTINE  
-      END INTERFACE 
-      END MODULE 
+      END SUBROUTINE
+      END INTERFACE
+      END MODULE

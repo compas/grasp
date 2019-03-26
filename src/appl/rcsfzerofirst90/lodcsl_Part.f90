@@ -1,6 +1,6 @@
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE LODCSL_Part(CSF_Number) 
+      SUBROUTINE LODCSL_Part(CSF_Number)
 !                                                                      *
 !   Loads the data from the  .csl  file. A number of checks are made   *
 !   to ensure correctness and consistency.                             *
@@ -10,7 +10,7 @@
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE BLK_C,            only: NBLOCK,NCFBLK
       USE rang_Int_C
@@ -30,12 +30,12 @@
 !-----------------------------------------------
 !
       CSF_Number = 0
-      DO 
+      DO
          CSF_Number = CSF_Number + 1
          Found_CSF = 0
-         IF(CSF_Number .EQ. 1) NCF = NCFBLK(NBLOCK) + 1 
-         READ (20, '(A)', IOSTAT=IOS) RECORD 
-         IF (IOS == 0) THEN 
+         IF(CSF_Number .EQ. 1) NCF = NCFBLK(NBLOCK) + 1
+         READ (20, '(A)', IOSTAT=IOS) RECORD
+         IF (IOS == 0) THEN
             IF (RECORD(1:2) == ' *') RETURN
             RECORD_C_shell = RECORD
 !
@@ -45,7 +45,7 @@
 !
 !   Read the X, J, and (sign of) P quantum numbers
 !
-            READ (20, '(A)') RECORD_C_coupl 
+            READ (20, '(A)') RECORD_C_coupl
             IF(NotFound >= 1) THEN
                DO I =1,NCF-1
                   IF(Found(I) == 0) THEN
@@ -56,10 +56,10 @@
                               NotFound = NotFound - 1
                               Found_CSF = 1
                               CYCLE
-                           ENDIF 
-                        ENDIF 
-                     ENDIF 
-                  ENDIF 
+                           ENDIF
+                        ENDIF
+                     ENDIF
+                  ENDIF
                END DO
                IF(Found_CSF == 1) CYCLE
                WRITE(22,'(A)') TRIM(RECORD_C_shell)
@@ -69,11 +69,11 @@
                WRITE(22,'(A)') TRIM(RECORD_C_shell)
                WRITE(22,'(A)') TRIM(RECORD_C_quant)
                WRITE(22,'(A)') TRIM(RECORD_C_coupl)
-            ENDIF 
+            ENDIF
          ELSE
             RETURN
-         ENDIF 
+         ENDIF
       END DO
-      RETURN  
+      RETURN
 !
       END SUBROUTINE LODCSL_Part

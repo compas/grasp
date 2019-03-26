@@ -10,7 +10,7 @@ MODL9290 = ${SRCLIBDIR}/lib9290
 MODLRANG90 = ${SRCLIBDIR}/librang90
 GRASPLIBS =-l9290 -lmod -lrang90
 
-APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS}  
+APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS}
 
 #   Define data types
 VASTO = ${MODDIR}/vast_kind_param_M.o
@@ -30,11 +30,11 @@ APP_OBJ= \
 	onescalarINT.o onescalar1INT.o onescalar2INT.o \
 	el1INT.o el2INT.o el3INT.o el31INT.o el32INT.o el33INT.o \
 	el4INT.o el41INT.o \
-	el5INT.o el51INT.o el52INT.o el53INT.o Interact_csf.o 
+	el5INT.o el51INT.o el52INT.o el53INT.o Interact_csf.o
 
 $(EXE): $(APP_OBJ)
 	$(FC) -o $(BINFILE) $(APP_OBJ) $(APP_LIBS) \
-		$(APP_LIBS) 
+		$(APP_LIBS)
 
 
 

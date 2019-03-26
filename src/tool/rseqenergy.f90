@@ -1,6 +1,6 @@
 program rseqenergy
 
-! Per Jönsson, Malmö University, June 2015   
+! Per Jönsson, Malmö University, June 2015
 
 implicit none
 logical :: ex
@@ -19,10 +19,10 @@ character(len=100) :: label
 write(*,*) 'RSEQENERGY'
 write(*,*) 'This program reads output from rlevels for several'
 write(*,*) 'ions and produces a Matlab/Octave file that plots'
-write(*,*) 'energy as a function of Z'  
+write(*,*) 'energy as a function of Z'
 write(*,*) 'Input files: energyZ1, energyZ2, .., energyZn'
 write(*,*) 'Output file: seqenergyplot.m'
-write(*,*) 
+write(*,*)
 
 !--- Define Z range --------------------------
 
@@ -32,12 +32,12 @@ read(*,*) Zmin,Zmax
 !--- Give parity, J and number for state -----
 
 write(*,*) 'How many states do you want to plot?'
-read(*,*) nplot 
+read(*,*) nplot
 do i = 1,nplot
    write(*,*) 'Give number within symmetry,2*J and parity (+/-)'
    read(*,*) numplot(i),j2,pplot(i)
 
-   if (mod(j2,2).eq.0) then 
+   if (mod(j2,2).eq.0) then
       if (j2.le.18) then
          write(jplot(i),'(a2,i1,a1)') '   ',j2/2,' '
       else
@@ -49,7 +49,7 @@ do i = 1,nplot
       else
          write(jplot(i),'(i2,a2)') j2,'/2'
       end if
-   end if    
+   end if
 !   write(*,*) pplot(i),jplot(i),numplot(i)
 end do
 
@@ -96,12 +96,12 @@ do k = 1,nions
 
    i = 0
    j = 0
-   do 
+   do
       read(100+k,'(a)',end=9) string
       j = j + 1
       if (string.eq.'-----') then
          i = i + 1
-         if (i.eq.2) then 
+         if (i.eq.2) then
             nstart = j
          end if
       end if
@@ -119,7 +119,7 @@ do k = 1,nions
 !--- Read header information ---------------
 
    do i = 1,nstart
-      read(100+k,*) 
+      read(100+k,*)
    end do
 
 !--- Read and xxxx
@@ -159,20 +159,20 @@ do i = 1,nplot
          write(12,'(a)') 'AD = [z.^(-2) z.^(-1) z.^0 z.^1 z.^2 z.^3];'
          write(12,'(a,i2,a)') 'y = A(:,',i+1,');'
          write(12,'(a)') 'm = mean(y); s = std(y);'
-         write(12,'(a)') 'a = AD\(y-m)/s'         
+         write(12,'(a)') 'a = AD\(y-m)/s'
          write(12,'(a)') 'eiplsq = a(1)./zip.^2 + a(2)./zip + a(3) + a(4)*zip + a(5)*zip.^2 + a(6)*zip.^3;'
          write(12,'(a)') 'eiplsq = s*eiplsq + m;'
-         write(12,'(a)') "plot(zip,eiplsq,'r')" 
+         write(12,'(a)') "plot(zip,eiplsq,'r')"
          write(12,*)
       else
          write(12,'(a)') 'z = A(:,1);'
          write(12,'(a)') 'AD = [z.^0 z.^1 z.^2 z.^3];'
          write(12,'(a,i2,a)') 'y = A(:,',i+1,');'
          write(12,'(a)') 'm = mean(y); s = std(y);'
-         write(12,'(a)') 'a = AD\(y-m)/s'         
+         write(12,'(a)') 'a = AD\(y-m)/s'
          write(12,'(a)') 'eiplsq =  a(1) + a(2)*zip + a(3)*zip.^2 + a(4)*zip.^3;'
          write(12,'(a)') 'eiplsq = s*eiplsq + m;'
-         write(12,'(a)') "plot(zip,eiplsq,'r')" 
+         write(12,'(a)') "plot(zip,eiplsq,'r')"
          write(12,*)
       end if
    else
@@ -182,6 +182,6 @@ do i = 1,nplot
    end if
 end do
 
-3  format(2i3,1x,a4,1x,a1,2x,f14.7,f12.2,f12.2,2x,a)   
+3  format(2i3,1x,a4,1x,a1,2x,f14.7,f12.2,f12.2,2x,a)
 
 end program rseqenergy

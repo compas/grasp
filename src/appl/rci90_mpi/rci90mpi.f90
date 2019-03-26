@@ -37,11 +37,11 @@
 !   Modified by Gediminas Gaigalas for new spin-angular integration.   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  14:04:58   1/ 3/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE default_C
       USE blim_C
@@ -58,36 +58,36 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      USE getyn_I 
-      USE cslhmpi_I 
-      USE setdbg_I 
-      USE setmc_I 
-      USE setcon_I 
-      USE setsum_I 
-      USE setres_I 
-      USE setmixmpi_I 
-      USE strsum_I 
-      USE factt_I 
-      USE matrix_I 
+      USE getyn_I
+      USE cslhmpi_I
+      USE setdbg_I
+      USE setmc_I
+      USE setcon_I
+      USE setsum_I
+      USE setres_I
+      USE setmixmpi_I
+      USE strsum_I
+      USE factt_I
+      USE matrix_I
       IMPLICIT NONE
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
-      INTEGER, PARAMETER :: NBLK0 = 50 
+      INTEGER, PARAMETER :: NBLK0 = 50
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       INTEGER, PARAMETER :: nblk=50
       INTEGER            :: lenperm, lentmp
-      INTEGER :: NCOUNT1, NCOUNT2, NCOUNT_RATE, NCOUNT_MAX 
-      INTEGER, DIMENSION(8) :: NYMDUHMSM 
-      INTEGER :: K, LENNAME, NCORE, NDUM, J2MAX, NSECONDS 
-      LOGICAL :: YES 
+      INTEGER :: NCOUNT1, NCOUNT2, NCOUNT_RATE, NCOUNT_MAX
+      INTEGER, DIMENSION(8) :: NYMDUHMSM
+      INTEGER :: K, LENNAME, NCORE, NDUM, J2MAX, NSECONDS
+      LOGICAL :: YES
       CHARACTER (LEN = 3) :: idstring
-!      CHARACTER(LEN=128) :: NAME, TMPDIR, PERMDIR, ISOFILE 
+!      CHARACTER(LEN=128) :: NAME, TMPDIR, PERMDIR, ISOFILE
       CHARACTER(LEN=128) :: STARTDIR, NAME, ISOFILE, NAMESAVE,TMPDIR, PERMDIR
-      CHARACTER(LEN=8), DIMENSION(NBLK0) :: IDBLK 
-      CHARACTER :: CHDATE*8, CHTIME*10, CHZONE*5, STR*8, MSG*128 
+      CHARACTER(LEN=8), DIMENSION(NBLK0) :: IDBLK
+      CHARACTER :: CHDATE*8, CHTIME*10, CHZONE*5, STR*8, MSG*128
 !-----------------------------------------------
 !=======================================================================
 !  Start mpi --- get processor info: myid, nprocs, host name; and print
@@ -106,18 +106,18 @@
 
       IF (myid .EQ. 0) THEN
          WRITE (istde,*)
-         WRITE (ISTDE, *) 'Default settings? ' 
-         YES = GETYN() 
-         IF (YES) THEN 
-            NDEF = 0 
+         WRITE (ISTDE, *) 'Default settings? '
+         YES = GETYN()
+         IF (YES) THEN
+            NDEF = 0
 !cjb fort.734
 !cjb        write(734,'(A)') 'y            ! Default settings'
-         ELSE 
-            NDEF = 1 
+         ELSE
+            NDEF = 1
 !cjb fort.734
 !cjb        write(734,'(A)') 'n            ! Default settings'
-         ENDIF 
-      ENDIF 
+         ENDIF
+      ENDIF
       CALL MPI_Bcast (NDEF,1,MPI_INTEGER,0,MPI_COMM_WORLD,ierr)
 !     CALL MPI_Bcast (imethod,1,MPI_INTEGER,0,MPI_COMM_WORLD,ierr)
 
@@ -209,14 +209,14 @@
 !=======================================================================
 !   Proceed with the CI calculation
 !=======================================================================
-      WRITE (6, *) 'Calling MATRIX...' 
- 
-      CALL MATRIX (NCORE, J2MAX) 
- 
-      IF (IPRERUN == 1) THEN 
-         IPRERUN = 2 
-         GO TO 99 
-      ENDIF 
+      WRITE (6, *) 'Calling MATRIX...'
+
+      CALL MATRIX (NCORE, J2MAX)
+
+      IF (IPRERUN == 1) THEN
+         IPRERUN = 2
+         GO TO 99
+      ENDIF
 !=======================================================================
 !  Execution finished; Statistics output
 !=======================================================================
@@ -224,5 +224,5 @@
       CALL stopmpi2 (myid, nprocs, host, lenhost,          &
                            ncount1, 'RCI_MPI')
 
-      STOP  
+      STOP
       END PROGRAM RCI90mpi

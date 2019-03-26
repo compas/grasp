@@ -1,6 +1,6 @@
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE SETTMPGG(NB, K, FILEHEAD) 
+      SUBROUTINE SETTMPGG(NB, K, FILEHEAD)
 !***********************************************************************
 !   Modified by Gediminas Gaigalas:                         Feb 2017   *
 !                               1) for new spin-angular integration,   *
@@ -9,8 +9,8 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      USE convrt_I 
-      USE openfl_I 
+      USE convrt_I
+      USE openfl_I
 !-----------------------------------------------
 !   C o m m o n   B l o c k s
 !-----------------------------------------------
@@ -18,14 +18,14 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      INTEGER, INTENT(IN) :: NB 
-      INTEGER, INTENT(IN) :: K 
-      CHARACTER, INTENT(IN) :: FILEHEAD*(*) 
+      INTEGER, INTENT(IN) :: NB
+      INTEGER, INTENT(IN) :: K
+      CHARACTER, INTENT(IN) :: FILEHEAD*(*)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      INTEGER   :: LCK, IERR, LNG 
-      CHARACTER :: CK*2 
+      INTEGER   :: LCK, IERR, LNG
+      CHARACTER :: CK*2
 !-----------------------------------------------
 !
 ! All files  filehead.XX  are UNFORMATTED;

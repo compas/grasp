@@ -5,7 +5,7 @@
 !   Written by Per Jonsson                Last revision: October 2014  *
 !                                                                      *
 !***********************************************************************
-!...Translated by Charlotte Froese Fischer 
+!...Translated by Charlotte Froese Fischer
 !                       Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s

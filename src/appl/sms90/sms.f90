@@ -15,10 +15,10 @@
 !                                         Last revision: 10 Nov 1995   *
 !                                                                      *
 !***********************************************************************
-!...Created by Charlotte Froese Fischer 
+!...Created by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  11/02/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param,  ONLY: DOUBLE
       USE parameter_def,    ONLY: NNNW
@@ -77,7 +77,7 @@
          DENS5(I) = 0.0D00
          DENS6(I) = 0.0D00
       ENDDO
- 
+
       VSH   = .TRUE.
       SMSSH = .TRUE.
 !
@@ -203,7 +203,7 @@
               //' Level  J Parity',8X,'<r-1> (a.u.)'/)
   312 FORMAT (//' Radial expectationvalue'                             &
               //' Level  J Parity',8X,'<r-2> (a.u.)'/)
- 
+
 !
       RETURN
       END SUBROUTINE SMS

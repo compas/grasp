@@ -105,7 +105,7 @@
         JI2=JI2-17
         J=IPR2(JI1)+JI2
         L=2
-      ELSE 
+      ELSE
         JI1=JI1-11
         JI2=JI2-11
         L=1

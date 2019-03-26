@@ -27,7 +27,7 @@ print "   State 2?  ";
 chomp($state2 = <>);
 if (length($state2) == 0) {
     $state2 = $state1;
-} 
+}
 
 
 $infile1 = $state1.".lsj.lbl";
@@ -40,10 +40,10 @@ $infile6 = $state2.".h";
 #Look for *.lsj.lbl files. If not found - exit program.
 if (-e $infile1 && -e $infile2) {
     printf("   Necessary input file(s) exist!\n");
-    printf("\n");    
+    printf("\n");
 }else{
     printf("   Necessary input file(s) do not exist! Program terminates!\n");
-    printf("\n");    
+    printf("\n");
     exit;
 }
 
@@ -57,29 +57,29 @@ if($gJinclude eq "y"){
 	$ci = 1;
     }else{
 	$ci = 0;
-    }    
+    }
 }else{
     $gJinclude = 0;
 }
 
 if($ci == 1 && $gJinclude ==1){
     if (-e $infile3 && -e $infile4) {
-	printf("   File(s) with g_J factors exist!\n");    
+	printf("   File(s) with g_J factors exist!\n");
     }else{
-	printf("   File(s) with g_J factors do not exist!\n");    
-	$gJinclude = 0;    
+	printf("   File(s) with g_J factors do not exist!\n");
+	$gJinclude = 0;
     }
 }elsif($ci == 0 && $gJinclude == 1){
     if (-e $infile5 && -e $infile6) {
-	printf("   File(s) with g_J factors exist!\n");    
+	printf("   File(s) with g_J factors exist!\n");
     }else{
-	printf("   File(s) with g_J factors do not exist!\n");    
-	$gJinclude = 0;    
+	printf("   File(s) with g_J factors do not exist!\n");
+	$gJinclude = 0;
     }
-    
+
 }
 
-printf("\n");    
+printf("\n");
 printf("   Do you want an extra empty column for e_obs in the energy table? (y/n) ");
 chomp($eobsinclude = <>);
 if($eobsinclude eq "y"){
@@ -93,7 +93,7 @@ printf("   determine how many positions should be skipped in \n");
 printf("   the string that determines the label. For example\n");
 printf("   if all the states have a common core 1s(2) in the \n");
 printf("   label then 6 positions should be skipped\n");
-    
+
 printf("\n");
 printf("   How many positions should be skipped? ");
 chomp($nochar = <>);
@@ -117,7 +117,7 @@ $imax = $i;
 close(INPUTFILE1);
 
 if($infile1 ne $infile2){
-    
+
     #READ CONTENT IN FILE 2
     #----------------------
     open(INPUTFILE2, $infile2);
@@ -133,7 +133,7 @@ if($infile1 ne $infile2){
     }
     $iimax = $ii;
     close(INPUTFILE2);
-    
+
     #MERGE CONTENT OF THE FILES 1 & 2
     #--------------------------------
     for($i=0; $i<$iimax; $i++){
@@ -145,7 +145,7 @@ if($infile1 ne $infile2){
 }
 
 if($gJinclude == 1) {
-    
+
     #READ CONTENT IN FILE 3
     #----------------------
     if($ci == 1){
@@ -160,7 +160,7 @@ if($gJinclude == 1) {
 	    my($line) = $_;
 	    chomp($line);
 	    $linecontent3[$j] = $line;
-	    #printf("$j  $linecontent3[$j]\n"); 
+	    #printf("$j  $linecontent3[$j]\n");
 	    $j++;
 	}
 	$i++;
@@ -169,7 +169,7 @@ if($gJinclude == 1) {
     close(INPUTFILE3);
 
     if($infile3 ne $infile4) {
-	
+
 	#READ CONTENT IN FILE 4
 	#----------------------
 	if($ci == 1){
@@ -184,23 +184,23 @@ if($gJinclude == 1) {
 		my($line) = $_;
 		chomp($line);
 		$linecontent4[$j] = $line;
-		#printf("$j  $linecontent4[$j]\n"); 
+		#printf("$j  $linecontent4[$j]\n");
 		$j++;
 	    }
 	    $i++;
 	}
 	$iiiimax = $j;
 	close(INPUTFILE4);
-	
+
 	#MERGE CONTENT OF FILES 3 & 4
 	#------------------------------
 	for($i=0; $i<$iiiimax; $i++){
 	    $linecontent3[$i+$iiimax] = $linecontent4[$i];
 	}
 	$iiimax = $iiimax + $iiiimax;
-	
+
     }
-    
+
     #EXTRACT RELEVANT DATA FROM CONTENT IN FILES 3 & 4
     #--------------------------------------------------
     #printf("\n");
@@ -215,17 +215,17 @@ if($gJinclude == 1) {
 	my $substring3 = "D-02";
 	if ($gj[$i] =~ /\Q$substring\E/) {
 	    $gj[$i] = substr($gj[$i], 0, 7);
-	    $gj[$i] = sprintf("%.5f", $gj[$i]); 
+	    $gj[$i] = sprintf("%.5f", $gj[$i]);
 	}
 	if ($gj[$i] =~ /\Q$substring2\E/) {
 	    $gj[$i] = substr($gj[$i], 0, 8);
 	    $gj[$i] = $gj[$i]/10.0;
-	    $gj[$i] = sprintf("%.5f", $gj[$i]); 
+	    $gj[$i] = sprintf("%.5f", $gj[$i]);
 	}
 	if ($gj[$i] =~ /\Q$substring3\E/) {
 	    $gj[$i] = substr($gj[$i], 0, 8);
 	    $gj[$i] = $gj[$i]/100.0;
-	    $gj[$i] = sprintf("%.5f", $gj[$i]); 
+	    $gj[$i] = sprintf("%.5f", $gj[$i]);
 	}
     }
 }
@@ -244,11 +244,11 @@ for($i=0; $i<$imax; $i++){
 	$parity[$j] = $linesplit[2];
 	$energy[$j] = $linesplit[3];
 	$energytot[$j] = $energy[$j];
-	
+
 	if($gJinclude == 1) {
 	    for($n=0; $n<$iiimax; $n++){
 		if($order[$j] == $or[$n] && $spin[$j] eq $sp[$n] && $parity[$j] eq $pa[$n]){
-		    $gjval[$j] = $gj[$n]; 
+		    $gjval[$j] = $gj[$n];
 		    #printf("$order[$j]   $or[$n]          $spin[$j]  $sp[$n]       $parity[$j]  $pa[$n]        $gjval[$j]\n");
 		}
 	    }
@@ -296,7 +296,7 @@ for($i=0; $i<$imax; $i++){
 for($j=0; $j<$jmax; $j++){
     for($k=0; $k<$jmax; $k++){
 	if($energy[$k] == $energysort[$j]){
-	    $energysortr7[$j] = sprintf "%.7f", $energysort[$j];	    
+	    $energysortr7[$j] = sprintf "%.7f", $energysort[$j];
 
 	    $eenergysort[$j] = $ec*($energysort[$j] - $energysort[0]);
 	    $eenergysortr[$j] = sprintf "%.0f", $eenergysort[$j];
@@ -369,7 +369,7 @@ for($i=0; $i<$jmax; $i++){
 	    if($test == 2) {$testconfsort[$j][0] = $testconfsort[$j][0]."\$_d\$";}
 	    if($test == 3) {$testconfsort[$j][0] = $testconfsort[$j][0]."\$_e\$";}
 	    if($test == 4) {$testconfsort[$j][0] = $testconfsort[$j][0]."\$_f\$";}
-	    if($test == 5) {$testconfsort[$j][0] = $testconfsort[$j][0]."\$_g\$";}	    	    
+	    if($test == 5) {$testconfsort[$j][0] = $testconfsort[$j][0]."\$_g\$";}
 	    $test++;
 	}
     }
@@ -396,7 +396,7 @@ close(MYOUTPUTFILE);
 $header_gJ_eobs = "No. & State & \$LS\$-composition & \$E(CI) \$ & \$E(OBS) \$  & \$g_J \$   \\\\ \n";
 $header_gJ = "No. & State & \$LS\$-composition & \$E(CI) \$ & \$g_J \$   \\\\ \n";
 $header_eobs = "No. & State & \$LS\$-composition & \$E(CI) \$ & \$E(OBS) \$  \\\\ \n";
-$header = "No. & State & \$LS\$-composition & \$E(CI) \$ \\\\ \n";    
+$header = "No. & State & \$LS\$-composition & \$E(CI) \$ \\\\ \n";
 
 open (MYOUTPUTFILE2, '>lscomp.tex');
 print MYOUTPUTFILE2 "\\documentclass[12pt]{article}\n";
@@ -408,13 +408,13 @@ print MYOUTPUTFILE2 "\{\\scriptsize\n";
 if ($gJinclude == 1 && $eobsinclude == 1) {print MYOUTPUTFILE2 "\\begin{longtable}{\@\{\}rllrrr}\n";}
 if ($gJinclude == 1 && $eobsinclude == 0) {print MYOUTPUTFILE2 "\\begin{longtable}{\@\{\}rllrr}\n";}
 if ($gJinclude == 0 && $eobsinclude == 1) {print MYOUTPUTFILE2 "\\begin{longtable}{\@\{\}rllrr}\n";}
-if ($gJinclude == 0 && $eobsinclude == 0) {print MYOUTPUTFILE2 "\\begin{longtable}{\@\{\}rllr}\n";}            
+if ($gJinclude == 0 && $eobsinclude == 0) {print MYOUTPUTFILE2 "\\begin{longtable}{\@\{\}rllr}\n";}
 print MYOUTPUTFILE2 "\\caption\{Energies.....\}\\\\  \n";
 print MYOUTPUTFILE2 "\\hline\n";
 if ($gJinclude == 1 && $eobsinclude == 1) {print MYOUTPUTFILE2 "$header_gJ_eobs\n";}
 if ($gJinclude == 1 && $eobsinclude == 0) {print MYOUTPUTFILE2 "$header_gJ\n";}
 if ($gJinclude == 0 && $eobsinclude == 1) {print MYOUTPUTFILE2 "$header_eobs\n";}
-if ($gJinclude == 0 && $eobsinclude == 0) {print MYOUTPUTFILE2 "$header\n";}            
+if ($gJinclude == 0 && $eobsinclude == 0) {print MYOUTPUTFILE2 "$header\n";}
 print MYOUTPUTFILE2 "\\hline\n";
 print MYOUTPUTFILE2 "\\endfirsthead\n";
 print MYOUTPUTFILE2 "\\caption\{Continued.\}\\\\  \n";
@@ -422,7 +422,7 @@ print MYOUTPUTFILE2 "\\hline\n";
 if ($gJinclude == 1 && $eobsinclude == 1) {print MYOUTPUTFILE2 "$header_gJ_eobs\n";}
 if ($gJinclude == 1 && $eobsinclude == 0) {print MYOUTPUTFILE2 "$header_gJ\n";}
 if ($gJinclude == 0 && $eobsinclude == 1) {print MYOUTPUTFILE2 "$header_eobs\n";}
-if ($gJinclude == 0 && $eobsinclude == 0) {print MYOUTPUTFILE2 "$header\n";}                
+if ($gJinclude == 0 && $eobsinclude == 0) {print MYOUTPUTFILE2 "$header\n";}
 print MYOUTPUTFILE2 "\\hline\n";
 print MYOUTPUTFILE2 "\\endhead\n";
 print MYOUTPUTFILE2 "\\hline\n";
@@ -433,7 +433,7 @@ for ($i=0; $i<$jmax; $i++)
     if ($gJinclude == 1 && $eobsinclude == 1) {printf MYOUTPUTFILE2 "%-3s & %-50s & %-90s & %-12s & %-2s & %-7s\\\\ \n", $i+1, $testconfsort[$i][0], $teststring[$i], $eenergysortrsep[$i], " ", $gjvalsort[$i];}
     if ($gJinclude == 1 && $eobsinclude == 0) {printf MYOUTPUTFILE2 "%-3s & %-50s & %-90s & %-12s & %-7s\\\\ \n", $i+1, $testconfsort[$i][0], $teststring[$i], $eenergysortrsep[$i], $gjvalsort[$i];}
     if ($gJinclude == 0 && $eobsinclude == 1) {printf MYOUTPUTFILE2 "%-3s & %-50s & %-90s & %-12s & %-2s \\\\ \n", $i+1, $testconfsort[$i][0], $teststring[$i], $eenergysortrsep[$i], " ";}
-    if ($gJinclude == 0 && $eobsinclude == 0) {printf MYOUTPUTFILE2 "%-3s & %-50s & %-90s & %-12s \\\\ \n", $i+1, $testconfsort[$i][0], $teststring[$i], $eenergysortrsep[$i]}            
+    if ($gJinclude == 0 && $eobsinclude == 0) {printf MYOUTPUTFILE2 "%-3s & %-50s & %-90s & %-12s \\\\ \n", $i+1, $testconfsort[$i][0], $teststring[$i], $eenergysortrsep[$i]}
 }
 
 print MYOUTPUTFILE2 "\\hline \n";
@@ -451,7 +451,7 @@ print "\n";
 sub lsj {
     ($confstring) = @_;
     $conflength = length($confstring);
- 
+
     $term = substr($confstring, $conflength - 2, 2);
     $sterm = substr($term, 0, 1);                                     #extract 2S+1
     $lterm = substr($term, 1, 1);                                     #extract L
@@ -473,16 +473,16 @@ sub level2 {
     $size = scalar(@confsplit);                                         # number of dot separeted strings
     #printf("$conf\n");
     for ($j=$confflag; $j<$size; $j++){                                 # loop over dot seprated strings
-	#printf("\n");	
+	#printf("\n");
 	#printf("$confsplit[$j]\n");
-	#printf("--------------------\n");	
+	#printf("--------------------\n");
         #if($confsplit[$j] =~ /\Q(\E/ && $confsplit[$j] !~ /\Q_\E/){     # if more than nl electron
-        if($confsplit[$j] =~ /\Q(\E/){                                   # if more than nl electron	    
-	    #printf("check\n");	
+        if($confsplit[$j] =~ /\Q(\E/){                                   # if more than nl electron
+	    #printf("check\n");
 		$confpartlength = length($confsplit[$j]);
 		if($confpartlength < 8){
 		    $nl = substr($confsplit[$j], 0, 2);                 # extract nl
-		    $checkpow = substr($confsplit[$j], 4, 1); 
+		    $checkpow = substr($confsplit[$j], 4, 1);
 		    if($checkpow eq ")"){                               # check if char 4 is ")"  example 5s(2)
 			$pow = substr($confsplit[$j], 3, 1);            # if so extract power = 1 char
 		    }else{
@@ -492,7 +492,7 @@ sub level2 {
 		    #printf("$nlpow\n");
 		}else{
 		    $nl = substr($confsplit[$j], 0, 2);
-		    $checkpow = substr($confsplit[$j], 4, 1); 
+		    $checkpow = substr($confsplit[$j], 4, 1);
 		    if($checkpow eq ")"){                               # check if char 4 is ")"  example 5s(2)
 			$pow = substr($confsplit[$j], 3, 1);            # if so extract power = 1 char
 		    }else{
@@ -504,13 +504,13 @@ sub level2 {
 			$intterm4 = substr($confsplit[$j], $confpartlength - 1, 1);
 			$intterm5 = substr($confsplit[$j], $confpartlength - 6, 1);
 			$intterm6 = substr($confsplit[$j], $confpartlength - 5, 1);
-			$intterm7 = substr($confsplit[$j], $confpartlength - 4, 1);		    
+			$intterm7 = substr($confsplit[$j], $confpartlength - 4, 1);
 			$nlpow = $nl."^{".$pow."}"."(^{$intterm5}_{$intterm7}$intterm6)"."~^{$intterm3}$intterm4";       # contruct nl^pow latex style
 		    }else{
 			#printf("not end\n");
 			$intterm5 = substr($confsplit[$j], $confpartlength - 3, 1);
 			$intterm6 = substr($confsplit[$j], $confpartlength - 2, 1);
-			$intterm7 = substr($confsplit[$j], $confpartlength - 1, 1);		    
+			$intterm7 = substr($confsplit[$j], $confpartlength - 1, 1);
 			$nlpow = $nl."^{".$pow."}"."(^{$intterm5}_{$intterm7}$intterm6)";       # contruct nl^pow latex style
 			#$nlpow = $nl."(^{".$intterm3."}".$intterm4.")";
 			#printf("$nlpow\n");

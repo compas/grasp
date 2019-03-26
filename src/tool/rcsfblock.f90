@@ -226,7 +226,7 @@
          ENDDO
 
       ENDIF
-     
+
       CONTAINS
 
 !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -289,5 +289,5 @@
       ENDIF
       RETURN
       END SUBROUTINE
-    
+
       END  PROGRAM

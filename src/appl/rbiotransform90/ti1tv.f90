@@ -29,7 +29,7 @@
 !   CIOUT : List of output CI vectors                                  *
 !                                                                      *
 !***********************************************************************
-!...Translated by Charlotte Froese Fischer 
+!...Translated by Charlotte Froese Fischer
 !                       Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -65,7 +65,7 @@
       NTEST = 000
 !
       IF(NTEST.GE.10) WRITE(6,*) ' Entering TI1TV'
- 
+
       CALL SETVEC(CIOUT,0.0D0,NCIV*NCSF)
 !
 !.  Obtain address of first coupling coefficient for h(jl,il) :  IFIRST
@@ -84,7 +84,7 @@
         IR = NSHLPP(L,NSHLP(L,I))
         IRA = NSHLPP(L,IA)
         IRB = NSHLPP(L,IB)
- 
+
         IF (IR.EQ.IRB.AND.IRA.LT.IRB) THEN
           IF (K.EQ.1) THEN
             IFIRST = 1
@@ -92,7 +92,7 @@
             IFIRST = INTPTR(K-1) + 1
           ENDIF
           NFOUND = INTPTR(K) - IFIRST + 1
- 
+
    15     DO IELMNT = 1, NFOUND
             RACAH = CNN(IFIRST-1+IELMNT)
             J = IRA
@@ -131,6 +131,6 @@
       END IF
 !
       IF(NTEST.GE.10) WRITE(6,*) ' LEAVING TI1TV'
- 
+
       RETURN
       END

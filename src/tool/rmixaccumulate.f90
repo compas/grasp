@@ -25,7 +25,7 @@ program rmixaccumulate
   write(*,*) 'a user defined fraction of the total wave function.'
   write(*,*) 'The CSFs in the output list can be sorted by mixing coefficents'
   write(*,*) 'to provide better initial estimates for the subsequent diagonalisation.'
-  write(*,*) 'of CI matrices.'      
+  write(*,*) 'of CI matrices.'
   write(*,*)
   write(*,*) 'Input files: <state>.(c)m, <state>.c'
   write(*,*) 'Output file: rcsf.out'
@@ -33,7 +33,7 @@ program rmixaccumulate
   write(*,*) '                                             J. Ekman & P. Jonsson Feb 2016'
   write(*,*) '***************************************************************************'
 
-  write(*,*) 
+  write(*,*)
   write(*,*) 'Give name of the state: '
   read(*,*) state
   write(*,*) 'Expansion coefficients resulting from CI calculation (y/n)? '
@@ -165,7 +165,7 @@ program rmixaccumulate
         !write(*,*) k, kk, ind2(i,kk), c2evec(i,k), totc2evecblk, checkcsf(i,ind2(i,kk))
         !write(*,*) k, kk, ind2(i,kk), c2evec(i,k), totc2evecblk, checkcsf(i,kk)
      end do
-     
+
   end do
 
   ! Open and read data from input file <state>.c
@@ -187,7 +187,7 @@ program rmixaccumulate
   end do
   nrelorb = ii - 1
   !write(*,*) 'nrelorb: ', nrelorb
-  
+
   i = 1
   j = 1
   do
@@ -221,7 +221,7 @@ program rmixaccumulate
            !write(10,'(i10,i10)') j,ind2(i,j)
            if(sortflag.eq.'n') then
               write(10,'(a)') trim(conf(i,j))
-              
+
               if(sum(co(1:nrelorb)).lt.nrelorb) then
                  do ii=1,nrelorb
                     indexans = index(conf(i,j),relorbitals(ii)(1:4))
@@ -230,7 +230,7 @@ program rmixaccumulate
                     end if
                  end do
               end if
-              
+
               write(10,'(a)') trim(coupling(i,j))
               write(10,'(a)') trim(spin(i,j))
            else if(sortflag.eq.'y') then
@@ -244,7 +244,7 @@ program rmixaccumulate
                     end if
                  end do
               end if
-              
+
               write(10,'(a)') trim(coupling(i,ind2(i,j)))
               write(10,'(a)') trim(spin(i,ind2(i,j)))
            end if
@@ -262,7 +262,7 @@ program rmixaccumulate
   do i = 1, nblock
      write(*,*) i, ncfblockout(i)
   end do
-    
+
   if(sum(co(1:nrelorb)).lt.nrelorb) then
      write(*,*)
      write(*,*) 'WARNING! Not all peel subshells are occupied in the output CSF list: '
@@ -274,7 +274,7 @@ program rmixaccumulate
      end do
   end if
 
-  
+
 end program rmixaccumulate
 
 SUBROUTINE HPSORT(N,RA,IND)
@@ -288,7 +288,7 @@ SUBROUTINE HPSORT(N,RA,IND)
   end do
 
   !The index L will be decremented from its initial value during the
-  !"hiring" (heap creation) phase. Once it reaches 1, the index IR 
+  !"hiring" (heap creation) phase. Once it reaches 1, the index IR
   !will be decremented from its initial value down to 1 during the
   !"retirement-and-promotion" (heap selection) phase.
 10 continue
@@ -321,7 +321,7 @@ SUBROUTINE HPSORT(N,RA,IND)
      else
         J=IR+1
      end if
-     
+
      goto 20
   end if
   RA(I)=RRA

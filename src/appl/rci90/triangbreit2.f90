@@ -8,7 +8,7 @@
 !   Written by Per Jonsson                                             *
 !                                                                      *
 !***********************************************************************
-!...Translated by Charlotte Froese Fischer 
+!...Translated by Charlotte Froese Fischer
 !                       Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
 !   M o d u l e s
@@ -47,4 +47,3 @@
 
       RETURN
       END FUNCTION TRIANGBREIT2
-

@@ -1,6 +1,6 @@
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE QUAD(RESULT) 
+      SUBROUTINE QUAD(RESULT)
 !                                                                      *
 !   The argument result is an approximation  to the integral of F(R)   *
 !   from  zero  to  infinity,  where the values of RP(I)*F(R(I)) are   *
@@ -23,68 +23,68 @@
 !   Written by Farid A Parpia, at Oxford   Last updated: 06 Oct 1992   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  10:50:18   2/14/04  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  10:50:18   2/14/04
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  DOUBLE 
-      USE DEF_C 
-      USE GRID_C 
-      USE NCC_C 
+      USE vast_kind_param, ONLY:  DOUBLE
+      USE DEF_C
+      USE GRID_C
+      USE NCC_C
       USE TATB_C, ONLY: TA, MTP
       IMPLICIT NONE
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      REAL(DOUBLE) , INTENT(OUT) :: RESULT 
+      REAL(DOUBLE) , INTENT(OUT) :: RESULT
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      INTEGER :: MTPM1, I, IP1, LOC 
-      REAL(DOUBLE) :: TAI, TAIP1, QUOTT, FRIP1, FRI, RATIO, RIP1, RI, SIGMA 
+      INTEGER :: MTPM1, I, IP1, LOC
+      REAL(DOUBLE) :: TAI, TAIP1, QUOTT, FRIP1, FRI, RATIO, RIP1, RI, SIGMA
 !-----------------------------------------------
 !
 !
 !   Find first values that will permit computation of exponent
 !
-      MTPM1 = MTP - 1 
-      DO I = 2, MTPM1 
+      MTPM1 = MTP - 1
+      DO I = 2, MTPM1
 !
-         TAI = TA(I) 
-         IF (ABS(TAI) <= 0.D0) CYCLE  
+         TAI = TA(I)
+         IF (ABS(TAI) <= 0.D0) CYCLE
 !
-         IP1 = I + 1 
-         TAIP1 = TA(IP1) 
-         QUOTT = TAIP1/TAI 
+         IP1 = I + 1
+         TAIP1 = TA(IP1)
+         QUOTT = TAIP1/TAI
 !
-         IF (QUOTT <= 0.D0) CYCLE  
+         IF (QUOTT <= 0.D0) CYCLE
 !
 !   Exponent from fit
 !
-         FRIP1 = TAIP1/RP(IP1) 
-         FRI = TAI/RP(I) 
-         RATIO = FRIP1/FRI 
-         RIP1 = R(IP1) 
-         RI = R(I) 
-         SIGMA = LOG(RATIO)/LOG(RIP1/RI) 
+         FRIP1 = TAIP1/RP(IP1)
+         FRI = TAI/RP(I)
+         RATIO = FRIP1/FRI
+         RIP1 = R(IP1)
+         RI = R(I)
+         SIGMA = LOG(RATIO)/LOG(RIP1/RI)
 !
 !   Analytical integration and error estimate for interval r(1:i)
 !
-         FRI = RI*FRI 
-         RESULT = FRI/(SIGMA + 1.D0) 
+         FRI = RI*FRI
+         RESULT = FRI/(SIGMA + 1.D0)
 !
 !   Set the tail to zero
 !
-         TA(MTP+1:3+MTP) = 0.D0 
+         TA(MTP+1:3+MTP) = 0.D0
 !
 !   Newton-Cotes quadature for the remainder
 !
-         RESULT = RESULT + C1*TAI 
+         RESULT = RESULT + C1*TAI
          RESULT = RESULT + SUM(C2*(TA(IP1:MTP:4)+TA(IP1+2:MTP+2:4))+C3*TA(IP1+1&
-            :MTP+1:4)+C4*TA(IP1+3:MTP+3:4)) 
-         IF (MOD(MTP - I,4) == 0) RESULT = RESULT - C1*TA(MTP) 
+            :MTP+1:4)+C4*TA(IP1+3:MTP+3:4))
+         IF (MOD(MTP - I,4) == 0) RESULT = RESULT - C1*TA(MTP)
 !
 !   Test of result's accuracy; `decomment' to activate
 !
@@ -92,19 +92,19 @@
 !              RATIO = ABS (ESTDER/RESULT)
 !              IF (RATIO .GT. ACCY) PRINT (*,300) RATIO
 !
-         GO TO 4 
+         GO TO 4
 !
-      END DO 
+      END DO
 !
 !   No value which will permit computation of exponent
 !
-      RESULT = 0.D0 
+      RESULT = 0.D0
 !
-    4 CONTINUE 
-      RETURN  
+    4 CONTINUE
+      RETURN
 !
   300 FORMAT(/,'QUAD: Estimated accuracy is ',1P,D10.3,/,&
-         ' Decrease RNT or improve input data conditioning to',' ameliorate.'/) 
-      RETURN  
+         ' Decrease RNT or improve input data conditioning to',' ameliorate.'/)
+      RETURN
 !
-      END SUBROUTINE QUAD 
+      END SUBROUTINE QUAD

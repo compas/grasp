@@ -1,7 +1,7 @@
 !***********************************************************************
 !                                                                      *
 !cjb  myid, nprocs = NOT args
-      SUBROUTINE SETMCPmpi(NCORE, IDBLK, FILEHEAD) 
+      SUBROUTINE SETMCPmpi(NCORE, IDBLK, FILEHEAD)
 !                                                                      *
 ! A wrapper for setmcp/getinf. setmcp/getinf are then shared by serial *
 ! and MPI programs.                                                    *
@@ -9,11 +9,11 @@
 !   Written by Xinghong He                Last revision: 30 Jun 1998   *
 !                                                                      *
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.3E  11:01:42   1/ 5/07  
-!...Modified by Charlotte Froese Fischer 
+!...Translated by Pacific-Sierra Research 77to90  4.3E  11:01:42   1/ 5/07
+!...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
 !cjb mpi_C
 !     USE mpi_C,    ONLY: MYID, NPROCS, ierr
@@ -30,18 +30,18 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      USE setmcp_I 
+      USE setmcp_I
 !     USE setmcpmpi_I
-      USE getinf_I 
+      USE getinf_I
       IMPLICIT NONE
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
 !      INTEGER , INTENT(IN) :: MYID
-!      INTEGER , INTENT(IN) :: NPROCS 
-       INTEGER , INTENT(IN) :: NCORE 
-      CHARACTER , INTENT(IN) :: FILEHEAD*(*) 
-       CHARACTER , INTENT(IN) :: IDBLK(*)*8 
+!      INTEGER , INTENT(IN) :: NPROCS
+       INTEGER , INTENT(IN) :: NCORE
+      CHARACTER , INTENT(IN) :: FILEHEAD*(*)
+       CHARACTER , INTENT(IN) :: IDBLK(*)*8
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -70,6 +70,6 @@
       DO K = 30, 32+KMAX
          CLOSE (K)
       ENDDO
- 
-      RETURN  
+
+      RETURN
       END SUBROUTINE SETMCPmpi
