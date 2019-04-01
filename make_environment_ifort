@@ -1,32 +1,28 @@
 #!/bin/bash
-# --------------------------------------------------------------------------------------
-# GRASP2K ENVIRONMENT FLAGS
-# --------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------------------------------
+# GRASP2K ENVIRONMENT FLAGS - Intel ifort version
+# -------------------------------------------------------------------------------------------------------------------------------------
 #
 # Define the following global variables according to your environment and
 # source this script or add these definitions to your terminal configuration
 # file, eg. ~/.cshrc, ~/.bashrc or ~/.profile.
 #
-# Current version: Linux, gfortran gcc version 4.8.2
+# Assumes that the Fortran compiler and OpenMPI/mpirun are added to your PATH
+# and that OpenMPI libraries are on LD_LIBRARY PATH
 #
-#
-# Assumes ifort compiler on the path
-# libraries invoked through a compiler option
-
-# --------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------
 # Set up main flags
-# --------------------------------------------------------------------------------------
-export   FC=ifort                       # Fortran compiler
-export   FC_FLAGS="-O2 -save "          # Serial code compiler flags
-#export  FC_FLAGS="-O0 -check all"      # Options for check for runtime errors
-export   FC_LD="-mkl=sequential"        # Serial linker flags
-export   LAPACK_LIB=" "                 # Library to be searched (not needed for ifort)
-export   GRASP="${PWD}"                 # Location of the grasp2k root directory
-# --------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------
+export   FC=ifort                                              # Fortran compiler
+export   FC_FLAGS="-O2 -save "                                 # Serial code compiler flags
+export   FC_LD="-mkl=sequential"                               # Serial linker flags
+export   GRASP="${PWD}"                                        # Location of the 2018 root directory
+export   LAPACK_LIBS="-llapack -lblas"                         # Lapack libraries
+# -----------------------------------------------------------------------------------------------------------------
 # Set up MPI related flags
-# --------------------------------------------------------------------------------------
-export   FC_MPI="mpifort"               # MPI
-export   FC_MPIFLAGS="${FC_FLAGS}"      # Parallel code compiler flags
-export   FC_MPILD="-mkl=sequential"     # Serical linker flags
-# --------------------------------------------------------------------------------------
-export MPI_TMP="/scratch/cff/case1"               # Location of directory for temporary files
+# -----------------------------------------------------------------------------------------------------------------
+export   FC_MPI="mpifort"                                      # MPI
+export   FC_MPIFLAGS="${FC_FLAGS}"                             # Parallel code compiler flags
+export   FC_MPILD=${FC_LD}                                     # Serial linker flags
+# -----------------------------------------------------------------------------------------------------------------
+export   MPI_TMP="${HOME}/tmp_mpi"                             # Location for temporary files

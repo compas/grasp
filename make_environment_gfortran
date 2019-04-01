@@ -1,18 +1,15 @@
 #!/bin/bash
 # -------------------------------------------------------------------------------------------------------------------------------------
-# GRASP2K ENVIRONMENT FLAGS
+# GRASP2K ENVIRONMENT FLAGS - GNU gfortran version
 # -------------------------------------------------------------------------------------------------------------------------------------
 #
 # Define the following global variables according to your environment and
 # source this script or add these definitions to your terminal configuration
 # file, eg. ~/.cshrc, ~/.bashrc or ~/.profile.
 #
-# Current version: Linux, gfortran gcc version 5.4.0
+# Assumes that the Fortran compiler and OpenMPI/mpirun are added to your PATH
+# and that OpenMPI libraries are on LD_LIBRARY PATH
 #
-# Assumes gfortran, openmpi are on PATH
-# Assumes  openmpi libraries on LD_LIBRARY PATH
-# files liblapack.a and libblas.a are added to $GRASP/lib
-
 # -----------------------------------------------------------------------------------------------------------------
 # Set up main flags
 # -----------------------------------------------------------------------------------------------------------------
@@ -28,4 +25,4 @@ export   FC_MPI="mpifort"                                      # MPI
 export   FC_MPIFLAGS="${FC_FLAGS}"                             # Parallel code compiler flags
 export   FC_MPILD=${FC_LD}                                     # Serial linker flags
 # -----------------------------------------------------------------------------------------------------------------
-export MPI_TMP="/home/per/tmp_mpi"                            # Location for temporary files
+export   MPI_TMP="${HOME}/tmp_mpi"                             # Location for temporary files
