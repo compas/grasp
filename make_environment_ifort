@@ -21,7 +21,7 @@ export   LAPACK_LIBS="-llapack -lblas"                         # Lapack librarie
 # -----------------------------------------------------------------------------------------------------------------
 # Set up MPI related flags
 # -----------------------------------------------------------------------------------------------------------------
-export   FC_MPI="mpifort"                                      # MPI
+export   FC_MPI="mpiifort"                                     # MPI
 export   FC_MPIFLAGS="${FC_FLAGS}"                             # Parallel code compiler flags
 export   FC_MPILD=${FC_LD}                                     # Serial linker flags
 # -----------------------------------------------------------------------------------------------------------------
