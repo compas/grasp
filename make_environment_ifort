@@ -8,7 +8,7 @@
 # file, eg. ~/.cshrc, ~/.bashrc or ~/.profile.
 #
 # Assumes that the Fortran compiler and OpenMPI/mpirun are added to your PATH
-# and that OpenMPI libraries are on LD_LIBRARY PATH
+# and that OpenMPI libraries are on LD_LIBRARY_PATH
 #
 # -----------------------------------------------------------------------------------------------------------------
 # Set up main flags
