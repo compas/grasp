@@ -1,6 +1,6 @@
 #!/bin/bash
 # -------------------------------------------------------------------------------------------------------------------------------------
-# GRASP2K ENVIRONMENT FLAGS - Intel ifort version
+# GRASP ENVIRONMENT FLAGS - Intel ifort version
 # -------------------------------------------------------------------------------------------------------------------------------------
 #
 # Define the following global variables according to your environment and
