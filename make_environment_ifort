@@ -1,28 +1,29 @@
 #!/bin/bash
-# -------------------------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------------
 # GRASP ENVIRONMENT FLAGS - Intel ifort version
-# -------------------------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------------
 #
 # Define the following global variables according to your environment and
 # source this script or add these definitions to your terminal configuration
 # file, eg. ~/.cshrc, ~/.bashrc or ~/.profile.
 #
-# Assumes that the Fortran compiler and OpenMPI/mpirun are added to your PATH
-# and that OpenMPI libraries are on LD_LIBRARY_PATH
+# Installation requirements:
+# - Lapack, Blas and MPI libraries have to be installed and properly linked - e.g. add them to LD_LIBRARY_PATH.
+# - The Fortran compiler of choice and the MPI wrapper (as specified by FC and FC_MPI below) have to be on your PATH.
 #
-# -----------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------------
 # Set up main flags
-# -----------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------------
 export   FC=ifort                                              # Fortran compiler
 export   FC_FLAGS="-O2 -save "                                 # Serial code compiler flags
 export   FC_LD="-mkl=sequential"                               # Serial linker flags
 export   GRASP="${PWD}"                                        # Location of the 2018 root directory
 export   LAPACK_LIBS="-llapack -lblas"                         # Lapack libraries
-# -----------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------------
 # Set up MPI related flags
-# -----------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------------
 export   FC_MPI="mpiifort"                                     # MPI
 export   FC_MPIFLAGS="${FC_FLAGS}"                             # Parallel code compiler flags
 export   FC_MPILD=${FC_LD}                                     # Serial linker flags
-# -----------------------------------------------------------------------------------------------------------------
-export   MPI_TMP="${HOME}/tmp_mpi"                             # Location for temporary files
+# -------------------------------------------------------------------------------------------------------------------
+export   MPI_TMP="${HOME}/grasp_mpi_tmp"                       # Location for temporary files
