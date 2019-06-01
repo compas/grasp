@@ -136,8 +136,12 @@
                END IF
 !
             WRITE (24, 300) F1,IVECFF(J),JLABJ,JPARJ,F2,IVECII(I),JLABI,JPARI, &
-               -ENG, -AC, -OSCC, -SA !, ASFA
-            WRITE (24, 301) -AB, -OSCB, -SB !, ASFB
+               -ENG, -AC, -OSCC, -SA, &
+               SIGN(DSQRT(-SA),ASFA)
+               !, ASFA
+            WRITE (24, 301) -AB, -OSCB, -SB, &
+               SIGN(DSQRT(-SB),ASFB)
+               !, ASFB
             ELSE IF ( 1.d+9 .GT. ENG .AND. ENG .GT. 1.D-2) THEN
                IF (LSAME) THEN
                   F1 = 'f '
@@ -148,8 +152,12 @@
                END IF
                WRITE (24,300) F1,IVECII(I),JLABI,JPARI,F2,IVECFF(J), &
                      JLABJ,JPARJ,ENG,AC*IATJPOFF(J)/IATJPOII(I),     &
-                     OSCC,SA
-               WRITE (24,301) AB*IATJPOFF(J)/IATJPOII(I),OSCB,SB
+                     OSCC,SA, &
+                     SIGN(DSQRT(SA),ASFA)
+
+               WRITE (24,301) AB*IATJPOFF(J)/IATJPOII(I),OSCB,SB, &
+                     SIGN(DSQRT(SB),ASFB)
+
             END IF
             LINES = LINES + 3
          ENDIF
@@ -196,7 +204,7 @@
                   F2 = 'f1'
                END IF
                WRITE (24,302) F1,IVECFF(J),JLABJ,JPARJ,F2,IVECII(I),&
-                     JLABI,JPARI,-ENG,-AM,-OSCM,-SA
+                     JLABI,JPARI,-ENG,-AM,-OSCM,-SA, SIGN(DSQRT(-SA),ASFA)
 !     :               ,ASFA (M-value)
 !            WRITE (24,*) 'Relative sign',ISIGNA
             ELSE IF ( 1.d+9 .GT. ENG .AND. ENG .GT. 1.D-2) THEN
@@ -209,7 +217,7 @@
                END IF
                WRITE (24,302) F1,IVECII(I),JLABI,JPARI,F2,IVECFF(J),&
                      JLABJ,JPARJ,ENG,AM*IATJPOFF(J)/IATJPOII(I),    &
-                     OSCM,SA
+                     OSCM,SA,SIGN(DSQRT(SA),ASFA)
 !     :              ,ASFA (M-value)
             END IF
             LINES = LINES+2
@@ -220,12 +228,12 @@
       RETURN
 !
 !cjb  format for highly charged ions         F11.2 -> F13.2
-  300 FORMAT(1X,A2,I3,1X,2A4,A2,I3,1X,2A4,0P,F13.2,' C',1P,  &
-           3D13.5)
-  301 FORMAT(42X,' B',1P,3D13.5)
+  300 FORMAT(1X,A2,I6,1X,2A4,3X,A2,I6,1X,2A4,0P,F13.2,' C',1P,  &
+           4D13.5)
+  301 FORMAT(51X,' B',1P,4D13.5)
 !cjb  format for highly charged ions         F11.2 -> F13.2
-  302 FORMAT(1X,A2,I3,1X,2A4,A2,I3,1X,2A4,0P,F13.2,' M',1P,  &
-           3D13.5)
+  302 FORMAT(1X,A2,I6,1X,2A4,A2,I6,1X,2A4,0P,F13.2,' M',1P,  &
+           4D13.5)
       RETURN
 !
       END SUBROUTINE PRINTA

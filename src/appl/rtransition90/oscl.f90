@@ -387,16 +387,20 @@
   308 FORMAT(/,/,' Electric 2**(',I2,')-pole transitions')
   309 FORMAT(/,/,' Magnetic 2**(',I2,')-pole transitions')
   310 FORMAT(1X,33('='))
+
   311 FORMAT(/,'   Upper state        Lower state  ',8X,'Gauge',8X,'Wavelength'&
          ,13X,'Einstein coefficients',13X,'Oscillator')
   312 FORMAT(81X,'-1',15X,'3 -2 -1',/,' Level  J Parity',4X,'Level  J ',&
          'Parity',21X,'(Angstroms)',10X,'A (s  )',9X,'gB (m s  J  )',7X,&
          'strength gf'/)
+  
   313 FORMAT(' Level  J Parity',4X,'Level  J Parity',21X,'(Angstroms)',10X,&
          'A (au)',13X,'gB (au)',10X,'strength gf'/)
-  314 FORMAT(/,' Upper       Lower ')
-  315 FORMAT(' Lev  J P',3X,'Lev  J P',7X,'E (',A4,')',9X,'A (s-1)',10X,'gf',&
-         12X,'S')
+  
+  314 FORMAT(/,' Upper               Lower ')
+  315 FORMAT(' f# Level   J  P',5X,'f# Level   J  P',7X,'E (',A4,')',4X,&
+      'A (s-1)',6X,'gf',11X,'S',12X,'M-val')
+
   316 FORMAT(' Level  J Parity',4X,'Level  J Parity',23X,'(',A4,')',13X,&
          'A (au)',13X,'gB (au)',10X,'strength gf'/)
   317 FORMAT(/,1X,124('+'))
