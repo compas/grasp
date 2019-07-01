@@ -143,7 +143,8 @@
 !
       TLAST = TTHIS
       TTHIS = ABS(XS(I)/TI(I))
-      IF (TTHIS + TLAST <= EPS) THEN
+!cff  Stop if J=NNNP
+      IF (TTHIS + TLAST <= EPS .OR. J .EQ. NNNP-1 ) THEN 
          MTP = J
       ELSE
          GO TO 1
