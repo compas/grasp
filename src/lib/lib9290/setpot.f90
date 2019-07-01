@@ -5,6 +5,11 @@
 !   This  subroutine  sets  up the  arrays TF and TG for use by  the   *
 !   subprograms IN, OUT, and SBSTEP.                                   *
 !                                                                      *
+!   The routine uses an algorithm that involves the orbital energy for *
+!   finding a join.  When the energy estimate is such that the         *
+!   criteria for the join is not met, the program sets the joining     *
+!   point in the middle of the grid.                                   *
+!                                                                      *
 !   Arguments:                                                         *
 !                                                                      *
 !      J:  (Input) Index of orbital                                    *
