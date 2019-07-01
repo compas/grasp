@@ -71,8 +71,8 @@
 !   Trap for inappropriate grid
 !
       IF (JP == 0) THEN
-         WRITE (ISTDE, *) 'SETPOT: Grid of insufficient extent.'
-         STOP
+         WRITE (ISTDE, *) 'SETPOT: Join set to NNNP/2 = ', nnnp/2
+         JP = NNNP/2
       ENDIF
 !
       RETURN
