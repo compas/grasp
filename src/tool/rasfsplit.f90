@@ -7,6 +7,7 @@ implicit none
 integer :: npos,i,j,k,l,ios,nblock,nblockodd,nblockeven
 integer :: nelec,ncftot,nw,nvectot,nvecsize
 integer :: nb,nevblk(100),iatjp,iaspa,ivec(100)
+integer :: system
 integer, allocatable :: ncfblk(:)
 
 double precision :: eav,eval(100)
