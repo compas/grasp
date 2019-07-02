@@ -19,6 +19,6 @@ rm energylabel*
 rm *.pdf
 rm *.tex
 rm *.aux
-cd ../tmp_mpi
+cd ./tmp_mpi
 rm */*
 cd ..
