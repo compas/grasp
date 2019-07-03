@@ -60,7 +60,6 @@
          JLAST, MLAST, M, J, I
       REAL(DOUBLE), DIMENSION(NNNP) :: YPJ, YPM, XPJ, XPM, XQJ, XQM
       REAL(DOUBLE) :: EPS, UCFJ, UCFM, RESULT, RIJM, QDIF, OBQDIF, OBQSUM
-!cff  .. added variables VLI and VLJ
       LOGICAL :: FIRST, FIXLI, FIXLJ, FULLI, FULLJ, VLI, VLJ
 !-----------------------------------------------
 !
@@ -93,10 +92,8 @@
                FULLJ = ABS ( UCF(LJ)-DBLE (NKJ(LJ)+1) ) .LT. EPS
             DO LIraw = 1, LJraw-1
                LI = iorder(LIraw)
-!cff        March, 2019
                VLI = .NOT. LFIX(LI)
                FULLI = ABS ( UCF(LI)-DBLE (NKJ(LI)+1) ) .LT. EPS
-!cff         March, 2019
                IF  (NAK(LI) .EQ. NAKLJ) then
                   If  (VLI  .OR. VLJ ) then       ! at least one orbital varied
 !                                                   but not both (varied and full)
@@ -139,7 +136,6 @@
          FIRST = .FALSE.
       ENDIF
 
-!FF+GG  12/07/05
 !     Lagrange multipliers need to be computed also on the first call
 !     RETURN
 
