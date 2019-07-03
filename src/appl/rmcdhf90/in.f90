@@ -72,7 +72,6 @@
 !
 !   Global initializations
 !
-!ww      EPS = 0.1D 00*ACCY
       EPS = 0.01D00*ACCY
       HHK = 0.5D00*H*DBLE(NAK(IORB))
 !
@@ -143,7 +142,6 @@
 !
       TLAST = TTHIS
       TTHIS = ABS(XS(I)/TI(I))
-!cff  Stop if J=NNNP
       IF (TTHIS + TLAST <= EPS .OR. J .EQ. NNNP-1 ) THEN 
          MTP = J
       ELSE
