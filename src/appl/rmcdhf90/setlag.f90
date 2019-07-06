@@ -222,20 +222,6 @@
 !end dbg
 
          ELSE
-
-!  Weighted sum : UCFM e_JM + UCFJ*e_MJ = 2 \ambda(J,J) 
-!           TA(1) = 0.d0
-!           DO I = 2, MTP 
-!              TA(I) = UCFM*(PF(I,J)*XQM(I)-QF(I,J)*XPM(I)) +           &
-!                      UCFJ*(PF(I,M)*XQJ(I)-QF(I,M)*XPJ(I)) 
-!              TA(I) = RPOR(I)*(TA(I)*C +                               &
-!                      (PF(I,J)*PF(I,M)+QF(I,J)*QF(I,M))*               &
-!                      (UCFM*YPM(I) + UCFJ*YPJ(I)))
-!           END DO 
-!           CALL QUAD (RESULT) 
-!
-!           RIJM = RINTI(J,M,1)                 
-!           ECV(LI) = (RESULT - (UCFM+UCFJ)*RIJM)/2
             
             QDIF = ABS((UCFJ - UCFM)/MAX(UCFJ,UCFM))
             
