@@ -97,7 +97,6 @@
 !cff           March, 2019 
                VLI = .NOT. LFIX(LI)
                FULLI = ABS ( UCF(LI)-DBLE (NKJ(LI)+1) ) .LT. EPS
-!cff           March, 2019
                IF  (NAK(LI) .EQ. NAKLJ) then
                   If  (VLI  .OR. VLJ ) then          !at least one varid
 !                                                    ! but not (both varied and full)
