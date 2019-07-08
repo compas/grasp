@@ -94,7 +94,6 @@
                FULLJ = ABS ( UCF(LJ)-DBLE (NKJ(LJ)+1) ) .LT. EPS
             DO LIraw = 1, LJraw-1
                LI = iorder(LIraw)
-!cff           March, 2019 
                VLI = .NOT. LFIX(LI)
                FULLI = ABS ( UCF(LI)-DBLE (NKJ(LI)+1) ) .LT. EPS
                IF  (NAK(LI) .EQ. NAKLJ) then
