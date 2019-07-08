@@ -89,7 +89,6 @@
          DO LJraw = NCORE+1, NW
                LJ = iorder(LJraw)
             NAKLJ = NAK(LJ)
-!cff        March, 2019 
             VLJ = .NOT. LFIX(LJ)
                FULLJ = ABS ( UCF(LJ)-DBLE (NKJ(LJ)+1) ) .LT. EPS
             DO LIraw = 1, LJraw-1
