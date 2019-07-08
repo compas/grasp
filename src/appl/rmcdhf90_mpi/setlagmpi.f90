@@ -60,7 +60,6 @@
          JLAST, MLAST, M, J, I
       REAL(DOUBLE), DIMENSION(NNNP) :: YPJ, YPM, XPJ, XPM, XQJ, XQM
       REAL(DOUBLE) :: EPS,UCFJ,UCFM,RESULT,RIJM,QDIF,OBQDIF,OBQSUM,TMP
-!cff  March 2019
       LOGICAL :: FIRST, FIXLI, FIXLJ, FULLI, FULLJ, VLI, VLJ
 !-----------------------------------------------
 !
