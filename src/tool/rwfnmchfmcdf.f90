@@ -35,19 +35,11 @@
 ! u  write out initial orbitals Pnl and Qnl as input
 ! u  for Grant's MCDF program
 ! u  *******************************************************************
-!
-      Z=0.0
-      do 1 i=1,nwf
-      do 1 j=1,no+1
-         pff(j,i)=0.d0
-1     continue
 
-
-      do 2 i=0,230
-         pg(i)=0.d0
-         qg(i)=0.d0
-2     continue
-
+      Z   = 0.d0
+      pff = 0.d0
+      pg  = 0.d0
+      qg  = 0.d0
 
       write(9) 'G92RWF'
 !

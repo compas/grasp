@@ -56,11 +56,11 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      INTEGER :: ITWICE, LIRAW, LI, LIP1, NAKLI, LJRAW, LJ, IECCLI, L1, L2, &
+      INTEGER :: ITWICE, LIRAW, LI, LIP1, NAKLJ, LJRAW, LJ, IECCLI, L1, L2, &
          JLAST, MLAST, M, J, I
       REAL(DOUBLE), DIMENSION(NNNP) :: YPJ, YPM, XPJ, XPM, XQJ, XQM
       REAL(DOUBLE) :: EPS,UCFJ,UCFM,RESULT,RIJM,QDIF,OBQDIF,OBQSUM,TMP
-      LOGICAL :: FIRST, FIXLI, FIXLJ, FULLI, FULLJ
+      LOGICAL :: FIRST, FIXLI, FIXLJ, FULLI, FULLJ, VLI, VLJ
 !-----------------------------------------------
 !
       DATA FIRST/ .TRUE./
@@ -85,60 +85,24 @@
          EPS = ACCY*0.01D0      ! criterion to see if an orb is occupied
          DO ITWICE = 1, 2
             NEC = 0
-!            IF (ITWICE /= 2) THEN
-!               DO LIRAW = 1, NW - 1
-!                  LI = IORDER(LIRAW)
-!                  LIP1 = MAX(NCORE,LIRAW) + 1
-!                  NAKLI = NAK(LI)
-!                  FIXLI = LFIX(LI)
-!                  FULLI = ABS(UCF(LI)-DBLE(NKJ(LI)+1)) < EPS
-!                  DO LJRAW = LIP1, NW
-!                     LJ = IORDER(LJRAW)
-!                     FIXLJ = LFIX(LJ)
-!                     FULLJ = ABS(UCF(LJ)-DBLE(NKJ(LJ)+1)) < EPS
-!                     IF (.NOT.(NAK(LJ)==NAKLI .AND. .NOT.(FIXLI .AND. FIXLJ)&
-!                         .AND. .NOT.(FULLI .AND. FULLJ))) CYCLE
-!                     NEC = NEC + 1
-!                     CYCLE
-!                  !*** Encode index at 2nd round ***
-!                  END DO
-!               END DO
-!            ELSE
-!               DO LIRAW = 1, NW - 1
-!                  LI = IORDER(LIRAW)
-!                  LIP1 = MAX(NCORE,LIRAW) + 1
-!                  NAKLI = NAK(LI)
-!                  FIXLI = LFIX(LI)
-!                  FULLI = ABS(UCF(LI)-DBLE(NKJ(LI)+1)) < EPS
-!                  !*** Encode index at 2nd round ***
-!                  DO LJRAW = LIP1, NW
-!                     LJ = IORDER(LJRAW)
-!                     FIXLJ = LFIX(LJ)
-!                     FULLJ = ABS(UCF(LJ)-DBLE(NKJ(LJ)+1)) < EPS
-!                     IF (.NOT.(NAK(LJ)==NAKLI .AND. .NOT.(FIXLI .AND. FIXLJ)&
-!                         .AND. .NOT.(FULLI .AND. FULLJ))) CYCLE
-!                     NEC = NEC + 1
-!                  !*** Encode index at 2nd round ***
-!                     IECC(NEC) = LI + KEY*LJ
-!                  END DO
-!               END DO
-!            ENDIF
-         DO LIraw = 1, NW - 1
-            LI = iorder(LIraw)
-            LIP1 = MAX (NCORE, LIraw) + 1
-            NAKLI = NAK(LI)
-            FIXLI = LFIX(LI)
-            FULLI = ABS ( UCF(LI)-DBLE (NKJ(LI)+1) ) .LT. EPS
-            DO LJraw = LIP1, NW
+         DO LJraw = NCORE+1, NW
                LJ = iorder(LJraw)
-               FIXLJ = LFIX(LJ)
+            NAKLJ = NAK(LJ)
+            VLJ = .NOT. LFIX(LJ)
                FULLJ = ABS ( UCF(LJ)-DBLE (NKJ(LJ)+1) ) .LT. EPS
-               IF ( (NAK(LJ) .EQ. NAKLI) .AND.            &
-                     (.NOT. (FIXLI .AND. FIXLJ)) .AND.    &
-                     (.NOT. (FULLI .AND. FULLJ)) ) THEN
+            DO LIraw = 1, LJraw-1
+               LI = iorder(LIraw)
+               VLI = .NOT. LFIX(LI)
+               FULLI = ABS ( UCF(LI)-DBLE (NKJ(LI)+1) ) .LT. EPS
+               IF  (NAK(LI) .EQ. NAKLJ) then
+                  If  (VLI  .OR. VLJ ) then          !at least one varid
+!                                                    ! but not (both varied and full)
+                     If (.NOT. ((VLI .AND. VLJ) .AND. (FULLI .AND. FULLJ))) THEN 
                   NEC = NEC + 1
                   !*** Encode index at 2nd round ***
                   IF (itwice == 2) IECC(NEC) = LI + KEY * LJ
+               ENDIF
+                  ENDIF
                ENDIF
             ENDDO
          ENDDO
@@ -217,8 +181,8 @@
          IF (LFIX(M)) THEN
             TA(1) = 0.D0
             DO I = 2, MTP
-               TA(I) = RPOR(I)*((PF(I,M)*XQJ(I)-QF(I,M)*XPJ(I))*C+(PF(I,M)*PF(I&
-                  ,J)+QF(I,M)*QF(I,J))*YPJ(I))
+               TA(I) = RPOR(I)*((PF(I,M)*XQJ(I)-QF(I,M)*XPJ(I))*C+       &
+                                (PF(I,M)*PF(I,J)+QF(I,M)*QF(I,J))*YPJ(I))
             END DO
 
             CALL QUAD (RESULT)
@@ -235,9 +199,8 @@
          ELSE IF (LFIX(J)) THEN
             TA(1) = 0.D0
             DO I = 2, MTP
-               TA(I) = RPOR(I)*((PF(I,J)*XQM(I)-QF(I,J)*XPM(I))*C+(PF(I,J)*PF(I&
-                  ,M)+QF(I,J)*QF(I,M))*YPM(I))
-!GG             write(222,*)"XQM(I)",XQM(I)
+               TA(I) = RPOR(I)*((PF(I,J)*XQM(I)-QF(I,J)*XPM(I))*C+      &
+                                (PF(I,J)*PF(I,M)+QF(I,J)*QF(I,M))*YPM(I))
             END DO
 
 !start dbg
@@ -260,34 +223,12 @@
 
 
          ELSE
-            QDIF = ABS((UCFJ - UCFM)/MAX(UCFJ,UCFM))
-            IF (QDIF > P001) THEN
-               OBQDIF = 1.D0/UCFJ - 1.D0/UCFM
-               TA(1) = 0.D0
-               DO I = 2, MTP
-                  TA(I) = RPOR(I)*((PF(I,M)*XQJ(I)-QF(I,M)*XPJ(I)-PF(I,J)*XQM(I&
-                     )+QF(I,J)*XPM(I))*C+(YPJ(I)-YPM(I))*(PF(I,M)*PF(I,J)+QF(I,&
-                     M)*QF(I,J)))
-               END DO
-
-               CALL QUAD (RESULT)
-               ECV(LI) = RESULT/OBQDIF
-!start dbg
-!           WRITE (81,*)'3, RESULT, OBQDIF, ECV, TA'
-!           WRITE (81,*)RESULT, OBQDIF, ECV
-!           DO i = 1, MTP
-!              WRITE (81,*) i, TA(i), r(i), rp(i)
-!           ENDDO
-!end dbg
-
-
-            ELSE
                OBQSUM = 1.D0/UCFJ + 1.D0/UCFM
                TA(1) = 0.D0
                DO I = 2, MTP
-                  TA(I) = RPOR(I)*((PF(I,M)*XQJ(I)-QF(I,M)*XPJ(I)+PF(I,J)*XQM(I&
-                     )-QF(I,J)*XPM(I))*C+(YPJ(I)+YPM(I))*(PF(I,M)*PF(I,J)+QF(I,&
-                     M)*QF(I,J)))
+                  TA(I) = RPOR(I)*((PF(I,M)*XQJ(I)-QF(I,M)*XPJ(I)         &
+                                   +PF(I,J)*XQM(I)-QF(I,J)*XPM(I))*C      &
+                         +(YPJ(I)+YPM(I))*(PF(I,M)*PF(I,J)+QF(I,M)*QF(I,J)))
                END DO
 
                CALL QUAD (RESULT)
@@ -301,7 +242,7 @@
 !           ENDDO
 !end dbg
 
-            ENDIF
+!           ENDIF 
          ENDIF
 !=======================================================================
 !  Collect contributions from all nodes.

@@ -1,10 +1,11 @@
 program rmixaccumulate
+
   implicit none
   integer :: i,ii,j,jj,k,kk,l,ios,err
   integer :: nelec, ncftot, nw, nvectot, nvecsize, nblock
-  integer :: nb, nevblk(100), iatjp, iaspa
+  integer :: nb, nevblk(200), iatjp, iaspa
   integer :: ivec
-  integer :: nrelorb, indexans, co(100)
+  integer :: nrelorb, indexans, co(200)
   integer, allocatable :: checkcsf(:,:), ind(:,:), ind2(:,:), ncfblk(:)
   integer, allocatable :: ncfblockout(:)
 
@@ -12,12 +13,12 @@ program rmixaccumulate
   double precision :: dc2evec, totc2evecblk, c2evecblklim
   double precision, allocatable :: evec(:,:,:),c2evec(:,:)
 
-  character(len=100) :: state, file1, file2
+  character(len=200) :: state, file1, file2
   character(len=600) :: header(5), string
-  character(len=5) :: relorbitals(100)
+  character(len=5) :: relorbitals(200)
   character(len=6) :: G92MIX
   character(len=1) :: ciflag,sortflag
-  character(len=100), allocatable  :: conf(:,:), coupling(:,:), spin(:,:)
+  character(len=200), allocatable  :: conf(:,:), coupling(:,:), spin(:,:)
   write(*,*) '***************************************************************************'
   write(*,*) 'Welcome to program rmixaccumulate'
   write(*,*)

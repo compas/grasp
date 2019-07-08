@@ -6,7 +6,8 @@
       USE iounit_C
 
       IMPLICIT DOUBLE PRECISION (a-h, o-z)
-      CHARACTER*100, line(3), g92mix*6, head*500
+      CHARACTER*200, line(3)
+      CHARACTER*100,  g92mix*6, head*500
       CHARACTER*64 StrInput, basnam, from*1, suffix*3, filnam*69, dotc*2
       LOGICAL sort, getyn, first_of_the_block
       DATA nfmix,nfcsf,nfout,nfscratch/20,21,22,23/
@@ -74,7 +75,8 @@
 
 !     ...Sort or not
 
-      PRINT*,'Sort extracted CSFs according to mixingcoeffcients? (y/n)'
+!     CFF .. send to screen rather than printer
+      WRITE (istde,*) 'Sort extracted CSFs according to mixingcoeffcients? (y/n)'
       sort = getyn()
 
 !***********************************************************************
@@ -258,7 +260,7 @@
       CHARACTER*(*) line(3), star*2
 
       OPEN (nfscratch, STATUS = 'SCRATCH', ACCESS = 'DIRECT',  &
-       RECL = 300)
+       RECL = 600)
 
       DO icf = 1, ncfblk
          READ (nfcsf,'(A)') line(1)

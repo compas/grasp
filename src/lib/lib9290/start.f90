@@ -199,8 +199,6 @@
       IF (DIFMAX > ACCY) THEN
          IF (NITER < MXITER) THEN
             GO TO 7
-         ELSE
-            WRITE (*, 300) NP(IORB), NH(IORB), DIFMAX, NITER, ACCY
          ENDIF
       ENDIF
 !     ELSE

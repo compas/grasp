@@ -8,12 +8,12 @@
 !...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
       implicit none
-      INTEGER, DIMENSION(31) :: ITAB
-      INTEGER, DIMENSION(32) :: JTAB
-      INTEGER, DIMENSION(327) :: NTAB
+      INTEGER, DIMENSION(39) :: ITAB
+      INTEGER, DIMENSION(40) :: JTAB
+      INTEGER, DIMENSION(357) :: NTAB
       INTEGER :: NROWS
       INTEGER, PRIVATE :: i
-      DATA NROWS/ 31/
+      DATA NROWS/ 39/
 !
 !   A row is defined by a subshell angular momentum and an occupation
 !   number
@@ -101,4 +101,13 @@
       DATA (JTAB(I),I=30,32)/ 300, 303, 328/
       DATA (NTAB(I),I=301,327)/ 1, 0, 16, 0, 0, 1, 2, 0, 5, 2, 0, 9, 2, 0, 13, &
          2, 0, 17, 2, 0, 21, 2, 0, 25, 2, 0, 29/
+!
+!   l, m-   (j = 17/2)
+!
+!   First two rows only
+!
+      DATA (ITAB(I),I=38,39)/ 1, 9/
+      DATA (JTAB(I),I=38,40)/ 327, 330, 358/
+      DATA (NTAB(I),I=328,357)/ 1, 0, 18, 0, 0, 1, 2, 0, 5, 2, 0, 9, 2, 0, 13, &
+         2, 0, 17, 2, 0, 21, 2, 0, 25, 2, 0, 29, 2, 0, 33/
       END MODULE terms_C

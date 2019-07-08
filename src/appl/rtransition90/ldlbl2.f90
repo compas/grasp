@@ -59,7 +59,7 @@
 !
             READ (31,'(7X,F12.8,17X,A)') WEIGHTS,string_CSF2(ICount)
 !
-    2       READ (31,'(1X,I2)',IOSTAT = IOS),ITEST
+    2       READ (31,'(1X,I2)',IOSTAT = IOS) ITEST
             IF (IOS .NE. 0) GO TO 1
             IF (ITEST .EQ. 0) GO TO 2
             BACKSPACE 31
