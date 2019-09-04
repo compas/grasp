@@ -1,4 +1,4 @@
-*.o
-*.mod
-lib/*
 bin/*
+build/
+build-*/
+CMakeLists.user
