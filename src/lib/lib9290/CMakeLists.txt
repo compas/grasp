@@ -1,152 +1,78 @@
 add_library(9290 STATIC
-    alcbuf.f90
-    alcbuf_I.f90
-    arctan.f90
-    arctan_I.f90
-    calen.f90
-    calen_I.f90
-    cgamma.f90
-    cgamma_I.f90
-    clrx.f90
-    clrx_I.f90
-    convrt.f90
-    convrt2.f90
-    convrt2_I.f90
-    convrt_I.f90
-    convrt_double.f90
-    convrt_double_I.f90
-    cord.f90
-    cord_I.f90
-    count.f90
-    count_I.f90
-    cre.f90
-    cre_I.f90
-    cslh.f90
-    cslh_I.f90
-    dcbsrw.f90
-    dcbsrw_I.f90
-    dinit.f90
-    dinit_I.f90
-    dmerge.f90
-    dmerge_I.f90
-    dpbdt.f90
-    dpbdt_I.f90
-    draw.f90
-    draw_I.f90
-    es.f90
-    es_I.f90
-    factt.f90
-    factt_I.f90
-    getrsl.f90
-    getrsl_I.f90
-    getyn.f90
-    getyn_I.f90
-    ichkq1.f90
-    ichkq1_I.f90
-    ichkq2.f90
-    ichkq2_I.f90
-    ichop.f90
-    ichop_I.f90
-    icopy.f90
-    icopy_I.f90
-    iniest2.f90
-    iniest2_I.f90
-    interp.f90
-    interp_I.f90
-    intrpq.f90
-    intrpq_I.f90
-    iq.f90
-    iq_I.f90
-    ispar.f90
-    ispar_I.f90
-    items.f90
-    items_I.f90
-    itjpo.f90
-    itjpo_I.f90
-    itrig.f90
-    itrig_I.f90
-    jcup.f90
-    jcup_I.f90
-    jqs.f90
-    jqs_I.f90
-    ldigit.f90
-    ldigit_I.f90
-    lodcsh.f90
-    lodcsh2.f90
-    lodcsh2_I.f90
-    lodcsh_I.f90
-    lodcsl.f90
-    lodcsl_I.f90
-    lodiso.f90
-    lodiso_I.f90
-    lodrwf.f90
-    lodrwf_I.f90
-    lodstate.f90
-    lodstate_I.f90
-    ltab.f90
-    ltab_I.f90
-    nucpot.f90
-    nucpot_I.f90
-    openfl.f90
-    openfl_I.f90
-    orthsc.f90
-    orthsc_I.f90
-    pack.f90
-    pack_I.f90
-    parsjl.f90
-    parsjl_I.f90
-    posfile.f90
-    posfile_I.f90
-    prsrcn.f90
-    prsrcn_I.f90
-    prsrsl.f90
-    prsrsl_I.f90
-    quad.f90
-    quad_I.f90
-    radgrd.f90
-    radgrd_I.f90
-    rint.f90
-    rint_I.f90
-    rinti.f90
-    rinti_I.f90
-    setcon.f90
-    setcon_I.f90
-    setcsh.f90
-    setcsh_I.f90
-    setcsla.f90
-    setcsla_I.f90
-    setcsll.f90
-    setcsll_I.f90
-    setiso.f90
-    setiso_I.f90
-    setj.f90
-    setj_I.f90
-    setmc.f90
-    setmc_I.f90
-    setpot.f90
-    setpot_I.f90
-    setqic.f90
-    setqic_I.f90
-    setqna.f90
-    setqna_I.f90
-    setrwfa.f90
-    setrwfa_I.f90
-    skrc.f90
-    skrc_I.f90
-    slater.f90
-    slater_I.f90
-    speak.f90
-    speak_I.f90
-    spicmv2.f90
-    spicmv2_I.f90
-    start.f90
-    start_I.f90
-    starttime.f90
-    starttime_I.f90
-    stoptime.f90
-    stoptime_I.f90
-    yzk.f90
-    yzk_I.f90
+    alcbuf.f90 alcbuf_I.f90
+    arctan.f90 arctan_I.f90
+    calen.f90 calen_I.f90
+    cgamma.f90 cgamma_I.f90
+    clrx.f90 clrx_I.f90
+    convrt.f90 convrt_I.f90
+    convrt2.f90 convrt2_I.f90
+    convrt_double.f90 convrt_double_I.f90
+    cord.f90 cord_I.f90
+    count.f90 count_I.f90
+    cre.f90 cre_I.f90
+    cslh.f90 cslh_I.f90
+    dcbsrw.f90 dcbsrw_I.f90
+    dinit.f90 dinit_I.f90
+    dmerge.f90 dmerge_I.f90
+    dpbdt.f90 dpbdt_I.f90
+    draw.f90 draw_I.f90
+    es.f90 es_I.f90
+    factt.f90 factt_I.f90
+    getrsl.f90 getrsl_I.f90
+    getyn.f90 getyn_I.f90
+    ichkq1.f90 ichkq1_I.f90
+    ichkq2.f90 ichkq2_I.f90
+    ichop.f90 ichop_I.f90
+    icopy.f90 icopy_I.f90
+    iniest2.f90 iniest2_I.f90
+    interp.f90 interp_I.f90
+    intrpq.f90 intrpq_I.f90
+    iq.f90 iq_I.f90
+    ispar.f90 ispar_I.f90
+    items.f90 items_I.f90
+    itjpo.f90 itjpo_I.f90
+    itrig.f90 itrig_I.f90
+    jcup.f90 jcup_I.f90
+    jqs.f90 jqs_I.f90
+    ldigit.f90 ldigit_I.f90
+    lodcsh.f90 lodcsh_I.f90
+    lodcsh2.f90 lodcsh2_I.f90
+    lodcsl.f90 lodcsl_I.f90
+    lodiso.f90 lodiso_I.f90
+    lodrwf.f90 lodrwf_I.f90
+    lodstate.f90 lodstate_I.f90
+    ltab.f90 ltab_I.f90
+    nucpot.f90 nucpot_I.f90
+    openfl.f90 openfl_I.f90
+    orthsc.f90 orthsc_I.f90
+    pack.f90 pack_I.f90
+    parsjl.f90 parsjl_I.f90
+    posfile.f90 posfile_I.f90
+    prsrcn.f90 prsrcn_I.f90
+    prsrsl.f90 prsrsl_I.f90
+    quad.f90 quad_I.f90
+    radgrd.f90 radgrd_I.f90
+    rint.f90 rint_I.f90
+    rinti.f90 rinti_I.f90
+    setcon.f90 setcon_I.f90
+    setcsh.f90 setcsh_I.f90
+    setcsla.f90 setcsla_I.f90
+    setcsll.f90 setcsll_I.f90
+    setiso.f90 setiso_I.f90
+    setj.f90 setj_I.f90
+    setmc.f90 setmc_I.f90
+    setpot.f90 setpot_I.f90
+    setqic.f90 setqic_I.f90
+    setqna.f90 setqna_I.f90
+    setrwfa.f90 setrwfa_I.f90
+    skrc.f90 skrc_I.f90
+    slater.f90 slater_I.f90
+    speak.f90 speak_I.f90
+    spicmv2.f90 spicmv2_I.f90
+    start.f90 start_I.f90
+    starttime.f90 starttime_I.f90
+    stoptime.f90 stoptime_I.f90
+    yzk.f90 yzk_I.f90
 )
 setup_fortran_modules(9290)
 target_link_libraries_Fortran(9290 PRIVATE mod)
