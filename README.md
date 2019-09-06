@@ -1,8 +1,61 @@
 # General Relativistic Atomic Structure Package
 
-**GRASP2018 - an F95  development version**
-
 [![][manual-badge]][manual-pdf]
+
+The General Relativistic Atomic Structure Package (GRASP) is a set of Fortran 90
+programs for performing fully-relativistic electron structure calculations of
+atoms.
+
+## Installation
+
+> **Please note:**
+> The installation instructions here are for the _development version_ on the
+> `master` branch.
+>
+> To install the _latest published release_ (2018-12-03), go to the
+> ["Releases" page](https://github.com/compas/grasp/releases/tag/2018-12-03),
+> download the tarball from there and refer to the instructions in the README in
+> the tarball.
+
+To compile and install GRASP, first clone this Git repository:
+
+```sh
+git clone https://github.com/compas/grasp.git
+```
+
+Internally, GRASP uses [CMake](https://cmake.org/) to control the compilation
+process. The first step with CMake is to create a separate out-of-source build
+directory. The `configure.sh` script can do that for you:
+
+```sh
+cd grasp/ && ./configure.sh
+```
+
+This will create a `build/` directory with the default _Release_ build
+configuration. However, `configure.sh` is just a simple wrapper around a `cmake`
+call and if you need more control over the build, you can always invoke `cmake`
+yourself (see [CMake documentation](https://cmake.org/documentation/) for more
+information).
+
+To then compile GRASP, you need to go into the out-of-source build directory and
+simply call `make`:
+
+```sh
+cd build/ && make
+```
+
+When you run `make`, the resulting binaries will end up under the build
+directory (e.g. in `build/bin/`). To install them into the conventional `bin/`
+directory at the repository root (i.e. `grasp/bin/`), you can call `make
+install` instead.
+
+Other remarks:
+
+* GRASP also supports parallel builds, which can be enabled by passing the `-j`
+  option to `make` (e.g. `make -j4 install` to build with four processes).
+
+
+## About GRASP
 
 This version of GRASP is a major revision of the previous GRASP2K package by [P.
 Jonsson, G. Gaigalas, J. Bieron, C. Froese Fischer, and I.P. Grant Computer
