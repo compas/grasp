@@ -10,7 +10,14 @@
 # which will compile and install all the libraries to lib/
 #
 
-cmake_minimum_required(VERSION 2.6)
+# This minimum CMake requirement can probably be loosened. But GRASP has not
+# been tested with CMake versions older than 3.6.3.
+#
+# This particular minimum version is necessary as it is the lowest one which
+# ships with a FindBLAS module that is able to detect OpenBLAS loaded with
+# Environment Modules.
+cmake_minimum_required(VERSION 3.6)
+
 project(grasp)
 
 enable_language(Fortran)
