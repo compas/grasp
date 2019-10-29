@@ -4,12 +4,12 @@ program rcsfsplit
 
 implicit none
 integer :: i, j, k, n, nlayer, norb, norblayer, nsymmetrymatch, norbcomp, ncsf, nwrite, ncount
-integer :: jr, jl, pos, ncsflist(50)
-character(len=200) :: string1, string2, string3, name
+integer :: ios, jr, jl, pos, ncsflist(50)
+character(len=100) :: string,  name
 character(len=1500) :: orbitalstring
 character(len=3) :: orb(300),orbital(25),orbcomp(300)
 character(len=4) :: orbrel(300)
-character(len=200) :: orbitallayer,label(50)
+character(len=100) :: orbitallayer,label(50)
 
 write(*,*) 'RCSFSPLIT'
 write(*,*) 'Splits a list name.c of CSFs into a number of lists with CSFs that '
@@ -29,11 +29,11 @@ open(unit=36,file=trim(name)//'.c',status='old')
 
 ! Read five first line save line four containing the string of orbitals
 
-read(36,'(a)') string1
-read(36,'(a)') string1
-read(36,'(a)') string1
+read(36,'(a)') string
+read(36,'(a)') string
+read(36,'(a)') string
 read(36,'(a)') orbitalstring
-read(36,'(a)') string1
+read(36,'(a)') string
 
 ! Number of orbitals
 
@@ -110,12 +110,12 @@ do k = 1,nlayer
    end do
 
    rewind(36)
-   read(36,'(a)') string1
-   write(48+k,'(a)') trim(string1)
-   read(36,'(a)') string1
-   write(48+k,'(a)') trim(string1)
-   read(36,'(a)') string1
-   write(48+k,'(a)') trim(string1)
+   read(36,'(a)') string
+   write(48+k,'(a)') trim(string)
+   read(36,'(a)') string
+   write(48+k,'(a)') trim(string)
+   read(36,'(a)') string
+   write(48+k,'(a)') trim(string)
    read(36,'(a)') orbitalstring
 
 !  Find out and write the orbitals for this layer in relativistic notation
@@ -139,36 +139,31 @@ do k = 1,nlayer
       end if
    end do
    write(48+k,'(a)') trim(orbitalstring)
-   read(36,'(a)') string1
-   write(48+k,'(a)') trim(string1)
+   read(36,'(a)') string
+   write(48+k,'(a)') trim(string)
 
+! Modified by cff 09/03/19 for shorter format
    ncsf = 0
+   read(36,'(a)') string
    do
-      read(36,'(a)',end=99) string1
-      if (string1(2:2).eq.'*') then
-         write(48+k,'(a)') trim(string1)
-         read(36,'(a)') string1
-      end if
-      read(36,'(a)') string2
-      read(36,'(a)') string3
-
 !  A CSF should be kept if there are no complementary orbitals in the string
-
+!     string here is always a configuration
       n = 0
       do i = 1,norbcomp
-         n = index(trim(string1),orbcomp(i))
+         n = index(trim(string),orbcomp(i))
          if (n.ne.0) exit
       end do
-      if (n.eq.0) then
-         write(48+k,'(a)') trim(string1)
-         write(48+k,'(a)') trim(string2)
-         write(48+k,'(a)') trim(string3)
-         ncsf = ncsf + 1
-      end if
+      if (n.eq.0) write(48+k,'(a)') trim(string)
+      Do
+         read(36,'(a)', end=99) string
+         if (index(string, '(') .ne. 0) exit
+         if (n.eq.0) then
+            write(48+k,'(a)') trim(string)
+            if (scan(string, '+-') .ne. 0) ncsf= ncsf+1
+         end if
+      end do
    end do
-
 99 continue
-
    ncsflist(k) = ncsf
 end do
 
