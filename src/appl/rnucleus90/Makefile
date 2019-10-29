@@ -12,7 +12,7 @@ GRASPLIBS =-l9290 -lmod
 APP_LIBS = -L${GRASPLIB} ${GRASPLIBS}
 
 APP_OBJ= \
-	estrms_I.o getcpr_I.o skfun_I.o  \
+	nucleus_m.o estrms_I.o getcpr_I.o skfun_I.o  \
 	estrms.o geniso.o getcpr.o skfun.o
 
 $(EXE): $(APP_OBJ)
