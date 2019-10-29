@@ -39,10 +39,11 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       INTEGER :: I, IEND, IBEG, LENTH
-      CHARACTER :: RECORD*80, CNUM*2
+      CHARACTER(LEN=12) :: CNUM
+      CHARACTER(LEN=80) :: RECORD*80
 !-----------------------------------------------
 !
-!
+!     Print *, ' Entering PRTREM'
 !   Determine if there are any subshell radial wavefunctions that
 !   remain to be estimated
 !
