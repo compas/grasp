@@ -1,42 +1,19 @@
-!***********************************************************************
-!***********************************************************************
-!***********************************************************************
-!**                                                                  ***
-!**          *****   *******  **   **  ****   *****    *****         ***
-!**         **   **  **       ***  **   **   **   **  **   **        ***
-!**         **       **       ** * **   **   **       **   **        ***
-!**         **  ***  ****     ** * **   **    *****   **   **        ***
-!**         **   **  **       ** * **   **        **  **   **        ***
-!**         **   **  **       **  ***   **   **   **  **   **        ***
-!**          *****   *******  **   **  ****   *****    *****         ***
-!**                                                                  ***
-!**   Package to generate the nuclear charge, geometry, mass, spin,  ***
-!**   and electromagnetic moment data file for the GRASP92 codes.    ***
-!**                                                                  ***
-!**                            GRASP92                               ***
-!**          F. A. Parpia, C. F. Fischer, and I. P. Grant            ***
-!**                                                                  ***
-!***********************************************************************
-!***********************************************************************
-!***********************************************************************
-!                                                                      *
-      PROGRAM GENISO
-!                                                                      *
-!   Generates the isotope data file for the GRASP92 suite of codes.    *
-!                                                                      *
-!   Call(s) to: GETCPR, GETYN, LENGTH, OPENFL.                         *
-!                                                                      *
-!   Written by Farid A. Parpia.           Last revision: 16 Oct 1994   *
-!                                                                      *
-!***********************************************************************
+!=========================================================================
 !
-!...Translated by Pacific-Sierra Research 77to90  4.3E  13:31:28   1/ 3/07
-!-----------------------------------------------
+!>   Generates the isotope data file for the GRASP92 suite of codes.
+!!
+!!  Written by Farid A. Parpia.           Last revision: 16 Oct 1994
+!!  Update: 2016-01-01 - Jörgen Ekman, Malmö University, Sweden
+!!  Revised: 2019-7-12 - C. Froese Fishcer, UBC
+!
+      PROGRAM RNUCLEUS
+!==========================================================================
 !   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  DOUBLE
       USE CONS_C
       USE IOUNIT_C
+      USE nucleus_m
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -51,7 +28,8 @@
       REAL(DOUBLE) :: EMEAMU, ALFAI, Z, A, CPARM, APARM, RRMS, TPARM, AMAMU, &
          EBIND, EMNAMU, SQN, DMOMNM, QMOMB
       LOGICAL :: YES
-      CHARACTER :: FILNAM*256, DEFNAM*11, FORM*11, STATUS*3
+      CHARACTER(Len=256) :: FILNAM
+      CHARACTER          ::  DEFNAM*11, FORM*11, STATUS*3
 !-----------------------------------------------
 !
       DATA EMEAMU/ 5.48579903D-04/
@@ -87,16 +65,14 @@
       WRITE (22, *) A
 
       IF (A == 0.0D00) THEN
-
          CPARM = 0.0D00
          APARM = 0.0D00
       ELSE
-         RRMS = 0.836D00*A**(1.0D00/3.0D00) + 0.570D00
-         WRITE (ISTDE, *) 'The default root mean squared', ' radius is ', RRMS&
-            , ' fm;'
+         RRMS = rrms_value(int(z),int(a))
+         WRITE (ISTDE, *) 'The default root mean squared', ' radius is ', &
+                 RRMS,'fm;  (', trim(rrms_source(int(z),int(a))), ')'
          TPARM = 2.30D00
-         WRITE (ISTDE, *) ' the default nuclear skin thickness', ' is ', TPARM&
-            , ' fm;'
+         WRITE (ISTDE, *) '  the default nuclear skin thickness', ' is ', TPARM,'fm;'
          WRITE (ISTDE, *) 'Revise these values?'
          YES = GETYN()
          IF (YES) THEN
@@ -119,25 +95,8 @@
          ' atom (in amu) (0 if the nucleus is to be static):'
       READ (5, *) AMAMU
       IF (AMAMU /= 0.0D00) THEN
-!        WRITE (ISTDE, *) 'Enter your best estimate of the ground', &
-!           ' state energy of, the neutral atom (in Hartrees):'
-!        READ (5, *) EBIND
-
-!XHH better use NINT, not INT.
-!         NENEU = INT (Z)
-         NENEU = NINT(Z)
-         EBIND = 0.D0
-
-!        WRITE (ISTDE, *) 'The number of electrons in the', &
-!           ' neutral atom is deduced to be', NENEU, ';'
-!        WRITE (ISTDE, *) 'Revise this?'
-!        YES = GETYN()
-!        IF (YES) THEN
-!           WRITE (ISTDE, *) 'Enter the number of electrons', &
-!              ' in the neutral atom:'
-!           READ (5, *) NENEU
-!        ENDIF
-!        IF (EBIND > 0.0D00) EBIND = -EBIND
+        NENEU = NINT(Z)
+        EBIND = 0.D0
         EMNAMU = AMAMU - EMEAMU*DBLE(NENEU) - EMEAMU*EBIND/ALFAI**2
       ELSE
          EMNAMU = 0.0D00
@@ -170,4 +129,4 @@
   300 FORMAT(A)
       STOP
 !
-      END PROGRAM GENISO
+      END PROGRAM RNUCLEUS
