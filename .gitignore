@@ -4,3 +4,4 @@
 *.mod
 lib/*
 bin/*
+Make.user
