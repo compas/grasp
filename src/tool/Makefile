@@ -7,7 +7,7 @@ MODDIR = ${SRCLIBDIR}/libmod
 MODL9290 = ${SRCLIBDIR}/lib9290
 GRASPLIBS = -l9290 -lmod
 
-APP_LIBS = -L${GRASPLIB} ${GRASPLIBS} -llapack -lblas
+APP_LIBS = -L${GRASPLIB} ${GRASPLIBS} ${LAPACK_LIBS}
 
 UTIL = rcsfsplit rmixaccumulate rseqenergy \
 	rseqhfs rseqtrans rtablevels rtabtransE1 \
