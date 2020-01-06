@@ -2,3 +2,7 @@ bin/*
 build/
 build-*/
 CMakeLists.user
+
+# Ignore artifacts from Make builds
+*.o
+*.mod
