@@ -2,10 +2,10 @@ BIN=${GRASP}/bin
 EXE=HF
 
 OBJS= \
-	HF.f90
+	HF.o
 
 $(BIN)/$(EXE): $(OBJS)
-	$(FC) $(FC_LD) -o $@ $?
+	$(FC) $(FC_LD) -o $@  $?
 
 %.o: %.f90
 	$(FC) $(FC_FLAGS) -c -o $@ $<

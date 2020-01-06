@@ -1,7 +1,7 @@
 LIB=mod
-FILES="memory_man.f90
-parameter_def_M.f90
+FILES="parameter_def_M.f90
 vast_kind_param_M.f90
+memory_man.f90
 AME_C.f90
 bcore_C.f90
 bess_C.f90
@@ -104,5 +104,5 @@ wchblk_C.f90
 wfac_C.f90
 where_C.f90
 whfrom_C.f90"
-generate-makefile
+generate-makefile > Makefile
 generate-cmakelists

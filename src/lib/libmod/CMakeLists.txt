@@ -1,7 +1,7 @@
 add_library(mod STATIC
-    memory_man.f90
     parameter_def_M.f90
     vast_kind_param_M.f90
+    memory_man.f90
     AME_C.f90
     bcore_C.f90
     bess_C.f90

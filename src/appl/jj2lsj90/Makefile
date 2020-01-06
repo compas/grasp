@@ -3,19 +3,19 @@ EXE=jj2lsj
 LIBS=-lmod -l9290 -lrang90 
 
 OBJS= \
-	getmixblock.f90 \
-	getmixblock_I.f90 \
-	idigit.f90 \
-	idigit_I.f90 \
-	lval.f90 \
-	lval_I.f90 \
-	packLS.f90 \
-	packLS_I.f90 \
-	jj2lsj2K.f90 \
-	jj2lsj_code.f90 \
-	jj2lsj_data_1_C.f90 \
-	jj2lsj_data_2_C.f90 \
-	jj2lsj_data_3_C.f90
+	getmixblock.o \
+	getmixblock_I.o \
+	idigit.o \
+	idigit_I.o \
+	lval.o \
+	lval_I.o \
+	packLS.o \
+	packLS_I.o \
+	jj2lsj2K.o \
+	jj2lsj_code.o \
+	jj2lsj_data_1_C.o \
+	jj2lsj_data_2_C.o \
+	jj2lsj_data_3_C.o
 
 $(BIN)/$(EXE): $(OBJS)
 	$(FC) $(FC_LD) -o $@ $(LIBS) $?

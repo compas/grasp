@@ -1,31 +1,45 @@
 #!/usr/bin/env bash
 
 function generate-makefile {
-	ofile="Makefile"
-	echo "Generating ${ofile}"
+	>&2 echo "Generating a Makefile"
+	if ! [ -z ${EXE+x} ]; then
+		_generate-makefile-binary
+	elif ! [ -z ${LIB+x} ]; then
+		_generate-makefile-library
+	else
+		>&2 echo "ERROR: neither EXE nor LIB specified"
+		exit 1
+	fi
+}
 
-	cat <<-EOF > ${ofile}
+function _generate-makefile-binary {
+	cat <<-EOF
 		BIN=\${GRASP}/bin
 		EXE=${EXE}
 	EOF
 
 	if ! [ -z ${LIBRARIES+x} ]; then
 		makelibs_string=$(for lib in ${LIBRARIES}; do echo -n "-l${lib} "; done)
-		echo "LIBS=${makelibs_string}" >> $ofile
+		echo "LIBS=${makelibs_string}"
 		LIBS="\$(LIBS)"
 	else
 		LIBS=""
 	fi
 
-	echo >> $ofile
-	echo -n "OBJS=" >> $ofile
+	echo
+	echo -n "OBJS="
 	for file in ${FILES}; do
-		echo " \\" >> $ofile
-		echo -n "    ${file}" >> $ofile
+		if [[ "$file" =~ ^(.+)\.f90$ ]]; then
+			echo " \\"
+			echo -n "	${BASH_REMATCH[1]}.o"
+		else
+			>&2 echo "ERROR: Invalid file in FILES: $file"
+			exit 1
+		fi
 	done
-	echo >> $ofile; echo >> $ofile
+	echo; echo
 
-	cat <<-EOF >> ${ofile}
+	cat <<-EOF | sed 's/    /\t/'
 		\$(BIN)/\$(EXE): \$(OBJS)
 		    \$(FC) \$(FC_LD) -o \$@ ${LIBS} \$?
 
@@ -35,8 +49,46 @@ function generate-makefile {
 		clean:
 		    -rm -f *.o *.mod
 	EOF
-	# Replace 4 spaces with tabs
-	sed -i 's/    /\t/' Makefile
+}
+
+function _generate-makefile-library {
+	cat <<-EOF
+		LIBA=\${GRASP}/lib/lib${LIB}.a
+	EOF
+
+	if ! [ -z ${LIBRARIES+x} ]; then
+		makelibs_string=$(for lib in ${LIBRARIES}; do echo -n "-l${lib} "; done)
+		echo "LIBS=${makelibs_string}"
+		LIBS="\$(LIBS)"
+	else
+		LIBS=""
+	fi
+
+	echo
+	echo -n "OBJS="
+	for file in ${FILES}; do
+		if [[ "$file" =~ ^(.+)\.f90$ ]]; then
+			echo " \\"
+			echo -n "	${BASH_REMATCH[1]}.o"
+		else
+			>&2 echo "ERROR: Invalid file in FILES: $file"
+			exit 1
+		fi
+	done
+	echo; echo
+
+	cat <<-EOF | sed 's/    /\t/'
+		\$(LIBA): \$(OBJS)
+		    @echo "Installing \$@"
+		    ar -curs \$@ \$?
+
+		%.o: %.f90
+		    \$(FC) \$(FC_FLAGS) -c -o \$@ \$<
+
+		clean:
+		    -rm -f \$(LIBA)
+		    -rm -f *.o *.mod
+	EOF
 }
 
 function generate-cmakelists {
