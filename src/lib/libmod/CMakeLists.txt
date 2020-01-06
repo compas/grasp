@@ -2,7 +2,6 @@ add_library(mod STATIC
     memory_man.f90
     parameter_def_M.f90
     vast_kind_param_M.f90
-    # Common block remnants
     AME_C.f90
     bcore_C.f90
     bess_C.f90
