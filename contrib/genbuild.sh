@@ -14,16 +14,20 @@ function generate-makefile {
 
 function _generate-makefile-binary {
 	cat <<-EOF
-		BIN=\${GRASP}/bin
-		EXE=${EXE}
+		EXE=\${GRASP}/bin/${EXE}
 	EOF
 
 	if ! [ -z ${LIBRARIES+x} ]; then
+		# TODO: trim space at the end of the string
 		makelibs_string=$(for lib in ${LIBRARIES}; do echo -n "-l${lib} "; done)
-		echo "LIBS=${makelibs_string}"
-		LIBS="\$(LIBS)"
+		echo "LIBS=-L \${GRASP}/lib/ ${makelibs_string}"
+		LIBS=" \$(LIBS)"
+		moddirs=$(for lib in ${LIBRARIES}; do echo -n "-I \${GRASP}/src/lib/$(libdir $lib) "; done)
+		echo "FC_MODULES=${moddirs}"
+		FC_MODS=" \$(FC_MODULES)" # Note: space is significant!
 	else
 		LIBS=""
+		FC_MODS=""
 	fi
 
 	echo
@@ -40,13 +44,14 @@ function _generate-makefile-binary {
 	echo; echo
 
 	cat <<-EOF | sed 's/    /\t/'
-		\$(BIN)/\$(EXE): \$(OBJS)
-		    \$(FC) \$(FC_LD) -o \$@ ${LIBS} \$?
+		\$(EXE): \$(OBJS)
+		    \$(FC) \$(FC_LD) -o \$@ \$?${LIBS}
 
 		%.o: %.f90
-		    \$(FC) \$(FC_FLAGS) -c -o \$@ \$<
+		    \$(FC) \$(FC_FLAGS)${FC_MODS} -c -o \$@ \$<
 
 		clean:
+		    -rm -f \$(EXE)
 		    -rm -f *.o *.mod
 	EOF
 }
@@ -94,10 +99,12 @@ function _generate-makefile-library {
 function libdir {
 	if [ "$1" = "mod" ]; then
 		echo "libmod"
+	elif [ "$1" = "9290" ]; then
+		echo "lib9290"
 	elif [ "$1" = "mpi" ]; then
 		echo "mpi90"
 	else
-		echo "lib${1}90"
+		echo "lib${1}"
 	fi
 }
 
@@ -121,7 +128,11 @@ function generate-cmakelists {
 		echo "setup_fortran_modules($LIB)"
 	fi
 	if ! [ -z ${LIBRARIES+x} ]; then
-		echo "target_link_libraries_Fortran(${TARGET} PRIVATE ${LIBRARIES})"
+		if ! [ -z ${EXE+x} ]; then
+			echo "target_link_libraries_Fortran(${TARGET} PUBLIC ${LIBRARIES})"
+		else
+			echo "target_link_libraries_Fortran(${TARGET} PRIVATE ${LIBRARIES})"
+		fi
 	fi
 	# Add LAPACK and BLAS libraries
 	if ! [ -z ${LAPACK} ]; then
