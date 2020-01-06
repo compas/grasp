@@ -6,3 +6,7 @@ CMakeLists.user
 # Ignore artifacts from Make builds
 *.o
 *.mod
+/bin/*
+!/bin/.gitkeep
+/lib/*
+!/lib/.gitkeep
