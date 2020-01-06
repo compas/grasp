@@ -57,11 +57,11 @@ function _generate-makefile-library {
 	EOF
 
 	if ! [ -z ${LIBRARIES+x} ]; then
-		makelibs_string=$(for lib in ${LIBRARIES}; do echo -n "-l${lib} "; done)
-		echo "LIBS=${makelibs_string}"
-		LIBS="\$(LIBS)"
+		moddirs=$(for lib in ${LIBRARIES}; do echo -n "-I \${GRASP}/src/lib/$(libdir $lib) "; done)
+		echo "FC_MODULES=${moddirs}"
+		FC_MODS=" \$(FC_MODULES)" # Note: space is significant!
 	else
-		LIBS=""
+		FC_MODS=""
 	fi
 
 	echo
@@ -83,7 +83,7 @@ function _generate-makefile-library {
 		    ar -curs \$@ \$?
 
 		%.o: %.f90
-		    \$(FC) \$(FC_FLAGS) -c -o \$@ \$<
+		    \$(FC) \$(FC_FLAGS)${FC_MODS} -c -o \$@ \$<
 
 		clean:
 		    -rm -f \$(LIBA)
@@ -91,28 +91,45 @@ function _generate-makefile-library {
 	EOF
 }
 
+function libdir {
+	if [ "$1" = "mod" ]; then
+		echo "libmod"
+	elif [ "$1" = "mpi" ]; then
+		echo "mpi90"
+	else
+		echo "lib${1}90"
+	fi
+}
+
 function generate-cmakelists {
-	ofile="CMakeLists.txt"
-	echo "Generating ${ofile}"
+	>&2 echo "Generating CMakeLists.txt"
 	if ! [ -z ${EXE+x} ]; then
-		echo "add_executable(${EXE}" > $ofile
+		TARGET=$EXE
+		echo "add_executable(${EXE}"
 	elif ! [ -z ${LIB+x} ]; then
-		echo "add_library(${LIB} STATIC" > $ofile
+		TARGET=$LIB
+		echo "add_library(${LIB} STATIC"
 	else
 		>&2 echo "ERROR: neither EXE nor LIB specified"
 		exit 1
 	fi
 	for file in ${FILES}; do
-		echo "    ${file}" >> $ofile
+		echo "    ${file}"
 	done
-	echo ")" >> $ofile
+	echo ")"
+	if ! [ -z ${LIB+x} ]; then
+		echo "setup_fortran_modules($LIB)"
+	fi
+	if ! [ -z ${LIBRARIES+x} ]; then
+		echo "target_link_libraries_Fortran(${TARGET} PRIVATE ${LIBRARIES})"
+	fi
+	# Add LAPACK and BLAS libraries
+	if ! [ -z ${LAPACK} ]; then
+		echo "target_link_libraries(${TARGET} PRIVATE \${BLAS_LIBRARIES} \${BLAS_LINKER_FLAGS})"
+		echo "target_link_libraries(${TARGET} PRIVATE \${LAPACK_LIBRARIES} \${LAPACK_LINKER_FLAGS})"
+	fi
 	if ! [ -z ${EXE+x} ]; then
-		if ! [ -z ${LIBRARIES+x} ]; then
-			echo "target_link_libraries_Fortran(jj2lsj PUBLIC ${LIBRARIES})" >> $ofile
-		fi
-		echo "install(TARGETS ${EXE} DESTINATION bin/)" >> $ofile
-	elif ! [ -z ${LIB+x} ]; then
-		echo "setup_fortran_modules($LIB)" >> $ofile
+		echo "install(TARGETS ${EXE} DESTINATION bin/)"
 	fi
 }
 
@@ -133,7 +150,7 @@ if ! [ -f "${target}/BUILDCONF.sh" ]; then
 	exit 1
 fi
 
-if ! output=$(cd ${target} || exit; source "${target}/BUILDCONF.sh"); then
+if ! output=$(cd ${target} || exit; source "${target}/BUILDCONF.sh" 2>&1); then
 	>&2 echo "ERROR: BUILDCONF.sh script failed for $target"
 	echo "Output:"
 	echo $output
