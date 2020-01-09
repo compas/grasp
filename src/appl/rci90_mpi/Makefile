@@ -1,0 +1,151 @@
+EXE=${GRASP}/bin/rci_mpi
+LIBS=-L ${GRASP}/lib/ -lmpiu90 -lrang90 -l9290 -ldvd90 -lmod
+FC_MODULES= -I ${GRASP}/src/lib/mpi90 -I ${GRASP}/src/lib/librang90 -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libdvd90 -I ${GRASP}/src/lib/libmod
+
+OBJS= \
+	evcout.o \
+	dspevx_I.o \
+	ratden_I.o \
+	bessel.o \
+	bessel_I.o \
+	zkf.o \
+	zkf_I.o \
+	rkintc.o \
+	rkintc_I.o \
+	rkint.o \
+	rkint_I.o \
+	skint.o \
+	skint_I.o \
+	brra.o \
+	brra_I.o \
+	brintf.o \
+	brintf_I.o \
+	breid.o \
+	breid_I.o \
+	brint1.o \
+	brint1_I.o \
+	brint2.o \
+	brint2_I.o \
+	brint3.o \
+	brint3_I.o \
+	brint4.o \
+	brint4_I.o \
+	brint5.o \
+	brint5_I.o \
+	brint6.o \
+	brint6_I.o \
+	cxk.o \
+	cxk_I.o \
+	dnicmv.o \
+	dnicmv_I.o \
+	engout.o \
+	engout_I.o \
+	funk.o \
+	funk_I.o \
+	funl.o \
+	funl_I.o \
+	mohr.o \
+	mohr_I.o \
+	klamaq.o \
+	klamaq_I.o \
+	fzalf.o \
+	fzalf_I.o \
+	triangbreit1.o \
+	triangbreit1_I.o \
+	triangbreit2.o \
+	triangbreit2_I.o \
+	triangrk.o \
+	triangrk_I.o \
+	genintbreit1.o \
+	genintbreit1_I.o \
+	genintbreit1wrap.o \
+	genintbreit1wrap_I.o \
+	genintbreit2.o \
+	genintbreit2_I.o \
+	genintbreit2wrap.o \
+	genintbreit2wrap_I.o \
+	genintrk.o \
+	genintrk_I.o \
+	genintrkwrap.o \
+	genintrkwrap_I.o \
+	getcid.o \
+	getcid_I.o \
+	hmout.o \
+	hmout_I.o \
+	hovlap.o \
+	hovlap_I.o \
+	iabint.o \
+	iabint_I.o \
+	indtpi.o \
+	indtpi_I.o \
+	iniestdm.o \
+	iniestdm_I.o \
+	iniestsd.o \
+	iniestsd_I.o \
+	keint.o \
+	keint_I.o \
+	lodmixmpi.o \
+	lodmixmpi_I.o \
+	lodres.o \
+	lodres_I.o \
+	spodmv.o \
+	spodmv_I.o \
+	maneigmpi.o \
+	maneigmpi_I.o \
+	ncharg.o \
+	ncharg_I.o \
+	qed_slfen.o \
+	qed_slfen_I.o \
+	qed.o \
+	qed_I.o \
+	setdbg.o \
+	setdbg_I.o \
+	setmixmpi.o \
+	setmixmpi_I.o \
+	setres.o \
+	setres_I.o \
+	setsum.o \
+	setsum_I.o \
+	snrc.o \
+	snrc_I.o \
+	strsum.o \
+	strsum_I.o \
+	talk.o \
+	talk_I.o \
+	vac2.o \
+	vac2_I.o \
+	vac4.o \
+	vac4_I.o \
+	vacpol.o \
+	vacpol_I.o \
+	vinti.o \
+	vinti_I.o \
+	vint.o \
+	vint_I.o \
+	vpintf.o \
+	vpintf_I.o \
+	vpint.o \
+	vpint_I.o \
+	wghtd5.o \
+	wghtd5_I.o \
+	auxblk.o \
+	auxblk_I.o \
+	setham_gg.o \
+	setham_gg_I.o \
+	genmat.o \
+	genmat_I.o \
+	genmat2.o \
+	genmat2_I.o \
+	matrix.o \
+	matrix_I.o \
+	rci90mpi.o
+
+$(EXE): $(OBJS)
+	$(FC_MPI) -o $@ $? $(FC_MPILD) $(LIBS) $(LAPACK_LIBS)
+
+%.o: %.f90
+	$(FC_MPI) -c $(FC_MPIFLAGS) $(FC_MODULES) -o $@ $<
+
+clean:
+	-rm -f $(EXE)
+	-rm -f *.o *.mod
