@@ -26,8 +26,8 @@ add_library(mpiu90 STATIC
 )
 setup_fortran_modules(mpiu90)
 target_link_libraries_Fortran(mpiu90 PRIVATE mod 9290)
-target_include_directories(mpiu90 PRIVATE ${MPI_Fortran_INCLUDE_PATH})"
-target_link_libraries(mpiu90 PRIVATE ${MPI_Fortran_LIBRARIES})"
+target_include_directories(mpiu90 PRIVATE ${MPI_Fortran_INCLUDE_PATH})
+target_link_libraries(mpiu90 PRIVATE ${MPI_Fortran_LIBRARIES})
 set_target_properties(mpiu90 PROPERTIES
   COMPILE_FLAGS "${MPI_Fortran_COMPILE_FLAGS}"
   LINK_FLAGS "${MPI_Fortran_LINK_FLAGS}"

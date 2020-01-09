@@ -1,4 +1,4 @@
-add_executable(rangular
+add_executable(rangular_mpi
     fndbeg.f90
     fndbeg_I.f90
     getinf.f90
@@ -27,13 +27,13 @@ add_executable(rangular
     mcpmpi_gg_I.f90
     genmcpmpi.f90
 )
-target_link_libraries_Fortran(rangular PUBLIC rang90 mcp90 mpiu90 9290 mod)
-target_link_libraries(rangular PRIVATE ${BLAS_LIBRARIES} ${BLAS_LINKER_FLAGS})
-target_link_libraries(rangular PRIVATE ${LAPACK_LIBRARIES} ${LAPACK_LINKER_FLAGS})
-target_include_directories(rangular PRIVATE ${MPI_Fortran_INCLUDE_PATH})"
-target_link_libraries(rangular PRIVATE ${MPI_Fortran_LIBRARIES})"
-set_target_properties(rangular PROPERTIES
+target_link_libraries_Fortran(rangular_mpi PUBLIC rang90 mcp90 mpiu90 9290 mod)
+target_link_libraries(rangular_mpi PRIVATE ${BLAS_LIBRARIES} ${BLAS_LINKER_FLAGS})
+target_link_libraries(rangular_mpi PRIVATE ${LAPACK_LIBRARIES} ${LAPACK_LINKER_FLAGS})
+target_include_directories(rangular_mpi PRIVATE ${MPI_Fortran_INCLUDE_PATH})
+target_link_libraries(rangular_mpi PRIVATE ${MPI_Fortran_LIBRARIES})
+set_target_properties(rangular_mpi PROPERTIES
   COMPILE_FLAGS "${MPI_Fortran_COMPILE_FLAGS}"
   LINK_FLAGS "${MPI_Fortran_LINK_FLAGS}"
 )
-install(TARGETS rangular DESTINATION bin/)
+install(TARGETS rangular_mpi DESTINATION bin/)

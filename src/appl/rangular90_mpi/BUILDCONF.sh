@@ -1,4 +1,4 @@
-EXE=rangular
+EXE=rangular_mpi
 LIBRARIES="rang90 mcp90 mpiu90 9290 mod"
 LAPACK=true
 ISMPI=true
