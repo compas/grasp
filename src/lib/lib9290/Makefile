@@ -1,5 +1,5 @@
 LIBA=${GRASP}/lib/lib9290.a
-FC_MODULES=-I ${GRASP}/src/lib/libmod 
+FC_MODULES= -I ${GRASP}/src/lib/libmod
 
 OBJS= \
 	alcbuf.o \
@@ -156,7 +156,7 @@ $(LIBA): $(OBJS)
 	ar -curs $@ $?
 
 %.o: %.f90
-	$(FC) $(FC_FLAGS) $(FC_MODULES) -c -o $@ $<
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
 	-rm -f $(LIBA)

@@ -112,7 +112,7 @@ $(LIBA): $(OBJS)
 	ar -curs $@ $?
 
 %.o: %.f90
-	$(FC) $(FC_FLAGS) -c -o $@ $<
+	$(FC) -c $(FC_FLAGS) -o $@ $<
 
 clean:
 	-rm -f $(LIBA)

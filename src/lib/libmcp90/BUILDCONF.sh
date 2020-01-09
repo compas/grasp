@@ -1,4 +1,4 @@
-LIB=mcp
+LIB=mcp90
 LIBRARIES="mod 9290"
 FILES="
 cxk.f90 cxk_I.f90

@@ -1,6 +1,6 @@
 EXE=${GRASP}/bin/jj2lsj
-LIBS=-L ${GRASP}/lib/ -l9290 -lrang90 -lmod 
-FC_MODULES=-I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/librang90 -I ${GRASP}/src/lib/libmod 
+LIBS=-L ${GRASP}/lib/ -l9290 -lrang90 -lmod
+FC_MODULES= -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/librang90 -I ${GRASP}/src/lib/libmod
 
 OBJS= \
 	getmixblock.o \
@@ -18,10 +18,10 @@ OBJS= \
 	jj2lsj2K.o
 
 $(EXE): $(OBJS)
-	$(FC) $(FC_LD) -o $@ $? $(LIBS)
+	$(FC) -o $@ $? $(FC_LD) $(LIBS)
 
 %.o: %.f90
-	$(FC) $(FC_FLAGS) $(FC_MODULES) -c -o $@ $<
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
 	-rm -f $(EXE)

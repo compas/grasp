@@ -1,14 +1,14 @@
-BIN=${GRASP}/bin
-EXE=HF
+EXE=${GRASP}/bin/HF
 
 OBJS= \
 	HF.o
 
-$(BIN)/$(EXE): $(OBJS)
-	$(FC) $(FC_LD) -o $@  $?
+$(EXE): $(OBJS)
+	$(FC) -o $@ $? $(FC_LD)
 
 %.o: %.f90
-	$(FC) $(FC_FLAGS) -c -o $@ $<
+	$(FC) -c $(FC_FLAGS) -o $@ $<
 
 clean:
+	-rm -f $(EXE)
 	-rm -f *.o *.mod

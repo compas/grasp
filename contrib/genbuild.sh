@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
-
+#
+# Variables that affect the behaviour:
+#
+# - EXE & LIB: only one should be set, name of the target
+# - FILES: List of .f90 source files, in the correct order (if there are between the files)
+# - LIBRARIES: List of libraries that this library or binary depends on
+#
+# External dependencies:
+# - LAPACK: Attach LAPACK and BLAS libraries
+# - ISMPI: Attach MPI libraries
+#
 function generate-makefile {
 	>&2 echo "Generating a Makefile"
 	if ! [ -z ${EXE+x} ]; then
@@ -17,22 +27,33 @@ function _generate-makefile-binary {
 		EXE=\${GRASP}/bin/${EXE}
 	EOF
 
+	if ! [ -z ${ISMPI+x} ]; then
+		FC="FC_MPI"
+		FC_FLAGS="\$(FC_MPIFLAGS)"
+		FC_LDFLAGS="\$(FC_MPILD)"
+	else
+		FC="FC"
+		FC_FLAGS="\$(FC_FLAGS)"
+		FC_LDFLAGS="\$(FC_LD)"
+	fi
+
 	if ! [ -z ${LIBRARIES+x} ]; then
 		# TODO: trim space at the end of the string
-		makelibs_string=$(for lib in ${LIBRARIES}; do echo -n "-l${lib} "; done)
-		echo "LIBS=-L \${GRASP}/lib/ ${makelibs_string}"
-		LIBS=" \$(LIBS)"
-		moddirs=$(for lib in ${LIBRARIES}; do echo -n "-I \${GRASP}/src/lib/$(libdir $lib) "; done)
+		makelibs_string=$(for lib in ${LIBRARIES}; do echo -n " -l${lib}"; done)
+		echo "LIBS=-L \${GRASP}/lib/${makelibs_string}"
+		FC_LDFLAGS="${FC_LDFLAGS} \$(LIBS)"
+		moddirs=$(for lib in ${LIBRARIES}; do echo -n " -I \${GRASP}/src/lib/$(libdir $lib)"; done)
 		echo "FC_MODULES=${moddirs}"
-		FC_MODS=" \$(FC_MODULES)" # Note: space is significant!
-	else
-		LIBS=""
-		FC_MODS=""
+		FC_FLAGS="${FC_FLAGS} \$(FC_MODULES)"
+	fi
+
+	if ! [ -z ${LAPACK} ]; then
+		FC_LDFLAGS="${FC_LDFLAGS} \$(LAPACK_LIBS)"
 	fi
 
 	echo
 	echo -n "OBJS="
-	for file in ${FILES}; do
+	for file in $(echo "$FILES" | sed 's/#.*$//'); do
 		if [[ "$file" =~ ^(.+)\.f90$ ]]; then
 			echo " \\"
 			echo -n "	${BASH_REMATCH[1]}.o"
@@ -45,10 +66,10 @@ function _generate-makefile-binary {
 
 	cat <<-EOF | sed 's/    /\t/'
 		\$(EXE): \$(OBJS)
-		    \$(FC) \$(FC_LD) -o \$@ \$?${LIBS}
+		    \$($FC) -o \$@ \$? ${FC_LDFLAGS}
 
 		%.o: %.f90
-		    \$(FC) \$(FC_FLAGS)${FC_MODS} -c -o \$@ \$<
+		    \$($FC) -c ${FC_FLAGS} -o \$@ \$<
 
 		clean:
 		    -rm -f \$(EXE)
@@ -61,17 +82,23 @@ function _generate-makefile-library {
 		LIBA=\${GRASP}/lib/lib${LIB}.a
 	EOF
 
-	if ! [ -z ${LIBRARIES+x} ]; then
-		moddirs=$(for lib in ${LIBRARIES}; do echo -n "-I \${GRASP}/src/lib/$(libdir $lib) "; done)
-		echo "FC_MODULES=${moddirs}"
-		FC_MODS=" \$(FC_MODULES)" # Note: space is significant!
+	if ! [ -z ${ISMPI+x} ]; then
+		FC="FC_MPI"
+		FC_FLAGS="\$(FC_MPIFLAGS)"
 	else
-		FC_MODS=""
+		FC="FC"
+		FC_FLAGS="\$(FC_FLAGS)"
+	fi
+
+	if ! [ -z ${LIBRARIES+x} ]; then
+		moddirs=$(for lib in ${LIBRARIES}; do echo -n " -I \${GRASP}/src/lib/$(libdir $lib)"; done)
+		echo "FC_MODULES=${moddirs}"
+		FC_FLAGS="${FC_FLAGS} \$(FC_MODULES)"
 	fi
 
 	echo
 	echo -n "OBJS="
-	for file in ${FILES}; do
+	for file in $(echo "$FILES" | sed 's/#.*$//'); do
 		if [[ "$file" =~ ^(.+)\.f90$ ]]; then
 			echo " \\"
 			echo -n "	${BASH_REMATCH[1]}.o"
@@ -88,7 +115,7 @@ function _generate-makefile-library {
 		    ar -curs \$@ \$?
 
 		%.o: %.f90
-		    \$(FC) \$(FC_FLAGS)${FC_MODS} -c -o \$@ \$<
+		    \$($FC) -c ${FC_FLAGS} -o \$@ \$<
 
 		clean:
 		    -rm -f \$(LIBA)
@@ -101,7 +128,7 @@ function libdir {
 		echo "libmod"
 	elif [ "$1" = "9290" ]; then
 		echo "lib9290"
-	elif [ "$1" = "mpi" ]; then
+	elif [ "$1" = "mpiu90" ]; then
 		echo "mpi90"
 	else
 		echo "lib${1}"
@@ -120,7 +147,7 @@ function generate-cmakelists {
 		>&2 echo "ERROR: neither EXE nor LIB specified"
 		exit 1
 	fi
-	for file in ${FILES}; do
+	for file in $(echo "$FILES" | sed 's/#.*$//'); do
 		echo "    ${file}"
 	done
 	echo ")"
@@ -139,6 +166,16 @@ function generate-cmakelists {
 		echo "target_link_libraries(${TARGET} PRIVATE \${BLAS_LIBRARIES} \${BLAS_LINKER_FLAGS})"
 		echo "target_link_libraries(${TARGET} PRIVATE \${LAPACK_LIBRARIES} \${LAPACK_LINKER_FLAGS})"
 	fi
+	if ! [ -z ${ISMPI+x} ]; then
+		cat <<-EOF
+		target_include_directories(${TARGET} PRIVATE \${MPI_Fortran_INCLUDE_PATH})"
+		target_link_libraries(${TARGET} PRIVATE \${MPI_Fortran_LIBRARIES})"
+		set_target_properties(${TARGET} PROPERTIES
+		  COMPILE_FLAGS "\${MPI_Fortran_COMPILE_FLAGS}"
+		  LINK_FLAGS "\${MPI_Fortran_LINK_FLAGS}"
+		)
+		EOF
+	fi
 	if ! [ -z ${EXE+x} ]; then
 		echo "install(TARGETS ${EXE} DESTINATION bin/)"
 	fi
@@ -149,7 +186,12 @@ if [ "$#" -ne 1 ]; then
 	>&2 echo "ERROR: Must provide a single argument (target directory)"
 	exit 1
 fi
-target="${PWD}/$1"
+# Construct the path to the target directory, relative to $PWD if not an absolute path
+if [[ "$1" =~ ^/(.+) ]]; then
+	target=$1
+else
+	target="${PWD}/$1"
+fi
 
 if ! [ -d "${target}" ]; then
 	>&2 echo "ERROR: Invalid directory ${target}"

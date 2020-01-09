@@ -1,5 +1,5 @@
-LIBA=${GRASP}/lib/libmcp.a
-FC_MODULES=-I ${GRASP}/src/lib/libmod -I ${GRASP}/src/lib/lib9290 
+LIBA=${GRASP}/lib/libmcp90.a
+FC_MODULES= -I ${GRASP}/src/lib/libmod -I ${GRASP}/src/lib/lib9290
 
 OBJS= \
 	cxk.o \
@@ -12,7 +12,7 @@ $(LIBA): $(OBJS)
 	ar -curs $@ $?
 
 %.o: %.f90
-	$(FC) $(FC_FLAGS) $(FC_MODULES) -c -o $@ $<
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
 	-rm -f $(LIBA)
