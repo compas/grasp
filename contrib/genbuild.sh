@@ -161,20 +161,22 @@ function generate-cmakelists {
 			echo "target_link_libraries_Fortran(${TARGET} PRIVATE ${LIBRARIES})"
 		fi
 	fi
-	# Add LAPACK and BLAS libraries
-	if ! [ -z ${LAPACK} ]; then
-		echo "target_link_libraries(${TARGET} PRIVATE \${BLAS_LIBRARIES} \${BLAS_LINKER_FLAGS})"
-		echo "target_link_libraries(${TARGET} PRIVATE \${LAPACK_LIBRARIES} \${LAPACK_LINKER_FLAGS})"
-	fi
-	if ! [ -z ${ISMPI+x} ]; then
-		cat <<-EOF
-		target_include_directories(${TARGET} PRIVATE \${MPI_Fortran_INCLUDE_PATH})
-		target_link_libraries(${TARGET} PRIVATE \${MPI_Fortran_LIBRARIES})
-		set_target_properties(${TARGET} PROPERTIES
-		  COMPILE_FLAGS "\${MPI_Fortran_COMPILE_FLAGS}"
-		  LINK_FLAGS "\${MPI_Fortran_LINK_FLAGS}"
-		)
-		EOF
+	# Add LAPACK and BLAS libraries to libraries
+	if [ -z ${EXE+x} ]; then
+		if ! [ -z ${LAPACK} ]; then
+			echo "target_link_libraries(${TARGET} PRIVATE \${BLAS_LIBRARIES} \${BLAS_LINKER_FLAGS})"
+			echo "target_link_libraries(${TARGET} PRIVATE \${LAPACK_LIBRARIES} \${LAPACK_LINKER_FLAGS})"
+		fi
+		if ! [ -z ${ISMPI+x} ]; then
+			cat <<-EOF
+			target_include_directories(${TARGET} PRIVATE \${MPI_Fortran_INCLUDE_PATH})
+			target_link_libraries(${TARGET} PRIVATE \${MPI_Fortran_LIBRARIES})
+			set_target_properties(${TARGET} PROPERTIES
+			  COMPILE_FLAGS "\${MPI_Fortran_COMPILE_FLAGS}"
+			  LINK_FLAGS "\${MPI_Fortran_LINK_FLAGS}"
+			)
+			EOF
+		fi
 	fi
 	if ! [ -z ${EXE+x} ]; then
 		echo "install(TARGETS ${EXE} DESTINATION bin/)"

@@ -28,12 +28,4 @@ add_executable(rangular_mpi
     genmcpmpi.f90
 )
 target_link_libraries_Fortran(rangular_mpi PUBLIC rang90 mcp90 mpiu90 9290 mod)
-target_link_libraries(rangular_mpi PRIVATE ${BLAS_LIBRARIES} ${BLAS_LINKER_FLAGS})
-target_link_libraries(rangular_mpi PRIVATE ${LAPACK_LIBRARIES} ${LAPACK_LINKER_FLAGS})
-target_include_directories(rangular_mpi PRIVATE ${MPI_Fortran_INCLUDE_PATH})
-target_link_libraries(rangular_mpi PRIVATE ${MPI_Fortran_LIBRARIES})
-set_target_properties(rangular_mpi PROPERTIES
-  COMPILE_FLAGS "${MPI_Fortran_COMPILE_FLAGS}"
-  LINK_FLAGS "${MPI_Fortran_LINK_FLAGS}"
-)
 install(TARGETS rangular_mpi DESTINATION bin/)

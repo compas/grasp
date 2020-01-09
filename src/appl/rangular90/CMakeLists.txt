@@ -30,6 +30,4 @@ add_executable(rangular
     genmcp.f90
 )
 target_link_libraries_Fortran(rangular PUBLIC rang90 mcp90 9290 mod)
-target_link_libraries(rangular PRIVATE ${BLAS_LIBRARIES} ${BLAS_LINKER_FLAGS})
-target_link_libraries(rangular PRIVATE ${LAPACK_LIBRARIES} ${LAPACK_LINKER_FLAGS})
 install(TARGETS rangular DESTINATION bin/)
