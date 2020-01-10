@@ -1,8 +1,3 @@
-bin/*
-build/
-build-*/
-CMakeLists.user
-
 # Ignore artifacts from Make builds
 *.o
 *.mod
@@ -10,3 +5,12 @@ CMakeLists.user
 !/bin/.gitkeep
 /lib/*
 !/lib/.gitkeep
+
+# Ignore generated CMake files
+build/
+build-*/
+CMakeLists.user
+
+# Ignore output log files
+*.out
+*.err

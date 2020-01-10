@@ -5,11 +5,11 @@ program rcsfsplit
 implicit none
 integer :: i, j, k, n, nlayer, norb, norblayer, nsymmetrymatch, norbcomp, ncsf, nwrite, ncount
 integer :: jr, jl, pos, ncsflist(50)
-character(len=100) :: string1, string2, string3, name
+character(len=200) :: string1, string2, string3, name
 character(len=1500) :: orbitalstring
 character(len=3) :: orb(300),orbital(25),orbcomp(300)
 character(len=4) :: orbrel(300)
-character(len=100) :: orbitallayer,label(50)
+character(len=200) :: orbitallayer,label(50)
 
 write(*,*) 'RCSFSPLIT'
 write(*,*) 'Splits a list name.c of CSFs into a number of lists with CSFs that '
