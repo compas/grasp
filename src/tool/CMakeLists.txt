@@ -13,12 +13,6 @@ add_executable(rcsfmr rcsfmr.f90)
 target_link_libraries_Fortran(rcsfmr PRIVATE mod 9290)
 install(TARGETS rcsfmr DESTINATION bin/)
 
-# rcsfratip was not being compiled in the original Makefile for some reason.
-#
-#add_executable(rcsfratip rcsfratip.f90)
-#target_link_libraries_Fortran(rcsfratip PRIVATE mod 9290)
-#install(TARGETS rcsfratip DESTINATION bin/)
-
 add_executable(rcsfsplit rcsfsplit.f90)
 target_link_libraries_Fortran(rcsfsplit PRIVATE mod 9290)
 install(TARGETS rcsfsplit DESTINATION bin/)
@@ -27,13 +21,13 @@ add_executable(rhfs_lsj rhfs_lsj.f90)
 target_link_libraries_Fortran(rhfs_lsj PRIVATE mod 9290)
 install(TARGETS rhfs_lsj DESTINATION bin/)
 
-add_executable(rlevels rlevels.f90)
-target_link_libraries_Fortran(rlevels PRIVATE mod 9290)
-install(TARGETS rlevels DESTINATION bin/)
-
 add_executable(rlevelseV rlevelseV.f90)
 target_link_libraries_Fortran(rlevelseV PRIVATE mod 9290)
 install(TARGETS rlevelseV DESTINATION bin/)
+
+add_executable(rlevels rlevels.f90)
+target_link_libraries_Fortran(rlevels PRIVATE mod 9290)
+install(TARGETS rlevels DESTINATION bin/)
 
 add_executable(rmixaccumulate rmixaccumulate.f90)
 target_link_libraries_Fortran(rmixaccumulate PRIVATE mod 9290)
@@ -95,8 +89,3 @@ add_executable(wfnplot wfnplot.f90)
 target_link_libraries_Fortran(wfnplot PRIVATE mod 9290)
 install(TARGETS wfnplot DESTINATION bin/)
 
-# rcsfratip was not being compiled in the original Makefile for some reason.
-#
-# add_executable(rcsfratip.f90 rcsfratip.f90.f90)
-# target_link_libraries_Fortran(rcsfratip.f90 PRIVATE mod 9290)
-# install(TARGETS rcsfratip.f90 DESTINATION bin/)
