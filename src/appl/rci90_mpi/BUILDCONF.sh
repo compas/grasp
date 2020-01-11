@@ -21,6 +21,8 @@ rkint.f90 rkint_I.f90
 skint.f90 skint_I.f90
 brra.f90 brra_I.f90
 brintf.f90 brintf_I.f90
+talk.f90 talk_I.f90
+cxk.f90 cxk_I.f90
 breid.f90 breid_I.f90
 brint1.f90 brint1_I.f90
 brint2.f90 brint2_I.f90
@@ -28,7 +30,6 @@ brint3.f90 brint3_I.f90
 brint4.f90 brint4_I.f90
 brint5.f90 brint5_I.f90
 brint6.f90 brint6_I.f90
-cxk.f90 cxk_I.f90
 dnicmv.f90 dnicmv_I.f90
 engout.f90 engout_I.f90
 funk.f90 funk_I.f90
@@ -66,7 +67,6 @@ setres.f90 setres_I.f90
 setsum.f90 setsum_I.f90
 snrc.f90 snrc_I.f90
 strsum.f90 strsum_I.f90
-talk.f90 talk_I.f90
 vac2.f90 vac2_I.f90
 vac4.f90 vac4_I.f90
 vacpol.f90 vacpol_I.f90

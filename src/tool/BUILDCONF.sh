@@ -28,8 +28,8 @@ wfnplot
 # Generate Makefile
 BINARIES_FLAT="$(for p in $SCRIPTS $PROGRAMS; do echo -n " \${GRASP}/bin/$p"; done)"
 cat <<-EOF | sed 's/    /\t/' > Makefile
-	LIBS=-L ${GRASP}/lib/ -l9290 -lmod
-	FC_MODULES=-I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
+	LIBS=-L \${GRASP}/lib/ -l9290 -lmod
+	FC_MODULES=-I \${GRASP}/src/lib/lib9290 -I \${GRASP}/src/lib/libmod
 
 	all: ${BINARIES_FLAT}
 

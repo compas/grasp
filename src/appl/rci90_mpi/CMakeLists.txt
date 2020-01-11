@@ -16,6 +16,10 @@ add_executable(rci_mpi
     brra_I.f90
     brintf.f90
     brintf_I.f90
+    talk.f90
+    talk_I.f90
+    cxk.f90
+    cxk_I.f90
     breid.f90
     breid_I.f90
     brint1.f90
@@ -30,8 +34,6 @@ add_executable(rci_mpi
     brint5_I.f90
     brint6.f90
     brint6_I.f90
-    cxk.f90
-    cxk_I.f90
     dnicmv.f90
     dnicmv_I.f90
     engout.f90
@@ -106,8 +108,6 @@ add_executable(rci_mpi
     snrc_I.f90
     strsum.f90
     strsum_I.f90
-    talk.f90
-    talk_I.f90
     vac2.f90
     vac2_I.f90
     vac4.f90

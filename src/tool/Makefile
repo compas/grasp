@@ -1,5 +1,5 @@
-LIBS=-L /home/mortenpi/Projects/grasp/grasp-upstream/lib/ -l9290 -lmod
-FC_MODULES=-I /home/mortenpi/Projects/grasp/grasp-upstream/src/lib/lib9290 -I /home/mortenpi/Projects/grasp/grasp-upstream/src/lib/libmod
+LIBS=-L ${GRASP}/lib/ -l9290 -lmod
+FC_MODULES=-I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
 all:  ${GRASP}/bin/lscomp.pl ${GRASP}/bin/rsave ${GRASP}/bin/rasfsplit ${GRASP}/bin/rcsfblock ${GRASP}/bin/rcsfmr ${GRASP}/bin/rcsfsplit ${GRASP}/bin/rhfs_lsj ${GRASP}/bin/rlevelseV ${GRASP}/bin/rlevels ${GRASP}/bin/rmixaccumulate ${GRASP}/bin/rmixextract ${GRASP}/bin/rseqenergy ${GRASP}/bin/rseqhfs ${GRASP}/bin/rseqtrans ${GRASP}/bin/rtabhfs ${GRASP}/bin/rtablevels ${GRASP}/bin/rtabtrans1 ${GRASP}/bin/rtabtrans2 ${GRASP}/bin/rtabtransE1 ${GRASP}/bin/rwfnmchfmcdf ${GRASP}/bin/rwfnplot ${GRASP}/bin/rwfnrelabel ${GRASP}/bin/rwfnrotate ${GRASP}/bin/wfnplot
 

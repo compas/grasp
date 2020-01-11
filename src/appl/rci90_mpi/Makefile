@@ -20,6 +20,10 @@ OBJS= \
 	brra_I.o \
 	brintf.o \
 	brintf_I.o \
+	talk.o \
+	talk_I.o \
+	cxk.o \
+	cxk_I.o \
 	breid.o \
 	breid_I.o \
 	brint1.o \
@@ -34,8 +38,6 @@ OBJS= \
 	brint5_I.o \
 	brint6.o \
 	brint6_I.o \
-	cxk.o \
-	cxk_I.o \
 	dnicmv.o \
 	dnicmv_I.o \
 	engout.o \
@@ -110,8 +112,6 @@ OBJS= \
 	snrc_I.o \
 	strsum.o \
 	strsum_I.o \
-	talk.o \
-	talk_I.o \
 	vac2.o \
 	vac2_I.o \
 	vac4.o \
