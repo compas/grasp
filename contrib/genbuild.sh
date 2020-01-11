@@ -169,7 +169,7 @@ function generate-cmakelists {
 		fi
 		if ! [ -z ${ISMPI+x} ]; then
 			cat <<-EOF
-			target_include_directories(${TARGET} PRIVATE \${MPI_Fortran_INCLUDE_PATH})
+			target_include_ directories(${TARGET} PRIVATE \${MPI_Fortran_INCLUDE_PATH})
 			target_link_libraries(${TARGET} PRIVATE \${MPI_Fortran_LIBRARIES})
 			set_target_properties(${TARGET} PROPERTIES
 			  COMPILE_FLAGS "\${MPI_Fortran_COMPILE_FLAGS}"
