@@ -6,5 +6,5 @@ estrms.f90 estrms_I.f90
 getcpr.f90 getcpr_I.f90
 geniso.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

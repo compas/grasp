@@ -7,5 +7,5 @@ set_CSF_number.f90 set_CSF_number_I.f90
 set_CSF_ZFlist.f90 set_CSF_ZFlist_I.f90
 RCSFzerofirst.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

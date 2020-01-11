@@ -18,5 +18,5 @@ strsum.f90 strsum_I.f90
 mcpmpi_gg.f90 mcpmpi_gg_I.f90
 genmcpmpi.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

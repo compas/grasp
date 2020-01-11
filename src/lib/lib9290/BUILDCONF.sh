@@ -77,5 +77,5 @@ start.f90 start_I.f90
 starttime.f90 starttime_I.f90
 stoptime.f90 stoptime_I.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

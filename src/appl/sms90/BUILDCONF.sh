@@ -26,5 +26,5 @@ smsnew.f90 smsnew_I.f90
 sms.f90 sms_I.f90
 sms92.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

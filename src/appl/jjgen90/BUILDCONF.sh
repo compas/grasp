@@ -39,5 +39,5 @@ jjgen15b.f90
 #lasax-reada.f90
 #m.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

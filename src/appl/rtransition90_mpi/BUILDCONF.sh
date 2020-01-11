@@ -47,5 +47,5 @@ biosclmpi.f90
 # Not referenced in the original makefile
 #setcsl.f90 setcsl_I.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

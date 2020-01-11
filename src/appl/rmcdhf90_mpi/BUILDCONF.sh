@@ -65,5 +65,5 @@ rscfmpivu.f90
 # Note: the interfaces for hmoutmpi_I.f90, orthor_I.f90 and setdbg_I.f90
 # were not being linked in the original makefile.
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

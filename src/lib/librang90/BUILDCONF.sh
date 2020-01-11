@@ -91,5 +91,5 @@ onescalar.f90 onescalar_I.f90
 rkco_gg.f90 rkco_gg_I.f90
 suwjj.f90 suwjj_I.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

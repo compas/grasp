@@ -22,5 +22,5 @@ genmcp.f90
 # cons_C was not being compiled in the original makefile
 #cons_C.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

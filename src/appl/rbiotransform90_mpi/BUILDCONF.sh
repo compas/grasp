@@ -51,5 +51,5 @@ biotrmpi.f90
 #orbord.f90 orbord_I.f90
 #tiinig.f90 tiinig_I.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

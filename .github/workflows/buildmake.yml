@@ -1,4 +1,4 @@
-name: Build With Make
+name: Build with Make
 
 on: [push, pull_request]
 

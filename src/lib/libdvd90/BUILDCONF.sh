@@ -10,5 +10,5 @@ dvdson.f90
 gdvd.f90 gdvd_I.f90
 iniest.f90 iniest_I.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

@@ -89,5 +89,5 @@ matrix.f90 matrix_I.f90
 
 rci92.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

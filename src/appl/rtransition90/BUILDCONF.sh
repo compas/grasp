@@ -47,5 +47,5 @@ bioscl.f90
 #ichkq1.f90 ichkq1_I.f90
 #setcsl.f90 setcsl_I.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

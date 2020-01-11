@@ -104,5 +104,5 @@ wchblk_C.f90
 wfac_C.f90
 where_C.f90
 whfrom_C.f90"
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

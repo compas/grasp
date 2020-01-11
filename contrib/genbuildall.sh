@@ -13,15 +13,23 @@ directories="
 	$(find ${SRCDIR}/lib/ -mindepth 1 -maxdepth 1 -type d)
 	${SRCDIR}/tool
 "
+success=true
 for d in ${directories}; do
 	if ! [ -f "${d}/BUILDCONF.sh" ]; then
 		>&2 echo "> WARNING: BUILDCONF.sh missing in $(basename $d)"
 		>&2 echo ">  in $d"
 		continue
 	fi
-	echo "> Calling genbuild.sh for $(basename $d)"
-	$GENBUILD "$d" || {
+	echo "> Calling genbuild.sh $@ for $(basename $d)"
+	if ! output=$($GENBUILD $@ "$d" 2>&1); then
+		success=false
 		>&2 echo "> WARNING: genbuild.sh failed with $? for $(basename $d)"
 		>&2 echo ">  in $d"
-	}
+		>&2 echo "Output:"
+		>&2 echo "$output"
+	fi
 done
+if [ $success = false ]; then
+	>&2 echo "> ERROR: genbuildall.sh failed"
+	exit 1
+fi

@@ -1,4 +1,4 @@
 EXE=HF
 FILES="HF.f90"
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

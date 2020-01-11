@@ -20,5 +20,5 @@ genrwf.f90 genrwf_I.f90
 getinfo.f90 getinf_I.f90 # subroutine GETINF, implementation in getinfo.f90
 erwf.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

@@ -16,5 +16,5 @@ sys_chdir.f90 sys_chdir_I.f90
 sys_getwd.f90 sys_getwd_I.f90
 sys_mkdir.f90 sys_mkdir_I.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

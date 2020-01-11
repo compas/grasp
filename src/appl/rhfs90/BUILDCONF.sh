@@ -14,5 +14,5 @@ strsum.f90 strsum_I.f90
 hfsgg.f90 hfsgg_I.f90
 hfs92.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

@@ -30,5 +30,5 @@ RCSFinteract.f90
 #recoonescalar.f90 recoonescalar_I.f90
 #el52_I.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

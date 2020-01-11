@@ -61,5 +61,5 @@ strsum.f90 strsum_I.f90
 
 rscfvu.f90
 "
-generate-makefile > Makefile
-generate-cmakelists > CMakeLists.txt
+generate-makefile > ${MAKEFILE}
+generate-cmakelists > ${CMAKELISTSTXT}

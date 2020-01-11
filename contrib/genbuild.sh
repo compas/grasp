@@ -184,6 +184,21 @@ function generate-cmakelists {
 }
 
 # The main script:
+CMAKELISTSTXT=CMakeLists.txt
+MAKEFILE=Makefile
+for arg in $@; do
+	if [ "$arg" = "--verify" ]; then
+		VERIFY=true
+		CMAKELISTSTXT=`tempfile`
+		MAKEFILE=`tempfile`
+		shift
+	elif [[ $arg =~ ^- ]]; then
+		>&2 echo "ERROR: Invalid argument $@"
+		exit 1
+	else
+		break
+	fi
+done
 if [ "$#" -ne 1 ]; then
 	>&2 echo "ERROR: Must provide a single argument (target directory)"
 	exit 1
@@ -208,11 +223,29 @@ fi
 if ! output=$(cd ${target} || exit; source "${target}/BUILDCONF.sh" 2>&1); then
 	>&2 echo "ERROR: BUILDCONF.sh script failed for $target"
 	echo "Output:"
-	echo $output
+	echo "$output"
 	exit 2
 else
 	echo "BUILDCONF.sh ran successfully in $target"
 	echo "Output:"
-	echo $output
+	echo "$output"
+
+	if ! [ -z ${VERIFY+x} ]; then
+		>&2 echo "INFO: Running in verification mode"
+		>&2 echo " CMakeLists.txt = ${CMAKELISTSTXT}"
+		>&2 echo " Makefile       = ${MAKEFILE}"
+
+		diff ${CMAKELISTSTXT} "${target}/CMakeLists.txt" || {
+			>&2 echo "ERROR: CMakeLists.txt differs"
+			VERIFY=fail
+		}
+		diff ${MAKEFILE} "${target}/Makefile"
+
+		rm -v "${CMAKELISTSTXT}" "${MAKEFILE}"
+
+		if [ "$VERIFY" = "fail" ]; then
+			exit 3
+		fi
+	fi
 	exit 0
 fi
