@@ -9,13 +9,18 @@ for arg in $@; do
 done
 
 BINARIES="
+hf
+jj2lsj
+jjgen
 lscomp.pl
 rangular
+rangular_mpi
 rasfsplit
 rbiotransform rbiotransform_mpi
 rci rci_mpi
 rcsfblock
 rcsfgenerate
+rcsfinteract
 rcsfmr
 rcsfsplit
 rcsfzerofirst
@@ -31,14 +36,16 @@ rsave
 rseqenergy
 rseqhfs
 rseqtrans
-rtabhfs rtablevels rtabtrans1 rtabtrans2 rtabtransE1
+rsms
+rtabhfs
+rtablevels
+rtabtrans1 rtabtrans2 rtabtransE1
 rtransition rtransition_mpi
 rwfnestimate
 rwfnmchfmcdf
 rwfnplot
 rwfnrelabel
 rwfnrotate
-sms
 wfnplot
 "
 

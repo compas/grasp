@@ -1,4 +1,4 @@
-EXE=${GRASP}/bin/sms
+EXE=${GRASP}/bin/rsms
 LIBS=-L ${GRASP}/lib/ -lrang90 -lmcp90 -l9290 -lmod
 FC_MODULES= -I ${GRASP}/src/lib/librang90 -I ${GRASP}/src/lib/libmcp90 -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 

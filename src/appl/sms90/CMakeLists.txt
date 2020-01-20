@@ -1,4 +1,4 @@
-add_executable(sms
+add_executable(rsms
     dvpot_C.f90
     sms1_C.f90
     teilst_C.f90
@@ -40,5 +40,5 @@ add_executable(sms
     sms_I.f90
     sms92.f90
 )
-target_link_libraries_Fortran(sms PUBLIC rang90 mcp90 9290 mod)
-install(TARGETS sms DESTINATION bin/)
+target_link_libraries_Fortran(rsms PUBLIC rang90 mcp90 9290 mod)
+install(TARGETS rsms DESTINATION bin/)

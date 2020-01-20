@@ -1,4 +1,4 @@
-EXE=sms
+EXE=rsms
 LIBRARIES="rang90 mcp90 9290 mod"
 LAPACK=true
 FILES="

@@ -1,4 +1,4 @@
-EXE=${GRASP}/bin/HF
+EXE=${GRASP}/bin/hf
 
 OBJS= \
 	HF.o

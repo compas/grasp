@@ -1,4 +1,4 @@
-add_executable(HF
+add_executable(hf
     HF.f90
 )
-install(TARGETS HF DESTINATION bin/)
+install(TARGETS hf DESTINATION bin/)
