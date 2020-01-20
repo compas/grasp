@@ -41,5 +41,6 @@ $(LIBA): $(OBJS)
 	$(FC_MPI) -c $(FC_MPIFLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f $(LIBA)
-	-rm -f *.o *.mod
+	-@rm $(LIBA)
+	-@rm *.o *.mod
+	-@rm -R $(MODULES_INSTALL)

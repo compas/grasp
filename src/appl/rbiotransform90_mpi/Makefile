@@ -94,5 +94,5 @@ $(EXE): $(OBJS)
 	$(FC_MPI) -c $(FC_MPIFLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f $(EXE)
-	-rm -f *.o *.mod
+	-@rm $(EXE)
+	-@rm *.o *.mod

@@ -121,5 +121,6 @@ $(LIBA): $(OBJS)
 	$(FC) -c $(FC_FLAGS) -o $@ $<
 
 clean:
-	-rm -f $(LIBA)
-	-rm -f *.o *.mod
+	-@rm $(LIBA)
+	-@rm *.o *.mod
+	-@rm -R $(MODULES_INSTALL)

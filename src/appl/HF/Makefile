@@ -10,5 +10,5 @@ $(EXE): $(OBJS)
 	$(FC) -c $(FC_FLAGS) -o $@ $<
 
 clean:
-	-rm -f $(EXE)
-	-rm -f *.o *.mod
+	-@rm $(EXE)
+	-@rm *.o *.mod

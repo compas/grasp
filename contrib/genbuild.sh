@@ -72,8 +72,8 @@ function _generate-makefile-binary {
 		    \$($FC) -c ${FC_FLAGS} -o \$@ \$<
 
 		clean:
-		    -rm -f \$(EXE)
-		    -rm -f *.o *.mod
+		    -@rm \$(EXE)
+		    -@rm *.o *.mod
 	EOF
 }
 
@@ -124,8 +124,9 @@ function _generate-makefile-library {
 		    \$($FC) -c ${FC_FLAGS} -o \$@ \$<
 
 		clean:
-		    -rm -f \$(LIBA)
-		    -rm -f *.o *.mod
+		    -@rm \$(LIBA)
+		    -@rm *.o *.mod
+		    -@rm -R \$(MODULES_INSTALL)
 	EOF
 }
 
