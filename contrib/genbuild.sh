@@ -180,6 +180,8 @@ function generate-cmakelists {
 	fi
 	if ! [ -z ${EXE+x} ]; then
 		echo "install(TARGETS ${EXE} DESTINATION bin/)"
+	else
+		echo "install(TARGETS ${LIB} DESTINATION lib/)"
 	fi
 }
 

@@ -32,3 +32,4 @@ set_target_properties(mpiu90 PROPERTIES
   COMPILE_FLAGS "${MPI_Fortran_COMPILE_FLAGS}"
   LINK_FLAGS "${MPI_Fortran_LINK_FLAGS}"
 )
+install(TARGETS mpiu90 DESTINATION lib/)

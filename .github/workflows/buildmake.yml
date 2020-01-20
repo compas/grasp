@@ -16,4 +16,4 @@ jobs:
         source make_environment_gfortran
         cd src/ && make
     - name: Verify binaries
-      run: ./contrib/checkbin.sh --libraries
+      run: ./contrib/checkbin.sh

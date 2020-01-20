@@ -180,3 +180,4 @@ add_library(rang90 STATIC
 )
 setup_fortran_modules(rang90)
 target_link_libraries_Fortran(rang90 PRIVATE mod 9290 mcp90)
+install(TARGETS rang90 DESTINATION lib/)

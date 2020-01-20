@@ -106,3 +106,4 @@ add_library(mod STATIC
     whfrom_C.f90
 )
 setup_fortran_modules(mod)
+install(TARGETS mod DESTINATION lib/)
