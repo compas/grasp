@@ -1,4 +1,5 @@
 LIBA=${GRASP}/lib/libmpiu90.a
+MODULES_INSTALL=${GRASP}/lib/mpiu90
 FC_MODULES= -I ${GRASP}/src/lib/libmod -I ${GRASP}/src/lib/lib9290
 
 OBJS= \
@@ -26,6 +27,11 @@ OBJS= \
 	sys_getwd_I.o \
 	sys_mkdir.o \
 	sys_mkdir_I.o
+
+PHONY: install
+install: $(LIBA)
+	mkdir -p $(MODULES_INSTALL)
+	cp -v *.mod $(MODULES_INSTALL)
 
 $(LIBA): $(OBJS)
 	@echo "Installing $@"

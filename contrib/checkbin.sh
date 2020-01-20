@@ -43,12 +43,12 @@ wfnplot
 "
 
 LIBRARIES="
-lib9290.a
-libdvd90.a
-libmcp90.a
-libmod.a
-libmpiu90.a
-librang90.a
+9290
+dvd90
+mcp90
+mod
+mpiu90
+rang90
 "
 
 success=true
@@ -63,8 +63,12 @@ done
 
 LIB="${DIR}/../lib"
 for lib in ${LIBRARIES}; do
-	if ! [ -f "${LIB}/$lib" ]; then
-		>&2 echo "ERROR: library ${lib} missing from lib/"
+	if ! [ -f "${LIB}/lib${lib}.a" ]; then
+		>&2 echo "ERROR: library lib${lib}.a missing from lib/"
+		success=false
+	fi
+	if ! [ -d "${LIB}/$lib" ]; then
+		>&2 echo "ERROR: modules directory for ${lib} missing in lib/"
 		success=false
 	fi
 done

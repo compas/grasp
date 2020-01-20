@@ -1,4 +1,5 @@
 LIBA=${GRASP}/lib/librang90.a
+MODULES_INSTALL=${GRASP}/lib/rang90
 FC_MODULES= -I ${GRASP}/src/lib/libmod -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmcp90
 
 OBJS= \
@@ -180,6 +181,11 @@ OBJS= \
 	rkco_gg_I.o \
 	suwjj.o \
 	suwjj_I.o
+
+PHONY: install
+install: $(LIBA)
+	mkdir -p $(MODULES_INSTALL)
+	cp -v *.mod $(MODULES_INSTALL)
 
 $(LIBA): $(OBJS)
 	@echo "Installing $@"

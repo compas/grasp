@@ -1,4 +1,5 @@
 LIBA=${GRASP}/lib/libmod.a
+MODULES_INSTALL=${GRASP}/lib/mod
 
 OBJS= \
 	parameter_def_M.o \
@@ -106,6 +107,11 @@ OBJS= \
 	wfac_C.o \
 	where_C.o \
 	whfrom_C.o
+
+PHONY: install
+install: $(LIBA)
+	mkdir -p $(MODULES_INSTALL)
+	cp -v *.mod $(MODULES_INSTALL)
 
 $(LIBA): $(OBJS)
 	@echo "Installing $@"

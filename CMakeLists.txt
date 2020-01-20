@@ -70,6 +70,8 @@ find_package(LAPACK REQUIRED)
 set(Fortran_MODULE_DIRECTORY_root ${CMAKE_CURRENT_BINARY_DIR}/modules)
 function(setup_fortran_modules target)
     set_property(TARGET ${target} PROPERTY Fortran_MODULE_DIRECTORY "${Fortran_MODULE_DIRECTORY_root}/${target}")
+    install(DIRECTORY "${Fortran_MODULE_DIRECTORY_root}/${target}" DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/"
+        FILES_MATCHING PATTERN "*.mod")
 endfunction()
 function(target_link_libraries_Fortran target mode)
     target_link_libraries(${target} ${mode} ${ARGN})

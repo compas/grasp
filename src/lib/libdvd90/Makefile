@@ -1,4 +1,5 @@
 LIBA=${GRASP}/lib/libdvd90.a
+MODULES_INSTALL=${GRASP}/lib/dvd90
 FC_MODULES= -I ${GRASP}/src/lib/libmod
 
 OBJS= \
@@ -16,6 +17,11 @@ OBJS= \
 	gdvd_I.o \
 	iniest.o \
 	iniest_I.o
+
+PHONY: install
+install: $(LIBA)
+	mkdir -p $(MODULES_INSTALL)
+	cp -v *.mod $(MODULES_INSTALL)
 
 $(LIBA): $(OBJS)
 	@echo "Installing $@"

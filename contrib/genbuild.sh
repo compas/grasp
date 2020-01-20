@@ -80,6 +80,7 @@ function _generate-makefile-binary {
 function _generate-makefile-library {
 	cat <<-EOF
 		LIBA=\${GRASP}/lib/lib${LIB}.a
+		MODULES_INSTALL=\${GRASP}/lib/${LIB}
 	EOF
 
 	if ! [ -z ${ISMPI+x} ]; then
@@ -110,6 +111,11 @@ function _generate-makefile-library {
 	echo; echo
 
 	cat <<-EOF | sed 's/    /\t/'
+		PHONY: install
+		install: \$(LIBA)
+		    mkdir -p \$(MODULES_INSTALL)
+		    cp -v *.mod \$(MODULES_INSTALL)
+
 		\$(LIBA): \$(OBJS)
 		    @echo "Installing \$@"
 		    ar -curs \$@ \$?

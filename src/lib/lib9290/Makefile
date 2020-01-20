@@ -1,4 +1,5 @@
 LIBA=${GRASP}/lib/lib9290.a
+MODULES_INSTALL=${GRASP}/lib/9290
 FC_MODULES= -I ${GRASP}/src/lib/libmod
 
 OBJS= \
@@ -150,6 +151,11 @@ OBJS= \
 	starttime_I.o \
 	stoptime.o \
 	stoptime_I.o
+
+PHONY: install
+install: $(LIBA)
+	mkdir -p $(MODULES_INSTALL)
+	cp -v *.mod $(MODULES_INSTALL)
 
 $(LIBA): $(OBJS)
 	@echo "Installing $@"
