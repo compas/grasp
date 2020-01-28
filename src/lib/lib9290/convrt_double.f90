@@ -52,7 +52,7 @@
 !
       IF (LENTH > LEN(CNUM)) THEN
          WRITE (6, *) 'CONVRT_DOUBLE: Length of CNUM inadeuate.'
-         STOP
+         ERROR STOP
       ELSE
          IF (LENTH <= 9) THEN
             FORM = '(1I'//C19(LENTH)//')'
@@ -64,7 +64,7 @@
          IF(mod(INTNUM,2) /= 0) THEN
             IF (LENTH+2 > LEN(CNUM)) THEN
                WRITE (6, *) 'CONVRT_DOUBLE: Length of CNUM inadeuate.'
-               STOP
+               ERROR STOP
             ELSE
                CNUM(1:LENTH+2) = CNUM(1:LENTH)//'/2'
                LENTH = LENTH + 2
