@@ -88,6 +88,30 @@ cd src/ && make
 **WARNING:** the `Makefile`s do not know about the dependencies between the source files, so
 parallel builds (i.e. calling `make` with the `-j` option) does not work.
 
+#### Customizing the build
+
+The `Makefile` by default is designed to use `gfortran`. The variables affecting
+GRASP builds are defined and documented at the beginning of the `Makefile`.
+
+For the user it should never be necessary to modify the `Makefile` itself. Rather,
+a `Make.user` file can be create next to the main `Makefile` where the build
+variables can be overridden. E.g. to use the Intel Fortran compiler instead, you
+may want to create the following `Make.user` file:
+
+```make
+export FC = ifort
+export FC_FLAGS = -O2 -save
+export FC_LD = -mkl=sequential
+export FC_MPI = mpiifort
+```
+
+As another example, to set up a linker search path for the BLAS or LAPACK
+libraries, you can set up `Make.user` as follows:
+
+```make
+export FC_LD = -L /path/to/blas
+```
+
 ## About GRASP
 
 This version of GRASP is a major revision of the previous GRASP2K package by [P.
@@ -205,30 +229,6 @@ The software is distributed with a practical guide to [GRASP2018 in PDF-format
 (click here to download)][manual-pdf]. The guide, which is under Creative
 Commons Attribution 4.0 International (CC BY 4.0) license, contains full
 information on how to compile and install the package.
-
-### Customizing the build
-
-The `Makfile` by default is designed to use `gfortran`. The variables affecting
-GRASP builds are defined and documented at the beginning of the `Makefile`.
-
-For the user it should never be necessary to modify the `Makefile` itself. Rather,
-a `Make.user` file can be create next to the main `Makefile` where the build
-variables can be overridden. E.g. to use the Intel Fortran compiler instead, you
-may want to create the following `Make.user` file:
-
-```make
-export FC = ifort
-export FC_FLAGS = -O2 -save
-export FC_LD = -mkl=sequential
-export FC_MPI = mpiifort
-```
-
-As another example, to set up a linker search path for the BLAS or LAPACK
-libraries, you can set up `Make.user` as follows:
-
-```make
-export FC_LD = -L /path/to/blas
-```
 
 
 ## Acknowledgements
