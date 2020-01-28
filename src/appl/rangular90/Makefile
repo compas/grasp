@@ -1,41 +1,44 @@
-.SUFFIXES: .f90 .mod
+EXE=${GRASP}/bin/rangular
+LIBS=-L ${GRASP}/lib/ -lrang90 -lmcp90 -l9290 -lmod
+FC_MODULES= -I ${GRASP}/src/lib/librang90 -I ${GRASP}/src/lib/libmcp90 -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
-EXE = rangular
-BINDIR = ${GRASP}/bin
-GRASPLIB = ${GRASP}/lib
-BINFILE = $(BINDIR)/$(EXE)
-SRCLIBDIR = ../../lib
-MODDIR = ${SRCLIBDIR}/libmod
-MODL9290 = ${SRCLIBDIR}/lib9290
-MODLRANG90 = ${SRCLIBDIR}/librang90
-MODLMCP90 = ${SRCLIBDIR}/libmcp90
-GRASPLIBS =  -l9290 -lrang90 -l9290 -lmcp90 -lmod
+OBJS= \
+	allocCheck.o \
+	allocCheck_I.o \
+	fndbeg.o \
+	fndbeg_I.o \
+	getinf.o \
+	getinf_I.o \
+	sort.o \
+	sort_I.o \
+	sortmem.o \
+	sortmem_I.o \
+	outsda.o \
+	outsda_I.o \
+	setsda.o \
+	setsda_I.o \
+	mcp_gg.o \
+	mcp_gg_I.o \
+	setdbg.o \
+	setdbg_I.o \
+	setmcp.o \
+	setmcp_I.o \
+	setmcp2.o \
+	setmcp2_I.o \
+	setsum.o \
+	setsum_I.o \
+	settmpGG.o \
+	settmpGG_I.o \
+	strsum.o \
+	strsum_I.o \
+	genmcp.o
 
-APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS}
+$(EXE): $(OBJS)
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-
-#   Define data types
-VASTO = ${MODDIR}/vast_kind_param_M.o
-
-APP_OBJ= \
-	fndbeg_I.o         mcp_gg_I.o      setmcp_I.o  settmpGG_I.o \
-	setdbg_I.o	   outsda_I.o   setsda_I.o  sort_I.o \
-	getinf_I.o         setmcp2_I.o  setsum_I.o  strsum_I.o \
-	allocCheck_I.o sortmem_I.o \
-	\
-        genmcp.o  mcp_gg.o outsda.o setmcp2.o \
-        fndbeg.o getinf.o setdbg.o setmcp.o setsda.o setsum.o settmpGG.o \
-        sort.o strsum.o allocCheck.o sortmem.o
-
-$(EXE): $(APP_OBJ)
-	$(FC) -o $(BINFILE) $(FC_LD) $(APP_OBJ) $(APP_LIBS) $(LAPACK_LIBS)
-
-.f90.o:
-	$(FC) -c $(FC_FLAGS) $< -I ${MODDIR} -I $(MODL9290) -I $(MODLRANG90) -I $(MODLMCP90) -I ${MODDIR} -o $@
-
-
-.f.o:
-	$(FC) -c $(FC_FLAGS) $< -o $@
+%.o: %.f90
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o core *.mod
+	-@rm $(EXE)
+	-@rm *.o *.mod

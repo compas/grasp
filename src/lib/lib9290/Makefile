@@ -1,53 +1,170 @@
-.SUFFIXES: .f90 .mod
+LIBA=${GRASP}/lib/lib9290.a
+MODULES_INSTALL=${GRASP}/lib/9290
+FC_MODULES= -I ${GRASP}/src/lib/libmod
 
-LIBDIR = $(GRASP)/lib
-LIBA = $(LIBDIR)/lib9290.a
+OBJS= \
+	alcbuf.o \
+	alcbuf_I.o \
+	arctan.o \
+	arctan_I.o \
+	calen.o \
+	calen_I.o \
+	cgamma.o \
+	cgamma_I.o \
+	clrx.o \
+	clrx_I.o \
+	convrt.o \
+	convrt_I.o \
+	convrt2.o \
+	convrt2_I.o \
+	convrt_double.o \
+	convrt_double_I.o \
+	speak.o \
+	speak_I.o \
+	cord.o \
+	cord_I.o \
+	count.o \
+	count_I.o \
+	cre.o \
+	cre_I.o \
+	openfl.o \
+	openfl_I.o \
+	setcsll.o \
+	setcsll_I.o \
+	prsrsl.o \
+	prsrsl_I.o \
+	prsrcn.o \
+	prsrcn_I.o \
+	lodcsh.o \
+	lodcsh_I.o \
+	cslh.o \
+	cslh_I.o \
+	dcbsrw.o \
+	dcbsrw_I.o \
+	dinit.o \
+	dinit_I.o \
+	dmerge.o \
+	dmerge_I.o \
+	dpbdt.o \
+	dpbdt_I.o \
+	draw.o \
+	draw_I.o \
+	es.o \
+	es_I.o \
+	factt.o \
+	factt_I.o \
+	ldigit.o \
+	ldigit_I.o \
+	getrsl.o \
+	getrsl_I.o \
+	getyn.o \
+	getyn_I.o \
+	iq.o \
+	iq_I.o \
+	ichkq1.o \
+	ichkq1_I.o \
+	ichkq2.o \
+	ichkq2_I.o \
+	ichop.o \
+	ichop_I.o \
+	icopy.o \
+	icopy_I.o \
+	iniest2.o \
+	iniest2_I.o \
+	interp.o \
+	interp_I.o \
+	quad.o \
+	quad_I.o \
+	rint.o \
+	rint_I.o \
+	intrpq.o \
+	intrpq_I.o \
+	ispar.o \
+	ispar_I.o \
+	items.o \
+	items_I.o \
+	itjpo.o \
+	itjpo_I.o \
+	itrig.o \
+	itrig_I.o \
+	jcup.o \
+	jcup_I.o \
+	jqs.o \
+	jqs_I.o \
+	parsjl.o \
+	parsjl_I.o \
+	pack.o \
+	pack_I.o \
+	lodcsh2.o \
+	lodcsh2_I.o \
+	lodcsl.o \
+	lodcsl_I.o \
+	lodiso.o \
+	lodiso_I.o \
+	orthsc.o \
+	orthsc_I.o \
+	lodrwf.o \
+	lodrwf_I.o \
+	lodstate.o \
+	lodstate_I.o \
+	ltab.o \
+	ltab_I.o \
+	nucpot.o \
+	nucpot_I.o \
+	posfile.o \
+	posfile_I.o \
+	radgrd.o \
+	radgrd_I.o \
+	rinti.o \
+	rinti_I.o \
+	setcon.o \
+	setcon_I.o \
+	setcsh.o \
+	setcsh_I.o \
+	setcsla.o \
+	setcsla_I.o \
+	setiso.o \
+	setiso_I.o \
+	setj.o \
+	setj_I.o \
+	setmc.o \
+	setmc_I.o \
+	setpot.o \
+	setpot_I.o \
+	setqic.o \
+	setqic_I.o \
+	setqna.o \
+	setqna_I.o \
+	setrwfa.o \
+	setrwfa_I.o \
+	skrc.o \
+	skrc_I.o \
+	yzk.o \
+	yzk_I.o \
+	slater.o \
+	slater_I.o \
+	spicmv2.o \
+	spicmv2_I.o \
+	start.o \
+	start_I.o \
+	starttime.o \
+	starttime_I.o \
+	stoptime.o \
+	stoptime_I.o
 
-LIBMOD = -lmod
-LIBOBJ = $(OBJ)
-MODDIR = ../libmod
+PHONY: install
+install: $(LIBA)
+	mkdir -p $(MODULES_INSTALL)
+	cp -v *.mod $(MODULES_INSTALL)
 
-RM = /bin/rm -f
+$(LIBA): $(OBJS)
+	@echo "Installing $@"
+	ar -curs $@ $?
 
-MODOBJ = \
-
-
-OBJ = \
-   alcbuf_I.o calen_I.o clrx_I.o convrt_double_I.o convrt_I.o cord_I.o \
-   cre_I.o cslh_I.o dinit_I.o dmerge_I.o factt_I.o convrt2_I.o \
-   getyn_I.o ichkq1_I.o ichkq2_I.o ichop_I.o icopy_I.o iq_I.o  intrpq_I.o \
-   ispar_I.o itjpo_I.o itrig_I.o jcup_I.o jqs_I.o   \
-   lodcsh_I.o lodcsh2_I.o lodcsl_I.o lodiso_I.o ltab_I.o openfl_I.o orthsc_I.o\
-   quad_I.o pack_I.o posfile_I.o interp_I.o\
-   parsjl_I.o prsrcn_I.o prsrsl_I.o rint_I.o speak_I.o\
-   setcsll_I.o setiso_I.o setj_I.o setmc_I.o setcsh_I.o setcsla_I.o setqna_I.o \
-   skrc_I.o starttime_I.o stoptime_I.o count_I.o dpbdt_I.o draw_I.o rinti_I.o \
-   slater_I.o yzk_I.o dcbsrw_I.o setpot_I.o cgamma_I.o arctan_I.o start_I.o \
-   lodstate_I.o getrsl_I.o items_I.o ldigit_I.o setqic_I.o radgrd_I.o \
-   nucpot_I.o setrwfa_I.o es_I.o lodrwf_I.o spicmv2_I.o iniest2_I.o \
-   setcon_I.o \
-   \
-   alcbuf.o calen.o clrx.o convrt_double.o convrt.o cord.o \
-   cre.o cslh.o dinit.o dmerge.o factt.o convrt2.o \
-   getyn.o ichkq1.o ichkq2.o ichop.o icopy.o iq.o intrpq.o \
-   ispar.o itjpo.o itrig.o jcup.o jqs.o  \
-   lodcsh.o lodcsh2.o lodcsl.o  lodiso.o ltab.o openfl.o orthsc.o \
-   quad.o pack.o posfile.o interp.o \
-   parsjl.o prsrcn.o prsrsl.o rint.o speak.o\
-   setcsll.o setiso.o setj.o setmc.o setcsh.o setcsla.o setqna.o \
-   skrc.o starttime.o stoptime.o count.o dpbdt.o draw.o rinti.o \
-   slater.o yzk.o dcbsrw.o setpot.o cgamma.o arctan.o start.o \
-   lodstate.o getrsl.o items.o ldigit.o setqic.o radgrd.o \
-   nucpot.o setrwfa.o es.o lodrwf.o spicmv2.o iniest2.o \
-   setcon.o
-
-install : $(LIBA)
-$(LIBA) : $(LIBOBJ)
-	@echo " Building " $(LIBA)
-	ar -crvs $(LIBA)  $?
+%.o: %.f90
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o *.mod core
-
-.f90.o:
-	$(FC) -c $(FC_FLAGS) $< -I  $(MODDIR) -I .  -o $@
+	-@rm $(LIBA)
+	-@rm *.o *.mod
+	-@rm -R $(MODULES_INSTALL)

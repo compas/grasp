@@ -1,44 +1,42 @@
-.SUFFIXES: .f90 .mod
+EXE=${GRASP}/bin/rangular_mpi
+LIBS=-L ${GRASP}/lib/ -lrang90 -lmcp90 -lmpiu90 -l9290 -lmod
+FC_MODULES= -I ${GRASP}/src/lib/librang90 -I ${GRASP}/src/lib/libmcp90 -I ${GRASP}/src/lib/mpi90 -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
-EXE = rangular_mpi
-BINDIR = ${GRASP}/bin
-GRASPLIB = ${GRASP}/lib
-BINFILE = $(BINDIR)/$(EXE)
-SRCLIBDIR = ../../lib
-MODDIR = ${SRCLIBDIR}/libmod
-MODL9290 = ${SRCLIBDIR}/lib9290
-MODLRANG90 = ${SRCLIBDIR}/librang90
-MODLMCP90 = ${SRCLIBDIR}/libmcp90
-MODLMPIU90 = ${SRCLIBDIR}/mpi90
-GRASPLIBS = -l9290 -lrang90 -l9290 -lmpiu90 -lmcp90 -l9290 -lmod
-
-APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS}
-
-
-#   Define data types
-VASTO = ${MODDIR}/vast_kind_param_M.o
-
-APP_OBJ= \
-	fndbeg_I.o mcpmpi_gg_I.o outsdampi_I.o setmcpmpi_I.o setmcp_I.o  settmp_I.o \
-	setdbgmpi_I.o  setsda_I.o  sort_I.o \
-	setdbg_I.o \
-	getinf_I.o setsum_I.o  strsum_I.o \
-\
-        genmcpmpi.o  mcpmpi_gg.o outsdampi.o setmcpmpi.o \
-        fndbeg.o getinf.o setdbgmpi.o setmcp.o setsda.o setsum.o settmp.o \
+OBJS= \
+	fndbeg.o \
+	fndbeg_I.o \
+	getinf.o \
+	getinf_I.o \
+	outsdampi.o \
+	outsdampi_I.o \
 	setdbg.o \
-        sort.o strsum.o
+	setdbg_I.o \
+	setdbgmpi.o \
+	setdbgmpi_I.o \
+	setmcp.o \
+	setmcp_I.o \
+	setmcpmpi.o \
+	setmcpmpi_I.o \
+	setsda.o \
+	setsda_I.o \
+	setsum.o \
+	setsum_I.o \
+	settmp.o \
+	settmp_I.o \
+	sort.o \
+	sort_I.o \
+	strsum.o \
+	strsum_I.o \
+	mcpmpi_gg.o \
+	mcpmpi_gg_I.o \
+	genmcpmpi.o
 
-$(EXE): $(APP_OBJ)
-	$(FC_MPI) -o $(BINFILE) $(FC_MPILD) $(APP_OBJ) $(APP_LIBS) \
-                     ${LAPACK_LIBS}
+$(EXE): $(OBJS)
+	$(FC_MPI) -o $@ $? $(FC_MPILD) $(LIBS) $(LAPACK_LIBS)
 
-.f90.o:
-	$(FC_MPI) -c $(FC_MPIFLAGS) $< -I $(MODDIR) -I $(MODL9290) -I $(MODLRANG90) -I $(MODLMCP90) -I ${MODDIR} -I $(MODLMPIU90) -o $@
-
-
-.f.o:
-	$(FC) -c $(FC_FLAGS) $< -o $@
+%.o: %.f90
+	$(FC_MPI) -c $(FC_MPIFLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o core *.mod
+	-@rm $(EXE)
+	-@rm *.o *.mod

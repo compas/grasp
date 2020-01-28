@@ -1,48 +1,60 @@
-.SUFFIXES: .f90 .mod
+EXE=${GRASP}/bin/rcsfinteract
+LIBS=-L ${GRASP}/lib/ -lrang90 -l9290 -lmod
+FC_MODULES= -I ${GRASP}/src/lib/librang90 -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
-EXE = rcsfinteract
-BINDIR = ${GRASP}/bin
-GRASPLIB = ${GRASP}/lib
-BINFILE = $(BINDIR)/$(EXE)
-SRCLIBDIR = ../../lib
-MODDIR = ${SRCLIBDIR}/libmod
-MODL9290 = ${SRCLIBDIR}/lib9290
-MODLRANG90 = ${SRCLIBDIR}/librang90
-GRASPLIBS =-l9290 -lmod -lrang90
+OBJS= \
+	onescalar1INT.o \
+	onescalar1INT_I.o \
+	onescalar2INT.o \
+	onescalar2INT_I.o \
+	onescalarINT.o \
+	onescalarINT_I.o \
+	el1INT.o \
+	el1INT_I.o \
+	el2INT.o \
+	el2INT_I.o \
+	el31INT.o \
+	el31INT_I.o \
+	el32INT.o \
+	el32INT_I.o \
+	el33INT.o \
+	el33INT_I.o \
+	el3INT.o \
+	el3INT_I.o \
+	el41INT.o \
+	el41INT_I.o \
+	el4INT.o \
+	el4INT_I.o \
+	el51INT.o \
+	el51INT_I.o \
+	el52INT.o \
+	el52INT_I.o \
+	el53INT.o \
+	el53INT_I.o \
+	el5INT.o \
+	el5INT_I.o \
+	Interact_MR.o \
+	Interact_MR_I.o \
+	Interact_csf.o \
+	Interact_csf_I.o \
+	getinf.o \
+	getinf_I.o \
+	lodcsl_CSF.o \
+	lodcsl_CSF_I.o \
+	lodcsl_MR.o \
+	lodcsl_MR_I.o \
+	set_CSF_list.o \
+	set_CSF_list_I.o \
+	set_CSF_number.o \
+	set_CSF_number_I.o \
+	RCSFinteract.o
 
-APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS}
+$(EXE): $(OBJS)
+	$(FC) -o $@ $? $(FC_LD) $(LIBS)
 
-#   Define data types
-VASTO = ${MODDIR}/vast_kind_param_M.o
-
-APP_OBJ= \
-	getinf_I.o Interact_MR_I.o \
-	lodcsl_MR_I.o lodcsl_CSF_I.o \
-	set_CSF_list_I.o set_CSF_number_I.o \
-	onescalarINT_I.o onescalar1INT_I.o onescalar2INT_I.o \
-	el1INT_I.o el2INT_I.o el3INT_I.o el31INT_I.o el32INT_I.o \
-	el33INT_I.o el4INT_I.o el41INT_I.o \
-	el5INT_I.o el51INT_I.o el52INT_I.o el53INT_I.o Interact_csf_I.o \
-\
-        RCSFinteract.o getinf.o Interact_MR.o \
-        lodcsl_MR.o lodcsl_CSF.o \
-	set_CSF_list.o set_CSF_number.o \
-	onescalarINT.o onescalar1INT.o onescalar2INT.o \
-	el1INT.o el2INT.o el3INT.o el31INT.o el32INT.o el33INT.o \
-	el4INT.o el41INT.o \
-	el5INT.o el51INT.o el52INT.o el53INT.o Interact_csf.o
-
-$(EXE): $(APP_OBJ)
-	$(FC) -o $(BINFILE) $(APP_OBJ) $(APP_LIBS) \
-		$(APP_LIBS)
-
-
-
-.f90.o:
-	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I ${MODL9290} -I $(MODLRANG90) -I $(MODDIR) -o $@
-
-.f.o:
-	$(FC) -c $(FC_FLAGS) $< -o $@
+%.o: %.f90
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o core  *.mod
+	-@rm $(EXE)
+	-@rm *.o *.mod

@@ -1,129 +1,85 @@
-.SUFFIXES: .f90 .mod
+LIBS=-L ${GRASP}/lib/ -l9290 -lmod
+FC_MODULES=-I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
-BIN = ${GRASP}/bin
-GRASPLIB = ${GRASP}/lib
-SRCLIBDIR = ../lib
-MODDIR = ${SRCLIBDIR}/libmod
-MODL9290 = ${SRCLIBDIR}/lib9290
-GRASPLIBS = -l9290 -lmod
+all:  ${GRASP}/bin/lscomp.pl ${GRASP}/bin/rsave ${GRASP}/bin/rasfsplit ${GRASP}/bin/rcsfblock ${GRASP}/bin/rcsfmr ${GRASP}/bin/rcsfsplit ${GRASP}/bin/rhfs_lsj ${GRASP}/bin/rlevelseV ${GRASP}/bin/rlevels ${GRASP}/bin/rmixaccumulate ${GRASP}/bin/rmixextract ${GRASP}/bin/rseqenergy ${GRASP}/bin/rseqhfs ${GRASP}/bin/rseqtrans ${GRASP}/bin/rtabhfs ${GRASP}/bin/rtablevels ${GRASP}/bin/rtabtrans1 ${GRASP}/bin/rtabtrans2 ${GRASP}/bin/rtabtransE1 ${GRASP}/bin/rwfnmchfmcdf ${GRASP}/bin/rwfnplot ${GRASP}/bin/rwfnrelabel ${GRASP}/bin/rwfnrotate ${GRASP}/bin/wfnplot
 
-APP_LIBS = -L${GRASPLIB} ${GRASPLIBS} ${LAPACK_LIBS}
+${GRASP}/bin/lscomp.pl: lscomp.pl
+	cp $^ $@
+	chmod u+x $@
 
-UTIL = rcsfsplit rmixaccumulate rseqenergy \
-	rseqhfs rseqtrans rtablevels rtabtransE1 \
+${GRASP}/bin/rsave: rsave
+	cp $^ $@
+	chmod u+x $@
 
-install: EXE
-	cp rsave $(GRASP)/bin
-	cp lscomp.pl $(GRASP)/bin
+${GRASP}/bin/rasfsplit: rasfsplit.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-EXE :        $(BIN)/rcsfsplit \
-		$(BIN)/rmixaccumulate\
-		$(BIN)/rseqenergy\
-		$(BIN)/rseqhfs\
-		$(BIN)/rseqtrans\
-		$(BIN)/rtablevels\
-		$(BIN)/rtabtransE1\
-                $(BIN)/rcsfblock  \
-		$(BIN)/rwfnmchfmcdf  \
-                $(BIN)/rlevels    \
-                $(BIN)/rtabtrans1  \
-                $(BIN)/rwfnplot \
-		$(BIN)/rtabtrans2\
-		$(BIN)/rlevelseV\
-		$(BIN)/rtabhfs\
-		$(BIN)/wfnplot\
-                $(BIN)/rmixextract \
-		$(BIN)/rasfsplit\
-                $(BIN)/rwfnrotate \
-                $(BIN)/rwfnrelabel \
-	        $(BIN)/rhfs_lsj    \
-	        $(BIN)/rcsfmr    \
+${GRASP}/bin/rcsfblock: rcsfblock.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
+${GRASP}/bin/rcsfmr: rcsfmr.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-OBJ : rasfsplit.o rcsfsplit.o rmixaccumulate.o rseqenergy.o \
-      rseqhfs.o rseqtrans.o rtablevels.o rtabtransE1.o \
-      rmixextract.o rcsfblock.o  rwfnmchfmcdf.o \
-      rlevels.o rtabtrans1.o format_mix.o rlevelsj.o \
-      rwfnrotate.o  \
-      rwfnplot.o rtabtrans2.o rlevelseV.o rtabhfs.o wfnplot.o rwfnrelabel.o \
-	rhfs_lsj.o rcsfmr.o\
+${GRASP}/bin/rcsfsplit: rcsfsplit.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rasfsplit: rasfsplit.o
-	$(FC) -o $(BIN)/rasfsplit  rasfsplit.f90
+${GRASP}/bin/rhfs_lsj: rhfs_lsj.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rcsfsplit: rcsfsplit.o
-	$(FC) -o $(BIN)/rcsfsplit rcsfsplit.o
+${GRASP}/bin/rlevelseV: rlevelseV.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rmixaccumulate: rmixaccumulate.o
-	$(FC) -o $(BIN)/rmixaccumulate rmixaccumulate.o
+${GRASP}/bin/rlevels: rlevels.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rseqenergy: rseqenergy.o
-	$(FC) -o $(BIN)/rseqenergy rseqenergy.o
+${GRASP}/bin/rmixaccumulate: rmixaccumulate.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rseqtrans: rseqtrans.o
-	$(FC) -o $(BIN)/rseqtrans rseqtrans.o
+${GRASP}/bin/rmixextract: rmixextract.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rseqhfs: rseqhfs.o
-	$(FC) -o $(BIN)/rseqhfs rseqhfs.o
+${GRASP}/bin/rseqenergy: rseqenergy.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rtablevels: rtablevels.o
-	$(FC) -o $(BIN)/rtablevels rtablevels.o
+${GRASP}/bin/rseqhfs: rseqhfs.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rtabtransE1: rtabtransE1.o
-	$(FC) -o $(BIN)/rtabtransE1 rtabtransE1.o
+${GRASP}/bin/rseqtrans: rseqtrans.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/format_mix  : format_mix.o
-	$(FC) -o $(BIN)/format_mix  $(FC_LD) -L$(LIBDIR) \
-                 format_mix.o
+${GRASP}/bin/rtabhfs: rtabhfs.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rmixextract: rmixextract.o
-	$(FC) -o $(BIN)/rmixextract $(FC_LD)   rmixextract.o  $(APP_LIBS)
+${GRASP}/bin/rtablevels: rtablevels.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rcsfblock: rcsfblock.o
-	$(FC) -o $(BIN)/rcsfblock $(FC_LD) rcsfblock.o $(APP_LIBS)
+${GRASP}/bin/rtabtrans1: rtabtrans1.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rwfnmchfmcdf: rwfnmchfmcdf.o
-	$(FC) -o $(BIN)/rwfnmchfmcdf $(FC_LD) rwfnmchfmcdf.o $(APP_LIBS)
+${GRASP}/bin/rtabtrans2: rtabtrans2.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rlevels: rlevels.o
-	$(FC) -o $(BIN)/rlevels $(FC_LD)  rlevels.o  $(APP_LIBS)
+${GRASP}/bin/rtabtransE1: rtabtransE1.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rtabtrans1: rtabtrans1.o
-	$(FC) -o $(BIN)/rtabtrans1 $(FC_LD)  rtabtrans1.o $(APP_LIBS)
+${GRASP}/bin/rwfnmchfmcdf: rwfnmchfmcdf.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rlevelsj: rlevelsj.o
-	$(FC) -o $(BIN)/rlevelsj $(FC_LD) rlevelsj.o $(APP_LIBS)
+${GRASP}/bin/rwfnplot: rwfnplot.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rwfnplot: rwfnplot.o
-	$(FC) -o $(BIN)/rwfnplot rwfnplot.o
+${GRASP}/bin/rwfnrelabel: rwfnrelabel.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rtabtrans2: rtabtrans2.o
-	$(FC) -o $(BIN)/rtabtrans2 rtabtrans2.o
+${GRASP}/bin/rwfnrotate: rwfnrotate.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rlevelseV: rlevelseV.o
-	$(FC) -o $(BIN)/rlevelseV $(FC_LD) rlevelseV.o $(APP_LIBS)
+${GRASP}/bin/wfnplot: wfnplot.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-$(BIN)/rtabhfs: rtabhfs.o
-	$(FC) -o $(BIN)/rtabhfs rtabhfs.o
-
-$(BIN)/wfnplot: wfnplot.o
-	$(FC) -o $(BIN)/wfnplot wfnplot.o
-
-$(BIN)/rwfnrotate: rwfnrotate.o
-	$(FC) -o $(BIN)/rwfnrotate $(FC_LD) rwfnrotate.o $(APP_LIBS)
-
-$(BIN)/rwfnrelabel: rwfnrelabel.o
-	$(FC) -o $(BIN)/rwfnrelabel $(FC_LD) rwfnrelabel.o $(APP_LIBS)
-
-$(BIN)/rhfs_lsj: rhfs_lsj.o
-	$(FC) -o $(BIN)/rhfs_lsj  $(FC_LD) rhfs_lsj.o $(APPS_LIBS)
-
-$(BIN)/rcsfmr: rcsfmr.o
-	$(FC) -o $(BIN)/rcsfmr  $(FC_LD) rcsfmr.o $(APPS_LIBS)
-
-
-.f90.o:
-	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I ${MODL9290} -I $(MODDIR) -o $@
+%.o: %.f90
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o core *.mod
+	-rm -f  ${GRASP}/bin/lscomp.pl ${GRASP}/bin/rsave ${GRASP}/bin/rasfsplit ${GRASP}/bin/rcsfblock ${GRASP}/bin/rcsfmr ${GRASP}/bin/rcsfsplit ${GRASP}/bin/rhfs_lsj ${GRASP}/bin/rlevelseV ${GRASP}/bin/rlevels ${GRASP}/bin/rmixaccumulate ${GRASP}/bin/rmixextract ${GRASP}/bin/rseqenergy ${GRASP}/bin/rseqhfs ${GRASP}/bin/rseqtrans ${GRASP}/bin/rtabhfs ${GRASP}/bin/rtablevels ${GRASP}/bin/rtabtrans1 ${GRASP}/bin/rtabtrans2 ${GRASP}/bin/rtabtransE1 ${GRASP}/bin/rwfnmchfmcdf ${GRASP}/bin/rwfnplot ${GRASP}/bin/rwfnrelabel ${GRASP}/bin/rwfnrotate ${GRASP}/bin/wfnplot
+	-rm -f *.o *.mod

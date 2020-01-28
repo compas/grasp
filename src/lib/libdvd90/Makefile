@@ -1,32 +1,36 @@
-.SUFFIXES: .f90 .mod
+LIBA=${GRASP}/lib/libdvd90.a
+MODULES_INSTALL=${GRASP}/lib/dvd90
+FC_MODULES= -I ${GRASP}/src/lib/libmod
 
-LIBDIR = $(GRASP)/lib
-LIBA = $(LIBDIR)/libdvd90.a
+OBJS= \
+	adds_I.o \
+	dvdrvr_I.o \
+	dvdson_I.o \
+	initdvd_I.o \
+	mgs_nrm_I.o \
+	multbc_I.o \
+	newvec_I.o \
+	ovflow_I.o \
+	tstsel_I.o \
+	dvdson.o \
+	gdvd.o \
+	gdvd_I.o \
+	iniest.o \
+	iniest_I.o
 
-LIBOBJ = $(OBJ)
-MODDIR = ../libmod
-MODL92 = ../lib9290
-MODLMPIU90 = ../mpi90
-
-RM= /bin/rm -f
-
-
-OBJ = \
-  adds_I.o       gdvd_I.o        mgs_nrm_I.o     ovflow_I.o     \
-  dvdrvr_I.o     iniest_I.o      multbc_I.o      tstsel_I.o     \
-  dvdson_I.o     initdvd_I.o     newvec_I.o     \
-\
-   dvdson.o      gdvd.o         iniest.o
-
-
+PHONY: install
 install: $(LIBA)
-$(LIBA) : $(LIBOBJ)
-	@echo " Building " $(LIBA)
-	ar -curvs $(LIBA) $(LIBOBJ)
-	ranlib $(LIBA)
+	mkdir -p $(MODULES_INSTALL)
+	cp -v *.mod $(MODULES_INSTALL)
 
-.f90.o:
-	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I $(MODL92) -I $(MODLMPIU90) -I .  -o $@
+$(LIBA): $(OBJS)
+	@echo "Installing $@"
+	ar -curs $@ $?
+
+%.o: %.f90
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	rm -f *.o *.mod core
+	-@rm $(LIBA)
+	-@rm *.o *.mod
+	-@rm -R $(MODULES_INSTALL)

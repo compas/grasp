@@ -1,36 +1,24 @@
-.SUFFIXES: .f90 .mod
+EXE=${GRASP}/bin/rcsfzerofirst
+LIBS=-L ${GRASP}/lib/ -l9290 -lmod
+FC_MODULES= -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
-EXE = rcsfzerofirst
-BINDIR = ${GRASP}/bin
-GRASPLIB = ${GRASP}/lib
-BINFILE = $(BINDIR)/$(EXE)
-SRCLIBDIR = ../../lib
-MODDIR = ${SRCLIBDIR}/libmod
-MODL9290 = ${SRCLIBDIR}/lib9290
-GRASPLIBS =-l9290 -lmod
+OBJS= \
+	lodcsl_Part.o \
+	lodcsl_Part_I.o \
+	lodcsl_Zero.o \
+	lodcsl_Zero_I.o \
+	set_CSF_number.o \
+	set_CSF_number_I.o \
+	set_CSF_ZFlist.o \
+	set_CSF_ZFlist_I.o \
+	RCSFzerofirst.o
 
-APP_LIBS = -L${GRASPLIB} ${GRASPLIBS}
+$(EXE): $(OBJS)
+	$(FC) -o $@ $? $(FC_LD) $(LIBS)
 
-#   Define data types
-#VASTO = ${MODDIR}/vast_kind_param_M.o
-
-APP_OBJ= \
-	lodcsl_Zero_I.o lodcsl_Part_I.o \
-	set_CSF_ZFlist_I.o set_CSF_number_I.o \
-\
-        RCSFzerofirst.o \
-        lodcsl_Zero.o lodcsl_Part.o \
-	set_CSF_ZFlist.o set_CSF_number.o
-
-$(EXE): $(APP_OBJ)
-	$(FC) -o $(BINFILE) $(FC_LD)  $(APP_OBJ) $(APP_LIBS) \
- 		$(APP_LIBS)
-
-.f90.o:
-	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I ${MODL9290} -I $(MODDIR) -o $@
-
-.f.o:
-	$(FC) -c $(FC_FLAGS) $< -o $@
+%.o: %.f90
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o core  *.mod
+	-@rm $(EXE)
+	-@rm *.o *.mod

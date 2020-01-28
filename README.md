@@ -1,8 +1,94 @@
 # General Relativistic Atomic Structure Package
 
-**GRASP2018 - an F95  development version**
-
 [![][manual-badge]][manual-pdf]
+
+The General Relativistic Atomic Structure Package (GRASP) is a set of Fortran 90
+programs for performing fully-relativistic electron structure calculations of
+atoms.
+
+## Installation
+
+> **Please note:**
+> The installation instructions here are for the _development version_ on the
+> `master` branch.
+>
+> To install the _latest published release_ (2018-12-03), go to the
+> ["Releases" page](https://github.com/compas/grasp/releases/tag/2018-12-03),
+> download the tarball from there and refer to the instructions in the README in
+> the tarball.
+
+To compile and install GRASP, first clone this Git repository:
+
+```sh
+git clone https://github.com/compas/grasp.git
+```
+
+There are two ways to build GRASP: either via [CMake](https://cmake.org/) or via the
+`Makefile`s in the source tree. Either works and you end up with the GRASP binaries in the
+`bin/` directory.
+
+CMake is the recommended way to build GRASP. The `Makefile`-based workflow is still there to
+make smoother to transition from `Makefile`s to a modern build system.
+
+### CMake-based build
+
+The first step with CMake is to create a separate out-of-source build directory. The
+`configure.sh` script can do that for you:
+
+```sh
+cd grasp/ && ./configure.sh
+```
+
+This will create a `build/` directory with the default _Release_ build
+configuration. However, `configure.sh` is just a simple wrapper around a `cmake`
+call and if you need more control over the build, you can always invoke `cmake`
+yourself (see [CMake documentation](https://cmake.org/documentation/) for more
+information).
+
+To then compile GRASP, you need to go into the out-of-source build directory and
+simply call `make`:
+
+```sh
+cd build/ && make install
+```
+
+Remarks:
+
+* Running `make install` instructs CMake to actually _install_ the resulting binaries into
+  the conventional `bin/` directory at the root of the repository.
+
+  When you run just `make`, the resulting binaries will end up under the `build/` directory
+  (specifically in `build/bin/`). This is useful when developing and debugging, as it allows
+  you to compile many versions of the binaries from the same source tree with different
+  compilation options (e.g. build with debug symbols enabled) by using several out of source
+  build directories.
+
+* With CMake, GRASP also supports parallel builds, which can be enabled by passing the `-j`
+  option to `make` (e.g. `make -j4 install` to build with four processes).
+
+* The CMake-based build allows running the (non-comprehensive) test suite by calling `ctest`
+  in the `build/` directory. The configuration and source files for the tests are under
+  `test/`/
+
+### `Makefile`-based build
+
+The legacy `Makefile`-based build can be performed by first loading the necessary
+environment variables (which may have to be modified to suit your system). E.g.:
+
+```sh
+source make_environment_gfortran
+```
+
+To actually build the binaries, you have to call `make` on the root `Makefile` in `src/`:
+
+```
+cd src/ && make
+```
+
+**WARNING:** the `Makefile`s do not know about the dependencies between the source files, so
+parallel builds (i.e. calling `make` with the `-j` option) does not work.
+
+## About GRASP
 
 This version of GRASP is a major revision of the previous GRASP2K package by [P.
 Jonsson, G. Gaigalas, J. Bieron, C. Froese Fischer, and I.P. Grant Computer

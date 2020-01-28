@@ -1,30 +1,26 @@
-.SUFFIXES: .f90 .mod
+LIBA=${GRASP}/lib/libmcp90.a
+MODULES_INSTALL=${GRASP}/lib/mcp90
+FC_MODULES= -I ${GRASP}/src/lib/libmod -I ${GRASP}/src/lib/lib9290
 
-LIBDIR = $(GRASP)/lib
-LIBA = $(LIBDIR)/libmcp90.a
+OBJS= \
+	cxk.o \
+	cxk_I.o \
+	talk.o \
+	talk_I.o
 
-LIBMOD = -lmod
-LIBOBJ = $(OBJ)
-MODDIR = ../libmod
-MODL92 = ../lib9290
+PHONY: install
+install: $(LIBA)
+	mkdir -p $(MODULES_INSTALL)
+	cp -v *.mod $(MODULES_INSTALL)
 
-RM = /bin/rm -f
+$(LIBA): $(OBJS)
+	@echo "Installing $@"
+	ar -curs $@ $?
 
-MODOBJ = \
-
-
-OBJ = \
-   cxk_I.o talk_I.o \
-   \
-   cxk.o   talk.o
-
-install : $(LIBA)
-$(LIBA) : $(LIBOBJ)
-	@echo " Building " $(LIBA)
-	ar -crvs $(LIBA)  $?
+%.o: %.f90
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o *.mod core
-
-.f90.o:
-	$(FC) -c $(FC_FLAGS) $< -I  $(MODDIR) -I $(MODL92) -I .  -o $@
+	-@rm $(LIBA)
+	-@rm *.o *.mod
+	-@rm -R $(MODULES_INSTALL)

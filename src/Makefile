@@ -12,7 +12,7 @@ $(TARGETS):
 	do \
                 cd $$i ; \
                 echo "....Entering: $$i" ; \
-                $(MAKE) $@ ; \
+                $(MAKE); \
                 cd .. ; \
                 echo "....Leaving: $$i" ; echo; echo;\
         done
