@@ -1,20 +1,14 @@
-.SUFFIXES: .f90 .mod
+EXE=${GRASP}/bin/hf
 
-BIN = ${GRASP}/bin
+OBJS= \
+	HF.o
 
-UTIL = hf
+$(EXE): $(OBJS)
+	$(FC) -o $@ $? $(FC_LD)
 
-install: EXE
-
-EXE :        $(BIN)/hf
-
-OBJ : hf .o
-
-$(BIN)/hf: HF.o
-	$(FC) -o $(BIN)/hf  HF.o
-
-.f90.o:
-	$(FC) -c $(FC_FLAGS) $< -o $@
+%.o: %.f90
+	$(FC) -c $(FC_FLAGS) -o $@ $<
 
 clean:
-	-rm -f *.o core *.mod
+	-@rm $(EXE)
+	-@rm *.o *.mod

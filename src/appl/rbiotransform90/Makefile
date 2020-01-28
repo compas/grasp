@@ -1,44 +1,98 @@
-.SUFFIXES: .f90 .mod
+EXE=${GRASP}/bin/rbiotransform
+LIBS=-L ${GRASP}/lib/ -lrang90 -l9290 -lmod
+FC_MODULES= -I ${GRASP}/src/lib/librang90 -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
-EXE = rbiotransform
-BINDIR = ${GRASP}/bin
-GRASPLIB = ${GRASP}/lib
-BINFILE = $(BINDIR)/$(EXE)
-SRCLIBDIR = ../../lib
-MODDIR = ${SRCLIBDIR}/libmod
-MODL92 = ${SRCLIBDIR}/lib9290
-MODLRANG90 = ${SRCLIBDIR}/librang90
-MODLMCP90 = ${SRCLIBDIR}/libmcp90
-GRASPLIBS =-l9290 -lmod -lrang90 -lmcp90 -ldvd90
+OBJS= \
+	angdata.o \
+	angdata_I.o \
+	bndinv.o \
+	bndinv_I.o \
+	brkt.o \
+	brkt_I.o \
+	wrtmat.o \
+	wrtmat_I.o \
+	scalve.o \
+	scalve_I.o \
+	copvec.o \
+	copvec_I.o \
+	fname.o \
+	fname_I.o \
+	getmix.o \
+	getmix_I.o \
+	gets.o \
+	gets_I.o \
+	ielsum.o \
+	ielsum_I.o \
+	ifnmnx.o \
+	ifnmnx_I.o \
+	rintff.o \
+	rintff_I.o \
+	rintii.o \
+	rintii_I.o \
+	inprod.o \
+	inprod_I.o \
+	intrpqf.o \
+	intrpqf_I.o \
+	intrpqi.o \
+	intrpqi_I.o \
+	invmat.o \
+	invmat_I.o \
+	kapdata.o \
+	kapdata_I.o \
+	lodcslBio.o \
+	lodcslBio_I.o \
+	lodrwff.o \
+	lodrwff_I.o \
+	lodrwfi.o \
+	lodrwfi_I.o \
+	prsym.o \
+	prsym_I.o \
+	lulu.o \
+	lulu_I.o \
+	setvec.o \
+	setvec_I.o \
+	matml4.o \
+	matml4_I.o \
+	qqsort.o \
+	qqsort_I.o \
+	mcpin.o \
+	mcpin_I.o \
+	mcpout_gg.o \
+	mcpout_gg_I.o \
+	pamtmt.o \
+	pamtmt_I.o \
+	radfile.o \
+	radfile_I.o \
+	radpar.o \
+	radpar_I.o \
+	setcslb.o \
+	setcslb_I.o \
+	tcsl.o \
+	tcsl_I.o \
+	ti1tv.o \
+	ti1tv_I.o \
+	tiinig.o \
+	tiinig_I.o \
+	trpmat.o \
+	trpmat_I.o \
+	ulla.o \
+	ulla_I.o \
+	vecsum.o \
+	vecsum_I.o \
+	genmcp.o \
+	genmcp_I.o \
+	citrag.o \
+	citrag_I.o \
+	biotr1.o \
+	biotr1_I.o \
+	biotr.o
 
-APP_LIBS = -L${GRASPLIB} ${GRASPLIBS}
+$(EXE): $(OBJS)
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-APP_OBJ=  \
-	angdata_I.o  getmix_I.o   invmat_I.o   pamtmt_I.o   setcslb_I.o \
-	biotr1_I.o   gets_I.o     kapdata_I.o  prsym_I.o    setvec_I.o \
-	bndinv_I.o   ichkq1_I.o   lodrwff_I.o  qqsort_I.o   tcsl_I.o \
-	brkt_I.o     ielsum_I.o   lodrwfi_I.o  radfile_I.o  tiinig_I.o \
-	citrag_I.o   ifnmnx_I.o   lulu_I.o     radpar_I.o   trpmat_I.o \
-	copvec_I.o   inprod_I.o   matml4_I.o   rintff_I.o   ulla_I.o \
-	fname_I.o    intrpqf_I.o  mcpout_gg_I.o   rintii_I.o   vecsum_I.o \
-	genmcp_I.o   intrpqi_I.o  orbord_I.o   scalve_I.o   wrtmat_I.o \
-        mcpin_I.o ti1tv_I.o lodcslBio_I.o \
-	biotr.o fname.o intrpqf.o intrpqi.o kapdata.o lodrwff.o lodrwfi.o \
-        radpar.o rintff.o rintii.o tcsl.o brkt.o gets.o wrtmat.o  \
-        biotr1.o radfile.o ifnmnx.o ielsum.o copvec.o invmat.o \
-        ulla.o trpmat.o matml4.o scalve.o setvec.o pamtmt.o bndinv.o lulu.o \
-        inprod.o genmcp.o mcpin.o getmix.o qqsort.o citrag.o tiinig.o \
-        ti1tv.o vecsum.o prsym.o setcslb.o angdata.o mcpout_gg.o lodcslBio.o
-
-$(EXE): $(APP_OBJ)
-	$(FC) -o $(BINFILE) $(FC_LD) $(APP_OBJ) $(APP_LIBS) \
-		$(APP_LIBS) ${LAPACK_LIBS}
-
-.f90.o:
-	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I . -I ${MODL92} -I ${MODLRANG90} -I $(MODLMCP90)  -o $@
-
-.f.o:
-	$(FC) -c $(FC_FLAGS) $< -o $@
+%.o: %.f90
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o core *.mod
+	-@rm $(EXE)
+	-@rm *.o *.mod

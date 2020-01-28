@@ -1,35 +1,35 @@
-.SUFFIXES: .f90 .mod
+EXE=${GRASP}/bin/rhfs
+LIBS=-L ${GRASP}/lib/ -lrang90 -lmcp90 -l9290 -lmod
+FC_MODULES= -I ${GRASP}/src/lib/librang90 -I ${GRASP}/src/lib/libmcp90 -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
-EXE = rhfs
-BINDIR = ${GRASP}/bin
-GRASPLIB = ${GRASP}/lib
-BINFILE = $(BINDIR)/$(EXE)
-SRCLIBDIR = ../../lib
-MODDIR = ${SRCLIBDIR}/libmod
-MODL92 = ${SRCLIBDIR}/lib9290
-MODLRANG90 = ${SRCLIBDIR}/librang90
-MODLMCP90 = ${SRCLIBDIR}/libmcp90
-GRASPLIBS =-l9290 -lmod  -lrang90 -lmcp90
+OBJS= \
+	engouth.o \
+	engouth_I.o \
+	gethfd.o \
+	gethfd_I.o \
+	getmixblock.o \
+	getmixblock_I.o \
+	opt6_C.o \
+	matelt.o \
+	matelt_I.o \
+	rinthf.o \
+	rinthf_I.o \
+	setdbg.o \
+	setdbg_I.o \
+	setsum.o \
+	setsum_I.o \
+	strsum.o \
+	strsum_I.o \
+	hfsgg.o \
+	hfsgg_I.o \
+	hfs92.o
 
-APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS}
+$(EXE): $(OBJS)
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-APP_OBJ= opt6_C.o\
-        getmixblock_I.o  rinthf_I.o  strsum_I.o \
-        engouth_I.o  hfsgg_I.o          setdbg_I.o \
-        gethfd_I.o   matelt_I.o       setsum_I.o \
- \
-        engouth.o gethfd.o hfsgg.o hfs92.o matelt.o  rinthf.o \
-        setdbg.o  setsum.o strsum.o getmixblock.o
-
-$(EXE): $(APP_OBJ)
-	$(FC) -o $(BINFILE) $(FC_LD) $(APP_OBJ) $(APP_LIBS) \
-		 $(APP_LIBS) ${LAPACK_LIBS}
-.f90.o:
-	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I ${MODL92} -I $(MODLRANG90) -I $(MODLMCP90) \
-	        -I $(MODDIR) -o $@
-
-.f.o:
-	$(FC) -c $(FC_FLAGS) $< -o $@
+%.o: %.f90
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o core  *.mod
+	-@rm $(EXE)
+	-@rm *.o *.mod

@@ -1,36 +1,46 @@
-.SUFFIXES: .f90 .mod
+LIBA=${GRASP}/lib/libmpiu90.a
+MODULES_INSTALL=${GRASP}/lib/mpiu90
+FC_MODULES= -I ${GRASP}/src/lib/libmod -I ${GRASP}/src/lib/lib9290
 
-LIBDIR = $(GRASP)/lib
-LIBA = $(LIBDIR)/libmpiu90.a
+OBJS= \
+	mpi_C.o \
+	mpiu.o \
+	cpath.o \
+	cpath_I.o \
+	cslhmpi.o \
+	cslhmpi_I.o \
+	iniestmpi.o \
+	iniestmpi_I.o \
+	lodcslmpi.o \
+	lodcslmpi_I.o \
+	lodrwfmpi.o \
+	lodrwfmpi_I.o \
+	setisompi.o \
+	setisompi_I.o \
+	setrwfmpi.o \
+	setrwfmpi_I.o \
+	spicmvmpi.o \
+	spicmvmpi_I.o \
+	sys_chdir.o \
+	sys_chdir_I.o \
+	sys_getwd.o \
+	sys_getwd_I.o \
+	sys_mkdir.o \
+	sys_mkdir_I.o
 
-LIBOBJ = $(OBJ)
-MODDIR = ../libmod
-MODL92 = ../lib9290
-PARDEF = $(MODDIR)/parameter_def_M.o
+PHONY: install
+install: $(LIBA)
+	mkdir -p $(MODULES_INSTALL)
+	cp -v *.mod $(MODULES_INSTALL)
 
-RM = /bin/rm -f
+$(LIBA): $(OBJS)
+	@echo "Installing $@"
+	ar -curs $@ $?
 
-MODOBJ = \
+%.o: %.f90
+	$(FC_MPI) -c $(FC_MPIFLAGS) $(FC_MODULES) -o $@ $<
 
-
-OBJ =  mpi_C.o  \
-   cpath_I.o cslhmpi_I.o iniestmpi_I.o lodcslmpi_I.o \
-   lodrwfmpi_I.o setisompi_I.o setrwfmpi_I.o \
-   spicmvmpi_I.o sys_chdir_I.o sys_getwd_I.o\
-   sys_mkdir_I.o \
-       \
-   cpath.o cslhmpi.o iniestmpi.o lodcslmpi.o \
-   lodrwfmpi.o      mpiu.o           setisompi.o      setrwfmpi.o \
-   spicmvmpi.o      sys_chdir.o  sys_getwd.o  \
-   sys_mkdir.o
-
-install : $(LIBA)
-$(LIBA) : $(LIBOBJ) ${PARDEF} $(MODOBJ)
-	@echo " Building " $(LIBA)
-	ar -crvs $(LIBA)  $?
-
-clean :
-	-rm -f *.o *.mod core
-
-.f90.o:
-	$(FC_MPI) -c $(FC_MPIFLAGS) $<  -I $(MODDIR) -I $(MODL92) -I . -o $@
+clean:
+	-@rm $(LIBA)
+	-@rm *.o *.mod
+	-@rm -R $(MODULES_INSTALL)

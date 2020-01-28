@@ -1,7 +1,19 @@
-*.out
-*.err
+# Ignore artifacts from Make builds
 *.o
 *.mod
-lib/*
-bin/*
+/bin/*
+!/bin/.gitkeep
+/lib/*
+!/lib/.gitkeep
+
+# Ignore user build configuration files
+CMakeLists.user
 Make.user
+
+# Ignore generated CMake files
+build/
+build-*/
+
+# Ignore output log files
+*.out
+*.err

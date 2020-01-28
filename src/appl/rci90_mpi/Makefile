@@ -1,66 +1,151 @@
-.SUFFIXES: .f90 .mod
+EXE=${GRASP}/bin/rci_mpi
+LIBS=-L ${GRASP}/lib/ -lmpiu90 -lrang90 -l9290 -ldvd90 -lmod
+FC_MODULES= -I ${GRASP}/src/lib/mpi90 -I ${GRASP}/src/lib/librang90 -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libdvd90 -I ${GRASP}/src/lib/libmod
 
-EXE = rci_mpi
-BINDIR = ${GRASP}/bin
-GRASPLIB = ${GRASP}/lib
-BINFILE = $(BINDIR)/$(EXE)
-SRCLIBDIR = ../../lib
-MODDIR = ${SRCLIBDIR}/libmod
-MODL92 = ${SRCLIBDIR}/lib9290
-MODLRANG90 = ${SRCLIBDIR}/librang90
-MODLMCP90 = ${SRCLIBDIR}/libmcp90
-MODLDVD = ${SRCLIBDIR}/libdvd90
-MODLMPIU90 = ${SRCLIBDIR}/mpi90
+OBJS= \
+	evcout.o \
+	dspevx_I.o \
+	ratden_I.o \
+	bessel.o \
+	bessel_I.o \
+	zkf.o \
+	zkf_I.o \
+	rkintc.o \
+	rkintc_I.o \
+	rkint.o \
+	rkint_I.o \
+	skint.o \
+	skint_I.o \
+	brra.o \
+	brra_I.o \
+	brintf.o \
+	brintf_I.o \
+	talk.o \
+	talk_I.o \
+	cxk.o \
+	cxk_I.o \
+	breid.o \
+	breid_I.o \
+	brint1.o \
+	brint1_I.o \
+	brint2.o \
+	brint2_I.o \
+	brint3.o \
+	brint3_I.o \
+	brint4.o \
+	brint4_I.o \
+	brint5.o \
+	brint5_I.o \
+	brint6.o \
+	brint6_I.o \
+	dnicmv.o \
+	dnicmv_I.o \
+	engout.o \
+	engout_I.o \
+	funk.o \
+	funk_I.o \
+	funl.o \
+	funl_I.o \
+	mohr.o \
+	mohr_I.o \
+	klamaq.o \
+	klamaq_I.o \
+	fzalf.o \
+	fzalf_I.o \
+	triangbreit1.o \
+	triangbreit1_I.o \
+	triangbreit2.o \
+	triangbreit2_I.o \
+	triangrk.o \
+	triangrk_I.o \
+	genintbreit1.o \
+	genintbreit1_I.o \
+	genintbreit1wrap.o \
+	genintbreit1wrap_I.o \
+	genintbreit2.o \
+	genintbreit2_I.o \
+	genintbreit2wrap.o \
+	genintbreit2wrap_I.o \
+	genintrk.o \
+	genintrk_I.o \
+	genintrkwrap.o \
+	genintrkwrap_I.o \
+	getcid.o \
+	getcid_I.o \
+	hmout.o \
+	hmout_I.o \
+	hovlap.o \
+	hovlap_I.o \
+	iabint.o \
+	iabint_I.o \
+	indtpi.o \
+	indtpi_I.o \
+	iniestdm.o \
+	iniestdm_I.o \
+	iniestsd.o \
+	iniestsd_I.o \
+	keint.o \
+	keint_I.o \
+	lodmixmpi.o \
+	lodmixmpi_I.o \
+	lodres.o \
+	lodres_I.o \
+	spodmv.o \
+	spodmv_I.o \
+	maneigmpi.o \
+	maneigmpi_I.o \
+	ncharg.o \
+	ncharg_I.o \
+	qed_slfen.o \
+	qed_slfen_I.o \
+	qed.o \
+	qed_I.o \
+	setdbg.o \
+	setdbg_I.o \
+	setmixmpi.o \
+	setmixmpi_I.o \
+	setres.o \
+	setres_I.o \
+	setsum.o \
+	setsum_I.o \
+	snrc.o \
+	snrc_I.o \
+	strsum.o \
+	strsum_I.o \
+	vac2.o \
+	vac2_I.o \
+	vac4.o \
+	vac4_I.o \
+	vacpol.o \
+	vacpol_I.o \
+	vinti.o \
+	vinti_I.o \
+	vint.o \
+	vint_I.o \
+	vpintf.o \
+	vpintf_I.o \
+	vpint.o \
+	vpint_I.o \
+	wghtd5.o \
+	wghtd5_I.o \
+	auxblk.o \
+	auxblk_I.o \
+	setham_gg.o \
+	setham_gg_I.o \
+	genmat.o \
+	genmat_I.o \
+	genmat2.o \
+	genmat2_I.o \
+	matrix.o \
+	matrix_I.o \
+	rci90mpi.o
 
-GRASPLIBS =-l9290 -lmod  -lrang90 -lmcp90 -ldvd90 -lmpiu90 -l9290
+$(EXE): $(OBJS)
+	$(FC_MPI) -o $@ $? $(FC_MPILD) $(LIBS) $(LAPACK_LIBS)
 
-
-APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS}
-
-#   Define data types
-VASTO = ${MODDIR}/vast_kind_param_M.o
-
-APP_OBJ= \
-        iabint_I.o	   funk_I.o     ncharg_I.o     skint_I.o \
-	auxblk_I.o         funl_I.o     qed_I.o        snrc_I.o \
-	bessel_I.o         fzalf_I.o    qed_slfen_I.o  spodmv_I.o \
-	breid_I.o          genmat2_I.o  ratden_I.o     strsum_I.o \
-	dspevx_I.o         genmat_I.o   rkint_I.o      talk_I.o \
-        brint1_I.o         brint2_I.o   brint3_I.o     brint4_I.o \
-        brint5_I.o  	   brint6_I.o   keint_I.o      vint_I.o \
-        genintrkwrap_I.o   genintrk_I.o \
-	vpint_I.o 	   lodmixmpi_I.o	getcid_I.o\
-	brintf_I.o         hmout_I.o    rkintc_I.o     triangrk_I.o \
-	brra_I.o           hovlap_I.o   vac2_I.o \
-	cxk_I.o            indtpi_I.o   setdbg_I.o     vac4_I.o \
-	klamaq_I.o   setmixmpi_I.o     vacpol_I.o \
-	dnicmv_I.o         lodres_I.o   setres_I.o     vinti_I.o \
-	maneigmpi_I.o   setsum_I.o     zkf_I.o \
-	engout_I.o         mohr_I.o     setham_gg_I.o\
-	vpintf_I.o	   iniestdm_I.o iniestsd_I.o	wghtd5_I.o \
-        matrix_I.o genintbreit1_I.o triangbreit1_I.o genintbreit2_I.o \
-        triangbreit2_I.o genintbreit1wrap_I.o genintbreit2wrap_I.o \
-        auxblk.o bessel.o breid.o brint1.o brint2.o brint3.o brint4.o \
-        brint5.o brint6.o brintf.o brra.o cxk.o engout.o evcout.o funk.o \
-        funl.o fzalf.o genintrk.o genmat.o hmout.o hovlap.o iabint.o indtpi.o \
-        keint.o klamaq.o mohr.o ncharg.o qed.o rkint.o rkintc.o setdbg.o \
-        setsum.o skint.o snrc.o talk.o triangrk.o vac2.o vac4.o vacpol.o \
-        genintrkwrap.o vint.o vinti.o vpint.o vpintf.o wghtd5.o zkf.o \
-        dnicmv.o genmat2.o getcid.o iniestdm.o iniestsd.o lodmixmpi.o lodres.o \
-        maneigmpi.o  rci90mpi.o  setham_gg.o setmixmpi.o setres.o \
-        spodmv.o strsum.o qed_slfen.o matrix.o genintbreit1.o triangbreit1.o \
-        genintbreit2.o triangbreit2.o genintbreit1wrap.o genintbreit2wrap.o
-
-$(EXE): $(APP_OBJ)
-	$(FC_MPI) -o $(BINFILE) $(FC_MPILD) $(APP_OBJ) $(APP_LIBS) \
-		$(APP_LIBS)  $(LAPACK_LIBS)
-
-.f90.o:
-	$(FC_MPI) -c $(FC_MPIFLAGS) $< -I $(MODDIR) -I ${MODL92} -I $(MODLRANG90) -I $(MODLMCP90) \
-	        -I $(MODDIR) -I $(MODLDVD) -I $(MODLMPIU90) -o $@
-
-.f.o:
-	$(FC) -c $(FC_FLAGS) $< -o $@
+%.o: %.f90
+	$(FC_MPI) -c $(FC_MPIFLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o core  *.mod
+	-@rm $(EXE)
+	-@rm *.o *.mod
