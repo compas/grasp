@@ -8,7 +8,8 @@ ifeq (exists, $(shell [ -e $(MAKE_USER_FILE) ] && echo exists ))
 include $(MAKE_USER_FILE)
 endif
 
-# Variables affecting the GRASP build
+# Variables affecting the GRASP build. These can be overridden in Make.user or via
+# environment variables.
 export FC_FLAGS ?= -O2 -fno-automatic
 export FC_LD ?=
 export FC_MPI ?= mpifort
