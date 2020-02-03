@@ -72,21 +72,56 @@ Remarks:
 
 ### `Makefile`-based build
 
-The legacy `Makefile`-based build can be performed by first loading the necessary
-environment variables (which may have to be modified to suit your system). E.g.:
+The legacy `Makefile`-based build can be performed by simply calling the `make` in the top
+level directory:
 
 ```sh
-source make_environment_gfortran
+make
 ```
 
-To actually build the binaries, you have to call `make` on the root `Makefile` in `src/`:
+In this case, the compilation of each of the libraries and programs happens in their
+respective directory under `src/` and the build artifacts are stored in the source tree.
+The resulting binaries and libraries will directly get installed under the `bin/` and `lib/`
+directories.
 
+To build a specific library or binary you can pass the path to the source directory as the
+Make target:
+
+```sh
+# build libmod
+make src/lib/libmod
+# build the rci_mpi binary
+make src/appl/rci90_mpi
 ```
-cd src/ && make
-```
+
+Note that any necessary library dependencies will also get built automatically.
 
 **WARNING:** the `Makefile`s do not know about the dependencies between the source files, so
 parallel builds (i.e. calling `make` with the `-j` option) does not work.
+
+#### Customizing the build
+
+By default the `Makefile` is designed to use `gfortran`. The variables affecting GRASP
+builds are defined and documented at the beginning of the `Makefile`.
+
+For the user it should never be necessary to modify the `Makefile` itself. Rather, a
+`Make.user` file can be create next to the main `Makefile` where the build variables can be
+overridden. E.g. to use the Intel Fortran compiler instead, you may want to create the
+following `Make.user` file:
+
+```make
+export FC = ifort
+export FC_FLAGS = -O2 -save
+export FC_LD = -mkl=sequential
+export FC_MPI = mpiifort
+```
+
+As another example, to set up a linker search path for the BLAS or LAPACK libraries, you can
+set up `Make.user` as follows:
+
+```make
+export FC_LD = -L /path/to/blas
+```
 
 ## About GRASP
 
