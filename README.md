@@ -84,10 +84,8 @@ respective directory under `src/` and the build artifacts are stored in the sour
 The resulting binaries and libraries will directly get installed under the `bin/` and `lib/`
 directories.
 
-You can also specify
-
 To build a specific library or binary you can pass the path to the source directory as the
-target:
+Make target:
 
 ```sh
 # build libmod
@@ -95,6 +93,8 @@ make src/lib/libmod
 # build the rci_mpi binary
 make src/appl/rci90_mpi
 ```
+
+Note that any necessary library dependencies will also get built automatically.
 
 **WARNING:** the `Makefile`s do not know about the dependencies between the source files, so
 parallel builds (i.e. calling `make` with the `-j` option) does not work.
