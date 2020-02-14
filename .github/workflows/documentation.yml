@@ -14,5 +14,5 @@ jobs:
     - name: Build documentation
       run: ./contrib/makedocs.sh
     - name: Deploy documentation
-      if: github.event_name == 'push' && github.ref == 'master'
+      if: github.event_name == 'push' && github.ref == 'mp/doxygen'
       run: ./contrib/deploydocs.sh
