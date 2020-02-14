@@ -14,7 +14,7 @@ jobs:
     - name: Build documentation
       run: ./contrib/makedocs.sh
     - name: Deploy documentation
-      if: github.event_name == 'push' && github.ref == 'refs/heads/mp/doxygen'
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
       env: # Set the secret as an input
         GITHUB_DEPLOY_KEY: ${{ secrets.GITHUB_DEPLOY_KEY }}
       run: ./contrib/deploydocs.sh

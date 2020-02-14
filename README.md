@@ -1,5 +1,7 @@
 # General Relativistic Atomic Structure Package
 
+![Tests][tests-badge]
+[![][doxygen-badge]][doxygen-url]
 [![][manual-badge]][manual-pdf]
 
 The General Relativistic Atomic Structure Package (GRASP) is a set of Fortran 90
@@ -262,6 +264,9 @@ under [the CC-BY-4.0 (Creative Commons Attribution 4.0 International) license][c
 
 [manual-pdf]: https://github.com/compas/grasp2018/releases/download/2018-12-03/GRASP2018-manual.pdf
 [manual-badge]: https://img.shields.io/badge/manual-pdf-blue.svg
+[doxygen-url]: https://compas.github.io/grasp/
+[doxygen-badge]: https://img.shields.io/badge/documentation-doxygen-blue.svg
+[tests-badge]: https://github.com/compas/grasp/workflows/Tests/badge.svg
 [grasp92-1996]: https://doi.org/10.1016/0010-4655(95)00136-0
 [grasp2k-2013]: https://doi.org/10.1016/j.cpc.2013.02.016
 [cc-by]: https://creativecommons.org/licenses/by/4.0/legalcode
