@@ -38,8 +38,13 @@ export GIT_SSH_COMMAND="ssh -F ~/.ssh/grasp_deploy_config"
 gh_pages_dir=`mktemp -d`
 echo "INFO: Cloning gh-pages into ${gh_pages_dir}"
 git clone -b gh-pages git@github.com:${GITHUB_REPOSITORY} "${gh_pages_dir}" || exit
-git config --global user.email "action@github.com" || exit
-git config --global user.name "GitHub Action" || exit
+if [ "${GITHUB_ACTIONS}" == "true" ]; then
+	echo "Configuring name and email for Git"
+	git config --list | grep 'user.'
+	git config --global user.email "action@github.com" || exit
+	git config --global user.name "GitHub Action" || exit
+	git config --list | grep 'user.'
+fi
 cd "${gh_pages_dir}" || exit
 # Remove all the old files (but not stuff under .git)
 find . -type f -not -regex "\./\.git/.*" -delete
