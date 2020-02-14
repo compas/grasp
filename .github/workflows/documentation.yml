@@ -1,0 +1,17 @@
+name: Documentation
+
+on: push
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: "Install dependencies"
+      run: sudo apt-get install -y doxygen graphviz
+    - name: Build documentation
+      run: ./contrib/makedocs.sh
+    - name: Deploy documentation
+      run: ./contrib/deploydocs.sh
