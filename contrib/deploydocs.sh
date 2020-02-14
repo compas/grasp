@@ -14,7 +14,7 @@ fi
 
 # Write the SSH deploy key to a file.
 if [ -z ${GITHUB_DEPLOY_KEY+x} ]; then
-	>&2 echo "ERROR: \$GITHUB_DEPLOY variable is unset."
+	>&2 echo "ERROR: \$GITHUB_DEPLOY_KEY variable is unset."
 	exit 1
 fi
 mkdir -p ~/.ssh
