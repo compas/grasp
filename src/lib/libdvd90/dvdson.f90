@@ -543,6 +543,8 @@
       DO IV = 1, NNCV
          IBSTART = 1
          DO IBV = 1, KPASS + IV
+!cychen            SS = DDOT(N,BASIS(IBSTART),1,AB(IDSTART),1)
+            call DDOTMPI(N,BASIS(IBSTART),AB(IDSTART),SS)
             SS = DDOT(N,BASIS(IBSTART),1,AB(IDSTART),1)
             S(ISSTART+IBV) = SS
             IBSTART = IBSTART + N
@@ -640,6 +642,7 @@
       INTEGER :: REST, I, KPASS, NNCV, IFIND, NFOUND, INFO, NEWSTART
       REAL(DOUBLE) :: TOL
       LOGICAL :: FIRST, DONE
+      REAL(DOUBLE)  :: dsum
 
       SAVE FIRST, DONE, REST, I, KPASS, NNCV, IFIND, TOL, NFOUND, INFO, &
          NEWSTART
@@ -822,8 +825,10 @@
          OLDVAL(I) = ABS(OLDVAL(I)-EIGVAL(I))
       END DO
 
-      CALL MULTBC (N, KPASS, NUME, SVEC, SCRA1, BASIS)
-      CALL MULTBC (N, KPASS, NUME, SVEC, SCRA1, AB)
+!cychen      CALL MULTBC (N, KPASS, NUME, SVEC, SCRA1, BASIS)
+!cychen      CALL MULTBC (N, KPASS, NUME, SVEC, SCRA1, AB)
+      CALL MULTBC_COL (N, KPASS, NUME, SVEC, SCRA1, BASIS)
+      CALL MULTBC_COL (N, KPASS, NUME, SVEC, SCRA1, AB)
 !
 ! i=1,NUME residual(i)= DCi-liBCi= newDi-linewBi
 ! temporarily stored in AB(NUME*N+1)
@@ -831,8 +836,10 @@
       DO I = 1, NUME
          CALL DCOPY (N, AB((I-1)*N+1), 1, AB(NUME*N+1), 1)
          CALL DAXPY (N, (-EIGVAL(I)),BASIS((I-1)*N+1), 1, AB(NUME*N+1), 1)
-         SCRA1(I) = DDOT(N,AB(NUME*N+1),1,AB(NUME*N+1),1)
-         SCRA1(I) = SQRT(SCRA1(I))
+!cychen         SCRA1(I) = DDOT(N,AB(NUME*N+1),1,AB(NUME*N+1),1)
+!         SCRA1(I) = SQRT(SCRA1(I))
+           call DDOTMPI(N,AB(NUME*N+1),AB(NUME*N+1),dsum)
+           SCRA1(I) = SQRT(dsum)
       END DO
 !
 ! Set IRC=0 for normal exit with no reverse communication
@@ -997,6 +1004,55 @@
       RETURN
       END SUBROUTINE MULTBC
 
+!=======================================================================
+      SUBROUTINE MULTBC_COL(N,K,M,C,SCARTMP,B)
+!=======================================================================
+!cychen: obtain the column of B(N,M), by using DGEMVMPI
+!       called by: DVDRVR
+!
+!       Multiplies B(N,K)*C(K,M) and stores it in B(N,M)
+!       Used for collapsing the expanding basis to current estimates,
+!       when basis becomes too large, or for returning the results back
+
+!       Subroutines called
+!       DINIT, DGEMV, DCOPY
+!-----------------------------------------------------------------------
+!-----------------------------------------------
+!   M o d u l e s
+!-----------------------------------------------
+      USE vast_kind_param, ONLY:  DOUBLE
+!-----------------------------------------------
+!   I n t e r f a c e   B l o c k s
+!-----------------------------------------------
+      !USE dgemv_I
+      !USE dcopy_I
+      IMPLICIT NONE
+!-----------------------------------------------
+!   D u m m y   A r g u m e n t s
+!-----------------------------------------------
+      INTEGER  :: N
+      INTEGER  :: K
+      INTEGER  :: M
+      REAL(DOUBLE)  :: C(K*M)
+      REAL(DOUBLE)  :: SCARTMP(M)
+!cychen      REAL(DOUBLE)  :: B(N*K)
+      REAL(DOUBLE)  :: B(1)
+!-----------------------------------------------
+!   L o c a l   V a r i a b l e s
+!-----------------------------------------------
+      INTEGER :: JCOL
+      REAL(DOUBLE) :: TEMP(N*M)
+
+!-----------------------------------------------------------------------
+      DO JCOL=1,M
+         CALL DGEMVMPI('N',N,K,1.D0,B,N,C((JCOL-1)*K+1),1, &
+                       0.d0,TEMP((JCOL-1)*N+1),1)
+      ENDDO
+      CALL DCOPY(N*M,TEMP,1,B,1)
+      CALL DCOPY(M,B(N),N,SCARTMP,1)
+
+      RETURN
+      END SUBROUTINE MULTBC_COL
 
 !=======================================================================
       SUBROUTINE NEWVEC(N, NUME, LIM, MBLOCK, KPASS, CRITR, NNCV, INCV, SVEC, &
@@ -1104,16 +1160,23 @@
 !        ..Compute d = AB*Svec_indx
 !        ..Daxpy d'= d - eigval b  gives the residual
 
-         CALL DGEMV ('N', N, KPASS, 1.D0, BASIS, N, SVEC((INDX-1)*KPASS+1) &
-            , 1, 0.D0, BASIS(ICUR), 1)
-         CALL DGEMV ('N', N, KPASS, 1.D0, AB, N, SVEC((INDX-1)*KPASS+1), 1, &
-            0.D0, AB(ICUR), 1)
+!cychen         CALL DGEMV ('N', N, KPASS, 1.D0, BASIS, N, SVEC((INDX-1)*KPASS+1) &
+!cychen            , 1, 0.D0, BASIS(ICUR), 1)
+!cychen         CALL DGEMV ('N', N, KPASS, 1.D0, AB, N, SVEC((INDX-1)*KPASS+1), 1, &
+!cychen            0.D0, AB(ICUR), 1)
+         CALL DGEMVMPI('N',N,KPASS,1.D0,BASIS,N,SVEC((INDX-1)*KPASS+1),1,&
+                      0.d0,BASIS(ICUR),1)
+         CALL DGEMVMPI('N',N,KPASS,1.D0,AB,N,SVEC((INDX-1)*KPASS+1),1, &
+                      0.d0,AB(ICUR),1)
+!cychen: daxpympi is worse
          CALL DAXPY (N, (-EIGVAL(INDX)),BASIS(ICUR), 1, AB(ICUR), 1)
+         !CALL DAXPYMPI(N,-EIGVAL(INDX),BASIS(ICUR),1,AB(ICUR),1)
 !
 !        ..Compute the norm of the residual
 !        ..and check for convergence
 !
-         SQRES = DDOT(N,AB(ICUR),1,AB(ICUR),1)
+!cychen         SQRES = DDOT(N,AB(ICUR),1,AB(ICUR),1)
+         call DDOTMPI(N,AB(ICUR),AB(ICUR),SQRES)
          SCRA1(INDX) = SQRT(SQRES)
 !cychen, the following informations are very useful for convergence
 !monitoring in an extremely large-scaled calculations.
@@ -1234,8 +1297,10 @@
 !-----------------------------------------------------------------------
 ! Truncate  the basis and the AB array.
 !
-      CALL MULTBC (N, KPASS, NUME, SVEC, SCRA1, BASIS)
-      CALL MULTBC (N, KPASS, NUME, SVEC, SCRA1, AB)
+!cychen      CALL MULTBC (N, KPASS, NUME, SVEC, SCRA1, BASIS)
+!cychen      CALL MULTBC (N, KPASS, NUME, SVEC, SCRA1, AB)
+      CALL MULTBC_COL (N, KPASS, NUME, SVEC, SCRA1, BASIS)
+      CALL MULTBC_COL (N, KPASS, NUME, SVEC, SCRA1, AB)
 !
 ! calculation of the new upper S=diag(l1,...,l_NUME) and
 ! its matrix Svec of eigenvectors (e1,...,e_NUME)
@@ -1468,8 +1533,10 @@
          kcur = 1
          do k = 1, kp
             jcur = newstart
-            call dgemv ('T', n, new, 1.D0, b(jcur), n, b(kcur), 1, 0.D0, scra, &
-               1)
+!cychen            call DGEMV ('T', n, new, 1.D0, b(jcur), n, b(kcur), 1, 0.D0, scra, &
+!cychen               1)
+           call DGEMVMPI('T', N, new, 1.d0, B(jcur), N, B(kcur), 1, &
+                        0.d0, scra, 1)
             do j = 1, new
 !           call daxpy(N,-scra(j),B(kcur),1,B(jcur),1)
                do mm = 0, n - 1
@@ -1486,12 +1553,15 @@
             jcur = kcur + n
 !  The current vector should be normalized
 !
-            dnm = ddot(n,b(kcur),1,b(kcur),1)
+!cychen            dnm = DDOT(n,b(kcur),1,b(kcur),1)
+            call DDOTMPI(N,B(kcur),B(kcur),dnm)
             dnm = sqrt(dnm)
             call dscal (n, 1/dnm, b(kcur), 1)
 !
-            call dgemv ('T', n, new - k, 1.D0, b(jcur), n, b(kcur), 1, 0.D0, &
-               scra, 1)
+!cychen            call DGEMV ('T', n, new - k, 1.D0, b(jcur), n, b(kcur), 1, 0.D0, &
+!cychen               scra, 1)
+            call DGEMVMPI('T', N, new - k, 1.d0, B(jcur), N, B(kcur), 1,&
+                          0.d0, scra, 1)
             do j = k + 1, new
 !              call daxpy(N,-scra(j-k),B(kcur),1,B(jcur),1)
                do mm = 0, n - 1
