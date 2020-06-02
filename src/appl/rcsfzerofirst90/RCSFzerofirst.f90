@@ -44,12 +44,15 @@
       print *, ""
       NBLOCK = 0
       CALL SET_CSF_ZFlist
+!cychen: output the zero-order space for re-use in mcp, rci
+      open(301,file='icut',form='formatted',status='unknown')
       WRITE (6, *) "  Block    Zero-order Space   Complete Space"
       DO
          CALL LODCSL_Zero (NEXT_BLOCK)
          CALL LODCSL_Part (CSF_Number)
          WRITE (6,'(3X,I2,6X,I14,3X,I17)')                            &
                                      NBLOCK,NCFBLK(NBLOCK),CSF_Number-1
+         write(301,*)NCFBLK(NBLOCK)
          deallocate (Found)
          deallocate (C_shell)
          deallocate (C_quant)
@@ -57,6 +60,7 @@
          IF(.NOT. NEXT_BLOCK) EXIT
          WRITE(22,'(A2)') ' *'
       END DO
+      close(301)
       call stoptime (ncount1, 'RCSFzerofirst')
       STOP
       END PROGRAM RCSFzerofirst

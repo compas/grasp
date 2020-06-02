@@ -60,8 +60,9 @@
             do i = 1,nblock
               write(istde,*) 'Give ICCUT for block',i
     1         READ *, ICCUT(i)
-              IF ((ICCUT(i) <= 1).OR.(ICCUT(i) >= ncfblk(i))) THEN
-                WRITE (istde,*) 'GETINF: ICCUT must be greater than 1',&
+!cychen              IF ((ICCUT(i) <= 1).OR.(ICCUT(i) >= ncfblk(i))) THEN
+              IF ((ICCUT(i) < 1).OR.(ICCUT(i) >= ncfblk(i))) THEN
+                WRITE (istde,*) 'GETINF: ICCUT must be greater than 0',&
                                 ' and less than ',ncfblk(i)
                 WRITE (istde,*) ' please reenter ICCUT:'
                 GOTO 1

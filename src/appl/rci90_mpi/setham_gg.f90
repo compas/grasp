@@ -398,6 +398,8 @@
 !cjb MPI progress begin --------------------------------------------------
 !
 !cjb just started
+!cychen: report only from myid.eq.0
+      if (myid .eq. 0 ) then
        IF (IC .LE. nprocs) then
             PRINT '(A6,I10,A9,I10,A9,I5,A8,I5)', 'Start ', ic,       &
                     ' nnonz = ', nelc,                             &
@@ -410,19 +412,19 @@
        IF (IC .GT. nprocs .and. IC .LT. NCF-nprocs .and. &
            MOD (IC-1,100*nprocs) .EQ. myid) then
          if (myid .eq. 0) then
-            PRINT '(A5,I10,A9,I10,A9,I5,A8,I5)', 'Done ', ic,       &
+            PRINT '(A6,I10,A9,I10,A9,I5,A8,I5)', 'Done ', ic,       &
                     ' nnonz = ', nelc,                             &
                     ' block = ', jblock,' myid = ', myid
         flush output_unit
         flush error_unit
          else
-            PRINT '(A5,I10,A9,I10,A9,I5,A8,I5)', 'Row  ', ic,       &
+            PRINT '(A6,I10,A9,I10,A9,I5,A8,I5)', 'Row  ', ic,       &
                     ' nnonz = ', nelc,                             &
                     ' block = ', jblock,' myid = ', myid
         flush output_unit
         flush error_unit
          endif
-       endif
+      endif
 !
 !cjb almost finished
        IF (IC .GT. NCF-nprocs) then
@@ -433,6 +435,7 @@
         flush output_unit
         flush error_unit
        endif
+      endif
 !cjb MPI progress end ----------------------------------------------------
 !
 !

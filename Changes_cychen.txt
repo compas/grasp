@@ -1,0 +1,16 @@
+00. src/tool: Makefile, add "chmod a+x $(GRASP)/bin/rsave"
+01. jj2lsj90: In jj2lsj_code.f90, lines 220 and 222 are changed to deal with both parities present. 
+#02. jj2lsj90: In jj2lsj_code.f90, lines around 850, and lines around 2435,
+#modifications for transformation of configurations with empty K-shell, such as
+#2s2p, 2lnl, as done in A&A 592, A141(2016). 
+03. rcsfzerofirst90: In RCSFzerofirst.f90, the number of CSFs in zero-order space
+are output. The informations could be used conveniently in RCSF and RCI calculations.
+04. rmcdhf90: In newco.f90, weighted average energy is output to monitor the energy convergence.
+05. rangular90_mpi: getinf.90 modified for iccut=1
+06. rci90_mpi: setham_gg.f90, only myid=0 reports how far the calculation has proceeded. 
+07. libdvd90, dvdson.f90: make lines 1119 and 1120 work for convergence
+monitor. The output messages are very useful for extremely large-scaled calculations. 
+08. libdvd90, dvdson.f90: function TSTSEL is modified, so that dvdson performs at least TWO
+iteration calculations. Or, error results could be obtained in some cases (in
+O-like isoelectronic sequence?). 
+09. dvdson--mpi

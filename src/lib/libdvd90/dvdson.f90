@@ -732,7 +732,7 @@
 ! by the largest magnitude in the last added NNCV rows of Svec.
 !
       DONE = TSTSEL(KPASS,NUME,NEIG,ISELEC,SVEC,EIGVAL,ICV,CRITE,CRITC,SCRA1,&
-         ISCRA2,OLDVAL,NNCV,INCV)
+         ISCRA2,OLDVAL,NNCV,INCV,NLOOPS)
       IF (DONE .OR. KPASS>=N) GO TO 30
 !
 ! Maximum size for expanding basis. Truncate basis, D, and S, Svec
@@ -1029,7 +1029,7 @@
 !   M o d u l e s
 !-----------------------------------------------
       USE vast_kind_param, ONLY: DOUBLE
-!     USE MPI_C,           ONLY: MYID
+      USE MPI_C,           ONLY: MYID      !cychen
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1115,9 +1115,10 @@
 !
          SQRES = DDOT(N,AB(ICUR),1,AB(ICUR),1)
          SCRA1(INDX) = SQRT(SQRES)
-
-!        IF (MYID == 0) WRITE (6, '(A11,F22.16,I2,A10,F19.16)') ' EIGVAL(i) ', &
-!           EIGVAL(INDX), INDX, ' Res.Norm ', SCRA1(INDX)
+!cychen, the following informations are very useful for convergence
+!monitoring in an extremely large-scaled calculations.
+        IF (MYID == 0) WRITE (6, '(A11,F22.16,I4,A10,F19.16)') &  
+        ' EIGVAL(i) ', EIGVAL(INDX), INDX, ' Res.Norm ', SCRA1(INDX)
 
          IF (SCRA1(INDX) < CRITR) THEN
 !           ..Converged,do not add. Go for next non converged one
@@ -1258,7 +1259,7 @@
 
 !=======================================================================
       LOGICAL FUNCTION TSTSEL (KPASS, NUME, NEIG, ISELEC, SVEC, EIGVAL, ICV, &
-         CRITE, CRITC, ROWLAST, IND, OLDVAL, NNCV, INCV)
+         CRITE, CRITC, ROWLAST, IND, OLDVAL, NNCV, INCV, NLOOPS)
 !=======================================================================
 !
 !     Called by: DVDRVR
@@ -1308,6 +1309,7 @@
       REAL(DOUBLE) , INTENT(IN) :: EIGVAL(NUME)
       REAL(DOUBLE)  :: ROWLAST(NEIG)
       REAL(DOUBLE) , INTENT(IN) :: OLDVAL(NUME)
+      INTEGER , INTENT(IN) :: NLOOPS
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -1372,7 +1374,8 @@
          DO L = 1, NNCV - 1
             TMAX = MAX(TMAX,ABS(SVEC(ICUR-L)))
          END DO
-         IF (TMAX < CRITC) THEN
+!cychen: perform at least TWO iterations, or, obtain error results in some cases.
+         IF (NLOOPS > 2 .and. TMAX < CRITC) THEN
 !                ..this  coefficient converged
             ICV(ISELEC(I)) = 1
          ELSE

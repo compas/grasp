@@ -14,6 +14,7 @@ UTIL = rcsfsplit rmixaccumulate rseqenergy \
 
 install: EXE
 	cp rsave $(GRASP)/bin
+	chmod a+x $(GRASP)/bin/rsave
 	cp lscomp.pl $(GRASP)/bin
 
 EXE :        $(BIN)/rcsfsplit \

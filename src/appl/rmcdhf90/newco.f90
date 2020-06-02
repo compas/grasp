@@ -114,6 +114,8 @@
 !   Write out average energy
 !
       IF (NCMIN > 1) WRITE (*, 304) SUM
+!cychen, output sum to the terminal for convergence monitor.
+      WRITE (0,'(A25,1PD18.10)') 'Weighted average energy: ', SUM
 !
 !   Write out generalized occupation numbers
 !

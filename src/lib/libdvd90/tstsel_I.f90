@@ -4,7 +4,7 @@
 !...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
       LOGICAL FUNCTION tstsel (KPASS, NUME, NEIG, ISELEC, SVEC, EIGVAL, ICV&
-         , CRITE, CRITC, ROWLAST, IND, OLDVAL, NNCV, INCV)
+         , CRITE, CRITC, ROWLAST, IND, OLDVAL, NNCV, INCV, NLOOPS)
       USE vast_kind_param,ONLY: DOUBLE
       INTEGER, INTENT(IN) :: KPASS
       INTEGER, INTENT(IN) :: NUME
@@ -20,6 +20,7 @@
       REAL(DOUBLE), DIMENSION(NUME), INTENT(IN) :: OLDVAL
       INTEGER, INTENT(INOUT) :: NNCV
       INTEGER, DIMENSION(NEIG), INTENT(OUT) :: INCV
+      INTEGER, INTENT(IN) :: NLOOPS
 !VAST.../MPI/ MYID(IN)
 !VAST...Calls: IDAMAX
 !...This routine performs I/O.

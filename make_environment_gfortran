@@ -9,13 +9,20 @@
 #
 # Installation requirements:
 # - Lapack, Blas and MPI libraries have to be installed and properly linked - e.g. add them to LD_LIBRARY_PATH.
+mkdir lib bin > /dev/null 2>&1 
+echo "cp ../BLAS-3.8.0/blas_LINUX.a lib/libblas.a"
+cp ../BLAS-3.8.0/blas_LINUX.a lib/libblas.a
+echo "cp ../lapack-3.8.0/liblapack.a lib/"
+cp ../lapack-3.8.0/liblapack.a lib/
+
 # - The Fortran compiler of choice and the MPI wrapper (as specified by FC and FC_MPI below) have to be on your PATH.
 #
 # -------------------------------------------------------------------------------------------------------------------
 # Set up main flags
 # -------------------------------------------------------------------------------------------------------------------
 export   FC=gfortran                                           # Fortran compiler
-export   FC_FLAGS="-O2 -fno-automatic "                        # Serial code compiler flags
+#export   FC_FLAGS="-O2 -fno-automatic"                        # Serial code compiler flags
+export   FC_FLAGS="-O2 -fno-automatic -fconvert=big-endian"    # If little-endian used, comment out this line, use the above one
 export   FC_LD=" "                                             # Serial linker flags
 export   GRASP="${PWD}"                                        # Location of the 2018 root directory
 export   LAPACK_LIBS="-llapack -lblas"                         # Lapack libraries
