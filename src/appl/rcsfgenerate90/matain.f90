@@ -262,7 +262,8 @@
                      if (Y(1:1).GE.'0' .AND. Y(1:1).LE.'9') then
                         if (org(i,j).GT.0) then
                            tmp = ICHAR(Y(1:1))-ICHAR('0')
-                           if (Y(2:2).GE.'1' .AND. Y(2:2).LE.'9')      &
+!cychen                           if (Y(2:2).GE.'1' .AND. Y(2:2).LE.'9')      &
+                           if (Y(2:2).GE.'0' .AND. Y(2:2).LE.'9')      &
                               tmp = tmp*10 + ICHAR(Y(2:2))-ICHAR('0')
                            low(i,j) = min(org(i,j),tmp)
                         endif
@@ -312,7 +313,8 @@
                      if (Y(1:1).GE.'0' .AND. Y(1:1).LE.'9') then
                         if (org(i,j).GT.0) then
                            tmp = ICHAR(Y(1:1))-ICHAR('0')
-                           if (Y(2:2).GE.'1' .AND. Y(2:2).LE.'9')      &
+!cychen                           if (Y(2:2).GE.'1' .AND. Y(2:2).LE.'9')      &
+                           if (Y(2:2).GE.'0' .AND. Y(2:2).LE.'9')      &
                               tmp = tmp*10 + ICHAR(Y(2:2))-ICHAR('0')
                            low(i,j) = min(org(i,j),tmp)
                         endif
