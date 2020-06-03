@@ -36,7 +36,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       INTEGER :: I, MODE
-      REAL(DOUBLE) :: WA, WB, WC, WD, WE
+      REAL(DOUBLE) :: WA, WB, WC, WD, WE, WF
 !-----------------------------------------------
 !
 !   Write out the orbital properties
@@ -53,11 +53,12 @@
          WB = RINT(I,I,1)
          WC = RINT(I,I,2)
          WD = RINT (I,I, 4)
+         WF = RINT(I,I,-2)
          WE = 0.d0
          IF (NH(I) /= 's ' .AND. NH(i) /= 'p-') then
             WE = RINT(I,I,-3)
          END IF
-         WRITE (24,304) NP(I),NH(I),WE,WA,WB,WC,WD, UCF(I)
+         WRITE (24,304) NP(I),NH(I),WE,WF,WA,WB,WC,WD, UCF(I)
       END DO
 !
       IF (NCMIN /= 0) THEN
@@ -74,10 +75,10 @@
   301 FORMAT(/,'Radial wavefunction summary:'/,/,67X,'Self'/,'Subshell',6X,'e',&
          13X,'p0',5X,'gamma',5X,'P(2)',7X,'Q(2)',3X,'Consistency',' MTP'/)
   302 FORMAT(1X,I2,A2,1X,1P,D17.10,1P,D11.3,0P,F6.2,1P,3(D11.3),I5)
-  303 FORMAT (/18X,'-3',14X,'-1',29X,'2',14x,'4',5X,'Generalised'     &
-              /'Subshell',4X,'<  r  >',8X,'<  r  >',8X,'<  r  >',8X,  &
+  303 FORMAT (/18X,'-3',14X,'-2',14X,'-1',29X,'2',14x,'4',5X,'Generalised'     &
+              /'Subshell',4X,'<  r  >',8X,'<  r  >',8X,'<  r  >',8X,'<  r  >',8X,  &
                '<  r  >',8X,'<  r  >',6X,'occupation'/)
-  304 FORMAT (1X,1I2,1A2,1X,1P,6D15.5)
+  304 FORMAT (1X,1I2,1A2,1X,1P,7D15.5)
       RETURN
 !
       END SUBROUTINE ENDSUM
