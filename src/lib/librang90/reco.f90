@@ -8,7 +8,7 @@
 !                                                                  *
 !   Written by  G. Gaigalas                                        *
 !   Transform to fortran 90/95 by G. Gaigalas       December 2012  *
-!   The last modification made by G. Gaigalas       October  2017  *
+!   The last modification made by G. Gaigalas       October  2020  *
 !                                                                  *
 !*******************************************************************
 !
@@ -48,6 +48,7 @@
           IF(I == JA2) CYCLE
         END IF
         DO J=1,3
+          IF(JA1 == JA2 .AND. I == JA1 .AND. J == 1) CYCLE
           IF(JJQ1(J,IJ) /= JJQ2(J,IJ))IAT=0
         END DO
       END DO
