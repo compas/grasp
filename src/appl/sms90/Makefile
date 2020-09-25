@@ -1,40 +1,55 @@
-.SUFFIXES: .f90 .mod
+EXE=${GRASP}/bin/rsms
+LIBS=-L ${GRASP}/lib/ -lrang90 -lmcp90 -l9290 -lmod
+FC_MODULES= -I ${GRASP}/src/lib/librang90 -I ${GRASP}/src/lib/libmcp90 -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
-EXE = rsms
-BINDIR = ${GRASP}/bin
-GRASPLIB = ${GRASP}/lib
-BINFILE = $(BINDIR)/$(EXE)
-SRCLIBDIR = ../../lib
-MODDIR = ${SRCLIBDIR}/libmod
-MODL92 = ${SRCLIBDIR}/lib9290
-MODLRANG90 = ${SRCLIBDIR}/librang90
-MODLMCP90 = ${SRCLIBDIR}/libmcp90
-GRASPLIBS =-l9290 -lmod  -lrang90 -lmcp90
+OBJS= \
+	dvpot_C.o \
+	sms1_C.o \
+	teilst_C.o \
+	densmcp.o \
+	densmcp_I.o \
+	densnew.o \
+	densnew_I.o \
+	engout.o \
+	engout_I.o \
+	gco.o \
+	gco_I.o \
+	getmixblock.o \
+	getmixblock_I.o \
+	getsmd.o \
+	getsmd_I.o \
+	polint.o \
+	polint_I.o \
+	rintdens.o \
+	rintdens_I.o \
+	rintiso.o \
+	rintiso_I.o \
+	setdbg.o \
+	setdbg_I.o \
+	setmcp.o \
+	setmcp_I.o \
+	setsum.o \
+	setsum_I.o \
+	wghtd5.o \
+	wghtd5_I.o \
+	strsum.o \
+	strsum_I.o \
+	vinti.o \
+	vinti_I.o \
+	smsmcp.o \
+	smsmcp_I.o \
+	smsnew.o \
+	smsnew_I.o \
+	sms.o \
+	sms_I.o \
+	sms92.o
 
+$(EXE): $(OBJS)
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS}
-
-APP_OBJ= sms1_C.o teilst_C.o dvpot_C.o\
-        sms_I.o      getmixblock_I.o  rintiso_I.o  smsmcp_I.o \
-        densmcp_I.o  getsmd_I.o       setdbg_I.o   smsnew_I.o \
-        densnew_I.o  polint_I.o       setmcp_I.o   strsum_I.o \
-        gco_I.o      rintdens_I.o     setsum_I.o   vinti_I.o \
-	engout_I.o wghtd5_I.o \
-\
-        densmcp.o densnew.o gco.o getsmd.o polint.o rintdens.o \
-        rintiso.o setdbg.o setmcp.o setsum.o sms.o sms92.o smsmcp.o \
-        smsnew.o strsum.o vinti.o getmixblock.o \
-	engout.o wghtd5.o
-
-$(EXE): $(APP_OBJ)
-	$(FC) -o $(BINFILE) $(FC_LD) $(APP_OBJ) $(APP_LIBS) \
-		 $(APP_LIBS) ${LAPACK_LIBS}
-.f90.o:
-	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I ${MODL92} -I $(MODLRANG90) -I $(MODLMCP90) \
-	        -I $(MODDIR) -o $@
-
-.f.o:
-	$(FC) -c $(FC_FLAGS) $< -o $@
+%.o: %.f90
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o core  *.mod
+	-@rm $(EXE)
+	-@rm *.o *.mod

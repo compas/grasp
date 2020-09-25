@@ -1,46 +1,98 @@
-.SUFFIXES: .f90 .mod
+EXE=${GRASP}/bin/rbiotransform_mpi
+LIBS=-L ${GRASP}/lib/ -lrang90 -lmpiu90 -l9290 -lmod
+FC_MODULES= -I ${GRASP}/src/lib/librang90 -I ${GRASP}/src/lib/mpi90 -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
-EXE = rbiotransform_mpi
-BINDIR = ${GRASP}/bin
-GRASPLIB = ${GRASP}/lib
-BINFILE = $(BINDIR)/$(EXE)
-SRCLIBDIR = ../../lib
-MODDIR = ${SRCLIBDIR}/libmod
-MODL92 = ${SRCLIBDIR}/lib9290
-MODLRANG90 = ${SRCLIBDIR}/librang90
-MODLMCP90 = ${SRCLIBDIR}/libmcp90
-MODLMPIU90 = ${SRCLIBDIR}/mpi90
+OBJS= \
+	angdatampi.o \
+	angdatampi_I.o \
+	bndinv.o \
+	bndinv_I.o \
+	brkt.o \
+	brkt_I.o \
+	vecsum.o \
+	vecsum_I.o \
+	wrtmat.o \
+	wrtmat_I.o \
+	copvec.o \
+	copvec_I.o \
+	fname.o \
+	fname_I.o \
+	getmixmpi.o \
+	getmixmpi_I.o \
+	getsmpi.o \
+	getsmpi_I.o \
+	ielsum.o \
+	ielsum_I.o \
+	ifnmnx.o \
+	ifnmnx_I.o \
+	inprod.o \
+	inprod_I.o \
+	invmat.o \
+	invmat_I.o \
+	rintff.o \
+	rintff_I.o \
+	rintii.o \
+	rintii_I.o \
+	intrpqf.o \
+	intrpqf_I.o \
+	intrpqi.o \
+	intrpqi_I.o \
+	kapdata.o \
+	kapdata_I.o \
+	lodcslBio.o \
+	lodcslBio_I.o \
+	lodrwffmpi.o \
+	lodrwffmpi_I.o \
+	lodrwfimpi.o \
+	lodrwfimpi_I.o \
+	prsym.o \
+	prsym_I.o \
+	lulu.o \
+	lulu_I.o \
+	setvec.o \
+	setvec_I.o \
+	matml4.o \
+	matml4_I.o \
+	qqsortmpi.o \
+	qqsortmpi_I.o \
+	mcpinmpi.o \
+	mcpinmpi_I.o \
+	mcpoutmpi_gg.o \
+	mcpoutmpi_gg_I.o \
+	pamtmt.o \
+	pamtmt_I.o \
+	radfilempi.o \
+	radfilempi_I.o \
+	radparmpi.o \
+	radparmpi_I.o \
+	scalve.o \
+	scalve_I.o \
+	setcslampi.o \
+	setcslampi_I.o \
+	setcslbmpi.o \
+	setcslbmpi_I.o \
+	tcsl.o \
+	tcsl_I.o \
+	ti1tv.o \
+	ti1tv_I.o \
+	tiinigmpi.o \
+	tiinigmpi_I.o \
+	trpmat.o \
+	trpmat_I.o \
+	ulla.o \
+	ulla_I.o \
+	citragmpi.o \
+	citragmpi_I.o \
+	biotr1.o \
+	biotr1_I.o \
+	biotrmpi.o
 
-GRASPLIBS =-l9290 -lmod -lrang90 -lmcp90 -ldvd90 -lmpiu90
+$(EXE): $(OBJS)
+	$(FC_MPI) -o $@ $? $(FC_MPILD) $(LIBS) $(LAPACK_LIBS)
 
-APP_LIBS = -L${GRASPLIB} ${GRASPLIBS}
-
-APP_OBJ=  \
-	angdatampi_I.o  getmixmpi_I.o   invmat_I.o   pamtmt_I.o   setcslbmpi_I.o \
-	setcslampi_I.o biotr1_I.o   getsmpi_I.o     kapdata_I.o  prsym_I.o    setvec_I.o \
-	bndinv_I.o   lodrwffmpi_I.o  qqsortmpi_I.o   tcsl_I.o \
-	brkt_I.o     ielsum_I.o   lodrwfimpi_I.o  radfilempi_I.o  tiinigmpi_I.o \
-	citragmpi_I.o   ifnmnx_I.o   lulu_I.o     radparmpi_I.o   trpmat_I.o \
-	copvec_I.o   inprod_I.o   matml4_I.o   rintff_I.o   ulla_I.o \
-	fname_I.o    intrpqf_I.o  mcpoutmpi_gg_I.o   rintii_I.o   vecsum_I.o \
-	intrpqi_I.o  orbord_I.o   scalve_I.o   wrtmat_I.o \
-        mcpinmpi_I.o ti1tv_I.o lodcslBio_I.o \
-	biotrmpi.o fname.o intrpqf.o intrpqi.o kapdata.o lodrwffmpi.o lodrwfimpi.o \
-        radparmpi.o rintff.o rintii.o tcsl.o brkt.o getsmpi.o wrtmat.o  \
-        biotr1.o radfilempi.o ifnmnx.o ielsum.o copvec.o invmat.o \
-        ulla.o trpmat.o matml4.o scalve.o setvec.o pamtmt.o bndinv.o lulu.o \
-        inprod.o mcpinmpi.o getmixmpi.o qqsortmpi.o citragmpi.o tiinigmpi.o \
-        ti1tv.o vecsum.o prsym.o setcslampi.o setcslbmpi.o angdatampi.o mcpoutmpi_gg.o lodcslBio.o
-
-$(EXE): $(APP_OBJ)
-	$(FC_MPI) -o $(BINFILE) $(FC_MPILD) $(APP_OBJ) $(APP_LIBS) \
-		$(APP_LIBS)  $(LAPACK_LIBS)
-
-.f90.o:
-	$(FC_MPI) -c $(FC_MPIFLAGS) $< -I $(MODDIR) -I . -I ${MODL92} -I ${MODLRANG90} -I $(MODLMCP90)  -I $(MODLMPIU90) -o $@
-
-.f.o:
-	$(FC_MPI) -c $(FC_FLAGS) $< -o $@
+%.o: %.f90
+	$(FC_MPI) -c $(FC_MPIFLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o core *.mod
+	-@rm $(EXE)
+	-@rm *.o *.mod

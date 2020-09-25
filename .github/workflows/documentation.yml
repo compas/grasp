@@ -1,0 +1,20 @@
+name: Documentation
+
+on: push
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: "Install dependencies"
+      run: sudo apt-get install -y doxygen graphviz
+    - name: Build documentation
+      run: ./contrib/makedocs.sh
+    - name: Deploy documentation
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      env: # Set the secret as an input
+        GITHUB_DEPLOY_KEY: ${{ secrets.GITHUB_DEPLOY_KEY }}
+      run: ./contrib/deploydocs.sh

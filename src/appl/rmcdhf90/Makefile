@@ -1,49 +1,125 @@
-.SUFFIXES: .f90 .mod
+EXE=${GRASP}/bin/rmcdhf
+LIBS=-L ${GRASP}/lib/ -ldvd90 -l9290 -lmod
+FC_MODULES= -I ${GRASP}/src/lib/libdvd90 -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
-EXE = rmcdhf
-BINDIR = ${GRASP}/bin
-GRASPLIB = ${GRASP}/lib
-BINFILE = $(BINDIR)/$(EXE)
-SRCLIBDIR = ../../lib
-MODDIR = ${SRCLIBDIR}/libmod
-MODL92 = ${SRCLIBDIR}/lib9290
-MODDVD = ${SRCLIBDIR}/libdvd90
-GRASPLIBS =-l9290 -lmod -ldvd90
+OBJS= \
+	mpi_s.o \
+	dsubrs.o \
+	dsubrs_I.o \
+	fco.o \
+	fco_I.o \
+	gco.o \
+	gco_I.o \
+	setcof.o \
+	setcof_I.o \
+	lodcsh2GG.o \
+	lodcsh2GG_I.o \
+	setcsl.o \
+	setcsl_I.o \
+	setdbg.o \
+	setdbg_I.o \
+	setham.o \
+	setham_I.o \
+	xpot.o \
+	xpot_I.o \
+	ypot.o \
+	ypot_I.o \
+	dacon.o \
+	dacon_I.o \
+	dampck.o \
+	dampck_I.o \
+	setlag.o \
+	setlag_I.o \
+	setmcp.o \
+	setmcp_I.o \
+	setmix.o \
+	setmix_I.o \
+	setsum.o \
+	setsum_I.o \
+	setxuv.o \
+	setxuv_I.o \
+	setxv.o \
+	setxv_I.o \
+	setxz.o \
+	setxz_I.o \
+	lagcon.o \
+	lagcon_I.o \
+	cofpot.o \
+	cofpot_I.o \
+	consis.o \
+	consis_I.o \
+	csfwgt.o \
+	csfwgt_I.o \
+	dampor.o \
+	dampor_I.o \
+	defcor.o \
+	defcor_I.o \
+	eigen.o \
+	eigen_I.o \
+	engoutgg.o \
+	engoutgg_I.o \
+	endsum.o \
+	endsum_I.o \
+	estim.o \
+	estim_I.o \
+	getaldwt.o \
+	getaldwt_I.o \
+	getald.o \
+	getald_I.o \
+	prtrsl.o \
+	prtrsl_I.o \
+	getoldwt.o \
+	getoldwt_I.o \
+	getold.o \
+	getold_I.o \
+	getscd.o \
+	getscd_I.o \
+	hmout.o \
+	hmout_I.o \
+	out.o \
+	out_I.o \
+	in.o \
+	in_I.o \
+	prwf.o \
+	prwf_I.o \
+	ispar.o \
+	ispar_I.o \
+	itjpo.o \
+	itjpo_I.o \
+	maneig.o \
+	maneig_I.o \
+	matrix.o \
+	matrix_I.o \
+	maxarr.o \
+	maxarr_I.o \
+	newco.o \
+	newco_I.o \
+	outbnd.o \
+	outbnd_I.o \
+	newe.o \
+	newe_I.o \
+	orbout.o \
+	orbout_I.o \
+	orthor.o \
+	orthor_I.o \
+	orthy.o \
+	orthy_I.o \
+	solve.o \
+	solve_I.o \
+	improv.o \
+	improv_I.o \
+	scf.o \
+	scf_I.o \
+	strsum.o \
+	strsum_I.o \
+	rscfvu.o
 
-APP_LIBS = -L${GRASPLIB} ${GRASPLIBS}
+$(EXE): $(OBJS)
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
-
-APP_OBJ= mpi_s.o \
-    itjpo_I.o ispar_I.o \
-    dsubrs_I.o  getaldwt_I.o  orbout_I.o  setcof_I.o  setxuv_I.o\
-    cofpot_I.o  eigen_I.o   getold_I.o    orthor_I.o  setcsl_I.o  setxv_I.o\
-    consis_I.o  endsum_I.o  getoldwt_I.o  lagcon_I.o  orthy_I.o   setdbg_I.o  setxz_I.o\
-    csfwgt_I.o  engoutgg_I.o  getscd_I.o    maneig_I.o  out_I.o     setham_I.o  solve_I.o\
-    dacon_I.o   estim_I.o   hmout_I.o     matrix_I.o  outbnd_I.o  setlag_I.o  strsum_I.o\
-    dampck_I.o  fco_I.o     improv_I.o    maxarr_I.o  prtrsl_I.o  setmcp_I.o  xpot_I.o\
-    dampor_I.o  gco_I.o     in_I.o        newco_I.o   prwf_I.o    setmix_I.o  ypot_I.o\
-    defcor_I.o  getald_I.o  newe_I.o      scf_I.o     setsum_I.o  lodcsh2GG_I.o \
-    \
-    itjpo.o ispar.o \
-    rscfvu.o consis.o csfwgt.o dacon.o dampck.o dampor.o defcor.o \
-    dsubrs.o eigen.o endsum.o engoutgg.o estim.o fco.o gco.o getaldwt.o \
-    getoldwt.o in.o lagcon.o maxarr.o newe.o orbout.o \
-    orthor.o orthy.o out.o outbnd.o prtrsl.o prwf.o setcof.o setdbg.o \
-    setham.o setmcp.o setmix.o setsum.o setxuv.o setxv.o setxz.o solve.o \
-    strsum.o xpot.o ypot.o \
-    cofpot.o getald.o getold.o getscd.o hmout.o improv.o maneig.o \
-    matrix.o newco.o scf.o setcsl.o setlag.o lodcsh2GG.o
-
-$(EXE): $(APP_OBJ)
-	$(FC) -o $(BINFILE) $(FC_LD)  $(APP_OBJ) $(APP_LIBS)  \
-	${LAPACK_LIBS}
-
-.f90.o:
-	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I ${MODL92} -I ${MODDVD} \
-	        -o $@
-
-.f.o:
-	$(FC) -c $(FC_FLAGS) $< -o $@
+%.o: %.f90
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o *.mod core
+	-@rm $(EXE)
+	-@rm *.o *.mod

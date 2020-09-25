@@ -1,8 +1,131 @@
 # General Relativistic Atomic Structure Package
 
-**GRASP2018 - an F95  development version**
-
+![Tests][tests-badge]
+[![][doxygen-badge]][doxygen-url]
 [![][manual-badge]][manual-pdf]
+
+The General Relativistic Atomic Structure Package (GRASP) is a set of Fortran 90
+programs for performing fully-relativistic electron structure calculations of
+atoms.
+
+## Installation
+
+> **Please note:**
+> The installation instructions here are for the _development version_ on the
+> `master` branch.
+>
+> To install the _latest published release_ (2018-12-03), go to the
+> ["Releases" page](https://github.com/compas/grasp/releases/tag/2018-12-03),
+> download the tarball from there and refer to the instructions in the README in
+> the tarball.
+
+To compile and install GRASP, first clone this Git repository:
+
+```sh
+git clone https://github.com/compas/grasp.git
+```
+
+There are two ways to build GRASP: either via [CMake](https://cmake.org/) or via the
+`Makefile`s in the source tree. Either works and you end up with the GRASP binaries in the
+`bin/` directory.
+
+CMake is the recommended way to build GRASP. The `Makefile`-based workflow is still there to
+make smoother to transition from `Makefile`s to a modern build system.
+
+### CMake-based build
+
+The first step with CMake is to create a separate out-of-source build directory. The
+`configure.sh` script can do that for you:
+
+```sh
+cd grasp/ && ./configure.sh
+```
+
+This will create a `build/` directory with the default _Release_ build
+configuration. However, `configure.sh` is just a simple wrapper around a `cmake`
+call and if you need more control over the build, you can always invoke `cmake`
+yourself (see [CMake documentation](https://cmake.org/documentation/) for more
+information).
+
+To then compile GRASP, you need to go into the out-of-source build directory and
+simply call `make`:
+
+```sh
+cd build/ && make install
+```
+
+Remarks:
+
+* Running `make install` instructs CMake to actually _install_ the resulting binaries into
+  the conventional `bin/` directory at the root of the repository.
+
+  When you run just `make`, the resulting binaries will end up under the `build/` directory
+  (specifically in `build/bin/`). This is useful when developing and debugging, as it allows
+  you to compile many versions of the binaries from the same source tree with different
+  compilation options (e.g. build with debug symbols enabled) by using several out of source
+  build directories.
+
+* With CMake, GRASP also supports parallel builds, which can be enabled by passing the `-j`
+  option to `make` (e.g. `make -j4 install` to build with four processes).
+
+* The CMake-based build allows running the (non-comprehensive) test suite by calling `ctest`
+  in the `build/` directory. The configuration and source files for the tests are under
+  `test/`/
+
+### `Makefile`-based build
+
+The legacy `Makefile`-based build can be performed by simply calling the `make` in the top
+level directory:
+
+```sh
+make
+```
+
+In this case, the compilation of each of the libraries and programs happens in their
+respective directory under `src/` and the build artifacts are stored in the source tree.
+The resulting binaries and libraries will directly get installed under the `bin/` and `lib/`
+directories.
+
+To build a specific library or binary you can pass the path to the source directory as the
+Make target:
+
+```sh
+# build libmod
+make src/lib/libmod
+# build the rci_mpi binary
+make src/appl/rci90_mpi
+```
+
+Note that any necessary library dependencies will also get built automatically.
+
+**WARNING:** the `Makefile`s do not know about the dependencies between the source files, so
+parallel builds (i.e. calling `make` with the `-j` option) does not work.
+
+#### Customizing the build
+
+By default the `Makefile` is designed to use `gfortran`. The variables affecting GRASP
+builds are defined and documented at the beginning of the `Makefile`.
+
+For the user it should never be necessary to modify the `Makefile` itself. Rather, a
+`Make.user` file can be create next to the main `Makefile` where the build variables can be
+overridden. E.g. to use the Intel Fortran compiler instead, you may want to create the
+following `Make.user` file:
+
+```make
+export FC = ifort
+export FC_FLAGS = -O2 -save
+export FC_LD = -mkl=sequential
+export FC_MPI = mpiifort
+```
+
+As another example, to set up a linker search path for the BLAS or LAPACK libraries, you can
+set up `Make.user` as follows:
+
+```make
+export FC_LD = -L /path/to/blas
+```
+
+## About GRASP
 
 This version of GRASP is a major revision of the previous GRASP2K package by [P.
 Jonsson, G. Gaigalas, J. Bieron, C. Froese Fischer, and I.P. Grant Computer
@@ -141,6 +264,9 @@ under [the CC-BY-4.0 (Creative Commons Attribution 4.0 International) license][c
 
 [manual-pdf]: https://github.com/compas/grasp2018/releases/download/2018-12-03/GRASP2018-manual.pdf
 [manual-badge]: https://img.shields.io/badge/manual-pdf-blue.svg
+[doxygen-url]: https://compas.github.io/grasp/
+[doxygen-badge]: https://img.shields.io/badge/documentation-doxygen-blue.svg
+[tests-badge]: https://github.com/compas/grasp/workflows/Tests/badge.svg
 [grasp92-1996]: https://doi.org/10.1016/0010-4655(95)00136-0
 [grasp2k-2013]: https://doi.org/10.1016/j.cpc.2013.02.016
 [cc-by]: https://creativecommons.org/licenses/by/4.0/legalcode
