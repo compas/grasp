@@ -3,6 +3,7 @@ LIBS=-L ${GRASP}/lib/ -l9290 -lmod
 FC_MODULES= -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
 OBJS= \
+	nucleus_m.o \
 	skfun.o \
 	skfun_I.o \
 	estrms.o \

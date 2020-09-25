@@ -1,4 +1,5 @@
 add_executable(rnucleus
+    nucleus_m.f90
     skfun.f90
     skfun_I.f90
     estrms.f90
