@@ -147,18 +147,23 @@ fi
 test_file_exists "rwfn.inp"
 
 # Set up MPI_TMP on MPI cases
+function strlen {
+	echo -n $1 | wc -c
+}
 if [[ $CASE =~ ^mpi ]]; then
+	export MPI_TMP=`mktemp -d`
+	function clean_up_mpitmp {
+		rm -Rv ${MPI_TMP}
+	}
+	trap clean_up_mpitmp EXIT
 	if [ "$CASE" == "mpi-longpath" ]; then
-		export MPI_TMP="$TMP/mpitmp"
-	else
-		export MPI_TMP=`mktemp -d`
-		function clean_up_mpitmp {
-			rm -Rv ${MPI_TMP}
-		}
-		trap clean_up_mpitmp EXIT
+		export MPI_TMP="$MPI_TMP/mpitmp"
+		while [ `strlen $MPI_TMP` -lt 80 ]; do
+			export MPI_TMP="${MPI_TMP}-qwertyuiop1234567890"
+		done
+		mkdir "${MPI_TMP}" || exit 5
 	fi
-	nchars=`echo -n $MPI_TMP | wc -c`
-	echo "$MPI_TMP ($nchars characters)"
+	echo "MPI_TMP=$MPI_TMP ($(strlen $MPI_TMP) characters)"
 fi
 
 # Run rangular
