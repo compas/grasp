@@ -2,7 +2,13 @@
 #
 # ./run.sh [--preserve-tmp] casename
 #
-# Create a temporary directory in the current working directory and run the rnucleus tests.
+# Create a temporary directory in the current working directory and run the integration
+# tests. Currently supported cases are:
+#
+# - serial: runs the serial versions of rangular and rmcdhf
+# - mpi: runs the MPI versions of rangular/rmcdhf, but with a short MPI_TMP (under /tmp)
+# - mpi-longpath: runs the MPI versions of rangular/rmcdhf, but with a much longer MPI_TMP
+#   to test for the MPI_TMP handling bug
 #
 export SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Check for mandatory environment variables
