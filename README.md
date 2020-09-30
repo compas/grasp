@@ -148,7 +148,6 @@ This version of GRASP has been published in:
 > https://doi.org/10.1016/j.cpc.2018.10.032
 
 Development of this package was performed largely by:
-
 |                           | email                         |
 | ------------------------- | ------------------------------|
 | Charlotte Froese Fischer  | cff@cs.ubc.ca                 |
@@ -156,16 +155,20 @@ Development of this package was performed largely by:
 | Per Jönsson               | per.jonsson@mau.se            |
 | Jacek Bieron              | jacek.bieron@uj.edu.pl        |
 
-Please contact one of these authors if you have questions.
-
 Supporters include:
-
 |                           | email                         |
 | ------------------------- | ------------------------------|
 | Jörgen Ekman              | jorgen.ekman@mah.se           |
 | Ian Grant                 | iangrant15@btinternet.com     |
 
+The GitHub repository is maintained by:
+|                           | email                         |
+| ------------------------- | ------------------------------|
+| Jon Grumer                | jon.grumer@physics.uu.se
 
+Please contact the repository manager should you have any questions with regards
+to bugs or the general development procedure. Contact the leading developer for 
+specific questions related to a certain code.
 
 ## Structure of the Package
 
