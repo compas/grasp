@@ -15,7 +15,7 @@
 !                                                                      *
 !   Rewrite by G. Gaigalas                                             *
 !   Transform to fortran 90/95 by G. Gaigalas           December 2012  *
-!   The last modification made by G. Gaigalas           October  2017  *
+!   The last modification made by G. Gaigalas           October  2020  *
 !                                                                      *
 !***********************************************************************
 !
@@ -330,8 +330,12 @@
               IF (NQ1(K1) .LE. 1) CYCLE
             END IF
             JA2 = JA1
-            IF(JA.NE.JB) THEN
-              IF(IDQG.NE.2) THEN
+            IF(JA /= JB) THEN
+              IF(NPEEL == 1 .AND. NQ1(K1) == NQ2(K1)) THEN
+!
+!               TARP TU PACIU BUSENU
+                CALL EL1(JA,JB,JA1,JB1,1,ICOLBREI)
+              ELSE IF(IDQG.NE.2) THEN
                 WRITE(99,996)
                 WRITE(99,*)"JA,JB,JA1,JB1",JA,JB,JA1,JB1
                 WRITE(99,*)"IDQG IDQ",IDQG,IDQ
