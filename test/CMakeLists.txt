@@ -26,3 +26,15 @@ foreach(conf "serial" "mpi" "mpi-longpath")
         "GRASP_BINDIR=${BUILD_BINDIR}"
     )
 endforeach()
+
+# Integration tests for rnucleus.
+# They only test if rnucleus runs, exits with non-zero exit code and produces an isodata file
+# in the current working directory.
+foreach(conf "Z1" "Z1-fnc" "Z1-fnc-revise" "Z92")
+    add_test(NAME integration.rnucleus.${conf}
+        COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/integration/rnucleus/run.sh "${conf}"
+    )
+    set_property(TEST integration.rnucleus.${conf} PROPERTY ENVIRONMENT
+        "GRASP_BINDIR=${BUILD_BINDIR}"
+    )
+endforeach()
