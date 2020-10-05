@@ -1,6 +1,13 @@
 name: Verify build files
 
-on: [push, pull_request]
+# branches: '*' only matches "main" branches, i.e. ones without a /
+# This ensures that we don't run CI multiple times on pull requests, since we expect all
+# feature branches to be namespaced as <prefix>/<branch>.
+on:
+  push:
+    branches: '*'
+    tags: '**'
+  pull_request:
 
 jobs:
   build:
