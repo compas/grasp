@@ -36,15 +36,22 @@ mkdir "${build_abspath}" && cd "${build_abspath}" \
 
 # Note: we need to use spaces, not tabs, to indent in the heredoc.
 cat <<-EOF
-Build directory ${build_directory}/ created.
-To build GRASP run you need to cd into ${build_directory}/ and run make:
+
+ Build directory ${build_directory}/ created.
+
+ To compile GRASP you need to cd into ${build_directory}/ and run make:
 
     cd ${build_directory}/
-    make
+    make install
+ 
+ which installs the GRASP binaries to the bin/ directory.
 
-Note that you probably want to also enable parallel builds by pass -j to make:
+ Note that you also probably want to enable parallel build by passing -j to make:
 
-    make -jN
+    make -jN install
 
-where N is the number of cores you have available.
+ where N is the number of cores you have available.
+
+ Note: remove the build/ directory and rerun ./configure.sh to completely redo the configure step.
+
 EOF
