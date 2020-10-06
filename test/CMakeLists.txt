@@ -16,6 +16,17 @@ add_executable(test.lib9290_quad
 target_link_libraries_Fortran(test.lib9290_quad PUBLIC mod 9290)
 add_test(lib9290_quad test.lib9290_quad)
 
+# Simple integration test testing the rnucleus-rcsfgenerate-rwfnestimate-rangular-rmcdhf
+# workflow.
+foreach(conf "serial" "mpi" "mpi-longpath")
+    add_test(NAME integration.workflow.${conf}
+        COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/integration/mpitmp/run.sh "${conf}"
+    )
+    set_property(TEST integration.workflow.${conf} PROPERTY ENVIRONMENT
+        "GRASP_BINDIR=${BUILD_BINDIR}"
+    )
+endforeach()
+
 # Integration tests for rnucleus.
 # They only test if rnucleus runs, exits with non-zero exit code and produces an isodata file
 # in the current working directory.
