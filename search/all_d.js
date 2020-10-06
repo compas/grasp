@@ -1,6 +1,8 @@
 var searchData=
 [
   ['n',['n',['../structjj2lsj__code_1_1nl.html#a7bade1d929ebebd19d509f3e769a904f',1,'jj2lsj_code::nl::n()'],['../namespaceradial__c.html#ad8ef8490adc8d283ff245dcf50de20b7',1,'radial_c::n()'],['../namespacegrid__c.html#a6bf278a6385772ff1ccff5f7a6633370',1,'grid_c::n()']]],
+  ['n_5fatoms',['n_atoms',['../namespacenucleus__m.html#a925a64d9a899e8ff06bfe84dc71aad24',1,'nucleus_m']]],
+  ['n_5frange',['n_range',['../namespacenucleus__m.html#a87434977af1bdb0c4e9f7e82746aca1d',1,'nucleus_m']]],
   ['nak',['nak',['../namespaceorb__c.html#afa7c9e2514fe8b46c8d8de105fbfdfbe',1,'orb_c']]],
   ['nakff',['nakff',['../namespacebiorb__c.html#a42fde6e05902a55b6ef8d853651b4d93',1,'biorb_c']]],
   ['nakii',['nakii',['../namespacebiorb__c.html#a389d29b1dcc200b58983b7ec4bf01575',1,'biorb_c']]],
@@ -189,6 +191,8 @@ var searchData=
   ['ntpi',['ntpi',['../namespacebilst__c.html#a0c20490f0b9658c18f844518b14571fd',1,'bilst_c']]],
   ['ntpitmp',['ntpitmp',['../namespacesetham__to__genmat2__c.html#adf115f2ad0d918ff4eac177fd1fc854f',1,'setham_to_genmat2_c::ntpitmp()'],['../namespacehmat__c.html#aeb419674589cda428e7868d338c1698c',1,'hmat_c::ntpitmp()']]],
   ['ntrans',['ntrans',['../namespacejqjc__c.html#a428eb4984e5d324ea5fe5b778730f707',1,'jqjc_c']]],
+  ['nucleus_5fm',['nucleus_m',['../namespacenucleus__m.html',1,'']]],
+  ['nucleus_5fm_2ef90',['nucleus_m.f90',['../nucleus__m_8f90.html',1,'']]],
   ['nucpot',['nucpot',['../interfacenucpot__i_1_1nucpot.html',1,'nucpot_i::nucpot'],['../interfacenucpot__i_1_1nucpot.html#ad87a1dbe2960d379584cb0d699311071',1,'nucpot_i::nucpot::nucpot()'],['../nucpot_8f90.html#a5ab4da2e6b823f88204eeab4b42c2fb8',1,'nucpot():&#160;nucpot.f90']]],
   ['nucpot_2ef90',['nucpot.f90',['../nucpot_8f90.html',1,'']]],
   ['nucpot_5fi',['nucpot_i',['../namespacenucpot__i.html',1,'']]],

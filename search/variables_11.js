@@ -10,5 +10,5 @@ var searchData=
   ['rnt',['rnt',['../namespacegrid__c.html#abb34ec17a6bda1bcd77b6282afbc0b4d',1,'grid_c']]],
   ['rp',['rp',['../namespacegrid__c.html#a3001dd68f960564cd1e114eb12228a3b',1,'grid_c']]],
   ['rpor',['rpor',['../namespacegrid__c.html#a6cfa61451588fae84b54bc84d1615e9b',1,'grid_c']]],
-  ['rr',['rr',['../namespaceradial__c.html#a52e1474e314cdf8957b37154a6fabbf2',1,'radial_c']]]
+  ['rr',['rr',['../namespaceradial__c.html#a52e1474e314cdf8957b37154a6fabbf2',1,'radial_c::rr()'],['../namespacenucleus__m.html#aadb2a0e0828722e6e3f118cdf1b07f50',1,'nucleus_m::rr()']]]
 ];

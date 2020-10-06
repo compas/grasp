@@ -6,6 +6,8 @@ var searchData=
   ['a1jj_5fi',['a1jj_i',['../namespacea1jj__i.html',1,'']]],
   ['a1jj_5fi_2ef90',['a1jj_I.f90',['../a1jj__I_8f90.html',1,'']]],
   ['a_5fi',['a_i',['../namespacea__i.html',1,'']]],
+  ['a_5fmax',['a_max',['../namespacenucleus__m.html#ac8aa001386cf3938a2be5b5ec45d0c8d',1,'nucleus_m']]],
+  ['a_5fmin',['a_min',['../namespacenucleus__m.html#a8541e730d34d4c5cbb0ca885c9c5cc35',1,'nucleus_m']]],
   ['acc',['acc',['../namespacewave__c.html#a11d53ce8353852661f0ef08513816800',1,'wave_c']]],
   ['accy',['accy',['../namespacedef__c.html#ac1ca723a06a67e7497a93961fdec7230',1,'def_c']]],
   ['add',['add',['../interfaceadd__i_1_1add.html',1,'add_i::add'],['../interfaceadd__i_1_1add.html#a1eacd3838d30ddd0078b8f5d21c36bbb',1,'add_i::add::add()'],['../HF_8f90.html#ad74f575f2aa76a8362a6d591c6163635',1,'add():&#160;HF.f90']]],

@@ -20,6 +20,7 @@ var searchData=
   ['node_5fc_2ef90',['node_C.f90',['../node__C_8f90.html',1,'']]],
   ['npar_5fc_2ef90',['npar_C.f90',['../npar__C_8f90.html',1,'']]],
   ['npot_5fc_2ef90',['npot_C.f90',['../npot__C_8f90.html',1,'']]],
+  ['nucleus_5fm_2ef90',['nucleus_m.f90',['../nucleus__m_8f90.html',1,'']]],
   ['nucpot_2ef90',['nucpot.f90',['../nucpot_8f90.html',1,'']]],
   ['nucpot_5fi_2ef90',['nucpot_I.f90',['../nucpot__I_8f90.html',1,'']]]
 ];

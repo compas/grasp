@@ -1,6 +1,8 @@
 var searchData=
 [
   ['a',['a',['../namespacelic13__c.html#ae251ce9208998b1364b2c12720f684a4',1,'lic13_c']]],
+  ['a_5fmax',['a_max',['../namespacenucleus__m.html#ac8aa001386cf3938a2be5b5ec45d0c8d',1,'nucleus_m']]],
+  ['a_5fmin',['a_min',['../namespacenucleus__m.html#a8541e730d34d4c5cbb0ca885c9c5cc35',1,'nucleus_m']]],
   ['acc',['acc',['../namespacewave__c.html#a11d53ce8353852661f0ef08513816800',1,'wave_c']]],
   ['accy',['accy',['../namespacedef__c.html#ac1ca723a06a67e7497a93961fdec7230',1,'def_c']]],
   ['aint1',['aint1',['../namespaceame__c.html#a1db4f56df4c1a1876722793b3b210ed9',1,'ame_c']]],

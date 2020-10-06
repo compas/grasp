@@ -1,6 +1,8 @@
 var searchData=
 [
   ['n',['n',['../structjj2lsj__code_1_1nl.html#a7bade1d929ebebd19d509f3e769a904f',1,'jj2lsj_code::nl::n()'],['../namespaceradial__c.html#ad8ef8490adc8d283ff245dcf50de20b7',1,'radial_c::n()'],['../namespacegrid__c.html#a6bf278a6385772ff1ccff5f7a6633370',1,'grid_c::n()']]],
+  ['n_5fatoms',['n_atoms',['../namespacenucleus__m.html#a925a64d9a899e8ff06bfe84dc71aad24',1,'nucleus_m']]],
+  ['n_5frange',['n_range',['../namespacenucleus__m.html#a87434977af1bdb0c4e9f7e82746aca1d',1,'nucleus_m']]],
   ['nak',['nak',['../namespaceorb__c.html#afa7c9e2514fe8b46c8d8de105fbfdfbe',1,'orb_c']]],
   ['nakff',['nakff',['../namespacebiorb__c.html#a42fde6e05902a55b6ef8d853651b4d93',1,'biorb_c']]],
   ['nakii',['nakii',['../namespacebiorb__c.html#a389d29b1dcc200b58983b7ec4bf01575',1,'biorb_c']]],

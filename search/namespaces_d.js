@@ -16,5 +16,6 @@ var searchData=
   ['npar_5fc',['npar_c',['../namespacenpar__c.html',1,'']]],
   ['npot_5fc',['npot_c',['../namespacenpot__c.html',1,'']]],
   ['nsmdat_5fc',['nsmdat_c',['../namespacensmdat__c.html',1,'']]],
+  ['nucleus_5fm',['nucleus_m',['../namespacenucleus__m.html',1,'']]],
   ['nucpot_5fi',['nucpot_i',['../namespacenucpot__i.html',1,'']]]
 ];
