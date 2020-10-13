@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE GETINF
+SUBROUTINE GETINF
 !                                                                      *
 !   Interactively determines data useful for generating estimates of   *
 !   the subshell radial wavefunctions.                                 *

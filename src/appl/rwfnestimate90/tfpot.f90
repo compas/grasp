@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE TFPOT
+SUBROUTINE TFPOT
 !                                                                      *
 !   Calculation of the universal Thomas-Fermi potential.               *
 !                                                                      *

@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE SETDBG
+SUBROUTINE SETDBG
 !                                                                      *
 !   This subroutine sets the arrays that control debug printout from   *
 !   the radial and angular modules of the GRASP92 suite.               *

@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE SBSTEP(IORB, NSTRT, NEND, P, Q)
+SUBROUTINE SBSTEP(IORB, NSTRT, NEND, P, Q)
 !                                                                      *
 !   This  subroutine continues the solution of the homogeneous Dirac   *
 !   radial equation  from tabulation point NSTRT to tabulation point   *

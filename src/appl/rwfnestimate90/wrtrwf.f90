@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE WRTRWF
+SUBROUTINE WRTRWF
 !                                                                      *
 !   Open, write a header and all subshell radial wavefunctions, and    *
 !   close the  .rwf  file.                                             *

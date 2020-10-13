@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE GENRWF
+SUBROUTINE GENRWF
 !                                                                      *
 !   Controls the computation of the subshell radial wavefunctions.     *
 !                                                                      *

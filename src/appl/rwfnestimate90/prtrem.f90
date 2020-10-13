@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE PRTREM(ALL)
+SUBROUTINE PRTREM(ALL)
 !                                                                      *
 !   Prints a list of subshells that remain to be estimated.  ALL  is   *
 !   .TRUE.  if all subshells have been estimated and  .FALSE. other-   *

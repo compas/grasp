@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE FRMRWF(INDEX, NSUBS, FILNAM)
+SUBROUTINE FRMRWF(INDEX, NSUBS, FILNAM)
 !                                                                      *
 !   This subroutine loads  radial wavefunctions from the  .rwf  file   *
 !   and performs some related setup.                                   *

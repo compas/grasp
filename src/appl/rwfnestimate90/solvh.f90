@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE SOLVH(IORB, FAIL)
+SUBROUTINE SOLVH(IORB, FAIL)
 !                                                                      *
 !   This routine solves the homogeneous Dirac radial equation.         *
 !                                                                      *

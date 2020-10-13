@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE SUMMRY(NUNIT)
+SUBROUTINE SUMMRY(NUNIT)
 !                                                                      *
 !   Prints  a summary of the complete  list of subshell radial wave-   *
 !   functions on NUNIT.                                                *

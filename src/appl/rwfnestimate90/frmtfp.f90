@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE FRMTFP(INDEX, NSUBS)
+SUBROUTINE FRMTFP(INDEX, NSUBS)
 !                                                                      *
 !   This  subroutine  is  used  to  produce  estimates  of  the wave   *
 !   functions by use of the Thomas-Fermi approximation to the direct   *

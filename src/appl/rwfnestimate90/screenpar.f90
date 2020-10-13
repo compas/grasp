@@ -1,7 +1,7 @@
 
 
 !***********************************************************************
-      SUBROUTINE SCREENPAR(NCORE)
+SUBROUTINE SCREENPAR(NCORE)
 !
 ! Purpose:
 !   Compute hydrogenic screen parameters

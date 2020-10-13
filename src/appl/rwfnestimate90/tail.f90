@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE TAIL(IORB, P, Q, JP, MTP)
+SUBROUTINE TAIL(IORB, P, Q, JP, MTP)
 !                                                                      *
 !   This subroutine begins the inward integration of the homogeneous   *
 !   Dirac radial equation. With only minor modifications, the series   *

@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE FRMHYD(INDEX, NSUBS, MODIFY)
+SUBROUTINE FRMHYD(INDEX, NSUBS, MODIFY)
 !                                                                      *
 !   This  subroutine  is  used  to  produce  estimates  of  the wave   *
 !   functions from the hydrogenic approximation. The screening cons-   *

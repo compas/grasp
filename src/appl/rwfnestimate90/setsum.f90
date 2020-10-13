@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE SETSUM
+SUBROUTINE SETSUM
       USE IOUNIT_C
 !                                                                      *
 !   Open the  .sum  file on stream 24.                                 *

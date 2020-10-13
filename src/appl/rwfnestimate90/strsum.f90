@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE STRSUM
+SUBROUTINE STRSUM
 !                                                                      *
 !   Generates the first part of  erwf.sum  (on stream 24).             *
 !                                                                      *
