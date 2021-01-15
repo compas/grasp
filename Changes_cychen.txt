@@ -14,3 +14,4 @@ monitor. The output messages are very useful for extremely large-scaled calculat
 iteration calculations. Or, error results could be obtained in some cases (in
 O-like isoelectronic sequence?). 
 09. dvdson--mpi
+10. Modifcations for searching the targeted eigenpairs one by one

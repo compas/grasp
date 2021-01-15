@@ -1,7 +1,7 @@
 
 !***************************************************************************
 
-      SUBROUTINE GDVD(OP, N, LIM, DIAG, ILOW, IHIGH, ISELEC, NIV, MBLOCK, CRITE&
+      SUBROUTINE GDVD(OP, IRESTART_GDVD, N, LIM, DIAG, ILOW, IHIGH, ISELEC, NIV, MBLOCK, CRITE&
          , CRITC, CRITR, ORTHO, MAXITER, WORK, IWRSZ, IWORK, IIWSZ, HIEND, &
          NLOOPS, NMV, IERR)
 !      Written by M. Saparov
@@ -25,6 +25,7 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
+      INTEGER  :: IRESTART_GDVD 
       INTEGER  :: N
       INTEGER  :: LIM
       INTEGER  :: ILOW
@@ -134,13 +135,27 @@
          GO TO 99
 
 !*********
-      ELSE IF (IRC==2 .OR. IRC==3) THEN
+!-----------------------------------------------------------------------
+! CYC: Try to diagonalize step by step
+      !ELSE IF (IRC==2 .OR. IRC==3) THEN
+      ELSE IF (IRC==3) THEN
 !********* ..Matrix-vector multiply.
          CALL OP (N, NB, WORK(IW1), WORK(IW2))
          NMV = NMV + NB
-
          GO TO 99
+
+      ELSE IF (IRC==2) THEN
+       IF (IRESTART_GDVD==0) THEN
+         CALL OP (N, NB, WORK(IW1), WORK(IW2))
+         NMV = NMV + NB 
+       ELSE
+         CALL OP (N, 1, WORK(IW1), WORK(IW2))
+         NMV = NMV + 1
+       ENDIF
+       GO TO 99
       ENDIF
+! CYC
+!-----------------------------------------------------------------------
 ! * * * * End of Reverse Communication * * * * * * * * * * * * * * * * *
 
       RETURN

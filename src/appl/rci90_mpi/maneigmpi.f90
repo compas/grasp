@@ -132,8 +132,12 @@
       CHARACTER(LEN=8) :: CNUM
       REAL(DOUBLE), DIMENSION(:), pointer :: w, z, work, diag
       INTEGER, DIMENSION(:), pointer :: iwork, ifail, jwork
-!-----------------------------------------------
-!
+
+!-----------------------------------------------------------------------
+! CYC Modifications for step by step diagonalization
+      INTEGER IRESTART_GDVD, ISTEP, NSTEP, IITMP, NMV0
+      INTEGER TIME0, TIME1, TIME2
+! CYC
 !-----------------------------------------------------------------------
       ABSTOL = 2*DLAMCH('S')
       IF (MYID == 0) WRITE (6, *) 'Calling maneig...'
@@ -494,7 +498,7 @@
               print *, 'Returned from iniestsd '
               if (ncf.gt. IOLPCK) then
                 print *, 'Calling GDVD'
-                CALL GDVD (SPODMV,NCF,LIM,DIAG,ILOW,IHIGH,            &
+                CALL GDVD (SPODMV,IRESTART_GDVD,NCF,LIM,DIAG,ILOW,IHIGH,            &
                   JWORK,NIV,MBLOCK,CRITE,CRITC, CRITR,ORTHO,MAXITR,   &
                   WORK,LWORK,IWORK,LIWORK,HIEND,NLOOPS,               &
                   NMV,IERR)
@@ -505,10 +509,70 @@
                IF (myid .EQ. 0) print *, ' Sparse - Memory, iniestmpi'
                CALL iniestmpi (IOLPCK, NCF,NIV,WORK,EMT,IENDC,IROW)
                if(ncf.gt. IOLPCK) then
-                 CALL GDVD (SPICMVmpi,NCF,LIM,DIAG,ILOW,IHIGH,        &
+!-----------------------------------------------------------------------
+! CYC: Try to diagonalize step by step
+                IRESTART_GDVD = 0
+                TIME0 = MPI_WTIME()
+! More tests should be performed for istep, it could be set as 1
+                ISTEP = 5 
+                NMV = 0 
+                IF (NCF.GT.2.0E5 .AND. NVEX.GT.ISTEP) THEN
+                 NSTEP = NVEX / ISTEP
+                 IF (MOD(NVEX,ISTEP).LE.ISTEP/2) NSTEP = NSTEP - 1
+                 DO IITMP = 1, NSTEP
+! NIV could be changed to nvecmx+1 in dvdson:initdvd procedure
+                  NIV = NVEX
+                  ILOW = 1
+                  IHIGH = IITMP * ISTEP
+                  IF (IITMP .EQ. 1 ) THEN
+                    IRESTART_GDVD = 0
+                  ELSE
+                    IRESTART_GDVD = 1
+                  ENDIF
+                  NMV0 = NMV
+                  TIME1 = MPI_WTIME()
+
+                  CALL GDVD (SPICMVmpi,IRESTART_GDVD,NCF,LIM,DIAG,ILOW,IHIGH, &
                   JWORK,NIV,MBLOCK,CRITE,CRITC, CRITR,ORTHO,MAXITR,   &
                   WORK,LWORK,IWORK,LIWORK,HIEND,NLOOPS,               &
                   NMV,IERR)
+
+                  TIME2 = MPI_WTIME()
+                  IF (MYID .EQ. 0) THEN
+                    WRITE (*, *)' IITMP= ', IITMP,  &
+                                ' Time (s)=', TIME2 - TIME1
+                    WRITE (*,*) ' ', NMV - NMV0, &
+                      'Matrix-vector multiplies for this loop.'  
+                    WRITE (*,*) ' ', NMV,  &
+                      ' Total matrix-vector multiplies by now.'
+                  ENDIF
+                 ENDDO
+                ENDIF
+
+! Search the remaining (NVEX - ISTEP * NSTEP) EIGENPAIRS
+                NIV = NVEX
+                ILOW = 1
+                IHIGH = NVEX
+                NMV0 = NMV  
+                TIME1 = MPI_WTIME()
+
+                CALL GDVD(SPICMVmpi,IRESTART_GDVD,NCF,LIM,DIAG,ILOW,IHIGH, &
+                JWORK,NIV,MBLOCK,CRITE,CRITC, CRITR,ORTHO,MAXITR,   &
+                WORK,LWORK,IWORK,LIWORK,HIEND,NLOOPS,               &
+                NMV,IERR)
+
+                TIME2 = MPI_WTIME()
+                IF (MYID .EQ. 0) THEN
+                  WRITE (*, *)' IITMP= ', IITMP,  &
+                              ' Time (s)=', TIME2 - TIME1 
+                  WRITE (*,*) ' ', NMV - NMV0, &
+                    'Matrix-vector multiplies for this loop.'  
+                  WRITE (*,*) ' ', NMV,  &
+                    ' Total matrix-vector multiplies by now.'
+                  WRITE (*, *)' Total time (m)=', (TIME2 - TIME0) / 60.0
+                ENDIF
+! CYC
+!-----------------------------------------------------------------------
                end if
 
                CALL DALLOC (EMT, 'EMT', 'MANEIG')
@@ -520,7 +584,7 @@
                IF (myid .EQ. 0) print *, ' Dense - Memory, iniestdm'
               CALL INIESTDM (IOLPCK,NCF,NIV,WORK,EMT)
               if (ncf.gt. IOLPCK) then
-                CALL GDVD (DNICMV,NCF,LIM,DIAG,ILOW,IHIGH,            &
+                CALL GDVD (DNICMV,IRESTART_GDVD,NCF,LIM,DIAG,ILOW,IHIGH,            &
                     JWORK,NIV,MBLOCK,CRITE,CRITC, CRITR,ORTHO,MAXITR, &
                     WORK,LWORK,IWORK,LIWORK,HIEND,NLOOPS,             &
                     NMV,IERR)

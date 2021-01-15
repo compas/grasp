@@ -362,7 +362,11 @@
 
       IF (IERR /= 0) RETURN
 
-      NUME = IHIGH
+!set NUME=NIV. In step-by-step diagonalization, IHIGH is changed in
+!different calling dvdson
+      !NUME=IHIGH
+      NUME = NIV
+
 !       ..Identify if few of the highest eigenpairs are wanted.
       IF (ILOW + IHIGH - 1 > N) THEN
          HIEND = .TRUE.
@@ -423,6 +427,7 @@
 !
 
   100 CONTINUE
+! CYC: niv may be changed to nume+1 in initdvd
       CALL INITDVD (IRC, IREV, N, NOC, NIV, NUME + 1, LIM, HIEND, WORK(ISCRA1)&
          , WORK(IORTHO), WORK(IBASIS), WORK(IAB), WORK(IS))
 !       ----------------------------------------------------------------
