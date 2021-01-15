@@ -78,6 +78,10 @@
       REAL(DOUBLE), DIMENSION(:), POINTER :: WORK, DIAG
       LOGICAL :: HIEND
 !-----------------------------------------------
+!CYC: Search the targeted eigenpairs one by one
+      INTEGER IRESTART_GDVD
+      IRESTART_GDVD = 0
+!
 
       !PRINT *, 'maneig ...'
 
@@ -159,7 +163,8 @@
 
          CALL ALLOC (IWORK, LIWORK, 'IWORK', 'MANEIG')
          CALL ALLOC (JWORK, LIM, 'JWORK', 'MANEIG')
-         CALL GDVD (SPICMV2, NCF, LIM, DIAG, ILOW, IHIGH, JWORK, NIV, MBLOCK, &
+         !CALL GDVD (SPICMV2, NCF, LIM, DIAG, ILOW, IHIGH, JWORK, NIV, MBLOCK, &
+         CALL GDVD (SPICMV2, IRESTART_GDVD, NCF, LIM, DIAG, ILOW, IHIGH, JWORK, NIV, MBLOCK, &
             CRITE, CRITC, CRITR, ORTHO, MAXITR, WORK, LWORK, IWORK, LIWORK, &
             HIEND, NLOOPS, NMV, IERR)
 

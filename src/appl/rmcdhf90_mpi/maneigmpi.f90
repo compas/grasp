@@ -78,8 +78,12 @@
       REAL(DOUBLE) :: PNWORK, CRITE, CRITC, CRITR, ORTHO, AMAX, WA, DNFAC
       REAL(DOUBLE), DIMENSION(:), POINTER :: WORK, DIAG, atmp
       LOGICAL :: HIEND
-!-----------------------------------------------
 
+!-----------------------------------------------
+!CYC: Search the targeted eigenpairs one by one
+      INTEGER IRESTART_GDVD
+      IRESTART_GDVD = 0
+!-----------------------------------------------
       !PRINT *, 'maneig ...'
 
 !      ...spicmvmpi needs this COMMON /WCHBLK/JBLOCKK
@@ -174,7 +178,8 @@
          CALL ALLOC (IWORK, LIWORK, 'IWORK', 'MANEIGmpi')
          CALL ALLOC (JWORK, LIM, 'JWORK', 'MANEIGmpi')
          if (ncf.gt.1000) then
-            CALL GDVD (SPICMVMPI,NCF,LIM,DIAG,ILOW,IHIGH,JWORK,NIV,MBLOCK, &
+            !CALL GDVD (SPICMVMPI,NCF,LIM,DIAG,ILOW,IHIGH,JWORK,NIV,MBLOCK, &
+            CALL GDVD (SPICMVMPI,IRESTART_GDVD,NCF,LIM,DIAG,ILOW,IHIGH,JWORK,NIV,MBLOCK, &
             CRITE, CRITC, CRITR, ORTHO, MAXITR, WORK, LWORK, IWORK, LIWORK, &
             HIEND, NLOOPS, NMV, IERR)
          end if
