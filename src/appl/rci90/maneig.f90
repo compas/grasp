@@ -107,6 +107,10 @@
       REAL(DOUBLE), DIMENSION(:), pointer :: w, z, work, diag
       INTEGER, DIMENSION(:), pointer :: iwork, ifail, jwork
 !-----------------------------------------------------------------------
+!CYC: Search the targeted eigenpairs one by one
+      INTEGER IRESTART_GDVD
+      IRESTART_GDVD = 0
+
       ABSTOL = 2*DLAMCH('S')
       MYID = 0
       NPROCS = 1
@@ -436,7 +440,7 @@
 
                !NIV = 0   ! Why equal 0 ???
                !WRITE (6, *) ' Calling gdvd(spodmv,...'
-               CALL GDVD (SPODMV, NCF, LIM, DIAG, ILOW, IHIGH, JWORK, NIV, &
+               CALL GDVD (SPODMV, IRESTART_GDVD, NCF, LIM, DIAG, ILOW, IHIGH, JWORK, NIV, &
                   MBLOCK, CRITE, CRITC, CRITR, ORTHO, MAXITR, WORK, LWORK, &
                   IWORK, LIWORK, HIEND, NLOOPS, NMV, IERR)
 
