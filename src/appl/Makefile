@@ -1,7 +1,8 @@
-SUBDIR =  HF jj2lsj90 jjgen90 rangular90  rbiotransform90  rci90  rcsfgenerate90  \
-          rcsfinteract90 rcsfzerofirst90 rhfs90 rmcdhf90 rnucleus90 rtransition90  rwfnestimate90 sms90  \
+SUBDIR =  HF jj2lsj90 jjgen90 rangular90  rbiotransform90  rcsfgenerate90  \
+          rcsfinteract90 rcsfzerofirst90 rhfs90 rnucleus90 rtransition90  rwfnestimate90 sms90  \
 	  rangular90_mpi rbiotransform90_mpi rci90_mpi rmcdhf90_mpi rtransition90_mpi
-
+          # rci90 rmcdhf90 
+          
 TARGETS	 = install
 
 $(TARGETS):

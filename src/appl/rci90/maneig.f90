@@ -452,7 +452,7 @@
                !WRITE (*, *) NCF, NIV, (WORK(I),I=NCF*NIV + 1,NCF*NIV + NIV)
                !WRITE (*, *) LIM, ILOW, IHIGH, MBLOCK, MAXITR, LWORK, LIWORK
                !WRITE (*, *) IERR
-               CALL GDVD (SPICMV2, NCF, LIM, DIAG, ILOW, IHIGH, JWORK, NIV, &
+               CALL GDVD (SPICMV2, IRESTART_GDVD, NCF, LIM, DIAG, ILOW, IHIGH, JWORK, NIV, &
                   MBLOCK, CRITE, CRITC, CRITR, ORTHO, MAXITR, WORK, LWORK, &
                   IWORK, LIWORK, HIEND, NLOOPS, NMV, IERR)
                !WRITE (*, *) 'after gdvd...'
@@ -469,7 +469,7 @@
                WRITE (6, *) ' Dense - Memory,  iniestdm'
 !            CALL INIESTDM (1000,NCF,NIV,WORK,EMT)
                CALL INIESTDM (2000, NCF, NIV, WORK, EMT)
-               CALL GDVD (DNICMV, NCF, LIM, DIAG, ILOW, IHIGH, JWORK, NIV, &
+               CALL GDVD (DNICMV, IRESTART_GDVD, NCF, LIM, DIAG, ILOW, IHIGH, JWORK, NIV, &
                   MBLOCK, CRITE, CRITC, CRITR, ORTHO, MAXITR, WORK, LWORK, &
                   IWORK, LIWORK, HIEND, NLOOPS, NMV, IERR)
                CALL DALLOC (EMT, 'EMT', 'MANEIG')
