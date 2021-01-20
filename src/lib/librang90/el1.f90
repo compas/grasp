@@ -13,7 +13,7 @@
 !                                                                  *
 !   Written by  G. Gaigalas                                        *
 !   Transform to fortran 90/95 by G. Gaigalas       December 2012  *
-!   The last modification made by G. Gaigalas       October  2017  *
+!   The last modification made by G. Gaigalas       October  2020  *
 !                                                                  *
 !*******************************************************************
 !
@@ -64,13 +64,14 @@
 !-----------------------------------------------
       IF(JA /= JB)GO TO 9
 !
-      IF(JJA /= JJB) RETURN
+!GG      IF(JJA /= JJB) RETURN
 !
 !     THE CASE 1111   + + - -
 !
       IF(IIRE /= 0) THEN
         CALL RECO(JA,JA,JA,JA,0,IAT)
-        IF(IAT /= 0)RETURN
+!GG        IF(IAT /= 0)RETURN
+        IF(IAT == 0)RETURN
       END IF
       CALL PERKO2(JA,JA,JA,JA,1)
       QM1=HALF
