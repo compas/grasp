@@ -159,7 +159,7 @@ Supporters include:
 |                           | email                         |
 | ------------------------- | ------------------------------|
 | Jörgen Ekman              | jorgen.ekman@mah.se           |
-| Ian Grant                 | iangrant15@btinternet.com     |
+| Ian Grant                 | ian.grant@maths.ox.ac.uk      |
 
 The GitHub repository is maintained by:
 |                           | email                         |
