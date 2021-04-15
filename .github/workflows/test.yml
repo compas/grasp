@@ -5,7 +5,7 @@ name: Tests
 # feature branches to be namespaced as <prefix>/<branch>.
 on:
   push:
-    branches: '*'
+    branches: '**'
     tags: '**'
   pull_request:
 
