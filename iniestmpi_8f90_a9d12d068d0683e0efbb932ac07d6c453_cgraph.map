@@ -1,6 +1,5 @@
 <map id="iniestmpi" name="iniestmpi">
-<area shape="rect" id="node1" title=" " alt="" coords="5,22,88,49"/>
-<area shape="rect" id="node2" href="$dinit_8f90.html#a1ff4ead44475a348f2f19d18922ed49b" title=" " alt="" coords="275,22,325,49"/>
-<area shape="rect" id="node3" href="$dspevx_8f90.html#a07ee2c397b1b0f73e296f20f8d36990a" title=" " alt="" coords="147,22,216,49"/>
-<area shape="rect" id="node4" href="$mpiu_8f90.html#a63a206a2a6ba8eb6ce1db4c4e745cd3f" title=" " alt="" coords="136,73,227,99"/>
+<area shape="rect" id="node2" href="$dinit_8f90.html#a1ff4ead44475a348f2f19d18922ed49b" title="dinit" alt="" coords="275,5,325,32"/>
+<area shape="rect" id="node3" href="$mpiu_8f90.html#a63a206a2a6ba8eb6ce1db4c4e745cd3f" title="gdsummpi" alt="" coords="136,31,227,57"/>
+<area shape="rect" id="node4" href="$dspevx_8f90.html#a07ee2c397b1b0f73e296f20f8d36990a" title="dspevx" alt="" coords="147,81,216,108"/>
 </map>

@@ -1,5 +1,4 @@
 <map id="interact_csf" name="interact_csf">
-<area shape="rect" id="node1" title=" " alt="" coords="293,5,392,32"/>
-<area shape="rect" id="node2" href="$Interact__MR_8f90.html#a6c71a7e79835521b9d9da3ab56a56b9f" title=" " alt="" coords="148,5,245,32"/>
-<area shape="rect" id="node3" href="$RCSFinteract_8f90.html#a2e3af96bc4c9d92477bcdf4b82e1acbc" title=" " alt="" coords="5,5,100,32"/>
+<area shape="rect" id="node2" href="$Interact__MR_8f90.html#a6c71a7e79835521b9d9da3ab56a56b9f" title="interact_mr" alt="" coords="152,5,249,32"/>
+<area shape="rect" id="node3" href="$RCSFinteract_8f90.html#a2e3af96bc4c9d92477bcdf4b82e1acbc" title="rcsfinteract" alt="" coords="297,5,392,32"/>
 </map>

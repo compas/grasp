@@ -1,6 +1,4 @@
 <map id="transtable" name="transtable">
-<area shape="rect" id="node1" title=" " alt="" coords="5,56,93,83"/>
-<area shape="rect" id="node2" href="$HF_8f90.html#a98791ee21a4056f61c37360e4192830a" title=" " alt="" coords="155,5,194,32"/>
-<area shape="rect" id="node3" href="$HF_8f90.html#aee87c12d0b47171997dd9929fe6744bd" title=" " alt="" coords="141,56,208,83"/>
-<area shape="rect" id="node4" href="$rmixaccumulate_8f90.html#a4b1fd9616bd82a754b2e304c07403ed7" title=" " alt="" coords="143,107,206,133"/>
+<area shape="rect" id="node2" href="$HF_8f90.html#a98791ee21a4056f61c37360e4192830a" title="a" alt="" coords="153,5,192,32"/>
+<area shape="rect" id="node3" href="$rmixaccumulate_8f90.html#a4b1fd9616bd82a754b2e304c07403ed7" title="hpsort" alt="" coords="141,56,204,83"/>
 </map>

@@ -1,6 +1,4 @@
 <map id="rnucleus" name="rnucleus">
-<area shape="rect" id="node1" title="Generates the isotope data file for the GRASP92 suite of codes." alt="" coords="5,27,83,54"/>
-<area shape="rect" id="node2" href="$HF_8f90.html#a98791ee21a4056f61c37360e4192830a" title=" " alt="" coords="359,27,397,54"/>
-<area shape="rect" id="node3" href="$namespacenucleus__m.html#aa17491b9818a6faaa904bea24bd6b2b2" title="This function returns the source of the value for the give charge Z and mass A, name &quot;a&quot; for Angeli e..." alt="" coords="131,27,311,54"/>
-<area shape="rect" id="node4" href="$namespacenucleus__m.html#a83e8714be10756711874d134c66bcf73" title="This function returns the tabulated value for the give charge Z and mass A, if available,..." alt="" coords="134,78,307,105"/>
+<area shape="rect" id="node2" href="$namespacenucleus__m.html#a83e8714be10756711874d134c66bcf73" title="This function returns the tabulated value for the give charge Z and mass A, if available, and from the formula proposed by Johnson and Soff (Johnson et al.) otherwise. " alt="" coords="134,5,307,32"/>
+<area shape="rect" id="node3" href="$namespacenucleus__m.html#aa17491b9818a6faaa904bea24bd6b2b2" title="This function returns the source of the value for the give charge Z and mass A, name &quot;a&quot; for Angeli e..." alt="" coords="131,56,311,83"/>
 </map>

@@ -1,7 +1,6 @@
 <map id="genintbreit2wrap" name="genintbreit2wrap">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,139,57"/>
-<area shape="rect" id="node2" href="$mpiu_8f90.html#a63a206a2a6ba8eb6ce1db4c4e745cd3f" title=" " alt="" coords="187,5,277,32"/>
-<area shape="rect" id="node4" href="$mpiu_8f90.html#a8e2bd0cea5bd6902ae5b320fe33fbd2d" title=" " alt="" coords="189,56,275,83"/>
-<area shape="rect" id="node3" href="$dinit_8f90.html#a1ff4ead44475a348f2f19d18922ed49b" title=" " alt="" coords="329,5,379,32"/>
-<area shape="rect" id="node5" href="$icopy_8f90.html#adbfafa8b6e5954200b4cd5f20780bdc2" title=" " alt="" coords="325,56,383,83"/>
+<area shape="rect" id="node2" href="$mpiu_8f90.html#a8e2bd0cea5bd6902ae5b320fe33fbd2d" title="gisummpi" alt="" coords="189,5,275,32"/>
+<area shape="rect" id="node4" href="$mpiu_8f90.html#a63a206a2a6ba8eb6ce1db4c4e745cd3f" title="gdsummpi" alt="" coords="187,56,277,83"/>
+<area shape="rect" id="node3" href="$icopy_8f90.html#adbfafa8b6e5954200b4cd5f20780bdc2" title="icopy" alt="" coords="325,5,383,32"/>
+<area shape="rect" id="node5" href="$dinit_8f90.html#a1ff4ead44475a348f2f19d18922ed49b" title="dinit" alt="" coords="329,56,379,83"/>
 </map>

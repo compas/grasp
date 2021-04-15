@@ -1,6 +1,5 @@
 <map id="iniest" name="iniest">
-<area shape="rect" id="node1" title=" " alt="" coords="5,56,64,83"/>
-<area shape="rect" id="node2" href="$count_8f90.html#abf1cd406c3aeed0520e5f480cedd0185" title=" " alt="" coords="117,5,176,32"/>
-<area shape="rect" id="node3" href="$dinit_8f90.html#a1ff4ead44475a348f2f19d18922ed49b" title=" " alt="" coords="121,56,172,83"/>
-<area shape="rect" id="node4" href="$dspevx_8f90.html#a07ee2c397b1b0f73e296f20f8d36990a" title=" " alt="" coords="112,107,181,133"/>
+<area shape="rect" id="node2" href="$dinit_8f90.html#a1ff4ead44475a348f2f19d18922ed49b" title="dinit" alt="" coords="121,5,172,32"/>
+<area shape="rect" id="node3" href="$count_8f90.html#abf1cd406c3aeed0520e5f480cedd0185" title="count" alt="" coords="117,56,176,83"/>
+<area shape="rect" id="node4" href="$dspevx_8f90.html#a07ee2c397b1b0f73e296f20f8d36990a" title="dspevx" alt="" coords="112,107,181,133"/>
 </map>

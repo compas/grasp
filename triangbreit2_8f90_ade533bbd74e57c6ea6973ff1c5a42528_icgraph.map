@@ -1,6 +1,5 @@
 <map id="triangbreit2" name="triangbreit2">
-<area shape="rect" id="node1" title=" " alt="" coords="257,31,356,57"/>
-<area shape="rect" id="node2" href="$genintbreit2_8f90.html#a021f90dc84357b250a22b46579fe8c43" title=" " alt="" coords="108,5,209,32"/>
-<area shape="rect" id="node4" href="$mpi_2triangbreit2_8f90.html#ade533bbd74e57c6ea6973ff1c5a42528" title=" " alt="" coords="109,56,208,83"/>
-<area shape="rect" id="node3" href="$rci92_8f90.html#a6ab29c03180531e12abf6cb2bd214498" title=" " alt="" coords="5,5,60,32"/>
+<area shape="rect" id="node2" href="$genintbreit2_8f90.html#a021f90dc84357b250a22b46579fe8c43" title="genintbreit2" alt="" coords="152,5,253,32"/>
+<area shape="rect" id="node4" href="$mpi_2triangbreit2_8f90.html#ade533bbd74e57c6ea6973ff1c5a42528" title="triangbreit2" alt="" coords="153,56,252,83"/>
+<area shape="rect" id="node3" href="$rci92_8f90.html#a6ab29c03180531e12abf6cb2bd214498" title="rci92" alt="" coords="301,5,356,32"/>
 </map>

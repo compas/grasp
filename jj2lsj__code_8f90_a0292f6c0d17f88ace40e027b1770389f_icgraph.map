@@ -1,7 +1,6 @@
 <map id="setls_action" name="setls_action">
-<area shape="rect" id="node1" title=" " alt="" coords="651,5,751,32"/>
-<area shape="rect" id="node2" href="$jj2lsj__code_8f90.html#abe5011e1104c5bc496f41a07a81c4612" title=" " alt="" coords="480,5,603,32"/>
-<area shape="rect" id="node3" href="$namespacejj2lsj__code.html#a5baa29caa92230c1939f1849debb0465" title=" " alt="" coords="301,5,432,32"/>
-<area shape="rect" id="node4" href="$namespacejj2lsj__code.html#a11a6b0950a2e77c07814312831700dc3" title=" " alt="" coords="123,5,253,32"/>
-<area shape="rect" id="node5" href="$jj2lsj2K_8f90.html#a6f22d60e9a40b5a552160c296965333d" title=" " alt="" coords="5,5,75,32"/>
+<area shape="rect" id="node2" href="$jj2lsj__code_8f90.html#abe5011e1104c5bc496f41a07a81c4612" title="setls_job_count" alt="" coords="153,5,276,32"/>
+<area shape="rect" id="node3" href="$namespacejj2lsj__code.html#a5baa29caa92230c1939f1849debb0465" title="jj2lsj_code::setls" alt="" coords="324,5,455,32"/>
+<area shape="rect" id="node4" href="$namespacejj2lsj__code.html#a11a6b0950a2e77c07814312831700dc3" title="jj2lsj_code::jj2lsj" alt="" coords="503,5,633,32"/>
+<area shape="rect" id="node5" href="$jj2lsj2K_8f90.html#a6f22d60e9a40b5a552160c296965333d" title="jj2lsj2k" alt="" coords="681,5,751,32"/>
 </map>

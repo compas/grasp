@@ -1,4 +1,3 @@
 <map id="nucleus_m::rrms_source" name="nucleus_m::rrms_source">
-<area shape="rect" id="node1" title="This function returns the source of the value for the give charge Z and mass A, name &quot;a&quot; for Angeli e..." alt="" coords="131,5,311,32"/>
-<area shape="rect" id="node2" href="$geniso_8f90.html#a56a1a777539e1bb42b8a628e10cbbd06" title="Generates the isotope data file for the GRASP92 suite of codes." alt="" coords="5,5,83,32"/>
+<area shape="rect" id="node2" href="$geniso_8f90.html#a56a1a777539e1bb42b8a628e10cbbd06" title="Generates the isotope data file for the GRASP92 suite of codes. " alt="" coords="233,5,311,32"/>
 </map>
