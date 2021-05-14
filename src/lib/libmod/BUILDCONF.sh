@@ -102,7 +102,6 @@ vpilst_C.f90
 wave_C.f90
 wchblk_C.f90
 wfac_C.f90
-where_C.f90
 whfrom_C.f90"
 generate-makefile > ${MAKEFILE}
 generate-cmakelists > ${CMAKELISTSTXT}
