@@ -6,6 +6,7 @@ OBJS= \
 	evcout.o \
 	dspevx_I.o \
 	ratden_I.o \
+	where_C.o \
 	talk.o \
 	talk_I.o \
 	cxk.o \

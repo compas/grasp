@@ -102,7 +102,6 @@ add_library(mod STATIC
     wave_C.f90
     wchblk_C.f90
     wfac_C.f90
-    where_C.f90
     whfrom_C.f90
 )
 setup_fortran_modules(mod)
