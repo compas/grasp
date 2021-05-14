@@ -47,7 +47,6 @@
       USE mpi_s
       USE orb_C
       USE WCHBLK_C, JBLOCKK=>JBLOCK
-      USE WHERE_C
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
