@@ -8,6 +8,7 @@
 !   Call(s) to: [RCI92]: LENGTH, OPENFL.                               *
 !                                                                      *
 !   Written by  G. Gaigalas                   NIST, December 2015      *
+!   Modified by G. Gaigalas                            04/21/2021      *
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
@@ -86,10 +87,13 @@
 !
       READ (21, '(A)') S_orbitals_1
       READ (20, '(A)') S_orbitals_2
-!      I = LEN_TRIM(S_orbitals_1)
-!      IF(S_orbitals_1(1:I) /= S_orbitals_2(1:I)) then
-!         STOP "Different order of Peel orbitals"
-!      end if
+      I = LEN_TRIM(S_orbitals_1)
+      IF(S_orbitals_1(1:I) /= S_orbitals_2(1:I)) then
+         WRITE (6, *) ''
+         WRITE (6, *) 'Error in input !!!'
+         WRITE (6, *) 'Different order of Peel orbitals'
+         STOP ' in files rcsfmr.inp and rcsf.inp'
+      end if
       WRITE (22, '(A)') TRIM(S_orbitals_2)
 !
       READ (21, '(1A7)', IOSTAT=IOS) RECORD_1
