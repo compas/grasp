@@ -92,7 +92,7 @@
          WRITE (6, *) ''
          WRITE (6, *) 'Error in input !!!'
          WRITE (6, *) 'Different order of Peel orbitals'
-         STOP ' in files rcsfmr.inp and rcsf.inp'
+         ERROR STOP ' in files rcsfmr.inp and rcsf.inp'
       end if
       WRITE (22, '(A)') TRIM(S_orbitals_2)
 !
