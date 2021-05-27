@@ -113,13 +113,24 @@ following `Make.user` file:
 
 ```make
 export FC = ifort
-export FC_FLAGS = -O2 -save
-export FC_LD = -mkl=sequential
+export FC_FLAGS = -O3 -save -mkl=sequential
+export FC_LD =
 export FC_MPI = mpiifort
+export OMPI_FC=${FC}
+```
+where `-mkl=sequential` should be set depending on what version of ifort you have access to.
+
+Alternatively, to customize the GNU gfortran build to e.g. use a specific version of the compiler, you can create a `Make.user` file such as
+```make
+export FC = gfortran-9
+export FC_FLAGS = -O3 -fno-automatic
+export FC_LD =
+export FC_MPI= mpifort
+export OMPI_FC=${FC}
 ```
 
-As another example, to set up a linker search path for the BLAS or LAPACK libraries, you can
-set up `Make.user` as follows:
+To set up a linker search path for the BLAS or LAPACK libraries you can
+set `FC_LD` as follows:
 
 ```make
 export FC_LD = -L /path/to/blas
