@@ -2,6 +2,7 @@ add_executable(rci
     evcout.f90
     dspevx_I.f90
     ratden_I.f90
+    where_C.f90
     talk.f90
     talk_I.f90
     cxk.f90

@@ -105,7 +105,6 @@ OBJS= \
 	wave_C.o \
 	wchblk_C.o \
 	wfac_C.o \
-	where_C.o \
 	whfrom_C.o
 
 PHONY: install

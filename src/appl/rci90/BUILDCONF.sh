@@ -22,6 +22,9 @@ ratden_I.f90
 #setham_to_genmat2_C.f90
 #t.f90
 
+# Common block remnants
+where_C.f90
+
 talk.f90 talk_I.f90
 cxk.f90 cxk_I.f90
 bessel.f90 bessel_I.f90
