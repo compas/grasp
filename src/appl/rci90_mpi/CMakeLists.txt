@@ -105,8 +105,6 @@ add_executable(rci_mpi
     setres_I.f90
     setsum.f90
     setsum_I.f90
-    snrc.f90
-    snrc_I.f90
     strsum.f90
     strsum_I.f90
     vac2.f90

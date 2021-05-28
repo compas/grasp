@@ -109,8 +109,6 @@ OBJS= \
 	setres_I.o \
 	setsum.o \
 	setsum_I.o \
-	snrc.o \
-	snrc_I.o \
 	strsum.o \
 	strsum_I.o \
 	vac2.o \

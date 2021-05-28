@@ -68,7 +68,6 @@ setdbg.f90 setdbg_I.f90
 setmixmpi.f90 setmixmpi_I.f90
 setres.f90 setres_I.f90
 setsum.f90 setsum_I.f90
-snrc.f90 snrc_I.f90
 strsum.f90 strsum_I.f90
 vac2.f90 vac2_I.f90
 vac4.f90 vac4_I.f90
