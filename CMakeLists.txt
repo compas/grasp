@@ -99,15 +99,31 @@ set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
 
 # Additional Fortran compiler flags.
 #
-# -fno-automatic: this was set in the original make_environment_gfortran_UBC file.
+#   -fno-automatic: this was set in the original make_environment_gfortran_UBC file.
 #
-# Note: optimization should be enabled on the Release target automatically.
+# Note: there is no need to pass optimization flags explicitly (e.g. -O2) -- CMake enables
+# -O2 automatically on the Release target. Similarly, -g is automatically set for the Debug
+# target.
 #
-# If need be, you can also set up linker flags. E.g.:
+# To set additional compiler flags, you can set CMAKE_Fortran_FLAGS when invoking CMake.
+# For example
 #
-#     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgfortran")
+#   cmake -DCMAKE_Fortran_FLAGS="-fno-automatic -fconvert=big-endian" ..
 #
-set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fno-automatic")
+# Note: this will override the defaults, so you need to pass -fno-automatic yourself. This
+# behavior is useful when using e.g. the Intel compiler, which has a different name for this
+# option, and so you don't want to pass a For GFortran-specific flag.
+#
+# Similarly, additional linker options can be passed via CMAKE_EXE_LINKER_FLAGS, e.g.
+#
+#   cmake -DCMAKE_EXE_LINKER_FLAGS="-static-libgfortran" ..
+#
+if(NOT DEFINED CMAKE_Fortran_FLAGS)
+    set(CMAKE_Fortran_FLAGS "-fno-automatic")
+else()
+    message("CMAKE_Fortran_FLAGS set by user to: ${CMAKE_Fortran_FLAGS}")
+    message("Note: GRASP requires -fno-automatic (or equivalent)")
+endif()
 
 message("Compiler flags etc. for this GRASP build:")
 message("* CMAKE_BUILD_TYPE:               ${CMAKE_BUILD_TYPE}")
