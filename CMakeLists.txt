@@ -99,34 +99,43 @@ set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
 
 # Additional Fortran compiler flags.
 #
-#   -fno-automatic: this was set in the original make_environment_gfortran_UBC file.
-#
-# Note: there is no need to pass optimization flags explicitly (e.g. -O2) -- CMake enables
-# -O2 automatically on the Release target. Similarly, -g is automatically set for the Debug
-# target.
-#
 # To set additional compiler flags, you can set CMAKE_Fortran_FLAGS when invoking CMake.
 # For example
 #
 #   cmake -DCMAKE_Fortran_FLAGS="-fno-automatic -fconvert=big-endian" ..
 #
-# Note: this will override the defaults, so you need to pass -fno-automatic yourself. This
-# behavior is useful when using e.g. the Intel compiler, which has a different name for this
-# option, and so you don't want to pass a For GFortran-specific flag.
+# Note: there is no need to pass optimization flags explicitly (e.g. -O2) -- CMake enables
+# -O2 automatically on the Release target. Similarly, -g is automatically set for the Debug
+# target.
 #
 # Similarly, additional linker options can be passed via CMAKE_EXE_LINKER_FLAGS, e.g.
 #
 #   cmake -DCMAKE_EXE_LINKER_FLAGS="-static-libgfortran" ..
 #
-if(NOT DEFINED CMAKE_Fortran_FLAGS)
-    set(CMAKE_Fortran_FLAGS "-fno-automatic")
-else()
-    message("CMAKE_Fortran_FLAGS set by user to: ${CMAKE_Fortran_FLAGS}")
-    message("Note: GRASP requires -fno-automatic (or equivalent)")
+# Default flags (in addition to CMake defaults):
+#
+#   -fno-automatic / -save: these were set in the original Makefiles
+#
+# To disable GRASP-specific default flags, you can set GRASP_DEFAULT_FLAGS=FALSE when
+# calling CMake with
+#
+#   cmake -DGRASP_DEFAULT_FLAGS=FALSE ..
+#
+set(GRASP_DEFAULT_FLAGS TRUE CACHE BOOL "If TRUE (default), -fno-automatic (gfortran) or -save (ifort) is automatically set in CMAKE_Fortran_FLAGS.")
+if(GRASP_DEFAULT_FLAGS)
+    if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
+        set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fno-automatic")
+    elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
+        set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -save")
+    else()
+        message("GRASP requires -fno-automatic or -save or equivalent, but is unable to determine the correct argument for this compiler (${CMAKE_Fortran_COMPILER_ID})")
+    endif()
 endif()
 
 message("Compiler flags etc. for this GRASP build:")
+message("* GRASP_DEFAULT_FLAGS:            ${GRASP_DEFAULT_FLAGS}")
 message("* CMAKE_BUILD_TYPE:               ${CMAKE_BUILD_TYPE}")
+message("* CMAKE_Fortran_COMPILER_ID:      ${CMAKE_Fortran_COMPILER_ID}")
 message("* CMAKE_Fortran_COMPILER:         ${CMAKE_Fortran_COMPILER}")
 message("* CMAKE_Fortran_COMPILER_VERSION: ${CMAKE_Fortran_COMPILER_VERSION}")
 message("* CMAKE_Fortran_FLAGS:            ${CMAKE_Fortran_FLAGS}")
