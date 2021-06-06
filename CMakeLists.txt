@@ -102,7 +102,7 @@ set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
 # To set additional compiler flags, you can set CMAKE_Fortran_FLAGS when invoking CMake.
 # For example
 #
-#   cmake -DCMAKE_Fortran_FLAGS="-fno-automatic -fconvert=big-endian" ..
+#   cmake -DCMAKE_Fortran_FLAGS="-fconvert=big-endian" ..
 #
 # Note: there is no need to pass optimization flags explicitly (e.g. -O2) -- CMake enables
 # -O2 automatically on the Release target. Similarly, -g is automatically set for the Debug
@@ -128,7 +128,7 @@ if(GRASP_DEFAULT_FLAGS)
     elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
         set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -save")
     else()
-        message("GRASP requires -fno-automatic or -save or equivalent, but is unable to determine the correct argument for this compiler (${CMAKE_Fortran_COMPILER_ID})")
+        message(WARNING "GRASP requires -fno-automatic or -save or equivalent, but is unable to determine the correct argument for this compiler (${CMAKE_Fortran_COMPILER_ID})")
     endif()
 endif()
 
