@@ -108,8 +108,8 @@ builds are defined and documented at the beginning of the `Makefile`.
 
 For the user it should never be necessary to modify the `Makefile` itself. Rather, a
 `Make.user` file can be create next to the main `Makefile` where the build variables can be
-overridden. E.g. to use the Intel Fortran compiler instead, you may want to create the
-following `Make.user` file:
+overridden. E.g. to use the Intel Fortran compiler instead, you may want to create the following
+`Make.user` file:
 
 ```make
 export FC = ifort
@@ -135,6 +135,8 @@ set `FC_LD` as follows:
 ```make
 export FC_LD = -L /path/to/blas
 ```
+
+The repository also contains the `Make.user.gfortran` and `Make.user.ifort` files, which can be used as templates for your own `Make.user` file.
 
 ## About GRASP
 
