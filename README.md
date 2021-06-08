@@ -108,8 +108,8 @@ builds are defined and documented at the beginning of the `Makefile`.
 
 For the user it should never be necessary to modify the `Makefile` itself. Rather, a
 `Make.user` file can be create next to the main `Makefile` where the build variables can be
-overridden. E.g. to use the Intel Fortran compiler instead, you may want to create the following
-`Make.user` file:
+overridden. E.g. to use the Intel Fortran compiler instead, you may want to create the
+following `Make.user` file:
 
 ```make
 export FC = ifort
