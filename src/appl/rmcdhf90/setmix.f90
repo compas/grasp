@@ -48,7 +48,7 @@
       CALL OPENFL (25, NAME, 'UNFORMATTED', 'NEW', IERR)
       IF (IERR /= 0) THEN
          WRITE (ISTDE, *) 'Error when opening ', NAME(1:LEN_TRIM(NAME))
-         STOP
+         ERROR STOP
       ENDIF
 !
 !   Write the file header

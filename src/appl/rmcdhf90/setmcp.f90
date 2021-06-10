@@ -79,7 +79,7 @@
       IERROR = IERROR + ABS(IOS)
       IF (NBLOCK>NBLKIN .OR. NBLOCK<1) THEN
          WRITE (ISTDE, *) 'setmcp: nblock = ', NBLOCK
-         STOP
+         ERROR STOP
       ENDIF
 
 !cjb allocate ncfblk(0:*)
@@ -105,7 +105,7 @@
 
       IF (.NOT.FOUND) THEN
          WRITE (ISTDE, *) 'The mcp files do not exist'
-         STOP
+         ERROR STOP
       ENDIF
 
 !  Open the files; check file headers
@@ -124,7 +124,7 @@
          IF (MYID/=MYIDD .OR. NPROCS/=NPROCSS) THEN
             WRITE (ISTDE, *) 'mcp files were generated under different', &
                ' processor configuration.'
-            STOP
+            ERROR STOP
          ENDIF
 
          IF (MCPLAB /= 'MCP') THEN
@@ -142,7 +142,7 @@
          DO I = 30, K
             CLOSE(I)
          END DO
-         STOP
+         ERROR STOP
       END DO
 
       RETURN

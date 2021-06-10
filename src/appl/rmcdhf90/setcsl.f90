@@ -56,14 +56,14 @@
       CALL OPENFL (21, NAME, 'FORMATTED', 'OLD', IERR)
       IF (IERR == 1) THEN
          WRITE (6, *) 'Error when opening ', NAME(1:LEN_TRIM(NAME))
-         STOP
+         ERROR STOP
       ENDIF
 
       READ (21, '(1A15)', IOSTAT=IOS) STR
       IF (IOS/=0 .OR. STR/='Core subshells:') THEN
          WRITE (6, *) 'Not a Configuration Symmetry List File;'
          CLOSE(21)
-         STOP
+         ERROR STOP
       ENDIF
 
       !..Load header of <name> file

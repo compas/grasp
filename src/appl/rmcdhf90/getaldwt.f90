@@ -48,7 +48,7 @@
          WRITE (ISTDE, *) 'Input not correct, do it again. tried=', I
       END DO
 
-      IF (I > 10) STOP 'Must be running un-attended'
+      IF (I > 10) ERROR STOP 'Must be running un-attended'
 
 !------------------------------------------------------------------
 
@@ -82,7 +82,7 @@
 
       CASE DEFAULT
          WRITE (ISTDE, *) 'Impossible ! Because it was guarded'
-         STOP
+         ERROR STOP
       END SELECT
 
       SUMWGT = 1.D0/SUMWGT
