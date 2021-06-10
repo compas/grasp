@@ -118,7 +118,7 @@
 !=======================================================================
 
          READ (30) MCPLAB, JBLOCKT, NCF
-         IF (JBLOCKT/=JBLOCK .OR. NCF/=NCFBLK(JBLOCK)) STOP &
+         IF (JBLOCKT/=JBLOCK .OR. NCF/=NCFBLK(JBLOCK)) ERROR STOP &
             'MATRIXMPI: jblockt .NE. jblock .OR. ncf1 .NE. ncf2'
          READ (30) NELMNTGG
          NELMNT = INT8(NELMNTGG)
@@ -147,8 +147,8 @@
             DO NFILE = 31, 32 + KMAXF
                READ (NFILE) MCPLAB, JBLOCKT, NCFT, NCOEFF
                IF (JBLOCKT /= JBLOCK)                  &
-                          STOP 'MATRIXmpi: jblockt .NE. jblock'
-               IF (NCFT /= NCF) STOP 'MATRIXmpi: ncft .NE. ncf'
+                          ERROR STOP 'MATRIXmpi: jblockt .NE. jblock'
+               IF (NCFT /= NCF) ERROR STOP 'MATRIXmpi: ncft .NE. ncf'
 
                READ (NFILE) LAB, NCONTR
                DO WHILE(LAB/=0 .OR. NCONTR/=0)

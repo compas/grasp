@@ -222,7 +222,7 @@
          ELSE
             IF (MYID == 0) WRITE (*, 301)
             !CALL TIMER (0)
-            STOP
+            ERROR STOP
          ENDIF
       ENDIF
 !

@@ -138,7 +138,7 @@
       CALL SETMCP (NCORE, NBLK0, IDBLK, 'mcp' // idstring)
       if(myid == 0) file_rcsl = permdir(1:lenperm)//'/rcsf.inp'
       CALL SETCSLmpi (file_rcsl, ncore1, idblk)
-      IF (NCORE /= NCORE1) STOP 'rscfmpivu: ncore'
+      IF (NCORE /= NCORE1) ERROR STOP 'rscfmpivu: ncore'
 
 !=======================================================================
 !  Gather all remaining information and perform some setup. This
