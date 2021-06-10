@@ -10,6 +10,7 @@ endif
 
 # Variables affecting the GRASP build. These can be overridden in Make.user or via
 # environment variables.
+export FC ?= gfortran
 export FC_FLAGS ?= -O2 -fno-automatic
 export FC_LD ?=
 export FC_MPI ?= mpifort
