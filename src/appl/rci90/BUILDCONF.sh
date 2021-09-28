@@ -24,6 +24,7 @@ ratden_I.f90
 
 # Common block remnants
 where_C.f90
+ncdist_C.f90
 
 talk.f90 talk_I.f90
 cxk.f90 cxk_I.f90
