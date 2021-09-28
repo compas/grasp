@@ -3,6 +3,7 @@ add_executable(rci
     dspevx_I.f90
     ratden_I.f90
     where_C.f90
+    ncdist_C.f90
     talk.f90
     talk_I.f90
     cxk.f90

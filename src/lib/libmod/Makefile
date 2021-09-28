@@ -68,7 +68,6 @@ OBJS= \
 	mtjj2_C.o \
 	mtjj_C.o \
 	ncc_C.o \
-	ncdist_C.o \
 	node_C.o \
 	npar_C.o \
 	npot_C.o \

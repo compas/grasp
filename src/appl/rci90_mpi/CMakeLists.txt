@@ -3,6 +3,7 @@ add_executable(rci_mpi
     dspevx_I.f90
     ratden_I.f90
     where_C.f90
+    ncdist_C.f90
     bessel.f90
     bessel_I.f90
     zkf.f90

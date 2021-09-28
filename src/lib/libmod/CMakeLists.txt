@@ -65,7 +65,6 @@ add_library(mod STATIC
     mtjj2_C.f90
     mtjj_C.f90
     ncc_C.f90
-    ncdist_C.f90
     node_C.f90
     npar_C.f90
     npot_C.f90

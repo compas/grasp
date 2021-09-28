@@ -7,6 +7,7 @@ OBJS= \
 	dspevx_I.o \
 	ratden_I.o \
 	where_C.o \
+	ncdist_C.o \
 	bessel.o \
 	bessel_I.o \
 	zkf.o \
