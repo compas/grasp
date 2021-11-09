@@ -1450,6 +1450,7 @@ CONTAINS
 !                                                                      *
 !     Written by G. Gaigalas,                                          *
 !     NIST                                     last update: Dec 2015   *
+!     Modified by G. Gaigalas,                              May 2021   *
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
@@ -1485,7 +1486,7 @@ CONTAINS
       integer,  dimension(Blocks_number)      :: number_of_levels
       integer, dimension(Blocks_number,Vectors_number) :: levels
       integer, dimension(1:Vectors_number)     :: max_comp
-      integer, dimension(1:Vectors_number)     :: leading_LS
+      integer, dimension(:), pointer     :: leading_LS
 !GG      integer, dimension(1:100)       :: iw
       integer, dimension(:), pointer       :: iw
 !GG      real(DOUBLE), dimension(1:100)  :: weights, weights2
@@ -1537,6 +1538,7 @@ CONTAINS
          allocate (weights(NCF_LS_jj_MAX))
          allocate (weights2(NCF_LS_jj_MAX))
          allocate (iw(NCF_LS_jj_MAX))
+         allocate (leading_LS(NCF_LS_jj_MAX))
          do  lev = 1, number_of_levels(IBLKNUM)
             level = levels(IBLKNUM,lev)
             weights = ZERO;    iw = 0;    wb = ZERO
@@ -1684,14 +1686,14 @@ CONTAINS
             call convrt_double(asf_set_LS%csf_set_LS%csf(iw(1))%totalJ,string_CNUM,string_l)
             print 16, asf_set_LS%asf(level)%level_No,string_CNUM(1:string_l), &
                    asf_set_LS%csf_set_LS%csf(iw(1))%parity,                   &
-                   (weights2(j),iw(j),J=1,nocsf_min)
+                   (weights2(j),iw(j),J=1,5)
             print*, "              Total sum over  weight (in LSJ) is:",wb
             print *, " "
             print *, "Definition of leading CSF:"
             print *, " "
             do  i = 1,NCF
-               do  j = 1, sum_nocsf_min
-                  if (i == leading_LS(j)) then
+               do  j = 1, 5
+                  if (i == iw(j)) then
                      call prCSFLS (-1,asf_set_LS%csf_set_LS,leading_LS(j))
                      exit
                   end if
@@ -1734,6 +1736,7 @@ CONTAINS
          deallocate(weights)
          deallocate(weights2)
          deallocate(iw)
+         deallocate(leading_LS)
     1    CONTINUE
       END DO
       deallocate(ithresh)
@@ -2897,7 +2900,7 @@ CONTAINS
             END DO
           end if
           IPRGG(Lev_OPT) = IPR + IPRGG(Lev_OPT) - 1
-          if(IPRGG(Lev_OPT) >= MAS_MAX(Lev_OPT)                        &
+          if(IPRGG(Lev_OPT) > MAS_MAX(Lev_OPT)                        &
                                         .AND. IPRGG(Lev_OPT) /= 1) then
              print*,                                                   &
              "The program is not able perform the identification for", &
