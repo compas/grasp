@@ -21,6 +21,8 @@
 !     NIST                                                  May 2011   *
 !     VILNIUS                                               May 2017   *
 !                                                                      *
+!     Modified by G. Gaigalas and C. Cychen                     2021   *
+!                                                                      *
 !***********************************************************************
 !-----------------------------------------------
 !   M o d u l e s
@@ -37,7 +39,7 @@
       print *, "jj2lsj: Transformation of ASFs from a jj-coupled CSF basis"
       print *, "        into an LS-coupled CSF basis  (Fortran 95 version)"
       print *, "        (C) Copyright by   G. Gaigalas and Ch. F. Fischer,"
-      print *, "        (2017)."
+      print *, "        (2021)."
       print *, "        Input files: name.c, name.(c)m"
       print *, "        Ouput files: name.lsj.lbl,"
       print *, "         (optional)  name.lsj.c, name.lsj.j,"

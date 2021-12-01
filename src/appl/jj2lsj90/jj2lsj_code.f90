@@ -1486,6 +1486,7 @@ CONTAINS
       integer,  dimension(Blocks_number)      :: number_of_levels
       integer, dimension(Blocks_number,Vectors_number) :: levels
       integer, dimension(1:Vectors_number)     :: max_comp
+!GG      integer, dimension(1:Vectors_number)     :: leading_LS
       integer, dimension(:), pointer     :: leading_LS
 !GG      integer, dimension(1:100)       :: iw
       integer, dimension(:), pointer       :: iw
@@ -1691,8 +1692,9 @@ CONTAINS
             print *, " "
             print *, "Definition of leading CSF:"
             print *, " "
+            if(sum_nocsf_min > 5) sum_nocsf_min = 5
             do  i = 1,NCF
-               do  j = 1, 5
+               do  j = 1, sum_nocsf_min
                   if (i == iw(j)) then
                      call prCSFLS (-1,asf_set_LS%csf_set_LS,leading_LS(j))
                      exit
