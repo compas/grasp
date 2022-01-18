@@ -34,7 +34,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       INTEGER :: LENTH, IEND, I, IBEG
-      CHARACTER :: RECORD*256, CDATA*26, CTIME*8, CDATE*8, CLEVEL*2
+      CHARACTER :: RECORD*256, CDATA*26, CTIME*8, CDATE*8, CLEVEL*4
 !-----------------------------------------------
 !
 !     POINTER (PWEIGH,WEIGHT(1))
