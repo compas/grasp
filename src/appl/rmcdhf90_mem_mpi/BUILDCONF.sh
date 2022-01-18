@@ -1,4 +1,4 @@
-EXE=rmcdhf_mpi
+EXE=rmcdhf_mem_mpi
 LIBRARIES="dvd90 mpiu90 9290 mod"
 LAPACK=true
 ISMPI=true
