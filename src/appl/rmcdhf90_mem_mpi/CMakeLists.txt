@@ -111,7 +111,6 @@ add_executable(rmcdhf_mem_mpi
     matrixmpi_I.f90
     scfmpi.f90
     scfmpi_I.f90
-    rscfmpivu.f90
     read02_mem.f90
     read02_mem_I.f90
     read03_mem.f90
@@ -129,6 +128,7 @@ add_executable(rmcdhf_mem_mpi
     systemfreemem_I.f90
     systemmem.f90
     systemmem_I.f90
+    rscfmpivu.f90
 )
 target_link_libraries_Fortran(rmcdhf_mem_mpi PUBLIC dvd90 mpiu90 9290 mod)
 install(TARGETS rmcdhf_mem_mpi DESTINATION bin/)

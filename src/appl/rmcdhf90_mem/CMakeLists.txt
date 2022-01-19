@@ -108,7 +108,6 @@ add_executable(rmcdhf_mem
     scf_I.f90
     strsum.f90
     strsum_I.f90
-    rscfvu.f90
     read02_mem.f90
     read02_mem_I.f90
     read03_mem.f90
@@ -126,6 +125,7 @@ add_executable(rmcdhf_mem
     systemfreemem_I.f90
     systemmem.f90
     systemmem_I.f90
+    rscfvu.f90
 )
 target_link_libraries_Fortran(rmcdhf_mem PUBLIC dvd90 9290 mod)
 install(TARGETS rmcdhf_mem DESTINATION bin/)
