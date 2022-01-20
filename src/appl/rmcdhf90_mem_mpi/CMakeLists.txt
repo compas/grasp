@@ -1,4 +1,21 @@
 add_executable(rmcdhf_mem_mpi
+    rmcdhf_mem_C.f90
+    read02_mem.f90
+    read02_mem_I.f90
+    read03_mem.f90
+    read03_mem_I.f90
+    read1_mem.f90
+    read1_mem_I.f90
+    read2_mem.f90
+    read2_mem_I.f90
+    read3_mem.f90
+    read3_mem_I.f90
+    systemmem.f90
+    systemmem_I.f90
+    systemfreemem.f90
+    systemfreemem_I.f90
+    setmcp_mem.f90
+    setmcp_mem_I.f90
     dsubrs.f90
     dsubrs_I.f90
     fco.f90
@@ -111,23 +128,6 @@ add_executable(rmcdhf_mem_mpi
     matrixmpi_I.f90
     scfmpi.f90
     scfmpi_I.f90
-    read02_mem.f90
-    read02_mem_I.f90
-    read03_mem.f90
-    read03_mem_I.f90
-    read1_mem.f90
-    read1_mem_I.f90
-    read2_mem.f90
-    read2_mem_I.f90
-    read3_mem.f90
-    read3_mem_I.f90
-    rmcdhf_mem_C.f90
-    setmcp_mem.f90
-    setmcp_mem_I.f90
-    systemfreemem.f90
-    systemfreemem_I.f90
-    systemmem.f90
-    systemmem_I.f90
     rscfmpivu.f90
 )
 target_link_libraries_Fortran(rmcdhf_mem_mpi PUBLIC dvd90 mpiu90 9290 mod)

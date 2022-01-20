@@ -3,6 +3,23 @@ LIBS=-L ${GRASP}/lib/ -ldvd90 -lmpiu90 -l9290 -lmod
 FC_MODULES= -I ${GRASP}/src/lib/libdvd90 -I ${GRASP}/src/lib/mpi90 -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
 OBJS= \
+	rmcdhf_mem_C.o \
+	read02_mem.o \
+	read02_mem_I.o \
+	read03_mem.o \
+	read03_mem_I.o \
+	read1_mem.o \
+	read1_mem_I.o \
+	read2_mem.o \
+	read2_mem_I.o \
+	read3_mem.o \
+	read3_mem_I.o \
+	systemmem.o \
+	systemmem_I.o \
+	systemfreemem.o \
+	systemfreemem_I.o \
+	setmcp_mem.o \
+	setmcp_mem_I.o \
 	dsubrs.o \
 	dsubrs_I.o \
 	fco.o \
@@ -115,23 +132,6 @@ OBJS= \
 	matrixmpi_I.o \
 	scfmpi.o \
 	scfmpi_I.o \
-	read02_mem.o \
-	read02_mem_I.o \
-	read03_mem.o \
-	read03_mem_I.o \
-	read1_mem.o \
-	read1_mem_I.o \
-	read2_mem.o \
-	read2_mem_I.o \
-	read3_mem.o \
-	read3_mem_I.o \
-	rmcdhf_mem_C.o \
-	setmcp_mem.o \
-	setmcp_mem_I.o \
-	systemfreemem.o \
-	systemfreemem_I.o \
-	systemmem.o \
-	systemmem_I.o \
 	rscfmpivu.o
 
 $(EXE): $(OBJS)
