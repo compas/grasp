@@ -43,14 +43,16 @@ tool: lib
 
 LIBRARY_CLEAN_TARGETS = $(foreach library,$(LIBRARIES),clean/lib/$(library))
 APPLICATION_CLEAN_TARGETS = $(foreach application,$(APPLICATIONS),clean/appl/$(application))
-.PHONY: clean clean/lib clean/appl clean/tool $(LIBRARY_CLEAN_TARGETS) $(APPLICATION_CLEAN_TARGETS)
+.PHONY: clean cleanall clean/lib clean/appl clean/tool $(LIBRARY_CLEAN_TARGETS) $(APPLICATION_CLEAN_TARGETS)
 clean: clean/lib clean/appl clean/tool $(LIBRARY_CLEAN_TARGETS) $(APPLICATION_CLEAN_TARGETS)
+cleanall: clean/lib clean/appl clean/tool clean/exec $(LIBRARY_CLEAN_TARGETS) $(APPLICATION_CLEAN_TARGETS)
 clean/lib: $(LIBRARY_CLEAN_TARGETS)
-	rm -vf $(GRASP)/lib/*.a
 $(LIBRARY_CLEAN_TARGETS): clean/lib/%:
 	$(MAKE) -C src/lib/$* clean
 clean/appl: $(APPLICATION_CLEAN_TARGETS)
+clean/exec:
 	rm -vf $(GRASP)/bin/*
+	rm -vf $(GRASP)/lib/*.a
 $(APPLICATION_CLEAN_TARGETS): clean/appl/%:
 	$(MAKE) -C src/appl/$* clean
 clean/tool:
