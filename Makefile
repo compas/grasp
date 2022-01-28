@@ -22,7 +22,7 @@ LIBRARIES = libmod lib9290 libdvd90 libmcp90 librang90 mpi90
 APPLICATIONS = HF jjgen90 rangular90 rbiotransform90 rci90 rcsfgenerate90 \
 	rcsfzerofirst90 rmcdhf90 rnucleus90 rtransition90_mpi sms90 jj2lsj90  \
 	rangular90_mpi rbiotransform90_mpi rci90_mpi rcsfinteract90 rhfs90    \
-	rmcdhf90_mpi  rtransition90  rwfnestimate90
+	rmcdhf90_mpi  rtransition90  rwfnestimate90  rmcdhf90_mem  rmcdhf90_mem_mpi
 
 LIBRARY_TARGETS = $(foreach library,$(LIBRARIES),src/lib/$(library))
 APPLICATION_TARGETS = $(foreach application,$(APPLICATIONS),src/appl/$(application))
@@ -43,14 +43,16 @@ tool: lib
 
 LIBRARY_CLEAN_TARGETS = $(foreach library,$(LIBRARIES),clean/lib/$(library))
 APPLICATION_CLEAN_TARGETS = $(foreach application,$(APPLICATIONS),clean/appl/$(application))
-.PHONY: clean clean/lib clean/appl clean/tool $(LIBRARY_CLEAN_TARGETS) $(APPLICATION_CLEAN_TARGETS)
+.PHONY: clean cleanall clean/lib clean/appl clean/tool $(LIBRARY_CLEAN_TARGETS) $(APPLICATION_CLEAN_TARGETS)
 clean: clean/lib clean/appl clean/tool $(LIBRARY_CLEAN_TARGETS) $(APPLICATION_CLEAN_TARGETS)
+cleanall: clean/lib clean/appl clean/tool clean/exec $(LIBRARY_CLEAN_TARGETS) $(APPLICATION_CLEAN_TARGETS)
 clean/lib: $(LIBRARY_CLEAN_TARGETS)
-	rm -vf $(GRASP)/lib/*.a
 $(LIBRARY_CLEAN_TARGETS): clean/lib/%:
 	$(MAKE) -C src/lib/$* clean
 clean/appl: $(APPLICATION_CLEAN_TARGETS)
+clean/exec:
 	rm -vf $(GRASP)/bin/*
+	rm -vf $(GRASP)/lib/*.a
 $(APPLICATION_CLEAN_TARGETS): clean/appl/%:
 	$(MAKE) -C src/appl/$* clean
 clean/tool:
