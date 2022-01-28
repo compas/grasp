@@ -36,6 +36,7 @@ var searchData=
   ['setmc_5fi',['setmc_i',['../namespacesetmc__i.html',1,'']]],
   ['setmcp2_5fi',['setmcp2_i',['../namespacesetmcp2__i.html',1,'']]],
   ['setmcp_5fi',['setmcp_i',['../namespacesetmcp__i.html',1,'']]],
+  ['setmcp_5fmem_5fi',['setmcp_mem_i',['../namespacesetmcp__mem__i.html',1,'']]],
   ['setmcpmpi_5fi',['setmcpmpi_i',['../namespacesetmcpmpi__i.html',1,'']]],
   ['setmix_5fi',['setmix_i',['../namespacesetmix__i.html',1,'']]],
   ['setmixmpi_5fi',['setmixmpi_i',['../namespacesetmixmpi__i.html',1,'']]],
@@ -93,5 +94,7 @@ var searchData=
   ['syma_5fc',['syma_c',['../namespacesyma__c.html',1,'']]],
   ['sys_5fchdir_5fi',['sys_chdir_i',['../namespacesys__chdir__i.html',1,'']]],
   ['sys_5fgetwd_5fi',['sys_getwd_i',['../namespacesys__getwd__i.html',1,'']]],
-  ['sys_5fmkdir_5fi',['sys_mkdir_i',['../namespacesys__mkdir__i.html',1,'']]]
+  ['sys_5fmkdir_5fi',['sys_mkdir_i',['../namespacesys__mkdir__i.html',1,'']]],
+  ['systemfreemem_5fi',['systemfreemem_i',['../namespacesystemfreemem__i.html',1,'']]],
+  ['systemmem_5fi',['systemmem_i',['../namespacesystemmem__i.html',1,'']]]
 ];

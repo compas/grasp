@@ -30,6 +30,7 @@ var searchData=
   ['setmc',['setmc',['../interfacesetmc__i_1_1setmc.html',1,'setmc_i']]],
   ['setmcp',['setmcp',['../interfacesetmcp__i_1_1setmcp.html',1,'setmcp_i']]],
   ['setmcp2',['setmcp2',['../interfacesetmcp2__i_1_1setmcp2.html',1,'setmcp2_i']]],
+  ['setmcp_5fmem',['setmcp_mem',['../interfacesetmcp__mem__i_1_1setmcp__mem.html',1,'setmcp_mem_i']]],
   ['setmcpmpi',['setmcpmpi',['../interfacesetmcpmpi__i_1_1setmcpmpi.html',1,'setmcpmpi_i']]],
   ['setmix',['setmix',['../interfacesetmix__i_1_1setmix.html',1,'setmix_i']]],
   ['setmixmpi',['setmixmpi',['../interfacesetmixmpi__i_1_1setmixmpi.html',1,'setmixmpi_i']]],
@@ -84,5 +85,7 @@ var searchData=
   ['suwjj',['SUWJJ',['../interfacesuwjj__i_1_1SUWJJ.html',1,'suwjj_i']]],
   ['sys_5fchdir',['SYS_CHDIR',['../interfacesys__chdir__i_1_1SYS__CHDIR.html',1,'sys_chdir_i']]],
   ['sys_5fgetwd',['SYS_GETWD',['../interfacesys__getwd__i_1_1SYS__GETWD.html',1,'sys_getwd_i']]],
-  ['sys_5fmkdir',['SYS_MKDIR',['../interfacesys__mkdir__i_1_1SYS__MKDIR.html',1,'sys_mkdir_i']]]
+  ['sys_5fmkdir',['SYS_MKDIR',['../interfacesys__mkdir__i_1_1SYS__MKDIR.html',1,'sys_mkdir_i']]],
+  ['systemfreemem',['systemfreemem',['../interfacesystemfreemem__i_1_1systemfreemem.html',1,'systemfreemem_i']]],
+  ['systemmem',['systemmem',['../interfacesystemmem__i_1_1systemmem.html',1,'systemmem_i']]]
 ];
