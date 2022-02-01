@@ -8,7 +8,11 @@ for arg in $@; do
 	if [ "$arg" == "--debug" ]; then
 		echo "Creating a DEBUG build"
 		build_directory="build-debug"
-		cmake_args="-DCMAKE_BUILD_TYPE=Debug"
+		cmake_args="-DCMAKE_BUILD_TYPE=Debug${cmake_args:+ $cmake_args}"
+	fi
+	if [ "$arg" == "--pic" ]; then
+		echo "Force-enable position-independent code (e.g. -fPIC)"
+		cmake_args="-DCMAKE_POSITION_INDEPENDENT_CODE=ON${cmake_args:+ $cmake_args}"
 	fi
 done
 
@@ -43,7 +47,7 @@ cat <<-EOF
 
     cd ${build_directory}/
     make install
- 
+
  which installs the GRASP binaries to the bin/ directory.
 
  Note that you also probably want to enable parallel build by passing -j to make:
