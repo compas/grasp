@@ -236,6 +236,8 @@ in the `appl` directory, libraries in the `lib` directory and tools in the
    |-----rhfs90
    |-----rmcdhf90
    |-----rmcdhf90_mpi
+   |-----rmcdhf90_mem
+   |-----rmcdhf90_mem_mpi
    |-----rnucleus90
    |-----rtransition90
    |-----rtransition90_mpi
