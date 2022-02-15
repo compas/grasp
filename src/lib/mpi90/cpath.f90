@@ -59,15 +59,14 @@
       !...locals - be careful when changing lenidstring !
       integer, parameter:: lendisk0 = 128, lenidstring = 3
       character(len=lendisk0) disk
-      character(len=lendisk0) mpi_tmp
       character(len=lenidstring) idstring
       integer   lendisk, i, len_cwd
-      character*(64) en,ev,uname
       integer lstring
       integer asleep, itry, iteery
       logical ydisks
 !     integer system
 !    integer lengthsleep, statusleep
+      character(:), allocatable :: mpi_tmp, env_user
 
 !=======================================================================
 ! step 0 get working directory
@@ -102,65 +101,39 @@
             close (1001)
          else
             permdir = startdir
+!=======================================================================
+! step 04 get env variable MPI_TMP
 !
 ! check whether user had set env variable MPI_TMP
 ! examples:
 ! csh: setenv MPI_TMP "${HOME}/grasprun/"
 ! bash: export MPI_TMP = "/scratch/${USER}"
-!
 !=======================================================================
-! step 04 get env variable MPI_TMP
-!=======================================================================
-             en = "MPI_TMP";
-!           call getenv(en,ev)
-             call get_environment_variable(en,ev,lstring,ierr)
-           if (ierr .ne. 0) then
+            if(.not.getenv_allocating("MPI_TMP", mpi_tmp)) then
+                ! error041 failed to get env variable MPI_TMP
+                print *, ' warning041 cpath failed at getenv MPI_TMP, myid = ', myid
+                print *, ' warning041 cpath will now default to /scratch/USER '
 
-! error041 failed to get env variable MPI_TMP
-      print *, ' warning041 cpath failed at getenv MPI_TMP, myid = ', myid
-      print *, ' warning041 cpath will now default to /scratch/USER '
-!=======================================================================
-! step 06 default to /scratch/USER
-! if env variable MPI_TMP is not set, cpath defaults to /scratch/$USER
-!=======================================================================
-             en = "USER";
-             call get_environment_variable(en,ev,lstring,ierr)
-             if (ierr .ne. 0) then
-! error061 failed to get env variable USER = MPI_ABORT
-      print *, ' error061 cpath failed at getenv USER, myid = ', myid
-      print *, ' error061 cpath fatal error, calling MPI_ABORT'
-               call MPI_ABORT(MPI_COMM_WORLD, ierr, ierr2m)
-             else
-!=======================================================================
-! else back to step 06 default to /scratch/USER
-!=======================================================================
-               lstring = len_trim(ev);
-               mpi_tmp = trim(ev);
-               mpi_tmp = '/scratch/'//mpi_tmp(1:lstring)
-               lstring = len_trim(mpi_tmp);
-             endif
-           else
-!=======================================================================
-! else back to step 04 use env variable MPI_TMP
-!=======================================================================
-             lstring = len_trim(ev);
-             mpi_tmp = trim(ev);
-           endif
-!
-! MPI_TMP/uname
-! version MPI_TMP/uname --- commented out
-! set tmpdir = MPI_TMP/uname
-!            en = "USER";
-!            call getenv(en,ev);
-!            lstring2 = len_trim(ev);
-!            uname = trim(ev);
-!           tmpdir = mpi_tmp(1:lstring1)//uname(1:lstring2)
+                if(.not.getenv_allocating("USER", env_user)) then
+                    ! error061 failed to get env variable USER = MPI_ABORT
+                    print *, ' error061 cpath failed at getenv USER, myid = ', myid
+                    print *, ' error061 cpath fatal error, calling MPI_ABORT'
+                    call MPI_ABORT(MPI_COMM_WORLD, ierr, ierr2m)
+                endif
 
+                mpi_tmp = '/scratch/'//env_user ! Defaults to /scratch/$USER
+            endif
 !=======================================================================
 ! step 08 MPI_Send/MPI_Recv tmpdir
 !=======================================================================
-            tmpdir = mpi_tmp(1:lstring)
-            disk = tmpdir(1:lstring)
+            if(len(mpi_tmp) > lendisk0) then
+                print *, ' error062 cpath MPI_TMP too long, myid = ', myid
+                print *, ' error062 cpath fatal error, calling MPI_ABORT'
+                call MPI_ABORT(MPI_COMM_WORLD, ierr, ierr2m)
+            endif
+
+            tmpdir = mpi_tmp
+            disk = mpi_tmp
             do i = 1, nprocs - 1
                call MPI_Send (disk, lendisk0, MPI_CHARACTER, i, i, &
                               MPI_COMM_WORLD, ierr2m)
@@ -345,4 +318,49 @@
 !     print *,' step2222 cpath succeeded myid = ',myid, ' tmpdir = ',&
 !                                                       tmpdir
       return
-      end
+
+! Indentation fixed from this point onwards:
+contains
+
+    !> Fetches an environment variable.
+    !!
+    !! If it was able to fetch the variable value, returns `.true.` and sets
+    !! `value` to the value ([re]allocating if necessary). Returns `.false.` if
+    !! the variable is not defined
+    !!
+    !! Under the hood it calls `get_environment_variable`, but it properly
+    !! allocates or re-allocates the `value` to match the actual length of the
+    !! environment variable.
+    !!
+    !! TODO: For this to be a proper library function, it should be implemented
+    !! as an interface with additional methods to handle pointers and fixed-length
+    !! strings.
+    function getenv_allocating(variable_name, value)
+        logical :: getenv_allocating
+        character(*), intent(in) :: variable_name
+        character(:), allocatable, intent(inout) :: value
+        integer :: length, status
+        character(1) :: test
+
+        ! First, make an inquiry call to get_environment_variable to determine
+        ! whether the variable exists and, if so, its length.
+        call get_environment_variable(variable_name, test, length, status)
+        if(status > 0) then
+            ! status of 1 or 2 from get_environment_variable means that the the
+            ! variable is undefined, or that the system does not support
+            ! environment variables at all, respectively. Both situations make
+            ! getenv fail.
+            getenv_allocating = .false.
+            return
+        endif
+        ! Will allocate or re-allocate value, unless it already has the correct length.
+        if(allocated(value) .and. len(value) /= length) deallocate(value)
+        if(.not.allocated(value)) allocate(character(length) :: value)
+        ! Can't pass a length 0 string to get_environment_variable.
+        if(length > 0) then
+            call get_environment_variable(variable_name, value, length, status)
+        endif
+        getenv_allocating = .true.
+    end
+
+end

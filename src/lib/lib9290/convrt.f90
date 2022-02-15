@@ -44,7 +44,7 @@
 !
       IF (LENTH > LEN(CNUM)) THEN
          WRITE (6, *) 'CONVRT: Length of CNUM inadeuate.'
-         STOP
+         ERROR STOP
       ELSE
          IF (LENTH <= 9) THEN
             FORM = '(1I'//C19(LENTH)//')'

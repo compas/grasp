@@ -225,11 +225,11 @@
 
       IF (JBLOCKT /= JBLOCK) THEN
          WRITE (ISTDE, *) MYNAME, ': blk1=', JBLOCKT, ' blk2=', JBLOCK
-         STOP
+         ERROR STOP
       ENDIF
       IF (NCFT /= NCF) THEN
          WRITE (ISTDE, *) MYNAME, ': ncf1 = ', NCFT, ' ncf2 = ', NCF
-         STOP
+         ERROR STOP
       ENDIF
 
 !=======================================================================
@@ -237,7 +237,7 @@
 !=======================================================================
 
       READ (31, IOSTAT=IOS) LAB, NCONTR
-      IF (IOS /= 0) STOP 'IOS .NE. 0 when reading LAB, NCONTR'
+      IF (IOS /= 0) ERROR STOP 'IOS .NE. 0 when reading LAB, NCONTR'
       DO WHILE(LAB/=0 .OR. NCONTR/=0)
 
          !*** decode the label of I(ab)
@@ -265,14 +265,14 @@
             IF (LOD > (NELMNT)) THEN
                WRITE (6, *) '  Error in computing 1-e contribution'
                WRITE (6, *) '  LOC = ', LOC, '  NELMNT = ', (NELMNT)
-               STOP
+               ERROR STOP
             ENDIF
             EMT(LOC) = EMT(LOC) + TEGRAL*COEFF(I)
          END DO
 
          READ (31, IOSTAT=IOS) LAB, NCONTR
          IF (IOS == 0) CYCLE
-         STOP 'IOS .NE. 0 when reading LAB, NCONTR'
+         ERROR STOP 'IOS .NE. 0 when reading LAB, NCONTR'
       END DO
 
 !=======================================================================
@@ -286,11 +286,11 @@
 
          IF (JBLOCKT /= JBLOCK) THEN
             WRITE (ISTDE, *) MYNAME, ': blk3=', JBLOCKT, ' blk4=', JBLOCK
-            STOP
+            ERROR STOP
          ENDIF
          IF (NCFT /= NCF) THEN
             WRITE (ISTDE, *) MYNAME, ': ncf3 = ', NCFT, ' ncf4 = ', NCF
-            STOP
+            ERROR STOP
          ENDIF
 
 !=======================================================================
@@ -298,7 +298,7 @@
 !=======================================================================
 
          READ (NFILE, IOSTAT=IOS) LAB, NCONTR
-         IF (IOS /= 0) STOP 'IOS .NE. 0 when reading LAB, NCONTR 2'
+         IF (IOS /= 0) ERROR STOP 'IOS .NE. 0 when reading LAB, NCONTR 2'
          DO WHILE(LAB/=0 .OR. NCONTR/=0)
 
             !                         k
@@ -331,14 +331,14 @@
                IF (LOD > NELMNT) THEN
                   WRITE (6, *) '  Error in computing 2-e contribution'
                   WRITE (6, *) '  LOC = ', LOC, '  NELMNT = ', NELMNT
-                  STOP
+                  ERROR STOP
                ENDIF
                EMT(LOC) = EMT(LOC) + TEGRAL*COEFF(I)
             END DO
 
             READ (NFILE, IOSTAT=IOS) LAB, NCONTR
             IF (IOS == 0) CYCLE
-            STOP 'IOS .NE. 0 when reading LAB, NCONTR 2'
+            ERROR STOP 'IOS .NE. 0 when reading LAB, NCONTR 2'
          END DO
       END DO
 

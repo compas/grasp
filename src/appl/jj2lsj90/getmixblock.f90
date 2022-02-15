@@ -13,6 +13,8 @@
 !   Written by Per Jonsson,                           September 2003   *
 !   Modified by G. Gaigalas,                                May 2011   *
 !                                                                      *
+!   Modified by C. Cychen                                       2021   *
+!                                                                      *
 !***********************************************************************
 !...Translated by Pacific-Sierra Research 77to90  4.3E  18:32:57   1/ 6/07
 !-----------------------------------------------
@@ -40,8 +42,9 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       INTEGER :: K, IERR, IOS, NCFTOT, NVECTOT, NVECSIZ, NBLOCK, I, NVECPAT, &
-         NCFPAT, NVECSIZPAT, NEAVSUM, JB, NB, NCFBLK, NEVBLK, IATJP, IASPA, J
+         NCFPAT, NEAVSUM, JB, NB, NCFBLK, NEVBLK, IATJP, IASPA, J
       REAL(DOUBLE) :: EAVSUM
+      integer*8 NVECSIZPAT, NCFTOT_i8,NVECSIZ_i8
       CHARACTER(LEN=3)   :: STATUS
       CHARACTER(LEN=6)   :: G92MIX
       CHARACTER(LEN=11)  :: FORM
@@ -80,6 +83,7 @@
       WRITE (*, *) '   nw     = ', NW
       WRITE (*, *) '   nblock = ', NBLOCK
       WRITE (*, *)
+      NCFTOT_i8 = NCFTOT
 
 !***********************************************************************
 ! Allocate memory for old format data
@@ -91,7 +95,7 @@
 !GG      CALL ALLOC (IATJPO, NVECTOT, 'IATJPO', 'GETMIXBLOCK')
 !GG      CALL ALLOC (IASPAR, NVECTOT, 'IASPAR', 'GETMIXBLOCK')
       allocate (EVAL(NVECTOT))
-      allocate (EVEC(NCFTOT*NVECTOT))
+      allocate (EVEC(NCFTOT_i8*NVECTOT))
       allocate (IVEC(NVECTOT))
       allocate (IATJPO(NVECTOT))
       allocate (IASPAR(NVECTOT))
@@ -99,7 +103,7 @@
 !***********************************************************************
 ! Initialize mixing coefficients to zero; others are fine
 !***********************************************************************
-      EVEC(:NVECTOT*NCFTOT) = 0.D0
+      EVEC(:NVECTOT*NCFTOT_i8) = 0.D0
 
 !***********************************************************************
 ! Initialize counters and sum registers
@@ -144,13 +148,13 @@
             EAVSUM = EAVSUM + EAV*NCFBLK
             NEAVSUM = NEAVSUM + NCFBLK
 
-            READ (25) ((EVEC(NVECSIZPAT+NCFPAT+I+(J-1)*NCFTOT),I=1,NCFBLK),J=1,&
+            READ (25) ((EVEC(NVECSIZPAT+NCFPAT+I+(J-1)*NCFTOT_i8),I=1,NCFBLK),J=1,&
                NEVBLK)
          ENDIF
 !
          NVECPAT = NVECPAT + NEVBLK
          NCFPAT = NCFPAT + NCFBLK
-         NVECSIZPAT = NVECSIZPAT + NEVBLK*NCFTOT
+         NVECSIZPAT = NVECSIZPAT + NEVBLK*NCFTOT_i8
 !
       END DO
 

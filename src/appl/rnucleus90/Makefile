@@ -1,27 +1,23 @@
-.SUFFIXES: .f90 .mod
+EXE=${GRASP}/bin/rnucleus
+LIBS=-L ${GRASP}/lib/ -l9290 -lmod
+FC_MODULES= -I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
-EXE = rnucleus
-BINDIR = ${GRASP}/bin
-GRASPLIB = ${GRASP}/lib
-BINFILE = $(BINDIR)/$(EXE)
-SRCLIBDIR = ../../lib
-MODDIR = ${SRCLIBDIR}/libmod
-MODL9290 = ${SRCLIBDIR}/lib9290
-GRASPLIBS =-l9290 -lmod
+OBJS= \
+	nucleus_m.o \
+	skfun.o \
+	skfun_I.o \
+	estrms.o \
+	estrms_I.o \
+	getcpr.o \
+	getcpr_I.o \
+	geniso.o
 
-APP_LIBS = -L${GRASPLIB} ${GRASPLIBS}
+$(EXE): $(OBJS)
+	$(FC) -o $@ $? $(FC_LD) $(LIBS)
 
-APP_OBJ= \
-	estrms_I.o getcpr_I.o skfun_I.o  \
-	estrms.o geniso.o getcpr.o skfun.o
-
-$(EXE): $(APP_OBJ)
-	$(FC) -o $(BINFILE) $(iFC_LD) $(APP_OBJ) $(APP_LIBS)
-
-.f90.o:
-	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I . -I ${MODL9290} -o $@
-
-
+%.o: %.f90
+	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f *.o core  *.mod
+	-@rm $(EXE)
+	-@rm *.o *.mod

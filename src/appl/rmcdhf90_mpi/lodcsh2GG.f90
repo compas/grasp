@@ -427,7 +427,7 @@
 
       IF (NCF /= NCFBLOCK) THEN
          WRITE (ISTDE, *) MYNAME//': ncf=', NCF, 'ncfblock=', NCFBLOCK
-         STOP
+         ERROR STOP
       ENDIF
 !
 !   Check if any subshell is empty; eliminate it from the
@@ -455,7 +455,7 @@
 !      NELEC = NCOREL+NPEEL
       IF (NCOREL + NPEEL /= NELEC) THEN
          WRITE (ISTDE, *) MYNAME//': nelec not equal to that in lodcsh'
-         STOP
+         ERROR STOP
       ENDIF
       WRITE (6,*)'There are ',NCF,' relativistic CSFs... load complete;'
       RETURN
@@ -474,5 +474,5 @@
    29 continue
       CLOSE(NFILE)
 
-      STOP
+      ERROR STOP
       END SUBROUTINE LODCSH2GG

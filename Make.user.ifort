@@ -1,0 +1,4 @@
+export FC = ifort
+export FC_FLAGS = -O2 -save
+export FC_LD = -mkl=sequential
+export FC_MPI = mpiifort

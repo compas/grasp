@@ -9,6 +9,7 @@
 !   This program is a slight modification of the GENMCP program        *
 !                                                                      *
 !   Written by  G. Gaigalas                   NIST, December 2015      *
+!   Modification by G. Gaigalas                          May 2021      *
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
@@ -42,7 +43,7 @@
       print *, "RCSFinteract: Determines all the CSFs (rcsf.inp) that interact"
       print *, "              with the CSFs in the multireference (rcsfmr.inp)"
       print *, "              (C)  Copyright by G. Gaigalas and Ch. F. Fischer"
-      print *, "              (Fortran 95 version)               NIST  (2017)."
+      print *, "              (Fortran 95 version)               NIST  (2021)."
       print *, "              Input files: rcsfmr.inp, rcsf.inp"
       print *, "              Output file: rcsf.out"
       print *, ""

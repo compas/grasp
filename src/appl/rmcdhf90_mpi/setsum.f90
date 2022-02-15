@@ -31,7 +31,7 @@
       CALL OPENFL (24, FILNAM, FORM, STATUS, IERR)
       IF (IERR /= 0) THEN
          WRITE (ISTDE, *) 'Error when opening ', FILNAM
-         STOP
+         ERROR STOP
       ENDIF
 
       RETURN

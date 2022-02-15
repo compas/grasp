@@ -1,0 +1,27 @@
+name: Documentation
+
+# branches: '*' only matches "main" branches, i.e. ones without a /
+# This ensures that we don't run CI multiple times on pull requests, since we expect all
+# feature branches to be namespaced as <prefix>/<branch>.
+on:
+  push:
+    branches: '*'
+    tags: '**'
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: "Install dependencies"
+      run: sudo apt-get install -y doxygen graphviz
+    - name: Build documentation
+      run: ./contrib/makedocs.sh
+    - name: Deploy documentation
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      env: # Set the secret as an input
+        GITHUB_DEPLOY_KEY: ${{ secrets.GITHUB_DEPLOY_KEY }}
+      run: ./contrib/deploydocs.sh
