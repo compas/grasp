@@ -110,7 +110,7 @@
          WRITE (ISTDE, *) '    1 -- GRASP92 File'
          WRITE (ISTDE, *) '    2 -- Thomas-Fermi'
          WRITE (ISTDE, *) '    3 -- Screened Hydrogenic'
-         WRITE (ISTDE, *) '    4 -- Screened Hydrogenic Core-Correlation'
+         WRITE (ISTDE, *) '    4 -- Screened Hydrogenic [custom Z]'
 
          READ (ISTDI, *) NRADIAL
          IF (NRADIAL<1 .OR. NRADIAL>4) THEN
