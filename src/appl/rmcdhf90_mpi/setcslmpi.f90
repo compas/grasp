@@ -57,7 +57,7 @@
          CALL OPENFL (21, name, 'FORMATTED', 'OLD', ierr)
          IF (ierr .EQ. 1) THEN
             PRINT *, 'Error when opening ',name(1:LEN_TRIM (name))
-            STOP
+            ERROR STOP
          ENDIF
 
          READ (21,'(1A15)',IOSTAT = ios) str
@@ -65,7 +65,7 @@
                (str .NE. 'Core subshells:')) THEN
             PRINT *, 'Not a Configuration Symmetry List File;'
             CLOSE (21)
-            STOP
+            ERROR STOP
          ENDIF
 
          !..Load header of <name> file

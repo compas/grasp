@@ -116,7 +116,7 @@
          WRITE (6, *) ' dimensional limit (currently '//CNUM(1:LCNUM)//');'
          WRITE (6, *) ' radial wavefunction may indicate a'
          WRITE (6, *) ' continuum state.'
-         STOP
+         ERROR STOP
       ENDIF
 !
 !   Compute required elements of remaining rows of  L  and  U

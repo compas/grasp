@@ -155,7 +155,7 @@
          END DO
          NOFFSET = NOFFSET + NEVBLK(JBLOCK)
       END DO
-      IF (NOFFSET /= NCMIN) STOP 'getold: ncmin trouble'
+      IF (NOFFSET /= NCMIN) ERROR STOP 'getold: ncmin trouble'
 
       RETURN
       END SUBROUTINE GETOLD
