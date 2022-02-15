@@ -262,7 +262,7 @@
          READ (30) MCPLAB, JBLOCKT, NCF
          IF (JBLOCKT /= JBLOCK) THEN
             WRITE (ISTDE, *) MYNAME, '1: jblockt .NE. jblock'
-            STOP
+            ERROR STOP
          ENDIF
          READ (30) NELMNTGG
          NELMNT = INT8(NELMNTGG)
@@ -273,7 +273,7 @@
          READ (31) MCPLAB, JBLOCKT, NCF, NCOEFF
          IF (JBLOCKT /= JBLOCK) THEN
             WRITE (ISTDE, *) MYNAME, '2: jblockt .NE. jblock'
-            STOP
+            ERROR STOP
          ENDIF
 
          !*** Loop over labels having non-zero coefficients
@@ -399,7 +399,7 @@
             READ (30) MCPLAB, JBLOCKT, NCF
             IF (JBLOCKT /= JBLOCK) THEN
                WRITE (ISTDE, *) MYNAME, ':3 jblockt .NE. jblock'
-               STOP
+               ERROR STOP
             ENDIF
             READ (30) NELMNTGG
             NELMNT = INT8(NELMNTGG)
@@ -409,7 +409,7 @@
             READ (NFILE) MCPLAB, JBLOCKT, NCF, NCOEFF
             IF (JBLOCKT /= JBLOCK) THEN
                WRITE (ISTDE, *) MYNAME, ':4 jblockt .NE. jblock'
-               STOP
+               ERROR STOP
             ENDIF
 
             K = NFILE - 32                       ! multipolarity of the integral
@@ -496,7 +496,7 @@
                   EXIT
                END DO
 
-               IF (ITHIS == (-911)) STOP 'ithis .EQ. -911'
+               IF (ITHIS == (-911)) ERROR STOP 'ithis .EQ. -911'
 
                !*** Check ithis against the previously recorded ***
                IF (JBLOCK > 1) THEN
@@ -665,7 +665,7 @@
                   ITHIS2 = ((IORB*KEY + IYO2)*KEY + IYO1)*KEY + K
                END DO
 
-               IF (ITHIS==(-911) .OR. ITHIS2==(-911)) STOP 'ithis2'
+               IF (ITHIS==(-911) .OR. ITHIS2==(-911)) ERROR STOP 'ithis2'
 
                !*** Check the previously recorded for YA
                IF (JBLOCK > 1) THEN

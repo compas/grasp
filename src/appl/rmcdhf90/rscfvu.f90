@@ -137,7 +137,7 @@
 
       CALL SETMCP (NCORE, NBLK0, IDBLK, 'mcp')
       CALL SETCSL ('rcsf.inp', NCORE1, IDBLK)
-      IF (NCORE /= NCORE1) STOP 'rscfvu: ncore'
+      IF (NCORE /= NCORE1) ERROR STOP 'rscfvu: ncore'
 
 !=======================================================================
 !  Gather all remaining information and perform some setup. This

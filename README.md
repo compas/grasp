@@ -136,6 +136,8 @@ set `FC_LD` as follows:
 export FC_LD = -L /path/to/blas
 ```
 
+The repository also contains the `Make.user.gfortran` and `Make.user.ifort` files, which can be used as templates for your own `Make.user` file.
+
 ## About GRASP
 
 This version of GRASP is a major revision of the previous GRASP2K package by [P.
@@ -234,6 +236,8 @@ in the `appl` directory, libraries in the `lib` directory and tools in the
    |-----rhfs90
    |-----rmcdhf90
    |-----rmcdhf90_mpi
+   |-----rmcdhf90_mem
+   |-----rmcdhf90_mem_mpi
    |-----rnucleus90
    |-----rtransition90
    |-----rtransition90_mpi

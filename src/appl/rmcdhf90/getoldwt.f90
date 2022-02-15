@@ -54,7 +54,7 @@
         WRITE(734,*) n159,'! level weights'
       END IF
 
-      IF (I > 10) STOP
+      IF (I > 10) ERROR STOP
 
 !------------------------------------------------------------------
 
@@ -89,7 +89,7 @@
 
       CASE DEFAULT
          WRITE (ISTDE, *) 'Impossible ! Because it was guarded'
-         STOP
+         ERROR STOP
       END SELECT
 
       RETURN
