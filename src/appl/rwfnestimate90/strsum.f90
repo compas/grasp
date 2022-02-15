@@ -93,9 +93,9 @@ SUBROUTINE STRSUM
           ' RNT  = ', 1P, D19.12, ' Bohr radii;'/, ' H    = ', D19.12, ' Bohr radii;'/ &
           , ' N    = ', 1I4, ';')
 306 FORMAT('Radial grid: ln(R(I)/RNT+1)+(H/HP)*R(I) = (I-1)*H,', &
-          ' I = 1, ..., N;'/, /, ' RNT  = ', 1P, D19.12, ' Bohr radii;'/, ' H    = ', D &
-          19.12, ' Bohr radii;'/, ' HP   = ', D19.12, ' Bohr radii;'/, ' N    = ', 1 &
-          I4, ';')
+          ' I = 1, ..., N;'/, /, ' RNT  = ', 1P, D19.12, ' Bohr radii;'/, ' H    = ', &
+          D19.12, ' Bohr radii;'/, ' HP   = ', D19.12, ' Bohr radii;'/, ' N    = ', &
+          1I4, ';')
 307 FORMAT(' R(1) = ', 1P, 1D19.12, ' Bohr radii;'/, ' R(2) = ', 1D19.12, &
           ' Bohr radii;'/, ' R(N) = ', 1D19.12, ' Bohr radii.')
    RETURN
