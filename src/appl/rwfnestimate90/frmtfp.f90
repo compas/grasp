@@ -1,7 +1,8 @@
 
+
 !***********************************************************************
 !                                                                      *
-SUBROUTINE FRMTFP(INDEX, NSUBS)
+      SUBROUTINE FRMTFP(INDEX, NSUBS)
 !                                                                      *
 !   This  subroutine  is  used  to  produce  estimates  of  the wave   *
 !   functions by use of the Thomas-Fermi approximation to the direct   *
@@ -18,68 +19,68 @@ SUBROUTINE FRMTFP(INDEX, NSUBS)
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
-   USE vast_kind_param, ONLY: DOUBLE
-   USE LEFT_C, ONLY: SET
-   USE ORB_C, ONLY: NP, NH
-   USE WAVE_C
-   USE WHFROM_C, ONLY: SOURCE
+      USE vast_kind_param, ONLY:  DOUBLE
+      USE LEFT_C, ONLY: SET
+      USE ORB_C, ONLY: NP, NH
+      USE WAVE_C
+      USE WHFROM_C, ONLY: SOURCE
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-   USE solvh_I
-   IMPLICIT NONE
+      USE solvh_I
+      IMPLICIT NONE
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
 !-----------------------------------------------
-   INTEGER, PARAMETER :: NNNP = 590
+      INTEGER, PARAMETER :: NNNP = 590
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-   INTEGER, INTENT(IN) :: NSUBS
-   INTEGER, INTENT(IN) :: INDEX(NNNW)
+      INTEGER , INTENT(IN) :: NSUBS
+      INTEGER , INTENT(IN) :: INDEX(NNNW)
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
-   INTEGER, PARAMETER :: NNN1 = NNNP + 10
+      INTEGER, PARAMETER :: NNN1 = NNNP + 10
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-   INTEGER :: J, LOC
-   LOGICAL :: FAIL
+      INTEGER :: J, LOC
+      LOGICAL :: FAIL
 !-----------------------------------------------
 !
 !
-   DO J = 1, NSUBS
+      DO J = 1, NSUBS
 !
-      LOC = INDEX(J)
+         LOC = INDEX(J)
 !
-      IF (SET(LOC)) CYCLE
+         IF (SET(LOC)) CYCLE
 !
 !   Estimate the leading coefficient of the series expansion for
 !   the orbital
 !
-      PZ(LOC) = 10.0D00
+         PZ(LOC) = 10.0D00
 !
 !   Calculate radial wavefunctions
 !
-      CALL SOLVH(LOC, FAIL)
+         CALL SOLVH (LOC, FAIL)
 !
 !   Message if SOLVH did not converge; reset SET(LOC) otherwise
 !
-      IF (FAIL) THEN
-         WRITE (*, 300) NP(LOC), NH(LOC)
-      ELSE
-         SET(LOC) = .TRUE.
-         !SOURCE(LOC) = 'Thomas-Fermi estimate'
-         SOURCE(LOC) = 'T-F'
-      ENDIF
+         IF (FAIL) THEN
+            WRITE (*, 300) NP(LOC), NH(LOC)
+         ELSE
+            SET(LOC) = .TRUE.
+               !SOURCE(LOC) = 'Thomas-Fermi estimate'
+            SOURCE(LOC) = 'T-F'
+         ENDIF
 !
-   END DO
+      END DO
 !
-   RETURN
+      RETURN
 !
-300 FORMAT(/, 'TFWAVE: Unable to compute radial'/, /, ' wavefunction for ', I2, A2 &
-           , ' subshell;')
-   RETURN
+  300 FORMAT(/,'TFWAVE: Unable to compute radial'/,/,' wavefunction for ',I2,A2&
+         ,' subshell;')
+      RETURN
 !
-END SUBROUTINE FRMTFP
+      END SUBROUTINE FRMTFP
