@@ -2,7 +2,7 @@
 
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE FRMHYD(INDEX, NSUBS, MODIFY)
+      SUBROUTINE FRMHYD(INDEX, NSUBS, MODIFY, NRADIAL)
 !                                                                      *
 !   This  subroutine  is  used  to  produce  estimates  of  the wave   *
 !   functions from the hydrogenic approximation. The screening cons-   *
@@ -46,32 +46,33 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      INTEGER :: J, LOC
-      REAL(DOUBLE) :: ZEFF
+      INTEGER :: J, LOC, NRADIAL
+      REAL(DOUBLE) :: ZEFF, DelZ
       LOGICAL :: YES, GETYN
 !-----------------------------------------------
 !
 !
-      WRITE (ISTDE, *)
-      WRITE (ISTDE, *) '***** Screening parameters ******'
+      delz = 0.d0
+      IF (NRADIal == 4)  THEN
+         WRITE (ISTDE, *) 'Enter increase in Z for correlation orbitals'
+         READ  (5, *) delz
+      END IF
+      WRITE (ISTDE, *) 'Orbital Z_eff for hydrogenic orbitals'
       DO J = 1, NSUBS
          LOC = INDEX(J)
          IF (SET(LOC)) CYCLE
-
-         WRITE (ISTDE, '(I2,A2,F10.2)') NP(LOC), NH(LOC), SIGMA(LOC)
          IF (MODIFY) THEN
             WRITE (ISTDE, *) 'Input new value >'
             READ (5, *) SIGMA(LOC)
          ENDIF
-
-         ZEFF = Z - SIGMA(LOC)
-
+         ZEFF = Z - SIGMA(LOC) + delz
+         WRITE (ISTDE, '(I2,A2,F10.2)') NP(LOC), NH(LOC), Zeff
 !           ...Calculate radial wavefunctions
          CALL DCBSRW (NP(LOC), NAK(LOC), ZEFF, E(LOC), PZ(LOC), PF(:,LOC), &
             QF(:,LOC), MF(LOC))
          SET(LOC) = .TRUE.
-            !SOURCE(LOC) = 'Screened hydrogenic estimate'
          SOURCE(LOC) = 'Hyd'
       END DO
+      WRITE (ISTDE, *)
       RETURN
       END SUBROUTINE FRMHYD

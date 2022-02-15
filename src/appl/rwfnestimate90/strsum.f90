@@ -34,7 +34,9 @@
       INTEGER :: LENTH
       CHARACTER(LEN=10) :: CTIME
       CHARACTER(LEN=8) :: CDATE
-      CHARACTER :: RECORD*256, CDATA*26
+      CHARACTER(LEN=256) :: RECORD
+      CHARACTER(LEN=26)  :: CDATA
+
 !-----------------------------------------------
 !
 !

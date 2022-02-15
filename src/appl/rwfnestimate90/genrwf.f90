@@ -110,9 +110,10 @@
          WRITE (ISTDE, *) '    1 -- GRASP92 File'
          WRITE (ISTDE, *) '    2 -- Thomas-Fermi'
          WRITE (ISTDE, *) '    3 -- Screened Hydrogenic'
+         WRITE (ISTDE, *) '    4 -- Screened Hydrogenic [custom Z]'
 
          READ (ISTDI, *) NRADIAL
-         IF (NRADIAL<1 .OR. NRADIAL>3) THEN
+         IF (NRADIAL<1 .OR. NRADIAL>4) THEN
             WRITE (ISTDE, *) NRADIAL, 'is not a valid choice, redo'
             GO TO 234
          ENDIF
@@ -140,13 +141,13 @@
             CALL FRMRWF (INDEX, NSUBS, INFILE)
          ELSE IF (NRADIAL == 2) THEN
             CALL FRMTFP (INDEX, NSUBS)
-         ELSE
-            CALL FRMHYD (INDEX, NSUBS, MODIFY)
+         ELSE IF (NRADIAL == 3) THEN
+            CALL FRMHYD (INDEX, NSUBS, MODIFY,NRADIAL)
+         ELSE IF (NRADIAL == 4) THEN
+            CALL FRMHYD (INDEX, NSUBS, MODIFY,NRADIAL)
          ENDIF
 
          CALL PRTREM (ALL)
-            !WRITE (istde,*) 'Radial functions incomplete, need more...'
-            ! PRTREM has more informative prompt
          IF (.NOT.ALL) GO TO 234
 
       ENDIF
