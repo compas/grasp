@@ -1,0 +1,100 @@
+#!/usr/bin/env python3
+
+import matplotlib.pyplot as plt
+import numpy as np
+import sys
+
+print("""
+  RWFNPYPLOT - Jon Grumer, Uppsala University, 2022
+  A simple python script to plot a single orbital
+  from a DBSR_HF or GRASP .plot file
+
+  Input file: <name>.plot [from dbsr_hf --out_plot=1, or the grasp tool: rwfntotxt]
+
+  For more info, run: rwfnpyplot --help
+  """)
+
+if len(sys.argv) > 1:
+    filename = sys.argv[1] # grasp or dbsr plot file name: 'name.plot'
+else:
+    sys.exit("""
+      Please provide correct command line arguments.
+      For more info, run: rwfnpyplot --help
+    """)
+
+if filename == "--help":
+    print("""
+    --help:
+
+      Run with 4 command line arguments as follows
+
+      >> rwfnplot <name>.plot <nls> <P/Q> <max-r> <y/n (plot to screen?)>
+
+      where nls is e.g. 2s or 6d-, P or Q selects large or small component
+      and max-r is the maximum plot radius. The last options controls whether
+      you want to plot to screen - if not, a pdf will be created instead.
+    """)
+    print("""
+      Program source file: {}
+    """.format(sys.argv[0]) )
+    sys.exit()
+
+if not len(sys.argv) >= 5:
+    sys.exit("""
+      Please provide correct command line arguments.
+
+      See rwfnpyplot --help for more info.
+    """)
+
+# get remaining control arguments
+nls            = sys.argv[2]        # orbital '1s' or '2p-'
+pq             = sys.argv[3]        # 'P' or 'Q' (or small letters)
+max_r          = float(sys.argv[4]) # max radius
+if len(sys.argv) == 6:
+    plot_to_screen = sys.argv[5]    # plot to screen? If not then save as pdf (default)
+    if plot_to_screen in ['True', 'T', 'y', 'Y']:
+        plot_to_screen = True
+else:
+    plot_to_screen = False
+
+orbital_grasp = pq.capitalize()+'('+nls+')'
+orbital_dbsr  = pq.lower()+nls
+
+if pq.capitalize() == 'P':
+    function_type = 'P'
+else:
+    function_type = 'Q'
+
+# start analyze <name>.plot and plot selected orbital
+first_line = True
+X, Y       = [], []
+
+for line in open(filename, 'r'):
+    if first_line:
+        # find which orbital to plot
+        i_orb = 1
+        for orb in line.split()[1:]:
+            if orb == orbital_grasp or orb == orbital_dbsr:
+                break
+            else:
+                i_orb += 1
+
+        # done with the header, move on to data
+        first_line = False
+        continue
+
+    values = [float(s) for s in line.split()]
+    X.append(values[0])
+    Y.append(values[i_orb])
+
+plt.axhline(y=0.0, color='black', lw=0.75, ls='--')
+plt.plot(X[1:], Y[1:], label = orbital_grasp)
+plt.xlabel('r[a.u.]')
+plt.ylabel(function_type+'(r)')
+plt.xlim([0,max_r])
+plt.legend()
+
+if plot_to_screen:
+    plt.show()
+else:
+    plt.savefig(filename.split(".")[0]+'_plot.pdf', bbox_inches='tight')
