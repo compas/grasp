@@ -1,37 +1,59 @@
-      PROGRAM extmix
 !
-! Extract mixing coefficients and the CSF from files
-!   <name>.c, <name>.m / <name>.cm
-
+!***********************************************************************
+!                                                                      *
+      PROGRAM extmix
+!                                                                      *
+!     Extract mixing coefficients and the CSF from files               *
+!     <name>.c, <name>.m / <name>.cm                                   *
+!                                                                      *
+!     Modified by G. Gaigalas                                   2022   *
+!                                                                      *
+!***********************************************************************
+!-----------------------------------------------
+!   M o d u l e s
+!-----------------------------------------------
+      USE vast_kind_param, ONLY: DOUBLE
+      USE eigv_C,          ONLY: EAV, EVAL, EVEC
       USE iounit_C
-
-      IMPLICIT DOUBLE PRECISION (a-h, o-z)
-      CHARACTER*200, line(3)
-      CHARACTER*100,  g92mix*6, head*500
+!-----------------------------------------------
+!   I n t e r f a c e   B l o c k s
+!-----------------------------------------------
+      IMPLICIT NONE
+!-----------------------------------------------
+!   L o c a l   V a r i a b l e s
+!-----------------------------------------------
+      CHARACTER*100, line(3), g92mix*6, head*500
       CHARACTER*64 StrInput, basnam, from*1, suffix*3, filnam*69, dotc*2
       LOGICAL sort, getyn, first_of_the_block
-      DATA nfmix,nfcsf,nfout,nfscratch/20,21,22,23/
       DATA dotc/'.c'/
-
-      INTEGER, Allocatable, DIMENSION(:) :: iset, jset
-      REAl*8, Allocatable, DIMENSION(:)  :: eval, evec
-
+      INTEGER :: nfmix,nfcsf,nfout,nfscratch
+      DATA nfmix,nfcsf,nfout,nfscratch/20,21,22,23/
+      INTEGER :: ncfblk, nw, nvectot, ncftot, nvecsiz, nblock, layer
+      INTEGER :: nevblk, nelec, nb, maxbub, icf, jcf, jblock, nmax
+      INTEGER :: ivecdum, iaspa, iatjp, i, j, ip, IOS, IERR
+      INTEGER, DIMENSION(:), pointer :: icount
+      REAL(DOUBLE) :: cutoff, bubmax
+      INTEGER, DIMENSION(:,:), pointer :: iset, jset
+!-----------------------------------------------
+!
 !***********************************************************************
 !  Input conversation on the purpose, filenames, control parameters
 !***********************************************************************
 
 !     ...General description
-      WRITE(*,*) 'RMIXEXTRACT'
-      WRITE(*,*) 'Extract and prints mixing coefficient above a '
-      WRITE(*,*) 'cut-off. Corresponding CSFs written to screen and '
-      WRITE(*,*) 'to rcsf.out'
-      WRITE(*,*) 'Input files: name.c, name.(c)m'
-      WRITE(*,*) 'Output file: rcsf.out'
+      WRITE(*,*) '  RMIXEXTRACT'
+      WRITE(*,*)
+      WRITE(*,*) '  Extract and print mixing coefficients above a given'
+      WRITE(*,*) '  cut-off. Resulting CSFs are written to screen and '
+      WRITE(*,*) '  to rcsf.out.'
+      WRITE(*,*)
+      WRITE(*,*) '  Input files: name.c, name.(c)m'
+      WRITE(*,*) '  Output file: rcsf.out'
       WRITE(*,*)
 
 !     ...Asking the base name
 
-  123 WRITE (istde,*) 'Name of state'
+  123 WRITE (istde,*) 'Give filename: '
       READ (istdi, '(A)') StrInput
       IF (LEN_TRIM (StrInput) .EQ. 0) THEN
          WRITE (istde,*) 'Blank line not acceptable, redo'
@@ -42,7 +64,7 @@
 
 !     ...Determing the suffix
 
-  234 WRITE (istde,*) 'Mixing coefficients from CI calc. ?'
+  234 WRITE (istde,*) 'Are mixing coefficients from a CI calculation? '
       READ (istdi,'(A)') StrInput
       StrInput = ADJUSTL (StrInput)
       from = StrInput(1:1)
@@ -69,14 +91,13 @@
 !     ...The cut-off parameter
 
       WRITE (istde,*) 'Enter the cut-off value for the coefficients ', &
-                      '[0--1]'
+                      '[0--1]: '
       READ (istdi,*) cutoff
-      cutoff = ABS (cutoff)
+      cutoff = DABS (cutoff)
 
 !     ...Sort or not
 
-!     CFF .. send to screen rather than printer
-      WRITE (istde,*) 'Sort extracted CSFs according to mixingcoeffcients? (y/n)'
+      PRINT*,'Sort extracted CSFs by mixing coefficients (y/n)?'
       sort = getyn()
 
 !***********************************************************************
@@ -85,7 +106,7 @@
       OPEN (nfmix, FILE = filnam, FORM = 'UNFORMATTED', STATUS = 'OLD' &
             , IOSTAT = IOS)
       IF (IOS .NE. 0) THEN
-         WRITE (istde,*) 'Failed to to open file "',                   &
+         WRITE (istde,*) 'Failed to to open file: "',                  &
                       filnam(1:LEN_TRIM (filnam)), '"'
          CLOSE (nfmix)
          STOP
@@ -93,12 +114,12 @@
 
       READ (nfmix) g92mix
       IF (g92mix .NE. 'G92MIX')                                        &
-         STOP 'Not a mixing coefficient file'
+         STOP 'Not a mixing coefficient file!'
 
       READ (nfmix) nelec, ncftot, nw, nvectot, nvecsiz, nblock
       PRINT *
-      PRINT '(2X,A,2X,I2,2X,A,2X,I8,2X,A,2X,I2,2X,A,2X,I2)',          &
-             'nblock = ', nblock, '  ncftot = ', ncftot,              &
+      PRINT '(2X,A,2X,I2,2X,A,2X,I8,2X,A,2X,I2,2X,A,2X,I2)',           &
+             'nblock = ', nblock, '  ncftot = ', ncftot,               &
                       '  nw = ', nw, '  nelec = ', nelec
       PRINT *
 
@@ -109,8 +130,8 @@
       OPEN (nfcsf, FILE = filnam, FORM = 'FORMATTED', STATUS = 'OLD'   &
             , IOSTAT = IOS)
       IF (IOS .NE. 0) THEN
-         WRITE (istde,*) 'Failed to to open file "',                   &
-     &                filnam(1:LEN_TRIM (filnam)), '"'
+         WRITE (istde,*) 'Failed to to open file: "',                  &
+                      filnam(1:LEN_TRIM (filnam)), '"'
          STOP
       ENDIF
 
@@ -150,13 +171,14 @@
 
 
          Allocate (eval(1:nevblk), stat=ierr)
-         IF  (ierr /= 0) STOP " not enough memory for eval"
+         IF  (ierr /= 0) STOP " Not enough memory for eval!"
          Allocate (evec(1:nevblk*ncfblk), stat=ierr)
-         IF  (ierr /= 0) STOP " not enough memory for evec"
-         Allocate (iset(1:ncfblk), stat=ierr)
-         IF  (ierr /= 0) STOP " not enough memory for iset"
+         IF  (ierr /= 0) STOP " Not enough memory for evec!"
+         Allocate (icount(1:nevblk), stat=ierr)
+         IF  (ierr /= 0) STOP " Not enough memory for iset!"
+         Allocate (iset(1:ncfblk,1:nevblk), stat=ierr)
+         IF  (ierr /= 0) STOP " Not enough memory for iset!"
 
-         !READ (nfmix) (ivec(i), i = 1, nevblk)
          READ (nfmix) (ivecdum, i = 1, nevblk)
          READ (nfmix) eav, (eval(i), i = 1, nevblk)
          READ (nfmix) ((evec(i + (j-1)*ncfblk ),           &
@@ -166,36 +188,46 @@
          icount = 0
          DO icf = 1, ncfblk
             DO ip = 1, nevblk
-               IF (ABS ( evec(icf+(ip-1)*ncfblk) ) .GT. cutoff) THEN
-                  icount = icount + 1
-                  iset(icount) = icf
-                  EXIT
+               IF (DABS ( evec(icf+(ip-1)*ncfblk) ) > cutoff) THEN
+                  icount(ip) = icount(ip) + 1
+                  iset(icount(ip),ip) = icf
                ENDIF
             ENDDO
+         ENDDO
+
+         DO ip = 1, nevblk
+            if (ip == 1) then
+               PRINT *,                                                &
+             'Average Energy = ', eav, '    ncf_reduced = ', icount(ip)
+            else
+               PRINT *, '                    Eigenvector =',ip,        &
+                                         '  ncf_reduced = ', icount(ip)
+            end if
+            nmax = max(nmax,icount(ip))
          ENDDO
 
 !        ...Make a copy of the original set which is to be altered if
 !           sorted
          IF (sort) THEN
-            allocate(jset(1:icount))
-            DO i = 1, icount
-               jset(i) = iset(i)
+            allocate(jset(1:nmax,1:nevblk))
+            DO j = 1, nevblk
+               DO i = 1, icount(j)
+                  jset(i,j) = iset(i,j)
+               ENDDO
             ENDDO
          ENDIF
 
-         PRINT *, 'Average Energy = ', eav, '    ncf_reduced = ', icount
-
          DO 321 ip = 1, nevblk
             layer = (ip-1)*ncfblk
-	    eval(ip) = eval(ip) + eav
+            eval(ip) = eval(ip) + eav
 
             IF (sort) THEN
-               DO i = 1, icount
-                  icf = iset(i)
+               DO i = 1, icount(ip)
+                  icf = iset(i,ip)
                   maxbub = i
                   bubmax = ABS (evec(icf+layer))
-                  DO j = i+1, icount
-                     jcf = iset(j)
+                  DO j = i+1, icount(ip)
+                     jcf = iset(j,ip)
                      IF (ABS ( evec(jcf+layer) ) .GT. bubmax)    &
                                             THEN
                         maxbub = j
@@ -203,18 +235,16 @@
                      ENDIF
                   ENDDO
 
-                  iset(i) = iset(maxbub)
-                  iset(maxbub) = icf
+                  iset(i,ip) = iset(maxbub,ip)
+                  iset(maxbub,ip) = icf
                ENDDO
             ENDIF
 
             PRINT *
             PRINT *, 'Energy = ', eval(ip), '    Coefficients and CSF :'
             PRINT *
-
-            DO i = 1, icount
-               icf = iset(i)
-!CPJ               PRINT *, i, evec(icf + layer)
+            DO i = 1, icount(ip)
+               icf = iset(i,ip)
                write(*,'(i12,f11.6)') i, evec(icf + layer)
                READ (nfscratch, REC = icf) line
                PRINT *, line(1)(1:LEN_TRIM (line(1)))
@@ -228,7 +258,7 @@
                ENDIF
 
 !              ...Recover original set
-               IF (sort) iset(i) = jset(i)
+               IF (sort) iset(i,ip) = jset(i,ip)
             ENDDO
 
             first_of_the_block = .FALSE.
@@ -242,7 +272,7 @@
          deallocate(evec)
          IF (sort) deallocate(jset)
 
-	 CLOSE (nfscratch, STATUS = 'DELETE')
+         CLOSE (nfscratch, STATUS = 'DELETE')
 
   432 CONTINUE
 
@@ -260,7 +290,7 @@
       CHARACTER*(*) line(3), star*2
 
       OPEN (nfscratch, STATUS = 'SCRATCH', ACCESS = 'DIRECT',  &
-       RECL = 600)
+       RECL = 300)
 
       DO icf = 1, ncfblk
          READ (nfcsf,'(A)') line(1)
@@ -270,10 +300,10 @@
       ENDDO
 
       READ (nfcsf,'(A)',END=123) star
-      IF (star .NE. ' *') STOP ' CSF read wrong'
+      IF (star .NE. ' *') STOP ' Error while reading CSFs!'
 
   123 CONTINUE
 
       RETURN
-      END  SUBROUTINE IOCSF
-      END  PROGRAM
+      END SUBROUTINE IOCSF
+      END PROGRAM extmix
