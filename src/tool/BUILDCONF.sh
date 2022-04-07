@@ -1,4 +1,4 @@
-SCRIPTS="lscomp.pl rsave"
+SCRIPTS="lscomp.pl rsave rwfnpyplot"
 PROGRAMS="
 rasfsplit
 rcsfblock
@@ -22,6 +22,7 @@ rwfnplot
 rwfnrelabel
 rwfnrotate
 wfnplot
+rwfntotxt
 "
 # rcsfratip was not being compiled in the original ${MAKEFILE} for some reason.
 
