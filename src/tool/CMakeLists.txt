@@ -1,5 +1,6 @@
 install(PROGRAMS lscomp.pl DESTINATION bin/)
 install(PROGRAMS rsave DESTINATION bin/)
+install(PROGRAMS rwfnpyplot DESTINATION bin/)
 
 add_executable(rasfsplit rasfsplit.f90)
 target_link_libraries_Fortran(rasfsplit PRIVATE mod 9290)
