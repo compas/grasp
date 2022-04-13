@@ -3,7 +3,7 @@
 !                                                                      *
 PROGRAM extmix
 !                                                                      *
-!     Extract mixing coefficients and the CSF from files               *
+!     Extract mixing coefficients and CSF's from files                 *
 !     <name>.c, <name>.m / <name>.cm                                   *
 !                                                                      *
 !     Modified by G. Gaigalas                                   2022   *
@@ -53,28 +53,24 @@ PROGRAM extmix
    WRITE (*, *) '  Output file: rcsf.out'
    WRITE (*, *)
 
-   WRITE (*, *)                                                    &
-   "The extraction of CSF's can be done for each individual state separately,"
-   WRITE (*, *)                                                    &
-   "or across all states together."
-   WRITE (*, *)                                                    &
-   "The latter implies that a CSF will be extracted if has a mixing"
-   WRITE (*, *)                                                    &
-   "coefficient larger than the given cut-off in any of the eigenstates"
-   WRITE (istde, *)                                                    &
-   "present in the mixing file."
+   !     ...Ask about which mode to run the code in
+
+   WRITE (*, *) "  The extraction of CSF's can be done for each individual"
+   WRITE (*, *) "  state separately, or across all states together."
+   WRITE (*, *) "  The latter implies that a CSF will be extracted if has"
+   WRITE (*, *) "  a mixing coefficient larger than the given cut-off in"
+   WRITE (*, *) "  any of the eigenstates present in the mixing file."
    WRITE (*, *)
-   WRITE (*, *)                                                        &
-   "- Do you want the extraction to be done for individual (0) or across all states (1)?: "
-   READ (istdi, '(I5)') ans_all_states
+   WRITE (*, *) "- Do you want the extraction to be done"
+   WRITE (*, *) "  for individual (0) or across all states (1)?: "
+   READ (istdi, '(I5)') ans_all_states ! 1 = across all states, 0 = for individual states
 
+   !     ...Asking the base name
 
-!     ...Asking the base name
-
-123 WRITE (*, *) 'Give filename: '
+123 WRITE (*, *) '- Give file name <name>.(c)m: '
    READ (istdi, '(A)') StrInput
    IF (LEN_TRIM(StrInput) .EQ. 0) THEN
-      WRITE (istde, *) 'Blank line not acceptable, redo'
+      WRITE (istde, *) 'Blank line not acceptable, redo.'
       GOTO 123
    END IF
 
@@ -82,7 +78,7 @@ PROGRAM extmix
 
 !     ...Determing the suffix
 
-234 WRITE (*, *) 'Are mixing coefficients from a CI calculation? '
+234 WRITE (*, *) '- Are mixing coefficients from a CI calculation (y/n)? '
    READ (istdi, '(A)') StrInput
    StrInput = ADJUSTL(StrInput)
    from = StrInput(1:1)
@@ -92,7 +88,7 @@ PROGRAM extmix
       suffix = '.m'
    ELSE
       WRITE (*,*) StrInput(1:LEN_TRIM(StrInput)), &
-         ' is not a valid choice, redo'
+         ' is not a valid choice, redo.'
       GOTO 234
    END IF
 
@@ -108,14 +104,14 @@ PROGRAM extmix
 
 !     ...The cut-off parameter
 
-   WRITE (*, *) 'Enter the cut-off value for the coefficients ', &
+   WRITE (*, *) '- Enter the cut-off value for the coefficients ', &
       '[0--1]: '
    READ (istdi, *) cutoff
    cutoff = DABS(cutoff)
 
 !     ...Sort or not
 
-   PRINT *, 'Sort extracted CSFs by mixing coefficients (y/n)?'
+   PRINT *, '- Sort extracted CSFs by mixing coefficients (y/n)?'
    sort = getyn()
 
 !***********************************************************************
@@ -193,13 +189,13 @@ PROGRAM extmix
       IF (ierr /= 0) STOP " Not enough memory for evec!"
       IF (ans_all_states == 0) THEN
          Allocate (icount0(1:nevblk), stat=ierr)
-         IF (ierr /= 0) STOP " Not enough memory for iset!"
+         IF (ierr /= 0) STOP " Not enough memory for icount0!"
          Allocate (iset0(1:ncfblk, 1:nevblk), stat=ierr)
-         IF (ierr /= 0) STOP " Not enough memory for iset!"
+         IF (ierr /= 0) STOP " Not enough memory for iset0!"
       ELSE
          Allocate (iset(1:ncfblk), stat=ierr)
-         IF (ierr /= 0) STOP " not enough memory for iset"
-      end if
+         IF (ierr /= 0) STOP " Not enough memory for iset"
+      END IF
 
       READ (nfmix) (ivecdum, i=1, nevblk)
       READ (nfmix) eav, (eval(i), i=1, nevblk)
@@ -340,8 +336,7 @@ PROGRAM extmix
 
             DO i = 1, icount
                icf = iset(i)
-!CPJ                  PRINT *, i, evec(icf + layer)
-               write (*, '(i12,f11.6)') i, evec(icf + layer)
+               WRITE (*, '(i12,f11.6)') i, evec(icf + layer)
                READ (nfscratch, REC=icf) line
                PRINT *, line(1) (1:LEN_TRIM(line(1)))
                PRINT *, line(2) (1:LEN_TRIM(line(2)))
@@ -371,36 +366,37 @@ PROGRAM extmix
 
       CLOSE (nfscratch, STATUS='DELETE')
 
-432   CONTINUE
+432 CONTINUE
 
-      CLOSE (nfmix)
-      CLOSE (nfcsf)
-      CLOSE (nfout)
+   CLOSE (nfmix)
+   CLOSE (nfcsf)
+   CLOSE (nfout)
 
-      WRITE (*, *) 'RMIXEXTRACT: Execution complete.'
+   WRITE (*, *) 'RMIXEXTRACT: Execution complete.'
 
-      CONTAINS
+CONTAINS
 
-         SUBROUTINE iocsf(nfcsf, nfscratch, jblock, ncfblk, line)
-            IMPLICIT NONE
-            INTEGER nfcsf, nfscratch, jblock, ncfblk, icf, i
-            CHARACTER*(*) line(3), star*2
+   SUBROUTINE iocsf(nfcsf, nfscratch, jblock, ncfblk, line)
+      IMPLICIT NONE
+      INTEGER nfcsf, nfscratch, jblock, ncfblk, icf, i
+      CHARACTER*(*) line(3), star*2
 
-            OPEN (nfscratch, STATUS='SCRATCH', ACCESS='DIRECT', &
-                  RECL=300)
+      OPEN (nfscratch, STATUS='SCRATCH', ACCESS='DIRECT', &
+            RECL=300)
 
-            DO icf = 1, ncfblk
-               READ (nfcsf, '(A)') line(1)
-               READ (nfcsf, '(A)') line(2)
-               READ (nfcsf, '(A)') line(3)
-               WRITE (nfscratch, REC=icf) line
-            END DO
+      DO icf = 1, ncfblk
+         READ (nfcsf, '(A)') line(1)
+         READ (nfcsf, '(A)') line(2)
+         READ (nfcsf, '(A)') line(3)
+         WRITE (nfscratch, REC=icf) line
+      END DO
 
-            READ (nfcsf, '(A)', END=123) star
-            IF (star .NE. ' *') STOP ' Error while reading CSFs!'
+      READ (nfcsf, '(A)', END=123) star
+      IF (star .NE. ' *') STOP ' Error while reading CSFs!'
 
-123         CONTINUE
+123   CONTINUE
 
-            RETURN
-         END SUBROUTINE IOCSF
-      END PROGRAM extmix
+      RETURN
+   END SUBROUTINE iocsf
+
+END PROGRAM extmix
