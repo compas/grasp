@@ -111,7 +111,7 @@ PROGRAM extmix
 
 !     ...Sort or not
 
-   PRINT *, '- Sort extracted CSFs by mixing coefficients (y/n)?'
+   WRITE (*,*)  '- Sort extracted CSFs by mixing coefficients (y/n)?'
    sort = getyn()
 
 !***********************************************************************
@@ -131,11 +131,11 @@ PROGRAM extmix
       STOP 'Not a mixing coefficient file!'
 
    READ (nfmix) nelec, ncftot, nw, nvectot, nvecsiz, nblock
-   PRINT *
-   PRINT '(2X,A,2X,I2,2X,A,2X,I8,2X,A,2X,I2,2X,A,2X,I2)', &
+   WRITE (*, '(A)') ''
+   WRITE (*,  '(2X,A,2X,I2,2X,A,2X,I8,2X,A,2X,I2,2X,A,2X,I2)') &
       'nblock = ', nblock, '  ncftot = ', ncftot, &
       '  nw = ', nw, '  nelec = ', nelec
-   PRINT *
+   WRITE (*, '(A)') ''
 
 !***********************************************************************
 !  Open CSF file
@@ -170,10 +170,7 @@ PROGRAM extmix
 
       READ (nfmix) nb, ncfblk, nevblk, iatjp, iaspa
       PRINT *, ('=', i=1, 75)
-      PRINT '(2X,A,2X,I2,2X,A,2X,I8,3(2X,A,2X,I2))', &
-         'nb = ', nb, 'ncfblk = ', ncfblk, &
-         'nevblk = ', nevblk, '2J+1 = ', iatjp, 'parity = ', iaspa
-      WRITE (istde, '(2X,A,2X,I2,2X,A,2X,I8,3(2X,A,2X,I2))') &
+      WRITE (*, '(2X,A,2X,I2,2X,A,2X,I8,3(2X,A,2X,I2))') &
          'nb = ', nb, 'ncfblk = ', ncfblk, &
          'nevblk = ', nevblk, '2J+1 = ', iatjp, 'parity = ', iaspa
       PRINT *, ('=', i=1, 75)
@@ -214,13 +211,9 @@ PROGRAM extmix
          END DO
 
          DO ip = 1, nevblk
-            if (ip == 1) then
-               PRINT *,                                                &
-               'Average Energy = ',eav,'    ncf_reduced = ',icount0(ip)
-            else
-               PRINT *, '                    Eigenvector =', ip,       &
+            if (ip == 1) WRITE (*,*) 'Average Energy = ',eav
+            WRITE (*,*) '                    Eigenvector =', ip,       &
                '  ncf_reduced = ', icount0(ip)
-            end if
             nmax = max(nmax, icount0(ip))
          END DO
 
