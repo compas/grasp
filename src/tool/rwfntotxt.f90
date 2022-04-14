@@ -18,9 +18,10 @@ PROGRAM rwfntotxt
    write (*, *)
    write (*, *) '    Input: rwfn.inp      Output: rwfn.plot'
    write (*, *)
-   write (*, *) '    Note: rwfnpyplot can be used to conveniently plot orbitals from the .plot file.'
-   write (*, *) '          E.g. >> rwfnpyplot rwfn.plot 2p- 50 y'
-   write (*, *) '          plots the large P(2p-) component to screen up to r = 50 au.'
+   write (*, *) '    Note: rwfnpyplot can be used to conveniently investigate orbitals'
+   write (*, *) '    from the .plot file.'
+   write (*, *) '          E.g. >> rwfnpyplot rwfn.plot P 2p- 0.50 y'
+   write (*, *) '          plots the large P(2p-) component to screen up to r = 0.50 au.'
    write (*, *)
 
    ! optional:
@@ -96,10 +97,10 @@ PROGRAM rwfntotxt
    ! write header
    write (4, '(a14)', advance='no') 'r(a.u)'
    do i = 1, nwf
-         !if ( any(selected_orbs == trim(adjustl(nl(i)))) ) then
+         !if ( any(selected_orbs == trim(adjustl(nl(i)))) ) then ! optional
          write (4, '(a14)', advance='no') 'P('//trim(adjustl(nl(i)))//')'
          write (4, '(a14)', advance='no') 'Q('//trim(adjustl(nl(i)))//')'
-         !end if
+         !end if ! optional
    end do
    write (4, *)
 
