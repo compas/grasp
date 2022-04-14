@@ -18,8 +18,9 @@ if len(sys.argv) > 1:
     filename = sys.argv[1] # grasp or dbsr plot file name: 'name.plot'
 else:
     sys.exit("""
-      Please provide correct command line arguments.
-      For more info, run: rwfnpyplot --help
+      Error: please provide correct command line arguments.
+
+      See rwfnpyplot --help for more info.
     """)
 
 if filename == "--help":
@@ -28,11 +29,17 @@ if filename == "--help":
 
       Run with 4 command line arguments as follows
 
-      >> rwfnplot <name>.plot <nls> <P/Q> <max-r> <y/n (plot to screen?)>
+      >> rwfnplot <name>.plot <nls> <P/Q> <max-r[a.u]> <y/n (plot to screen?)>
 
-      where nls is e.g. 2s or 6d-, P or Q selects large or small component
-      and max-r is the maximum plot radius. The last options controls whether
-      you want to plot to screen - if not, a pdf will be created instead.
+      where nls is e.g. '2p' or '6d-', 'P' or 'Q' selects large or small component
+      and max-r is the maximum plot radius in au. The last option controls whether
+      you want to plot to screen - if not, a pdf will be created instead (default = n).
+
+      E.g.
+
+      >> rwfnpyplot rwfn.plot 2p- P 0.50 y
+
+      plots the large component of the 2p- orbital to screen up to r = 0.5 au.
     """)
     print("""
       Program source file: {}
@@ -41,7 +48,7 @@ if filename == "--help":
 
 if not len(sys.argv) >= 5:
     sys.exit("""
-      Please provide correct command line arguments.
+      Error: please provide correct command line arguments.
 
       See rwfnpyplot --help for more info.
     """)
@@ -54,6 +61,8 @@ if len(sys.argv) == 6:
     plot_to_screen = sys.argv[5]    # plot to screen? If not then save as pdf (default)
     if plot_to_screen in ['True', 'T', 'y', 'Y']:
         plot_to_screen = True
+    else:
+        plot_to_screen = False
 else:
     plot_to_screen = False
 
@@ -64,6 +73,13 @@ if pq.capitalize() == 'P':
     function_type = 'P'
 else:
     function_type = 'Q'
+
+if plot_to_screen:
+    message = 'to screen...'
+else:
+    message = 'to pdf: '+filename.split(".")[0]+'_plot.pdf...'
+
+print('  Plotting '+function_type+'('+nls+') '+message)
 
 # start analyze <name>.plot and plot selected orbital
 first_line = True
