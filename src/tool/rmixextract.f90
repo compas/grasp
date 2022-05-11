@@ -46,20 +46,23 @@ PROGRAM extmix
    WRITE (*, *) '  RMIXEXTRACT'
    WRITE (*, *)
    WRITE (*, *) '  Extract and print mixing coefficients above a given'
-   WRITE (*, *) '  cut-off. Resulting CSFs are written to screen and '
-   WRITE (*, *) '  to rcsf.out.'
+   WRITE (*, *) '  cut-off. Resulting CSFs and mixing coefficients for'
+   WRITE (*, *) '  the individual eigenstates are written to name.rmx,'
+   WRITE (*, *) '  and the total list of extracted CSFs to rcsf.out'
    WRITE (*, *)
    WRITE (*, *) '  Input files: name.c, name.(c)m'
-   WRITE (*, *) '  Output file: rcsf.out'
+   WRITE (*, *) '  Output file: rcsf.out, name.rmx'
    WRITE (*, *)
 
    !     ...Ask about which mode to run the code in
 
-   WRITE (*, *) "  The extraction of CSF's can be done for each individual"
-   WRITE (*, *) "  state separately, or across all states together."
+   WRITE (*, *) "  The extraction of CSFs to the rmx file can be carried"
+   WRITE (*, *) "  out with the cut-off applied to each individual state"
+   WRITE (*, *) "  separately, or across all states together."
    WRITE (*, *) "  The latter implies that a CSF will be extracted if has"
    WRITE (*, *) "  a mixing coefficient larger than the given cut-off in"
    WRITE (*, *) "  any of the eigenstates present in the mixing file."
+   WRITE (*, *) "  The total list of CSFs (rcsf.out) is unaffected by this."
    WRITE (*, *)
    WRITE (*, *) "- Do you want the extraction to be done"
    WRITE (*, *) "  for individual (0) or across all states (1)?: "
