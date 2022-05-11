@@ -26,8 +26,8 @@ PROGRAM extmix
    CHARACTER*64 StrInput, basnam, from*1, suffix*3, filnam*69, dotc*2
    LOGICAL sort, getyn, first_of_the_block
    DATA dotc/'.c'/
-   INTEGER :: nfmix, nfcsf, nfout, nfscratch
-   DATA nfmix, nfcsf, nfout, nfscratch/20, 21, 22, 23/
+   INTEGER :: nfmix, nfcsf, nfout, nfoutb, nfscratch
+   DATA nfmix, nfcsf, nfout, nfoutb, nfscratch/20, 21, 22, 23, 24/
    INTEGER :: ncfblk, nw, nvectot, ncftot, nvecsiz, nblock, layer
    INTEGER :: nevblk, nelec, nb, maxbub, icf, jcf, jblock, nmax
    INTEGER :: ivecdum, iaspa, iatjp, i, j, ip, IOS, IERR
@@ -131,11 +131,15 @@ PROGRAM extmix
       STOP 'Not a mixing coefficient file!'
 
    READ (nfmix) nelec, ncftot, nw, nvectot, nvecsiz, nblock
-   WRITE (*, '(A)') ''
-   WRITE (*,  '(2X,A,2X,I2,2X,A,2X,I8,2X,A,2X,I2,2X,A,2X,I2)') &
-      'nblock = ', nblock, '  ncftot = ', ncftot, &
-      '  nw = ', nw, '  nelec = ', nelec
-   WRITE (*, '(A)') ''
+
+   WRITE (*,*)
+   WRITE (*,*) "  Summary of input CSF list: "//basnam(1:LEN_TRIM(basnam))//dotc
+   WRITE (*,*)
+   WRITE (*,*) "  Number of blocks:", nblock
+   WRITE (*,*) "             CSF's:", ncftot
+   WRITE (*,*) "          orbitals:", nw
+   WRITE (*,*) "         electrons:", nelec
+   WRITE (*, *)
 
 !***********************************************************************
 !  Open CSF file
@@ -164,16 +168,19 @@ PROGRAM extmix
 !    Proceed if nevblk > 0
 !       Allocate memory and read mix files
 !***********************************************************************
+
+   OPEN (nfoutb, FILE=basnam(1:LEN_TRIM(basnam))//'.rmx', STATUS='UNKNOWN')
+
    DO 432 jblock = 1, nblock
 
       first_of_the_block = .TRUE.
 
       READ (nfmix) nb, ncfblk, nevblk, iatjp, iaspa
-      PRINT *, ('=', i=1, 75)
-      WRITE (*, '(2X,A,2X,I2,2X,A,2X,I8,3(2X,A,2X,I2))') &
+      WRITE (nfoutb, *) ('=', i=1, 75)
+      WRITE (nfoutb, '(2X,A,2X,I2,2X,A,2X,I8,3(2X,A,2X,I2))') &
          'nb = ', nb, 'ncfblk = ', ncfblk, &
          'nevblk = ', nevblk, '2J+1 = ', iatjp, 'parity = ', iaspa
-      PRINT *, ('=', i=1, 75)
+      WRITE (nfoutb, *) ('=', i=1, 75)
       IF (jblock .NE. nb) STOP 'jblock .NE. nb'
 
       CALL iocsf(nfcsf, nfscratch, jblock, ncfblk, line)
@@ -211,8 +218,8 @@ PROGRAM extmix
          END DO
 
          DO ip = 1, nevblk
-            if (ip == 1) WRITE (*,*) 'Average Energy = ',eav
-            WRITE (*,*) '                    Eigenvector =', ip,       &
+            if (ip == 1) WRITE (nfoutb,*) 'Average Energy = ',eav
+            WRITE (nfoutb,*) '                    Eigenvector =', ip,       &
                '  ncf_reduced = ', icount0(ip)
             nmax = max(nmax, icount0(ip))
          END DO
@@ -250,16 +257,16 @@ PROGRAM extmix
                END DO
             END IF
 
-            PRINT *
-            PRINT *, 'Energy = ', eval(ip), '    Coefficients and CSF :'
-            PRINT *
+            WRITE (nfoutb, *)
+            WRITE (nfoutb, *) 'Energy = ', eval(ip), '    Coefficients and CSF :'
+            WRITE (nfoutb, *)
             DO i = 1, icount0(ip)
                icf = iset0(i, ip)
-               write (*, '(i12,f11.6)') i, evec(icf + layer)
+               write (nfoutb, '(i12,f11.6)') i, evec(icf + layer)
                READ (nfscratch, REC=icf) line
-               PRINT *, line(1) (1:LEN_TRIM(line(1)))
-               PRINT *, line(2) (1:LEN_TRIM(line(2)))
-               PRINT *, line(3) (1:LEN_TRIM(line(3)))
+               WRITE (nfoutb, *) line(1) (1:LEN_TRIM(line(1)))
+               WRITE (nfoutb, *) line(2) (1:LEN_TRIM(line(2)))
+               WRITE (nfoutb, *) line(3) (1:LEN_TRIM(line(3)))
                IF (first_of_the_block) THEN
                   WRITE (nfout, '(A)') line(1) (1:LEN_TRIM(line(1)))
                   WRITE (nfout, '(A)') line(2) (1:LEN_TRIM(line(2)))
@@ -308,7 +315,7 @@ PROGRAM extmix
             END DO
          END IF
 
-         PRINT *, 'Average Energy = ', eav, '    ncf_reduced = ', icount
+         WRITE (nfoutb, *) 'Average Energy = ', eav, '    ncf_reduced = ', icount
 
          DO 2 ip = 1, nevblk
             layer = (ip - 1)*ncfblk
@@ -332,17 +339,17 @@ PROGRAM extmix
                END DO
             END IF
 
-            PRINT *
-            PRINT *, 'Energy = ', eval(ip), '    Coefficients and CSF :'
-            PRINT *
+            WRITE (nfoutb, *)
+            WRITE (nfoutb, *) 'Energy = ', eval(ip), '    Coefficients and CSF :'
+            WRITE (nfoutb, *)
 
             DO i = 1, icount
                icf = iset(i)
-               WRITE (*, '(i12,f11.6)') i, evec(icf + layer)
+               WRITE (nfoutb, '(i12,f11.6)') i, evec(icf + layer)
                READ (nfscratch, REC=icf) line
-               PRINT *, line(1) (1:LEN_TRIM(line(1)))
-               PRINT *, line(2) (1:LEN_TRIM(line(2)))
-               PRINT *, line(3) (1:LEN_TRIM(line(3)))
+               WRITE (nfoutb, *) line(1) (1:LEN_TRIM(line(1)))
+               WRITE (nfoutb, *) line(2) (1:LEN_TRIM(line(2)))
+               WRITE (nfoutb, *) line(3) (1:LEN_TRIM(line(3)))
 
                IF (first_of_the_block) THEN
                   WRITE (nfout, '(A)') line(1) (1:LEN_TRIM(line(1)))
@@ -373,8 +380,11 @@ PROGRAM extmix
    CLOSE (nfmix)
    CLOSE (nfcsf)
    CLOSE (nfout)
+   CLOSE (nfoutb)
 
-   WRITE (*, *) 'RMIXEXTRACT: Execution complete.'
+   WRITE (*, *) '  Extraction finished - see output files: rcsf.out and '//basnam(1:LEN_TRIM(basnam))//'.rmx'
+   WRITE (*, *)
+   WRITE (*, *) '  RMIXEXTRACT: Execution complete.'
 
 CONTAINS
 
