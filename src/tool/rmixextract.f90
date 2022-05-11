@@ -174,16 +174,31 @@ PROGRAM extmix
 
    OPEN (nfoutb, FILE=basnam(1:LEN_TRIM(basnam))//'.rmx', STATUS='UNKNOWN')
 
+   WRITE (*, *) '  Extracting CSFs...'
+
    DO 432 jblock = 1, nblock
 
       first_of_the_block = .TRUE.
 
       READ (nfmix) nb, ncfblk, nevblk, iatjp, iaspa
-      WRITE (nfoutb, *) ('=', i=1, 75)
-      WRITE (nfoutb, '(2X,A,2X,I2,2X,A,2X,I8,3(2X,A,2X,I2))') &
-         'nb = ', nb, 'ncfblk = ', ncfblk, &
-         'nevblk = ', nevblk, '2J+1 = ', iatjp, 'parity = ', iaspa
-      WRITE (nfoutb, *) ('=', i=1, 75)
+      !WRITE (nfoutb, *) ('=', i=1, 75)
+      !WRITE (nfoutb, '(2X,A,2X,I2,2X,A,2X,I8,3(2X,A,2X,I2))') &
+      !   'nb = ', nb, 'ncfblk = ', ncfblk, &
+      !   'nevblk = ', nevblk, '2J+1 = ', iatjp, 'parity = ', iaspa
+      !WRITE (nfoutb, *) ('=', i=1, 75)
+      WRITE (nfoutb, *) '  ', ('=', i=1, 78)
+      WRITE (nfoutb, '(2X,A,2X,I2,2(2X,A,2X,I2),/,2X,A,2X,I2,2X,A,2X,I10)') &
+         ' Block no.          = ', nb,     '        2J+1 = ', iatjp, &
+         ' Parity         =         ', iaspa, &
+         ' No. of eigenvalues = ', nevblk, '                      No. of CSFs    = ', ncfblk
+
+      ! Print to screen as well
+      WRITE (*, *) '  ', ('=', i=1, 78)
+      WRITE (*, '(2X,A,2X,I2,2(2X,A,2X,I2),/,2X,A,2X,I2,2X,A,2X,I10)') &
+         ' Block no.          = ', nb,     '        2J+1 = ', iatjp, &
+         ' Parity         =         ', iaspa, &
+         ' No. of eigenvalues = ', nevblk, '                      No. of CSFs    = ', ncfblk
+
       IF (jblock .NE. nb) STOP 'jblock .NE. nb'
 
       CALL iocsf(nfcsf, nfscratch, jblock, ncfblk, line)
@@ -221,11 +236,18 @@ PROGRAM extmix
          END DO
 
          DO ip = 1, nevblk
-            if (ip == 1) WRITE (nfoutb,*) 'Average Energy = ',eav
-            WRITE (nfoutb,*) '                    Eigenvector =', ip,       &
-               '  ncf_reduced = ', icount0(ip)
+            IF (ip == 1) WRITE (nfoutb, *) '  Average Energy     = ', eav
+            WRITE (nfoutb, *) '  Eigenvector        = ', ip, &
+                '               Extracted CSFs = ', icount0(ip)
+
+            ! Print info to screen as well
+            IF (ip == 1) WRITE (*, *) '  Average Energy     = ', eav
+            WRITE (*, *) '  Eigenvector        = ', ip, &
+                '               Extracted CSFs = ', icount0(ip)
+
             nmax = max(nmax, icount0(ip))
          END DO
+         WRITE (nfoutb, *) '  ', ('=', i=1, 78)
 
 !        ...Make a copy of the original set which is to be altered if
 !           sorted
@@ -261,8 +283,9 @@ PROGRAM extmix
             END IF
 
             WRITE (nfoutb, *)
-            WRITE (nfoutb, *) 'Energy = ', eval(ip), '    Coefficients and CSF :'
+            WRITE (nfoutb, *) '  Energy = ', eval(ip), ' Coefficients and CSFs:'
             WRITE (nfoutb, *)
+
             DO i = 1, icount0(ip)
                icf = iset0(i, ip)
                write (nfoutb, '(i12,f11.6)') i, evec(icf + layer)
@@ -319,6 +342,8 @@ PROGRAM extmix
          END IF
 
          WRITE (nfoutb, *) 'Average Energy = ', eav, '    ncf_reduced = ', icount
+         ! Print to screen as well
+         WRITE (*, *) '  Average Energy     = ', eav, ' Extracted CSFs = ', icount
 
          DO 2 ip = 1, nevblk
             layer = (ip - 1)*ncfblk
@@ -385,9 +410,12 @@ PROGRAM extmix
    CLOSE (nfout)
    CLOSE (nfoutb)
 
+   WRITE (*, *) '  ', ('=', i=1, 78)
+   WRITE (*, *)
    WRITE (*, *) '  Extraction finished - see output files: rcsf.out and '//basnam(1:LEN_TRIM(basnam))//'.rmx'
    WRITE (*, *)
    WRITE (*, *) '  RMIXEXTRACT: Execution complete.'
+   WRITE (*, *)
 
 CONTAINS
 
