@@ -31,7 +31,7 @@ PROGRAM extmix
    INTEGER :: ncfblk, nw, nvectot, ncftot, nvecsiz, nblock, layer
    INTEGER :: nevblk, nelec, nb, maxbub, icf, jcf, jblock, nmax
    INTEGER :: ivecdum, iaspa, iatjp, i, j, ip, IOS, IERR
-   INTEGER :: icount, ans_all_states
+   INTEGER :: icount, ans_all_states, ipp, ii
    INTEGER, DIMENSION(:), pointer :: icount0
    REAL(DOUBLE) :: cutoff, bubmax
    INTEGER, DIMENSION(:, :), pointer :: iset0, jset0
@@ -260,11 +260,20 @@ PROGRAM extmix
                PRINT *, line(1) (1:LEN_TRIM(line(1)))
                PRINT *, line(2) (1:LEN_TRIM(line(2)))
                PRINT *, line(3) (1:LEN_TRIM(line(3)))
-
                IF (first_of_the_block) THEN
                   WRITE (nfout, '(A)') line(1) (1:LEN_TRIM(line(1)))
                   WRITE (nfout, '(A)') line(2) (1:LEN_TRIM(line(2)))
                   WRITE (nfout, '(A)') line(3) (1:LEN_TRIM(line(3)))
+               ELSE
+                  DO ipp = 1 ,ip - 1
+                     DO ii = 1, icount0(ipp)
+                        IF( icf == iset0(ii, ipp)) GO TO 3
+                     END DO
+                  END DO
+                  WRITE (nfout, '(A)') line(1) (1:LEN_TRIM(line(1)))
+                  WRITE (nfout, '(A)') line(2) (1:LEN_TRIM(line(2)))
+                  WRITE (nfout, '(A)') line(3) (1:LEN_TRIM(line(3)))
+   3              CONTINUE
                END IF
 
 !              ...Recover original set
