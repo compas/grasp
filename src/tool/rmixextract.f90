@@ -48,7 +48,7 @@ PROGRAM extmix
    WRITE (*, *) '  Extract and print mixing coefficients above a given'
    WRITE (*, *) '  cut-off. Resulting CSFs and mixing coefficients for'
    WRITE (*, *) '  the individual eigenstates are written to name.rmx,'
-   WRITE (*, *) '  and the total list of extracted CSFs to rcsf.out'
+   WRITE (*, *) '  and the total list of extracted CSFs to rcsf.out.'
    WRITE (*, *)
    WRITE (*, *) '  Input files: name.c, name.(c)m'
    WRITE (*, *) '  Output file: rcsf.out, name.rmx'
