@@ -5,7 +5,7 @@ program rtransitiontable
 ! Per Jonssson, Malmo University, August 2014
 
 implicit none
-integer, parameter :: ntrans = 100000
+integer, parameter :: ntrans = 1000000
 real(kind=8), parameter :: rydberg = 109737.31568508d0
 real(kind=8) :: Elev_upper(ntrans), Elev_lower(ntrans), Elev_groundst
 real(kind=8) :: twoJ_upper(ntrans), twoJ_lower(ntrans)
@@ -54,9 +54,6 @@ write(*,*) ' the label from 2s_2S.2p(2)3P2_4P'
 write(*,*)
 write(*,*) ' How many positions should be skipped?'
 read(*,*) nskip
-
-!write(*,*) 'Give the number of files'
-!iead(*,*) nfile
 
 write(19,'(a)') '\documentclass[10pt]{article}'
 write(19,'(a)') '\usepackage{longtable}'
@@ -147,27 +144,14 @@ do h = 1,nfile
          labelstring2(lastpos:lastpos) = ' '
       end select
 
-
-
-
-
-
-
       asciistring1(nt) = line1(21+nskip:200)
       asciistring2(nt) = line2(21+nskip:200)
 
-      ! 2J and total binding energy in a.u.
+      ! 2J value and total binding energy in a.u.
       j1 = line1(3:4)
       j2 = line2(3:4)
       read(line1(5:18),*) Elev_lower(nt)
       read(line2(5:18),*) Elev_upper(nt)
-
-!      energystring(nt) = line3(1:11)
-!      wavelengthstring(nt) = line3(17:29)
-!      sstring(nt) = line4(11:21)
-!      gfstring(nt) = line4(31:41)
-!      Astring(nt) = line4(52:62)
-!      dTstring(nt) = line4(70:78)
 
       energystring(nt) = line3(1:8)
       wavelengthstring(nt) = line3(17:29)
@@ -175,17 +159,13 @@ do h = 1,nfile
       gfstring(nt) = line4(31:35)//line4(38:41)
       Astring(nt) = line4(52:56)//line4(59:62)
       dTstring(nt) = line4(70:76)
-!      write(*,*) labelstring1
-!      write(*,*) labelstring2
 
-
-! Convert quantum labels
-! to LaTeX
-
+      ! Convert quantum labels
+      ! to LaTeX
 
       do i = 1,177
 
-!  Replace (n) with ^n
+      !  Replace (n) with ^n
 
          if ((labelstring1(i:i).eq.'(').and.(labelstring1(i+2:i+2).eq.')')) then
             labelstring1(i:i) = '^'
@@ -199,7 +179,7 @@ do h = 1,nfile
 
       do i = 1,177
 
-!  Replace . with \,
+      !  Replace . with \,
 
          if (labelstring1(i:i).eq.'.') then
             dummystring = labelstring1
@@ -219,16 +199,13 @@ do h = 1,nfile
 
       do i = 1,177
 
-!  Replace _ with ~
+      !  Replace _ with ~
 
          if (labelstring1(i:i).eq.'_') labelstring1(i:i) = '~'
          if (labelstring2(i:i).eq.'_') labelstring2(i:i) = '~'
       end do
-!      write(*,'(a)') trim(labelstring1)
-!      write(*,'(a)') trim(labelstring2)
 
-!  If integer1 and S, P, D, F, G, H, I, K, L, M, N and integer2 replace with (^integer1_integer2S), (^integer1_integer2P), etc
-
+      !  If integer1 and S, P, D, F, G, H, I, K, L, M, N and integer2 replace with (^integer1_integer2S), (^integer1_integer2P), etc
       do l = 1,15
          ncase = 0
          do i = 1,177
@@ -248,8 +225,6 @@ do h = 1,nfile
             end do
             if (ncase.eq.1) exit
          end do
-
-!         write(*,'(a)') trim(labelstring1)
       end do
 
       do l = 1,15
@@ -271,8 +246,6 @@ do h = 1,nfile
             end do
             if (ncase.eq.1) exit
          end do
-
-!         write(*,'(a)') trim(labelstring2)
       end do
 
 !  If integer1 and S, P, D, F, G, H, I, K, L, M, N and not integer2 replace with ^integer1S, ^integer1P, etc
@@ -340,50 +313,8 @@ do h = 1,nfile
       latexstring1(nt) = labelstring1
       latexstring2(nt) = labelstring2
 
-      !if (j1.eq.' 0') asciistring1(nt) = trim(asciistring1(nt))//' 0  '
-      !if (j2.eq.' 0') asciistring2(nt) = trim(asciistring2(nt))//' 0  '
-      !if (j1.eq.' 1') asciistring1(nt) = trim(asciistring1(nt))//' 1/2'
-      !if (j2.eq.' 1') asciistring2(nt) = trim(asciistring2(nt))//' 1/2'
-      !if (j1.eq.' 2') asciistring1(nt) = trim(asciistring1(nt))//' 1  '
-      !if (j2.eq.' 2') asciistring2(nt) = trim(asciistring2(nt))//' 1  '
-      !if (j1.eq.' 3') asciistring1(nt) = trim(asciistring1(nt))//' 3/2'
-      !if (j2.eq.' 3') asciistring2(nt) = trim(asciistring2(nt))//' 3/2'
-      !if (j1.eq.' 4') asciistring1(nt) = trim(asciistring1(nt))//' 2  '
-      !if (j2.eq.' 4') asciistring2(nt) = trim(asciistring2(nt))//' 2  '
-      !if (j1.eq.' 5') asciistring1(nt) = trim(asciistring1(nt))//' 5/2'
-      !if (j2.eq.' 5') asciistring2(nt) = trim(asciistring2(nt))//' 5/2'
-      !if (j1.eq.' 6') asciistring1(nt) = trim(asciistring1(nt))//' 3  '
-      !if (j2.eq.' 6') asciistring2(nt) = trim(asciistring2(nt))//' 3  '
-      !if (j1.eq.' 7') asciistring1(nt) = trim(asciistring1(nt))//' 7/2'
-      !if (j2.eq.' 7') asciistring2(nt) = trim(asciistring2(nt))//' 7/2'
-      !if (j1.eq.' 8') asciistring1(nt) = trim(asciistring1(nt))//' 4  '
-      !if (j2.eq.' 8') asciistring2(nt) = trim(asciistring2(nt))//' 4  '
-      !if (j1.eq.' 9') asciistring1(nt) = trim(asciistring1(nt))//' 9/2'
-      !if (j2.eq.' 9') asciistring2(nt) = trim(asciistring2(nt))//' 9/2'
-      !if (j1.eq.'10') asciistring1(nt) = trim(asciistring1(nt))//' 5  '
-      !if (j2.eq.'10') asciistring2(nt) = trim(asciistring2(nt))//' 5  '
-      !if (j1.eq.'11') asciistring1(nt) = trim(asciistring1(nt))//' 11/2'
-      !if (j2.eq.'11') asciistring2(nt) = trim(asciistring2(nt))//' 11/2'
-      !if (j1.eq.'12') asciistring1(nt) = trim(asciistring1(nt))//' 6  '
-      !if (j2.eq.'12') asciistring2(nt) = trim(asciistring2(nt))//' 6  '
-      !if (j1.eq.'13') asciistring1(nt) = trim(asciistring1(nt))//' 13/2'
-      !if (j2.eq.'13') asciistring2(nt) = trim(asciistring2(nt))//' 13/2'
-      !if (j1.eq.'14') asciistring1(nt) = trim(asciistring1(nt))//' 7  '
-      !if (j2.eq.'14') asciistring2(nt) = trim(asciistring2(nt))//' 7  '
-      !if (j1.eq.'15') asciistring1(nt) = trim(asciistring1(nt))//' 15/2'
-      !if (j2.eq.'15') asciistring2(nt) = trim(asciistring2(nt))//' 15/2'
-      !if (j1.eq.'16') asciistring1(nt) = trim(asciistring1(nt))//' 8  '
-      !if (j2.eq.'16') asciistring2(nt) = trim(asciistring2(nt))//' 8  '
-      !if (j1.eq.'17') asciistring1(nt) = trim(asciistring1(nt))//' 17/2'
-      !if (j2.eq.'17') asciistring2(nt) = trim(asciistring2(nt))//' 17/2'
-      !if (j1.eq.'18') asciistring1(nt) = trim(asciistring1(nt))//' 9  '
-      !if (j2.eq.'18') asciistring2(nt) = trim(asciistring2(nt))//' 9  '
-      !if (j1.eq.'19') asciistring1(nt) = trim(asciistring1(nt))//' 19/2'
-      !if (j2.eq.'19') asciistring2(nt) = trim(asciistring2(nt))//' 19/2'
-
       if (len_trim(asciistring1(nt)).gt.maxlengthascii1) maxlengthascii1 = len_trim(asciistring1(nt))
       if (len_trim(asciistring2(nt)).gt.maxlengthascii2) maxlengthascii2 = len_trim(asciistring2(nt))
-
 
       ! use numerical J-values for the ASCII print out
       read(j1,*) twoJ_lower(nt); write(j1_numerical(nt),'(f4.1)') twoJ_lower(nt)/2.0
@@ -398,8 +329,8 @@ do h = 1,nfile
    do i = 1,nt
 
       ! get energy levels in cm-1 relative to the lowest state in the list
-      write(El_str,'(i8)') int((Elev_lower(i) - Elev_groundst)*rydberg*2d0, kind=8)
-      write(Eu_str,'(i8)') int((Elev_upper(i) - Elev_groundst)*rydberg*2d0, kind=8)
+      write(El_str,'(i8)') int((Elev_lower(i) - Elev_groundst)*rydberg*2.d0, kind=8)
+      write(Eu_str,'(i8)') int((Elev_upper(i) - Elev_groundst)*rydberg*2.d0, kind=8)
 
       ! print latex file
       if (nformat.eq.0) then
@@ -480,6 +411,3 @@ write(19,'(a)') '\end{document}'
 end do
 
 end program rtransitiontable
-
-
-
