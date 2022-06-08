@@ -1,13 +1,17 @@
 LIBS=-L ${GRASP}/lib/ -l9290 -lmod
 FC_MODULES=-I ${GRASP}/src/lib/lib9290 -I ${GRASP}/src/lib/libmod
 
-all:  ${GRASP}/bin/lscomp.pl ${GRASP}/bin/rsave ${GRASP}/bin/rasfsplit ${GRASP}/bin/rcsfblock ${GRASP}/bin/rcsfmr ${GRASP}/bin/rcsfsplit ${GRASP}/bin/rhfs_lsj ${GRASP}/bin/rlevelseV ${GRASP}/bin/rlevels ${GRASP}/bin/rmixaccumulate ${GRASP}/bin/rmixextract ${GRASP}/bin/rseqenergy ${GRASP}/bin/rseqhfs ${GRASP}/bin/rseqtrans ${GRASP}/bin/rtabhfs ${GRASP}/bin/rtablevels ${GRASP}/bin/rtabtrans1 ${GRASP}/bin/rtabtrans2 ${GRASP}/bin/rtabtransE1 ${GRASP}/bin/rwfnmchfmcdf ${GRASP}/bin/rwfnplot ${GRASP}/bin/rwfnrelabel ${GRASP}/bin/rwfnrotate ${GRASP}/bin/wfnplot
+all:  ${GRASP}/bin/lscomp.pl ${GRASP}/bin/rsave ${GRASP}/bin/rwfnpyplot ${GRASP}/bin/rasfsplit ${GRASP}/bin/rcsfblock ${GRASP}/bin/rcsfmr ${GRASP}/bin/rcsfsplit ${GRASP}/bin/rhfs_lsj ${GRASP}/bin/rlevelseV ${GRASP}/bin/rlevels ${GRASP}/bin/rmixaccumulate ${GRASP}/bin/rmixextract ${GRASP}/bin/rseqenergy ${GRASP}/bin/rseqhfs ${GRASP}/bin/rseqtrans ${GRASP}/bin/rtabhfs ${GRASP}/bin/rtablevels ${GRASP}/bin/rtabtrans1 ${GRASP}/bin/rtabtrans2 ${GRASP}/bin/rtabtransE1 ${GRASP}/bin/rwfnmchfmcdf ${GRASP}/bin/rwfnplot ${GRASP}/bin/rwfnrelabel ${GRASP}/bin/rwfnrotate ${GRASP}/bin/wfnplot ${GRASP}/bin/rwfntotxt
 
 ${GRASP}/bin/lscomp.pl: lscomp.pl
 	cp $^ $@
 	chmod u+x $@
 
 ${GRASP}/bin/rsave: rsave
+	cp $^ $@
+	chmod u+x $@
+
+${GRASP}/bin/rwfnpyplot: rwfnpyplot
 	cp $^ $@
 	chmod u+x $@
 
@@ -77,9 +81,12 @@ ${GRASP}/bin/rwfnrotate: rwfnrotate.o
 ${GRASP}/bin/wfnplot: wfnplot.o
 	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
 
+${GRASP}/bin/rwfntotxt: rwfntotxt.o
+	$(FC) -o $@ $? $(FC_LD) $(LIBS) $(LAPACK_LIBS)
+
 %.o: %.f90
 	$(FC) -c $(FC_FLAGS) $(FC_MODULES) -o $@ $<
 
 clean:
-	-rm -f  ${GRASP}/bin/lscomp.pl ${GRASP}/bin/rsave ${GRASP}/bin/rasfsplit ${GRASP}/bin/rcsfblock ${GRASP}/bin/rcsfmr ${GRASP}/bin/rcsfsplit ${GRASP}/bin/rhfs_lsj ${GRASP}/bin/rlevelseV ${GRASP}/bin/rlevels ${GRASP}/bin/rmixaccumulate ${GRASP}/bin/rmixextract ${GRASP}/bin/rseqenergy ${GRASP}/bin/rseqhfs ${GRASP}/bin/rseqtrans ${GRASP}/bin/rtabhfs ${GRASP}/bin/rtablevels ${GRASP}/bin/rtabtrans1 ${GRASP}/bin/rtabtrans2 ${GRASP}/bin/rtabtransE1 ${GRASP}/bin/rwfnmchfmcdf ${GRASP}/bin/rwfnplot ${GRASP}/bin/rwfnrelabel ${GRASP}/bin/rwfnrotate ${GRASP}/bin/wfnplot
+	-rm -f  ${GRASP}/bin/lscomp.pl ${GRASP}/bin/rsave ${GRASP}/bin/rwfnpyplot ${GRASP}/bin/rasfsplit ${GRASP}/bin/rcsfblock ${GRASP}/bin/rcsfmr ${GRASP}/bin/rcsfsplit ${GRASP}/bin/rhfs_lsj ${GRASP}/bin/rlevelseV ${GRASP}/bin/rlevels ${GRASP}/bin/rmixaccumulate ${GRASP}/bin/rmixextract ${GRASP}/bin/rseqenergy ${GRASP}/bin/rseqhfs ${GRASP}/bin/rseqtrans ${GRASP}/bin/rtabhfs ${GRASP}/bin/rtablevels ${GRASP}/bin/rtabtrans1 ${GRASP}/bin/rtabtrans2 ${GRASP}/bin/rtabtransE1 ${GRASP}/bin/rwfnmchfmcdf ${GRASP}/bin/rwfnplot ${GRASP}/bin/rwfnrelabel ${GRASP}/bin/rwfnrotate ${GRASP}/bin/wfnplot ${GRASP}/bin/rwfntotxt
 	-rm -f *.o *.mod
