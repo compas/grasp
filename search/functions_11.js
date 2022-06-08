@@ -86,5 +86,6 @@ var searchData=
   ['rwfnplot',['rwfnplot',['../rwfnplot_8f90.html#a754e8cd8e5ef9e8e6ed7f59997a130d2',1,'rwfnplot.f90']]],
   ['rwfnrelabel',['rwfnrelabel',['../rwfnrelabel_8f90.html#a8f883247a7cb20bdd673a3836e425058',1,'rwfnrelabel.f90']]],
   ['rwfnrotate',['rwfnrotate',['../rwfnrotate_8f90.html#acb690e572093bda3604c82b152205191',1,'rwfnrotate.f90']]],
+  ['rwfntotxt',['rwfntotxt',['../rwfntotxt_8f90.html#a16e0b1ae4dfa6f3d5e1fd866db9ef883',1,'rwfntotxt.f90']]],
   ['rwjj',['rwjj',['../interfacerwjj__i_1_1RWJJ.html#a5dbb3840db3e7ebe52407d890b636ab5',1,'rwjj_i::RWJJ::rwjj()'],['../Rwjj_8f90.html#a7ecd3a93cdf2e0446d4eb26cd60b5767',1,'rwjj():&#160;Rwjj.f90']]]
 ];

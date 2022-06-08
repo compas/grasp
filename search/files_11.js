@@ -120,6 +120,7 @@ var searchData=
   ['rwfnplot_2ef90',['rwfnplot.f90',['../rwfnplot_8f90.html',1,'']]],
   ['rwfnrelabel_2ef90',['rwfnrelabel.f90',['../rwfnrelabel_8f90.html',1,'']]],
   ['rwfnrotate_2ef90',['rwfnrotate.f90',['../rwfnrotate_8f90.html',1,'']]],
+  ['rwfntotxt_2ef90',['rwfntotxt.f90',['../rwfntotxt_8f90.html',1,'']]],
   ['rwjj_2ef90',['Rwjj.f90',['../Rwjj_8f90.html',1,'']]],
   ['rwjj_5fi_2ef90',['Rwjj_I.f90',['../Rwjj__I_8f90.html',1,'']]]
 ];

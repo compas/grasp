@@ -270,6 +270,8 @@ var searchData=
   ['rwfnrelabel_2ef90',['rwfnrelabel.f90',['../rwfnrelabel_8f90.html',1,'']]],
   ['rwfnrotate',['rwfnrotate',['../rwfnrotate_8f90.html#acb690e572093bda3604c82b152205191',1,'rwfnrotate.f90']]],
   ['rwfnrotate_2ef90',['rwfnrotate.f90',['../rwfnrotate_8f90.html',1,'']]],
+  ['rwfntotxt',['rwfntotxt',['../rwfntotxt_8f90.html#a16e0b1ae4dfa6f3d5e1fd866db9ef883',1,'rwfntotxt.f90']]],
+  ['rwfntotxt_2ef90',['rwfntotxt.f90',['../rwfntotxt_8f90.html',1,'']]],
   ['rwjj',['RWJJ',['../interfacerwjj__i_1_1RWJJ.html',1,'rwjj_i::RWJJ'],['../interfacerwjj__i_1_1RWJJ.html#a5dbb3840db3e7ebe52407d890b636ab5',1,'rwjj_i::RWJJ::rwjj()'],['../Rwjj_8f90.html#a7ecd3a93cdf2e0446d4eb26cd60b5767',1,'rwjj():&#160;Rwjj.f90']]],
   ['rwjj_2ef90',['Rwjj.f90',['../Rwjj_8f90.html',1,'']]],
   ['rwjj_5fi',['rwjj_i',['../namespacerwjj__i.html',1,'']]],
