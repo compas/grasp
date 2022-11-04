@@ -236,12 +236,14 @@ in the `appl` directory, libraries in the `lib` directory and tools in the
    |-----rcsfzerofirst90
    |-----rdensity
    |-----rhfs90
+   |-----rhfszeeman95
    |-----rmcdhf90
    |-----rmcdhf90_mpi
    |-----rmcdhf90_mem
    |-----rmcdhf90_mem_mpi
    |-----rnucleus90
    |-----rtransition90
+   |-----rtransition90_phase
    |-----rtransition90_mpi
    |-----rwfnestimate90
    |-----sms90
