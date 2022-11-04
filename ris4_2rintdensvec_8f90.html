@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>GRASP: src/appl/rdensity/rintdensvec.f90 File Reference</title>
+<title>GRASP: src/appl/ris4/rintdensvec.f90 File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -58,7 +58,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_76b35da2834f19780dcc0714860bf08b.html">appl</a></li><li class="navelem"><a class="el" href="dir_b1ebc0bf9ddf4bbf886f9e5e5c88b381.html">rdensity</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_76b35da2834f19780dcc0714860bf08b.html">appl</a></li><li class="navelem"><a class="el" href="dir_55458aa70affc4a6b374654d05bdd320.html">ris4</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -71,12 +71,12 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions/Subroutines</h2></td></tr>
-<tr class="memitem:a723f5b6c35c0fa5c21f018538fdf3613"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rintdensvec_8f90.html#a723f5b6c35c0fa5c21f018538fdf3613">rintdensvec</a> (I, J, DINT1VEC)</td></tr>
-<tr class="separator:a723f5b6c35c0fa5c21f018538fdf3613"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefb3dfc3009f73e0e855cd49579b8e17"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ris4_2rintdensvec_8f90.html#aefb3dfc3009f73e0e855cd49579b8e17">rintdensvec</a> (I, J, DINT1VEC, NRNUC)</td></tr>
+<tr class="separator:aefb3dfc3009f73e0e855cd49579b8e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function/Subroutine Documentation</h2>
-<a id="a723f5b6c35c0fa5c21f018538fdf3613"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a723f5b6c35c0fa5c21f018538fdf3613">&#9670;&nbsp;</a></span>rintdensvec()</h2>
+<a id="aefb3dfc3009f73e0e855cd49579b8e17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefb3dfc3009f73e0e855cd49579b8e17">&#9670;&nbsp;</a></span>rintdensvec()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -97,7 +97,13 @@ Functions/Subroutines</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">real(double), dimension(nnnw,nnnw,n), intent(<a class="el" href="mpi_2out_8f90.html#a94588c8e85d785c9c42cef7f03446ec2">out</a>)&#160;</td>
-          <td class="paramname"><em>DINT1VEC</em>&#160;</td>
+          <td class="paramname"><em>DINT1VEC</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer&#160;</td>
+          <td class="paramname"><em>NRNUC</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

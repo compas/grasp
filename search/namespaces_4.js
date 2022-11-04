@@ -1,6 +1,7 @@
 var searchData=
 [
   ['eav_5fc',['eav_c',['../namespaceeav__c.html',1,'']]],
+  ['edensityfit_5fi',['edensityfit_i',['../namespaceedensityfit__i.html',1,'']]],
   ['eigen_5fi',['eigen_i',['../namespaceeigen__i.html',1,'']]],
   ['eigv_5fc',['eigv_c',['../namespaceeigv__c.html',1,'']]],
   ['eigvec1_5fc',['eigvec1_c',['../namespaceeigvec1__c.html',1,'']]],

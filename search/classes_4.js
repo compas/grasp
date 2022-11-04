@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['edensityfit',['edensityfit',['../interfaceedensityfit__i_1_1edensityfit.html',1,'edensityfit_i']]],
   ['eigen',['eigen',['../interfaceeigen__i_1_1eigen.html',1,'eigen_i']]],
   ['eile',['EILE',['../interfaceeile__i_1_1EILE.html',1,'eile_i']]],
   ['ekin',['ekin',['../interfaceekin__i_1_1ekin.html',1,'ekin_i']]],

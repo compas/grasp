@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['edensityfit_2ef90',['edensityfit.f90',['../edensityfit_8f90.html',1,'']]],
+  ['edensityfit_5fi_2ef90',['edensityfit_I.f90',['../edensityfit__I_8f90.html',1,'']]],
   ['eigen_2ef90',['eigen.f90',['../eigen_8f90.html',1,'(Global Namespace)'],['../mem_2eigen_8f90.html',1,'(Global Namespace)'],['../mem__mpi_2eigen_8f90.html',1,'(Global Namespace)'],['../mpi_2eigen_8f90.html',1,'(Global Namespace)']]],
   ['eigen_5fi_2ef90',['eigen_I.f90',['../eigen__I_8f90.html',1,'(Global Namespace)'],['../mem_2eigen__I_8f90.html',1,'(Global Namespace)'],['../mem__mpi_2eigen__I_8f90.html',1,'(Global Namespace)'],['../mpi_2eigen__I_8f90.html',1,'(Global Namespace)']]],
   ['eigv_5fc_2ef90',['eigv_C.f90',['../eigv__C_8f90.html',1,'']]],
@@ -56,10 +58,10 @@ var searchData=
   ['el5int_5fi_2ef90',['el5INT_I.f90',['../el5INT__I_8f90.html',1,'']]],
   ['endsum_2ef90',['endsum.f90',['../endsum_8f90.html',1,'(Global Namespace)'],['../mem_2endsum_8f90.html',1,'(Global Namespace)'],['../mem__mpi_2endsum_8f90.html',1,'(Global Namespace)'],['../mpi_2endsum_8f90.html',1,'(Global Namespace)']]],
   ['endsum_5fi_2ef90',['endsum_I.f90',['../endsum__I_8f90.html',1,'(Global Namespace)'],['../mem_2endsum__I_8f90.html',1,'(Global Namespace)'],['../mem__mpi_2endsum__I_8f90.html',1,'(Global Namespace)'],['../mpi_2endsum__I_8f90.html',1,'(Global Namespace)']]],
-  ['engout_2ef90',['engout.f90',['../rci90_2engout_8f90.html',1,'(Global Namespace)'],['../rci90__mpi_2engout_8f90.html',1,'(Global Namespace)'],['../sms90_2engout_8f90.html',1,'(Global Namespace)']]],
+  ['engout_2ef90',['engout.f90',['../rci90_2engout_8f90.html',1,'(Global Namespace)'],['../rci90__mpi_2engout_8f90.html',1,'(Global Namespace)'],['../ris4_2engout_8f90.html',1,'(Global Namespace)'],['../sms90_2engout_8f90.html',1,'(Global Namespace)']]],
   ['engout1_2ef90',['engout1.f90',['../engout1_8f90.html',1,'(Global Namespace)'],['../mpi_2engout1_8f90.html',1,'(Global Namespace)']]],
   ['engout1_5fi_2ef90',['engout1_I.f90',['../engout1__I_8f90.html',1,'(Global Namespace)'],['../mpi_2engout1__I_8f90.html',1,'(Global Namespace)']]],
-  ['engout_5fi_2ef90',['engout_I.f90',['../rci90_2engout__I_8f90.html',1,'(Global Namespace)'],['../rci90__mpi_2engout__I_8f90.html',1,'(Global Namespace)'],['../sms90_2engout__I_8f90.html',1,'(Global Namespace)']]],
+  ['engout_5fi_2ef90',['engout_I.f90',['../rci90_2engout__I_8f90.html',1,'(Global Namespace)'],['../rci90__mpi_2engout__I_8f90.html',1,'(Global Namespace)'],['../ris4_2engout__I_8f90.html',1,'(Global Namespace)'],['../sms90_2engout__I_8f90.html',1,'(Global Namespace)']]],
   ['engoutgg_2ef90',['engoutgg.f90',['../engoutgg_8f90.html',1,'(Global Namespace)'],['../mem_2engoutgg_8f90.html',1,'(Global Namespace)'],['../mem__mpi_2engoutgg_8f90.html',1,'(Global Namespace)'],['../mpi_2engoutgg_8f90.html',1,'(Global Namespace)']]],
   ['engoutgg_5fi_2ef90',['engoutgg_I.f90',['../engoutgg__I_8f90.html',1,'(Global Namespace)'],['../mem_2engoutgg__I_8f90.html',1,'(Global Namespace)'],['../mem__mpi_2engoutgg__I_8f90.html',1,'(Global Namespace)'],['../mpi_2engoutgg__I_8f90.html',1,'(Global Namespace)']]],
   ['engouth_2ef90',['engouth.f90',['../engouth_8f90.html',1,'']]],
