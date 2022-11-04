@@ -1,0 +1,46 @@
+.SUFFIXES: .f90 .mod
+
+#GRASP=../grasp2018-master
+
+export FC=gfortran
+export FC_FLAGS ?= -O2 -fno-automatic
+export FC_LD ?=
+export LAPACK_LIBS ?= -llapack -lblas
+
+EXE = rdensity
+BINDIR = ${GRASP}/bin
+GRASPLIB = ${GRASP}/lib
+BINFILE = $(BINDIR)/$(EXE)
+SRCLIBDIR = ${GRASP}/src/lib
+MODDIR = ${SRCLIBDIR}/libmod
+MODL92 = ${SRCLIBDIR}/lib9290
+MODLRANG90 = ${SRCLIBDIR}/librang90
+MODLMCP90 = ${SRCLIBDIR}/libmcp90
+GRASPLIBS =-l9290 -lmod  -lrang90 -lmcp90 
+
+APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS} 
+
+APP_OBJ= rdensity_C.o teilst_C.o \
+        cxk_I.o  \
+         getmixblock_I.o getsmd_I.o polint_I.o  \
+        rdensity_cal_I.o rintdens_I.o rintdensvec_I.o  \
+        natorbnew_I.o setdbg_I.o setdens_I.o \
+ \
+        rdensity.o cxk.o  \
+        getmixblock.o getsmd.o polint.o   \
+        rdensity_cal.o rintdens.o  rintdensvec.o \
+        natorbnew.o setdbg.o setdens.o \
+
+$(EXE): $(APP_OBJ)
+	$(FC) -o $(BINFILE) $(FC_LD) $(APP_OBJ) $(APP_LIBS) \
+		 $(APP_LIBS) ${LAPACK_LIBS} 
+.f90.o:
+	$(FC) -c $(FC_FLAGS)  $< -I $(MODDIR) -I ${MODL92} -I $(MODLRANG90) -I $(MODLMCP90) \
+	        -I $(MODDIR) -o $@
+
+.f.o:
+	$(FC) -c $(FC_FLAGS) $< -o $@
+
+clean:
+	-rm -f *.o core  *.mod
+
