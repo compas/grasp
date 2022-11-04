@@ -1,0 +1,14 @@
+  Number of relativistic eigenvalues
+   2
+  Lev     J  Parity       E
+   1     3.5   -   -2095.248432236
+   1     2.5   -   -2095.248428981
+  Zeeman interaction matrix  
+  0.22684E+01 -0.32809E+00
+  0.37884E+00  0.12672E+01
+  HFI-matrix for the magnetic dipole operator  
+  0.73508E-03 -0.27772E-03
+  0.32069E-03  0.20511E-03
+  HFI-matrix for the electric quadrupole operator  
+  0.61308E-02  0.20658E-02
+ -0.23854E-02  0.59418E-02
