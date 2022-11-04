@@ -151,6 +151,7 @@ add_subdirectory("src/appl/rnucleus90")
 add_subdirectory("src/appl/rtransition90")
 add_subdirectory("src/appl/rwfnestimate90")
 add_subdirectory("src/appl/sms90")
+add_subdirectory("src/appl/rdensity")
 
 # Additional GRASP tools and programs
 add_subdirectory("src/tool")
