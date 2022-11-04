@@ -149,10 +149,12 @@ add_subdirectory("src/appl/rmcdhf90")
 add_subdirectory("src/appl/rmcdhf90_mem")
 add_subdirectory("src/appl/rnucleus90")
 add_subdirectory("src/appl/rtransition90")
+add_subdirectory("src/appl/rtransition90_phase")
 add_subdirectory("src/appl/rwfnestimate90")
 add_subdirectory("src/appl/sms90")
 add_subdirectory("src/appl/rdensity")
 add_subdirectory("src/appl/ris4")
+add_subdirectory("src/appl/rhfszeeman95")
 
 # Additional GRASP tools and programs
 add_subdirectory("src/tool")
