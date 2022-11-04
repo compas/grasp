@@ -22,7 +22,8 @@ LIBRARIES = libmod lib9290 libdvd90 libmcp90 librang90 mpi90
 APPLICATIONS = HF jjgen90 rangular90 rbiotransform90 rci90 rcsfgenerate90 \
 	rcsfzerofirst90 rmcdhf90 rnucleus90 rtransition90_mpi sms90 jj2lsj90  \
 	rangular90_mpi rbiotransform90_mpi rci90_mpi rcsfinteract90 rhfs90    \
-	rmcdhf90_mpi  rtransition90  rwfnestimate90  rmcdhf90_mem  rmcdhf90_mem_mpi
+	rmcdhf90_mpi  rtransition90  rwfnestimate90  rmcdhf90_mem  rmcdhf90_mem_mpi \
+	coupling
 
 LIBRARY_TARGETS = $(foreach library,$(LIBRARIES),src/lib/$(library))
 APPLICATION_TARGETS = $(foreach application,$(APPLICATIONS),src/appl/$(application))

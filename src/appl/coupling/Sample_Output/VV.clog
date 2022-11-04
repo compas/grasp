@@ -1,0 +1,14 @@
+y            ! Default settings
+VV
+y            ! Contribution of H Transverse?
+n            ! Modify photon frequencies?
+y            ! Vacuum polarization?
+n            ! Normal mass shift?
+n            ! Specific mass shift?
+y            ! Self energy?
+           3 ! Max n for including self energy
+2
+3-5
+1-4
+1-3
+1

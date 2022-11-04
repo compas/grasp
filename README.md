@@ -222,6 +222,7 @@ in the `appl` directory, libraries in the `lib` directory and tools in the
    |-src
    |---appl
    |-----HF
+   |-----coupling
    |-----jj2lsj90
    |-----jjgen90
    |-----rangular90

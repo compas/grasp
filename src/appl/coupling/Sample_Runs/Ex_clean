@@ -1,0 +1,5 @@
+rm SR*
+rm VV*
+rm CV*
+rm isodata
+rm energy_levels*

@@ -1,0 +1,68 @@
+
+../../../../bin/rcsfgenerate << S1
+*
+2
+3s(2,1)3p(1,*)4f(1,*)
+
+4s,4p,3d,4f
+2,10
+2
+n
+S1
+
+mv rcsf.out CV.c
+cp VV.w CV.w
+
+rm rcsfgenerate.log
+rm rwfn.*
+rm clist.new
+rm rcsf.log
+
+../../../../bin/rci << S2
+y
+CV
+y
+n
+y
+n
+n
+y
+3
+2
+3-5
+1-4
+1-3
+1
+S2
+
+rm rci.res
+
+../../../../bin/jj2lsj << S3
+CV
+y
+n
+n
+y
+0
+0.01
+S3
+
+../../../../bin/rlevels CV.cm > energy_levels_CV_LS
+
+../../../../bin/Coupling << S4
+CV
+y
+3
+0.01
+3s 3p 4f 3d 4p 5f
+S4
+
+mv CV.lsj.lbl CV.lsj.lbl_ORG
+
+cp CV.coup3.jj.lbl CV.lsj.lbl
+../../../../bin/rlevels CV.cm > energy_levels_CV_jj
+
+cp CV.coup3.LK3.lbl CV.lsj.lbl
+
+../../../../bin/rlevels CV.cm > energy_levels_CV_LK3
+

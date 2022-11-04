@@ -1,0 +1,120 @@
+EXE=${GRASP}/bin/coupling
+
+OBJ=Coupling.o Coupling_structures.o Coupling_constants.o Coupling_inside_shell.o Coupling_main.o Coupling_getdata_mchf.o Coupling_transform_cfg_LSJJ.o Coupling_transform_LSJJ.o Coupling_transform_cfg_LSLK.o Coupling_transform_LSLK.o Coupling_transform_cfg_JJJK.o Coupling_transform_JJJK.o Coupling_transform_cfg_LSLS3.o sqlsf.o Coupling_transform_LSLS3.o Coupling_transform_cfg_LSLSJ3.o Coupling_transform_LSLSJ3.o Coupling_transform_cfg_LSLK3.o Coupling_transform_LSLK3.o Coupling_transform_cfg_LSJK3.o Coupling_transform_LSJK3.o Coupling_transform_cfg_LScLSJ3.o Coupling_transform_LScLSJ3.o Coupling_transform_cfg_LSjj3.o Coupling_transform_LSjj3.o  Coupling_transform_cfg_LSLScjj.o Coupling_transform_LSLScjj.o Coupling_transform_cfg_LSjj1.o Coupling_transform_LSjj1.o Coupling_transform_cfg_LSjj2.o Coupling_transform_LSjj2.o Coupling_evaluation.o Coupling_data.o jj2lsj_data_1_C.o jj2lsj_data_2_C.o jj2lsj_data_3_C.o
+
+FFL = -c $(FC_FLAGS)
+
+Coupling :$(OBJ)
+	$(FC) $(OBJ) -O  -o Coupling
+	mv Coupling ${GRASP}/bin/Coupling
+
+Coupling.o: Coupling.f90 Coupling_structures.o Coupling_constants.o Coupling_inside_shell.o Coupling_main.o jj2lsj_data_1_C.o jj2lsj_data_2_C.o jj2lsj_data_3_C.o
+	$(FC) $(FFL) Coupling.f90
+
+Coupling_main.o : Coupling_main.f90 Coupling_getdata_mchf.o Coupling_transform_LSJJ.o Coupling_transform_JJJK.o Coupling_transform_LSLK.o Coupling_transform_LSLS3.o Coupling_transform_LSLSJ3.o Coupling_transform_LSLK3.o Coupling_transform_LSJK3.o Coupling_transform_LScLSJ3.o Coupling_transform_LSjj3.o Coupling_transform_LSLScjj.o Coupling_transform_LSjj1.o Coupling_transform_LSjj2.o Coupling_structures.o Coupling_constants.o Coupling_evaluation.o Coupling_data.o Coupling_inside_shell.o jj2lsj_data_1_C.o jj2lsj_data_2_C.o jj2lsj_data_3_C.o
+	$(FC) $(FFL) Coupling_main.f90
+
+Coupling_getdata_mchf.o : Coupling_getdata_mchf.f90 Coupling_structures.o Coupling_constants.o sqlsf.o Coupling_data.o
+	$(FC) $(FFL) Coupling_getdata_mchf.f90
+
+Coupling_transform_JJJK.o : Coupling_transform_JJJK.f90 Coupling_transform_cfg_JJJK.o Coupling_structures.o Coupling_constants.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_JJJK.f90
+
+Coupling_transform_cfg_JJJK.o : Coupling_transform_cfg_JJJK.f90 Coupling_structures.o Coupling_constants.o sqlsf.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_cfg_JJJK.f90
+
+Coupling_transform_LSLK.o : Coupling_transform_LSLK.f90 Coupling_transform_cfg_LSLK.o Coupling_structures.o Coupling_constants.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_LSLK.f90
+
+Coupling_transform_cfg_LSLK.o : Coupling_transform_cfg_LSLK.f90 Coupling_structures.o Coupling_constants.o sqlsf.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_cfg_LSLK.f90
+
+Coupling_transform_LSJJ.o : Coupling_transform_LSJJ.f90 Coupling_transform_cfg_LSJJ.o Coupling_structures.o Coupling_constants.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_LSJJ.f90
+
+Coupling_transform_cfg_LSJJ.o : Coupling_transform_cfg_LSJJ.f90 Coupling_structures.o Coupling_constants.o sqlsf.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_cfg_LSJJ.f90
+
+Coupling_transform_LSLS3.o : Coupling_transform_LSLS3.f90 Coupling_transform_cfg_LSLS3.o Coupling_structures.o Coupling_constants.o Coupling_data.o Coupling_evaluation.o
+	$(FC) $(FFL) Coupling_transform_LSLS3.f90
+
+Coupling_transform_cfg_LSLS3.o : Coupling_transform_cfg_LSLS3.f90 Coupling_structures.o Coupling_constants.o sqlsf.o Coupling_data.o Coupling_evaluation.o
+	$(FC) $(FFL) Coupling_transform_cfg_LSLS3.f90
+
+Coupling_transform_LSLSJ3.o : Coupling_transform_LSLSJ3.f90 Coupling_transform_cfg_LSLSJ3.o Coupling_structures.o Coupling_constants.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_LSLSJ3.f90
+
+Coupling_transform_cfg_LSLSJ3.o : Coupling_transform_cfg_LSLSJ3.f90 Coupling_structures.o Coupling_constants.o sqlsf.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_cfg_LSLSJ3.f90
+
+Coupling_transform_LSLK3.o : Coupling_transform_LSLK3.f90 Coupling_transform_cfg_LSLK3.o Coupling_structures.o Coupling_constants.o Coupling_data.o Coupling_evaluation.o
+	$(FC) $(FFL) Coupling_transform_LSLK3.f90
+
+Coupling_transform_cfg_LSLK3.o : Coupling_transform_cfg_LSLK3.f90 Coupling_structures.o Coupling_constants.o sqlsf.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_cfg_LSLK3.f90
+
+Coupling_transform_LSJK3.o : Coupling_transform_LSJK3.f90 Coupling_transform_cfg_LSJK3.o Coupling_structures.o Coupling_constants.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_LSJK3.f90
+
+Coupling_transform_cfg_LSJK3.o : Coupling_transform_cfg_LSJK3.f90 Coupling_structures.o Coupling_constants.o sqlsf.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_cfg_LSJK3.f90
+
+Coupling_transform_cfg_LScLSJ3.o : Coupling_transform_cfg_LScLSJ3.f90 Coupling_structures.o Coupling_constants.o sqlsf.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_cfg_LScLSJ3.f90
+
+Coupling_transform_LScLSJ3.o : Coupling_transform_LScLSJ3.f90 Coupling_transform_cfg_LScLSJ3.o Coupling_structures.o Coupling_constants.o Coupling_data.o Coupling_inside_shell.o jj2lsj_data_1_C.o jj2lsj_data_2_C.o jj2lsj_data_3_C.o
+	$(FC) $(FFL) Coupling_transform_LScLSJ3.f90
+
+Coupling_transform_cfg_LSjj3.o : Coupling_transform_cfg_LSjj3.f90 Coupling_structures.o Coupling_constants.o sqlsf.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_cfg_LSjj3.f90
+
+Coupling_transform_LSjj3.o : Coupling_transform_LSjj3.f90 Coupling_transform_cfg_LSjj3.o Coupling_structures.o Coupling_constants.o Coupling_data.o Coupling_inside_shell.o jj2lsj_data_1_C.o jj2lsj_data_2_C.o jj2lsj_data_3_C.o
+	$(FC) $(FFL) Coupling_transform_LSjj3.f90
+
+Coupling_evaluation.o : Coupling_evaluation.f90 Coupling_structures.o Coupling_constants.o Coupling_data.o  Coupling_inside_shell.o
+	$(FC) $(FFL) Coupling_evaluation.f90
+
+Coupling_transform_cfg_LSLScjj.o : Coupling_transform_cfg_LSLScjj.f90 Coupling_structures.o Coupling_constants.o sqlsf.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_cfg_LSLScjj.f90
+
+Coupling_transform_LSLScjj.o : Coupling_transform_LSLScjj.f90 Coupling_transform_cfg_LSLScjj.o Coupling_structures.o Coupling_constants.o Coupling_data.o Coupling_inside_shell.o jj2lsj_data_1_C.o jj2lsj_data_2_C.o jj2lsj_data_3_C.o
+	$(FC) $(FFL) Coupling_transform_LSLScjj.f90
+
+Coupling_transform_cfg_LSjj1.o : Coupling_transform_cfg_LSjj1.f90 Coupling_structures.o Coupling_constants.o sqlsf.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_cfg_LSjj1.f90
+
+Coupling_transform_LSjj1.o : Coupling_transform_LSjj1.f90 Coupling_transform_cfg_LSjj1.o Coupling_structures.o Coupling_constants.o Coupling_data.o Coupling_inside_shell.o jj2lsj_data_1_C.o jj2lsj_data_2_C.o jj2lsj_data_3_C.o
+	$(FC) $(FFL) Coupling_transform_LSjj1.f90
+
+Coupling_transform_cfg_LSjj2.o : Coupling_transform_cfg_LSjj2.f90 Coupling_structures.o Coupling_constants.o sqlsf.o Coupling_data.o
+	$(FC) $(FFL) Coupling_transform_cfg_LSjj2.f90
+
+Coupling_transform_LSjj2.o : Coupling_transform_LSjj2.f90 Coupling_transform_cfg_LSjj2.o Coupling_structures.o Coupling_constants.o Coupling_data.o Coupling_inside_shell.o jj2lsj_data_1_C.o jj2lsj_data_2_C.o jj2lsj_data_3_C.o
+	$(FC) $(FFL) Coupling_transform_LSjj2.f90
+
+Coupling_data.o : Coupling_data.f90 Coupling_structures.o Coupling_constants.o
+	$(FC) $(FFL) Coupling_data.f90
+
+Coupling_inside_shell.o : Coupling_inside_shell.f90 jj2lsj_data_1_C.o jj2lsj_data_2_C.o jj2lsj_data_3_C.o Coupling_structures.o
+	$(FC) $(FFL) Coupling_inside_shell.f90
+
+jj2lsj_data_1_C.o : jj2lsj_data_1_C.f90 Coupling_structures.o
+	$(FC) $(FFL) jj2lsj_data_1_C.f90
+
+jj2lsj_data_2_C.o : jj2lsj_data_2_C.f90 Coupling_structures.o
+	$(FC) $(FFL) jj2lsj_data_2_C.f90
+
+jj2lsj_data_3_C.o : jj2lsj_data_3_C.f90 Coupling_structures.o
+	$(FC) $(FFL) jj2lsj_data_3_C.f90
+
+Coupling_structures.o : Coupling_structures.f90 Coupling_constants.o
+	$(FC) $(FFL) Coupling_structures.f90
+
+Coupling_constants.o : Coupling_constants.f90
+	$(FC) $(FFL) Coupling_constants.f90
+
+sqlsf.o : sqlsf.f
+	$(FC) $(FFL) sqlsf.f
+
+clean:
+	-rm -f *.o core *.mod

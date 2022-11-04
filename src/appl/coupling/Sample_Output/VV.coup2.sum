@@ -1,0 +1,342 @@
+       -------------------------------
+       Summry file of program COUPLING
+       -------------------------------
+
+ The CSF input file:                VV.lsj.c
+ The mixing coefficient input file: VV.lsj.j
+ There are           2 (in LS-coupling) coupled shells case.
+ Specification of couplings:  yyyynnnnnynyn
+ (LS JJ LK JK LS3 LSJ3 LK3 JK3 cLSJ3 LScjj jj1 jj2 jj3)
+   y  y  y  y  n   n    n   n    n    y    n    y    n
+
+ The value below which an eigenvector composition
+ is to be neglected for printing:  1.000000000000000E-002
+
+ List of the shells included in the recoupling:
+ 3p 4f 3d 4p 5f
+
+
+ Symmetry block:    1
+ Total number of CSF in the input file =       11  (number of csf in expansion)
+ ---------------------------------------------------------------
+ List of configurations which are eliminated from the calculation
+
+    No.           Configurations
+ ---------------------------------------------------------------
+      1  3s( 2)  3p( 2)
+      7  3s( 2)  3d( 2)
+      8  3s( 2)  3d( 1)  4s( 1)
+      9  3s( 2)  4p( 2)
+     11  3s( 2)  4f( 2)
+ ---------------------------------------------------------------
+ Number of states =    1
+ ---------------------------------------------------------------------
+ List of maximum values of expansion coefficients and  Summation rules
+ ---------------------------------------------------------------------
+ State   Maximum value   Maximum value   Expansion   Summation
+ No.     included in     removed from    size        rules
+         calculations    calculations
+ ---------------------------------------------------------------------
+     1   0.99988316      0.01461513          11    0.99978601787890953
+ ---------------------------------------------------------------------
+
+
+ JJ coupling:
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+ State number   Expansion size   Summation rules
+           1           6      0.999786017878908
+
+ LK coupling:
+ State number   Expansion size   Summation rules
+           1           6      0.999786017878910
+
+ JK coupling:
+ State number   Expansion size   Summation rules
+           1           6      0.999786017878907
+
+ LScjj coupling:
+ State number   Expansion size   Summation rules
+           1           6      0.999786017878907
+
+ jj2 coupling:
+ State number   Expansion size   Summation rules
+           1           6      0.999786017878907
+ ------------------------------------------------------
+ ------------------------------------------------------
+
+
+ Symmetry block:    2
+ Total number of CSF in the input file =       21  (number of csf in expansion)
+ ---------------------------------------------------------------
+ List of configurations which are eliminated from the calculation
+
+    No.           Configurations
+ ---------------------------------------------------------------
+      1  3s( 2)  3p( 2)
+      2  3s( 2)  3p( 2)
+      9  3s( 2)  3d( 2)
+     10  3s( 2)  3d( 2)
+     11  3s( 2)  3d( 2)
+     12  3s( 2)  3d( 1)  4s( 1)
+     13  3s( 2)  3d( 1)  4s( 1)
+     14  3s( 2)  4p( 2)
+     15  3s( 2)  4p( 2)
+     19  3s( 2)  4f( 2)
+     20  3s( 2)  4f( 2)
+     21  3s( 2)  4f( 2)
+ ---------------------------------------------------------------
+ Number of states =    3
+ ---------------------------------------------------------------------
+ List of maximum values of expansion coefficients and  Summation rules
+ ---------------------------------------------------------------------
+ State   Maximum value   Maximum value   Expansion   Summation
+ No.     included in     removed from    size        rules
+         calculations    calculations
+ ---------------------------------------------------------------------
+     1   0.96645509      0.03198675          21    0.99891094834908323
+     2   0.68450918      0.01850273          21    0.99915937699036461
+     3   0.71007190      0.02001632          21    0.99908497609641900
+ ---------------------------------------------------------------------
+
+
+ JJ coupling:
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+ State number   Expansion size   Summation rules
+           1           9      0.998910948349080
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+           2           9      0.999159376990362
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+           3           9      0.999084976096419
+
+ LK coupling:
+ State number   Expansion size   Summation rules
+           1           9      0.998910948349083
+           2           9      0.999159376990364
+           3           9      0.999084976096418
+
+ JK coupling:
+ State number   Expansion size   Summation rules
+           1           9      0.998910948349079
+           2           9      0.999159376990360
+           3           9      0.999084976096416
+
+ LScjj coupling:
+ State number   Expansion size   Summation rules
+           1           9      0.998910948349079
+           2           9      0.999159376990363
+           3           9      0.999084976096417
+
+ jj2 coupling:
+ State number   Expansion size   Summation rules
+           1           9      0.998910948349080
+           2           9      0.999159376990363
+           3           9      0.999084976096417
+ ------------------------------------------------------
+
+ There are the states with same labeling in LS coupling
+    States           2  and           3
+ ------------------------------------------------------
+
+
+ Symmetry block:    3
+ Total number of CSF in the input file =       12  (number of csf in expansion)
+ ---------------------------------------------------------------
+ List of configurations which are eliminated from the calculation
+
+    No.           Configurations
+ ---------------------------------------------------------------
+      6  3s( 2)  3d( 2)
+      7  3s( 2)  3d( 1)  4s( 1)
+     12  3s( 2)  4f( 2)
+ ---------------------------------------------------------------
+ Number of states =    4
+ ---------------------------------------------------------------------
+ List of maximum values of expansion coefficients and  Summation rules
+ ---------------------------------------------------------------------
+ State   Maximum value   Maximum value   Expansion   Summation
+ No.     included in     removed from    size        rules
+         calculations    calculations
+ ---------------------------------------------------------------------
+     1   0.80176737      0.02672469          12    0.99926925670859645
+     2   0.76247369      0.01542964          12    0.99976149138819526
+     3   0.90699409      0.00719996          12    0.99994812331371785
+     4   0.96458851      0.01537701          12    0.99972788240248278
+ ---------------------------------------------------------------------
+
+
+ JJ coupling:
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+ State number   Expansion size   Summation rules
+           1           9      0.999269256708593
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+           2           9      0.999761491388191
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+           3           9      0.999948123313716
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+           4           9      0.999727882402481
+
+ LK coupling:
+ State number   Expansion size   Summation rules
+           1           9      0.999269256708596
+           2           9      0.999761491388195
+           3           9      0.999948123313718
+           4           9      0.999727882402481
+
+ JK coupling:
+ State number   Expansion size   Summation rules
+           1           9      0.999269256708591
+           2           9      0.999761491388189
+           3           9      0.999948123313712
+           4           9      0.999727882402478
+
+ LScjj coupling:
+ State number   Expansion size   Summation rules
+           1           9      0.999269256708592
+           2           9      0.999761491388193
+           3           9      0.999948123313715
+           4           9      0.999727882402479
+
+ jj2 coupling:
+ State number   Expansion size   Summation rules
+           1           9      0.999269256708591
+           2           9      0.999761491388191
+           3           9      0.999948123313713
+           4           9      0.999727882402478
+ ------------------------------------------------------
+ ------------------------------------------------------
+
+
+ Symmetry block:    4
+ Total number of CSF in the input file =       11  (number of csf in expansion)
+ ---------------------------------------------------------------
+ List of configurations which are eliminated from the calculation
+
+    No.           Configurations
+ ---------------------------------------------------------------
+      4  3s( 2)  3d( 2)
+      5  3s( 2)  3d( 2)
+      9  3s( 2)  4f( 2)
+     10  3s( 2)  4f( 2)
+     11  3s( 2)  4f( 2)
+ ---------------------------------------------------------------
+ Number of states =    3
+ ---------------------------------------------------------------------
+ List of maximum values of expansion coefficients and  Summation rules
+ ---------------------------------------------------------------------
+ State   Maximum value   Maximum value   Expansion   Summation
+ No.     included in     removed from    size        rules
+         calculations    calculations
+ ---------------------------------------------------------------------
+     1   0.89627969      0.02873144          11    0.99874685523306461
+     2   0.66767733      0.04409578          11    0.99790516932802842
+     3   0.73571985      0.04109526          11    0.99831051204151722
+ ---------------------------------------------------------------------
+
+
+ JJ coupling:
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+ State number   Expansion size   Summation rules
+           1           6      0.998746855233067
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+           2           6      0.997905169328030
+     end count_nr_of_csfs_JJ
+     end count_nr_of_csfs_JJ
+           3           6      0.998310512041517
+
+ LK coupling:
+ State number   Expansion size   Summation rules
+           1           6      0.998746855233065
+           2           6      0.997905169328029
+           3           6      0.998310512041518
+
+ JK coupling:
+ State number   Expansion size   Summation rules
+           1           6      0.998746855233067
+           2           6      0.997905169328030
+           3           6      0.998310512041518
+
+ LScjj coupling:
+ State number   Expansion size   Summation rules
+           1           6      0.998746855233064
+           2           6      0.997905169328030
+           3           6      0.998310512041519
+
+ jj2 coupling:
+ State number   Expansion size   Summation rules
+           1           6      0.998746855233064
+           2           6      0.997905169328030
+           3           6      0.998310512041518
+ ------------------------------------------------------
+ ------------------------------------------------------
+
+
+ Symmetry block:    5
+ Total number of CSF in the input file =        3  (number of csf in expansion)
+ ---------------------------------------------------------------
+ List of configurations which are eliminated from the calculation
+
+    No.           Configurations
+ ---------------------------------------------------------------
+      3  3s( 2)  4f( 2)
+ ---------------------------------------------------------------
+ Number of states =    1
+ ---------------------------------------------------------------------
+ List of maximum values of expansion coefficients and  Summation rules
+ ---------------------------------------------------------------------
+ State   Maximum value   Maximum value   Expansion   Summation
+ No.     included in     removed from    size        rules
+         calculations    calculations
+ ---------------------------------------------------------------------
+     1   1.00000000      0.00000027           3    1.00000000000462252
+ ---------------------------------------------------------------------
+
+
+ JJ coupling:
+ State number   Expansion size   Summation rules
+           1           2       1.00000000000462
+
+ LK coupling:
+ State number   Expansion size   Summation rules
+           1           2       1.00000000000462
+
+ JK coupling:
+ State number   Expansion size   Summation rules
+           1           2       1.00000000000462
+
+ LScjj coupling:
+ State number   Expansion size   Summation rules
+           1           2       1.00000000000463
+
+ jj2 coupling:
+ State number   Expansion size   Summation rules
+           1           2       1.00000000000462
+ ------------------------------------------------------
+ ------------------------------------------------------
+ -------------------------------------------------
+ List of  P  values in different coupling schemes:
+ (The bigger P the better is coupling)
+     LS coupling              0.723
+     JJ coupling              0.776
+     LK coupling              0.909
+     JK coupling              0.788
+     LScjj coupling           0.776
+     jj2 coupling             0.776
+ -------------------------------------------------
