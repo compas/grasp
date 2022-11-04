@@ -1,0 +1,44 @@
+.SUFFIXES: .f90 .mod
+
+EXE = ris4
+BINDIR = ${GRASP}/bin
+GRASPLIB = ${GRASP}/lib
+BINFILE = $(BINDIR)/$(EXE)
+SRCLIBDIR = ../../lib
+MODDIR = ${SRCLIBDIR}/libmod
+MODL92 = ${SRCLIBDIR}/lib9290
+MODLRANG90 = ${SRCLIBDIR}/librang90
+MODLMCP90 = ${SRCLIBDIR}/libmcp90
+GRASPLIBS =-l9290 -lmod  -lrang90 -lmcp90
+
+APP_LIBS = -L ${GRASPLIB} ${GRASPLIBS}
+
+APP_OBJ= ris_C.o teilst_C.o \
+        angdata_I.o densread_I.o densread_seltz_I.o densnew_I.o densnew_seltz_I.o \
+        edensityfit_I.o getmixblock_I.o getsmd_I.o polint_I.o  \
+        ris_cal_I.o rintdens_I.o rintdensvec_I.o rinti_nms_I.o rint_sms2_I.o \
+        rint_sms3_I.o \
+        setdbg_I.o setsum_I.o strsum_I.o smsread_I.o \
+        smsnew_I.o sigma_1_I.o sigma_2_I.o vinti_I.o \
+        engout_I.o \
+ \
+        ris.o angdata.o densread.o densread_seltz.o densnew.o densnew_seltz.o \
+        edensityfit.o getmixblock.o getsmd.o polint.o   \
+        ris_cal.o rintdens.o  rintdensvec.o rinti_nms.o rint_sms2.o \
+        rint_sms3.o \
+        setdbg.o setsum.o strsum.o smsread.o \
+        smsnew.o sigma_1.o sigma_2.o vinti.o \
+        engout.o
+
+$(EXE): $(APP_OBJ)
+	$(FC) -o $(BINFILE) $(FC_LD) $(APP_OBJ) $(APP_LIBS) \
+		 $(APP_LIBS) ${LAPACK_LIBS}
+.f90.o:
+	$(FC) -c $(FC_FLAGS) $< -I $(MODDIR) -I ${MODL92} -I $(MODLRANG90) -I $(MODLMCP90) \
+	        -I $(MODDIR) -o $@
+
+.f.o:
+	$(FC) -c $(FC_FLAGS) $< -o $@
+
+clean:
+	-rm -f *.o core  *.mod
