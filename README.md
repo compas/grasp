@@ -228,11 +228,13 @@ in the `appl` directory, libraries in the `lib` directory and tools in the
    |-----rangular90_mpi
    |-----rbiotransform90
    |-----rbiotransform90_mpi
+   |-----ris4
    |-----rci90
    |-----rci90_mpi
    |-----rcsfgenerate90
    |-----rcsfinteract90
    |-----rcsfzerofirst90
+   |-----rdensity
    |-----rhfs90
    |-----rmcdhf90
    |-----rmcdhf90_mpi
