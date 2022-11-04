@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>GRASP: src/appl/rhfs90/engouth.f90 File Reference</title>
+<title>GRASP: src/appl/rtransition90_phase/printa.f90 File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -58,70 +58,76 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_76b35da2834f19780dcc0714860bf08b.html">appl</a></li><li class="navelem"><a class="el" href="dir_beab698999b3bb3b5c631d9655375ad9.html">rhfs90</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_76b35da2834f19780dcc0714860bf08b.html">appl</a></li><li class="navelem"><a class="el" href="dir_86c73f64ca28f5d8c7a40f977a377130.html">rtransition90_phase</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions/Subroutines</a>  </div>
   <div class="headertitle">
-<div class="title">engouth.f90 File Reference</div>  </div>
+<div class="title">printa.f90 File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions/Subroutines</h2></td></tr>
-<tr class="memitem:a35ebaafbdbde2ddd8c30640dcdd27b7f"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engouth_8f90.html#a35ebaafbdbde2ddd8c30640dcdd27b7f">engouth</a> (EAV, E, JTOT, IPAR, ILEV, NN, MODE)</td></tr>
-<tr class="separator:a35ebaafbdbde2ddd8c30640dcdd27b7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a954fbb060d67c4985ec6127b179df27b"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="phase_2printa_8f90.html#a954fbb060d67c4985ec6127b179df27b">printa</a> (ASFA, ASFB, I, J, OMEGA, FACTOR, LINES, LSAME)</td></tr>
+<tr class="separator:a954fbb060d67c4985ec6127b179df27b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function/Subroutine Documentation</h2>
-<a id="a35ebaafbdbde2ddd8c30640dcdd27b7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35ebaafbdbde2ddd8c30640dcdd27b7f">&#9670;&nbsp;</a></span>engouth()</h2>
+<a id="a954fbb060d67c4985ec6127b179df27b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a954fbb060d67c4985ec6127b179df27b">&#9670;&nbsp;</a></span>printa()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">subroutine engouth </td>
+          <td class="memname">subroutine printa </td>
           <td>(</td>
           <td class="paramtype">real(double), intent(<a class="el" href="mpi_2in_8f90.html#ab29b56b686e522d449fe8f5ea02c09ca">in</a>)&#160;</td>
-          <td class="paramname"><em>EAV</em>, </td>
+          <td class="paramname"><em>ASFA</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">real(double), dimension(nn), intent(<a class="el" href="mpi_2in_8f90.html#ab29b56b686e522d449fe8f5ea02c09ca">in</a>)&#160;</td>
-          <td class="paramname"><em>E</em>, </td>
+          <td class="paramtype">real(double), intent(<a class="el" href="mpi_2in_8f90.html#ab29b56b686e522d449fe8f5ea02c09ca">in</a>)&#160;</td>
+          <td class="paramname"><em>ASFB</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer, dimension(nn), intent(<a class="el" href="mpi_2in_8f90.html#ab29b56b686e522d449fe8f5ea02c09ca">in</a>)&#160;</td>
-          <td class="paramname"><em>JTOT</em>, </td>
+          <td class="paramtype">integer&#160;</td>
+          <td class="paramname"><em>I</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer, dimension(nn), intent(<a class="el" href="mpi_2in_8f90.html#ab29b56b686e522d449fe8f5ea02c09ca">in</a>)&#160;</td>
-          <td class="paramname"><em>IPAR</em>, </td>
+          <td class="paramtype">integer&#160;</td>
+          <td class="paramname"><em>J</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer, dimension(nn), intent(<a class="el" href="mpi_2in_8f90.html#ab29b56b686e522d449fe8f5ea02c09ca">in</a>)&#160;</td>
-          <td class="paramname"><em>ILEV</em>, </td>
+          <td class="paramtype">real(double), intent(<a class="el" href="mpi_2in_8f90.html#ab29b56b686e522d449fe8f5ea02c09ca">in</a>)&#160;</td>
+          <td class="paramname"><em>OMEGA</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer, intent(<a class="el" href="mpi_2in_8f90.html#ab29b56b686e522d449fe8f5ea02c09ca">in</a>)&#160;</td>
-          <td class="paramname"><em>NN</em>, </td>
+          <td class="paramtype">real(double), intent(<a class="el" href="mpi_2in_8f90.html#ab29b56b686e522d449fe8f5ea02c09ca">in</a>)&#160;</td>
+          <td class="paramname"><em>FACTOR</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer, intent(<a class="el" href="mpi_2in_8f90.html#ab29b56b686e522d449fe8f5ea02c09ca">in</a>)&#160;</td>
-          <td class="paramname"><em>MODE</em>&#160;</td>
+          <td class="paramtype">integer, intent(inout)&#160;</td>
+          <td class="paramname"><em>LINES</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">logical, intent(<a class="el" href="mpi_2in_8f90.html#ab29b56b686e522d449fe8f5ea02c09ca">in</a>)&#160;</td>
+          <td class="paramname"><em>LSAME</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

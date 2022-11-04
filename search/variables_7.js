@@ -1,19 +1,7 @@
 var searchData=
 [
-  ['h',['h',['../namespaceparam__c.html#adb1bbe70e029f30ea90f4eed58cad707',1,'param_c::h()'],['../namespacegrid__c.html#afe9cb900f98da35b2df530d1faaaf0b9',1,'grid_c::h()']]],
-  ['h1',['h1',['../namespaceparam__c.html#ae5b2bb98d3209e1d1ce77ffbc9a5e6b6',1,'param_c']]],
-  ['h3',['h3',['../namespaceparam__c.html#a61e46b99574bd2b98429f3d5673801c4',1,'param_c']]],
-  ['half',['half',['../namespacecons__c.html#ad3718a2445d0a9bf0849dda377efa222',1,'cons_c']]],
-  ['hb1',['hb1',['../namespaceosc__c.html#a55473170789d2932983e0ddea4c0ce38',1,'osc_c']]],
-  ['hb2',['hb2',['../namespaceosc__c.html#a1131fb442eb7f08f4a9709e123c490ad',1,'osc_c']]],
-  ['hc1',['hc1',['../namespaceosc__c.html#a20dfa8d10732bdf7168fd274f77e4e37',1,'osc_c']]],
-  ['hc2',['hc2',['../namespaceosc__c.html#ae1b139e991df57b6f91c86ecc18c4ff7',1,'osc_c']]],
-  ['hfsd',['hfsd',['../namespacensmdat__c.html#aa107676fada54196e74846d10a50c876',1,'nsmdat_c']]],
-  ['hfsi',['hfsi',['../namespacensmdat__c.html#abbd926df83e97596c99722cc19c2f17b',1,'nsmdat_c']]],
-  ['hfsq',['hfsq',['../namespacensmdat__c.html#a7dfc62d3e67092dfbc4161736d24ac6c',1,'nsmdat_c']]],
-  ['hm1',['hm1',['../namespaceosc__c.html#a0581aa55bf05e93de77f19952b5b1f25',1,'osc_c']]],
-  ['hm2',['hm2',['../namespaceosc__c.html#ac98f9774bb4f909988e0335705711715',1,'osc_c']]],
-  ['host',['host',['../namespacempi__c.html#aff8befca901999073c61cbdd19a7ce80',1,'mpi_c']]],
-  ['hp',['hp',['../namespacegrid__c.html#a74dff3395c1b2fce5a184879daa83dca',1,'grid_c']]],
-  ['hq',['hq',['../namespacede__c.html#ab9b087917d46800d352845ef16778b6b',1,'de_c']]]
+  ['gam',['gam',['../namespacefact__c.html#a4a1d4317833289fbcca2f49fc7065ffa',1,'fact_c::gam()'],['../namespacefacts__c.html#a5a3ef9c2bb59ff686e85fc39f6c11fec',1,'facts_c::gam()']]],
+  ['gama',['gama',['../namespaceorb__c.html#a0e00c5618e0786a0e0a84943c2cd03d1',1,'orb_c']]],
+  ['gamaff',['gamaff',['../namespacebiorb__c.html#aad7fcce2f42b2a2fc152d43628529785',1,'biorb_c']]],
+  ['gamaii',['gamaii',['../namespacebiorb__c.html#a181607649ec3c3506554ddab5248770a',1,'biorb_c']]]
 ];
