@@ -26,6 +26,7 @@ var searchData=
   ['setcslmpi_5fi',['setcslmpi_i',['../namespacesetcslmpi__i.html',1,'']]],
   ['setdbg_5fi',['setdbg_i',['../namespacesetdbg__i.html',1,'']]],
   ['setdbgmpi_5fi',['setdbgmpi_i',['../namespacesetdbgmpi__i.html',1,'']]],
+  ['setdens_5fi',['setdens_i',['../namespacesetdens__i.html',1,'']]],
   ['setham_5fi',['setham_i',['../namespacesetham__i.html',1,'']]],
   ['setham_5fto_5fgenmat2_5fc',['setham_to_genmat2_c',['../namespacesetham__to__genmat2__c.html',1,'']]],
   ['setiso_5fi',['setiso_i',['../namespacesetiso__i.html',1,'']]],

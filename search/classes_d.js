@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['natorbnew',['natorbnew',['../interfacenatorbnew__i_1_1natorbnew.html',1,'natorbnew_i']]],
   ['ncharg',['ncharg',['../interfacencharg__i_1_1ncharg.html',1,'ncharg_i']]],
   ['newco',['newco',['../interfacenewco__i_1_1newco.html',1,'newco_i']]],
   ['newcompi',['newcompi',['../interfacenewcompi__i_1_1newcompi.html',1,'newcompi_i']]],

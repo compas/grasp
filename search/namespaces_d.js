@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['natorbnew_5fi',['natorbnew_i',['../namespacenatorbnew__i.html',1,'']]],
   ['ncc_5fc',['ncc_c',['../namespacencc__c.html',1,'']]],
   ['ncdist_5fc',['ncdist_c',['../namespacencdist__c.html',1,'']]],
   ['ncharg_5fi',['ncharg_i',['../namespacencharg__i.html',1,'']]],
