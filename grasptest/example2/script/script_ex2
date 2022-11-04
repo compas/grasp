@@ -1,18 +1,40 @@
 # 1: DF
 rnucleus < rnucleus_input
+
 rcsfgenerate < rcsfgenerate_input
+
 cp rcsfgenerate.log 2s2p_DF.exc
 cp rcsf.out rcsf.inp
+
 rangular < rangular_input
+
 hf < HF_input
+
 cp wfn.out wfn.inp
+
 rwfnmchfmcdf 
+
 cp rwfn.out rwfn.inp
+
 rmcdhf < rmcdhf_input
 rsave 2s2p_DF
+
 jj2lsj < jj2lsj_input
 # 2: PRODUCE ENERGY TABLE
 rlevels 2s2p_DF.m > energyDF 
 rtablevels < rtablevels_input 
 pdflatex energytablelatex.tex
-#
+
+# 3: energy in different couplings
+jj2lsj < jj2lsj_input_couplings
+
+Coupling < coupling_input
+
+cp 2s2p_DF.coup3.LK3.lbl 2s2p_DF.lsj.lbl
+rlevels 2s2p_DF.m > energyDF_LK3
+
+cp 2s2p_DF.coup3.JK3.lbl 2s2p_DF.lsj.lbl
+rlevels 2s2p_DF.m > energyDF_JK3
+
+# The same as above for the other couplings
+

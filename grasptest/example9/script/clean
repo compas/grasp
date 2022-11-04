@@ -1,0 +1,7 @@
+rm even*
+rm odd*
+rm m*
+rm rci.res
+rm isodata
+rm clist.new
+rm out

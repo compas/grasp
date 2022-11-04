@@ -1,0 +1,23 @@
+#!/bin/sh
+
+set -x
+
+#    Main script for 1s(2)2s and 1s(2)2p
+
+# 1.   Generate the expansions
+        ./sh_files_c
+
+# 2.   Get the nuclear data
+        ./sh_nuc
+
+# 3.   Get screened hydrogenic orbitals as initial estimates
+        ./sh_initial
+
+# 4.   Perform scf calculations and a final rci calculation that
+#      includes the Breit correction and QED. Perform ris4
+#      calculations for the rci wave functions
+        ./sh_scf
+
+# 5.   Run fical
+        ./sh_fical
+

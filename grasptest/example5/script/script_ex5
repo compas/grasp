@@ -1,44 +1,74 @@
 # GENERATE WAVE FUNCTION
 rnucleus < rnucleus_input
+
 rcsfgenerate < rcsfgenerate_input1
+
 cp rcsfgenerate.log Ni_mr.exc
 cp rcsf.out rcsf.inp
+
 rangular < rangular_input
+
 rwfnestimate < rwfnestimate_input1
+
 rmcdhf < rmcdhf_input1
 rsave Ni_mr
+
 rcsfgenerate < rcsfgenerate_input2
+
 cp rcsf.out rcsfmr.inp
+
 rcsfgenerate < rcsfgenerate_input3
+
 cp rcsf.out rcsf.inp
+
 rcsfinteract < rcsfinteract_input
+
 cp rcsf.out rcsf.inp
+
 rangular < rangular_input
+
 rwfnestimate < rwfnestimate_input2
+
 rmcdhf < rmcdhf_input2
 rsave Ni_even_n4
+
 rci < rci_input1
+
 jj2lsj < jj2lsj_input1
 #
 rcsfgenerate < rcsfgenerate_input4
+
 cp rcsf.out rcsfmr.inp
+
 rcsfgenerate < rcsfgenerate_input5
+
 cp rcsf.out rcsf.inp
+
 rcsfinteract < rcsfinteract_input
+
 cp rcsf.out rcsf.inp
+
 rangular < rangular_input
+
 rwfnestimate < rwfnestimate_input2
+
 rmcdhf < rmcdhf_input3
 rsave Ni_odd_n4
+
 rci < rci_input2
+
 jj2lsj < jj2lsj_input2
-rlevels Ni_even_n4.cm Ni_odd_n4.cm
+
+rlevels Ni_even_n4.cm Ni_odd_n4.cm > energy4
 #
 cp Ni_even_n4.cm Ni_even_n4.uni.cm
-rlevels Ni_even_n4.uni.cm Ni_odd_n4.cm
+
+rlevels Ni_even_n4.uni.cm Ni_odd_n4.cm > energy4_unique
 #
 cp Ni_even_n4.c Ni_even_n4.uni.c
 cp Ni_even_n4.w Ni_even_n4.uni.w
+
 # TRANSITIONS
 rbiotransform < rbiotransform_input
+
 rtransition < rtransition_input

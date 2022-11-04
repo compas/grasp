@@ -1,0 +1,37 @@
+#!/bin/sh
+set -x
+
+# 3. Get initial estimates for DF
+
+cp DF.c rcsf.inp
+rangular  <<S4
+y
+S4
+
+#  Get initial estimates of wave functions
+rwfnestimate <<S5
+y
+3
+*
+S5
+
+# Perform self-consistent field calculations
+rmcdhf > DF <<S6
+y
+1
+1
+1
+5
+*
+*
+100
+S6
+
+#  Save the result to DF
+rsave DF
+
+# For convenience in the scf script, and to avoid if statements in the latter,
+# copy DF.w to even2.w and odd2.w
+
+cp DF.w even2.w
+cp DF.w odd2.w

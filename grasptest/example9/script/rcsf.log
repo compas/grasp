@@ -1,0 +1,20 @@
+  Option : *
+ Standard ordering.
+           3  Highest principal quantum number.
+           2  Highest orbital angular momentum.
+ F  all subshells active.
+ F  limitations on population of n-subshells.
+           2  highest n-number.
+ Predefined core:*
+           2  number of electrons in           1 s
+ i   closed, inactive, etc...
+           1  number of electrons in           2 s
+ *   inactive, active, etc...
+           1  number of electrons in           2 p
+ *   inactive, active, etc...
+ *           3 s inactive, active, etc...
+ *           3 p inactive, active, etc...
+ *           3 d inactive, active, etc...
+           0  to           4  is the resulting term.
+           2  number of excitations.
+ F  Generate another list.

@@ -1,37 +1,84 @@
 # GENERATE WAVE FUNCTION
 rnucleus < rnucleus_input
+
 rcsfgenerate < rcsfgenerate_input1
+
 cp rcsfgenerate.log 2s22p3_2p5_DF.exc
+
 cp rcsf.out rcsf.inp
 cp rcsf.out rcsfmr.inp
+
 rangular < rangular_input
+
 rwfnestimate < rwfnestimate_input1
+
 rmcdhf < rmcdhf_input1
 rsave 2s22p3_2p5_DF
+
 rcsfgenerate < rcsfgenerate_input2
+
 cp rcsfgenerate.log 2s2p3_2p5_3.exc
 cp rcsf.out rcsf.inp
+
 rcsfinteract < rcsfinteract_input
+
 cp rcsf.out rcsf.inp
+
 rangular < rangular_input
+
 rwfnestimate < rwfnestimate_input2
+
 rmcdhf < rmcdhf_input2
 rsave 2s22p3_2p5_3
+
 rci < rci_input
+
 jj2lsj < jj2lsj_input
+
+# In LSJ coupling
+rlevels 2s22p3_2p5_3.cm > energy3_LSJ
+cp 2s22p3_2p5_3.lsj.lbl 2s22p3_2p5_3.lsj.lbl_SAVE 
+
+jj2lsj < jj2lsj_input_coupling
+
+Coupling < coupling_input
+
+# In LK3 coupling
+sed -n 25,28p 2s22p3_2p5_3.lsj.lbl_SAVE >patch1 
+sed -i 327rpatch1 2s22p3_2p5_3.coup3.LK3.lbl 
+sed -n 6,10p 2s22p3_2p5_3.lsj.lbl_SAVE >patch2 
+sed -i 57rpatch2 2s22p3_2p5_3.coup3.LK3.lbl 
+
+cp 2s22p3_2p5_3.coup3.LK3.lbl 2s22p3_2p5_3.lsj.lbl
+
+rlevels 2s22p3_2p5_3.cm > energy3_LK3
+
+# In JK3 coupling
+sed -i 327rpatch1 2s22p3_2p5_3.coup3.JK3.lbl
+sed -i 57rpatch2 2s22p3_2p5_3.coup3.JK3.lbl
+cp 2s22p3_2p5_3.coup3.JK3.lbl 2s22p3_2p5_3.lsj.lbl
+
+rlevels 2s22p3_2p5_3.cm > energy3_JK3
+
+# Displaying the energy: the same for the other couplings
+
 # TRANSITIONS
 cp 2s22p3_2p5_3.w 2s22p3_2p5_3.bw
 cp 2s22p3_2p5_3.cm 2s22p3_2p5_3.cbm
+
+# In LJS coupling
+cp 2s22p3_2p5_3.lsj.lbl_SAVE 2s22p3_2p5_3.lsj.lbl
 rtransition < rtransition_input
-# PRODUCE ENERGY TABLE
-rlevels 2s22p3_2p5_3.cm > energy3 
-rtablevels < rtablevels_input
-pdflatex energytablelatex.tex
-# PRODUCE TRANSITION TABLE
-rtabtrans1 < rtabtrans1_input
-rtabtrans2 < rtabtrans2_input
-pdflatex transitiontable.tex
-pdflatex lifetimetable.tex
-# PRODUCE COMPOSITION TABLE USING PERL
-perl lscomp.pl < lscomp_input
-pdflatex lscomp.tex
+mv 2s22p3_2p5_3.2s22p3_2p5_3.ct.lsj 2s22p3_2p5_3.2s22p3_2p5_3.ct.lsj_SAVE
+
+# In LK3 coupling
+ cp 2s22p3_2p5_3.coup3.LK3.lbl 2s22p3_2p5_3.lsj.lbl
+rtransition < rtransition_input
+mv 2s22p3_2p5_3.2s22p3_2p5_3.ct.lsj 2s22p3_2p5_3.2s22p3_2p5_3.ct.lsj_LK3
+
+# In JK3 coupling
+cp 2s22p3_2p5_3.coup3.JK3.lbl 2s22p3_2p5_3.lsj.lbl
+rtransition < rtransition_input
+mv 2s22p3_2p5_3.2s22p3_2p5_3.ct.lsj 2s22p3_2p5_3.2s22p3_2p5_3.ct.lsj_JK3
+
+# Computing transition parameters: the same for other couplings
