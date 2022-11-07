@@ -1,0 +1,11 @@
+rm clist.new
+rm e*
+rm f*
+rm i*
+rm m*
+rm o*
+rm r*
+rm DF*
+rm *.cfi
+rm spherical*
+rm deformed*

@@ -19,3 +19,5 @@ rm *pdf
 rm e*
 rm t*
 rm scatterplot.m
+rm patch1
+rm patch2

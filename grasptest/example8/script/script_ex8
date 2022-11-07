@@ -1,0 +1,55 @@
+# GENERATE WAVE FUNCTION
+rnucleus < rnucleus_input
+
+rcsfgenerate < rcsfgenerate_input1
+
+cp rcsfgenerate.log DF.exc
+cp rcsf.out rcsf.inp
+
+rangular < rangular_input
+
+rwfnestimate < rwfnestimate_input1
+
+rmcdhf_mem < rmcdhf_input1
+rsave DF
+
+rcsfgenerate < rcsfgenerate_input2
+
+cp rcsfgenerate.log n3.exc
+cp rcsf.out rcsf.inp
+
+rangular < rangular_input
+
+rwfnestimate < rwfnestimate_input2
+
+rmcdhf_mem < rmcdhf_input2
+rsave n3
+
+rcsfgenerate < rcsfgenerate_input3
+
+cp rcsfgenerate.log n4.exc
+cp rcsf.out rcsf.inp
+
+rangular < rangular_input
+
+rwfnestimate < rwfnestimate_input3
+
+rmcdhf_mem < rmcdhf_input3
+rsave n4
+
+# rci in ordinary orbital basis
+rci < rci_input1
+
+rmixextract < rmixextract_input1 > mix4
+
+rdensity < rdensity_input
+
+cp n4.c n4NO.c
+cp n4.nw n4NO.w
+
+# rci in NO orbital basis
+rci < rci_input2
+
+rmixextract < rmixextract_input2 > mix4NO
+
+

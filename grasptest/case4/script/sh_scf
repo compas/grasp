@@ -1,0 +1,143 @@
+#!/bin/sh
+set -x
+
+#   3.  Get results for even n=3,4
+# Note that we copied DF.w to even2.w so this is available
+
+for n in 3 4 
+do
+   (cp even${n}.c rcsf.inp
+
+#  Get angular data
+rangular <<S1
+y
+S1
+
+# Get initial estimates of wave functions
+m=`expr $n - 1`
+echo m=$m n=$n
+rwfnestimate <<S2
+y
+1
+even${m}.w
+*
+3
+*
+S2
+
+# Perform self-consistent field calculations
+rmcdhf > outeven_rmcdhf_${n} <<S3
+y
+1
+${n}*
+
+100
+S3
+
+rsave even${n}
+
+   echo)
+done
+
+#  Perform Breit-correction using CI for n=4
+
+n=4
+cp even${n}.c evenCI${n}.c
+cp even${n}.w evenCI${n}.w
+
+rci > outeven_rci <<S4
+y
+evenCI${n}
+y
+y
+1.d-6
+y
+n
+n
+y
+4
+1
+S4
+
+#  RIS4 calculation using CI for n=4
+
+ris4 > outeven_ris4 <<S5
+y
+evenCI${n}
+y
+y
+n
+S5
+
+#   4.  Get results for odd n=3,4
+# Note that we copied DF.w to odd2.w so this is available
+
+for n in 3 4 
+do
+   (cp odd${n}.c rcsf.inp
+
+#  Get angular data
+rangular <<S6
+y
+S6
+
+# Get initial estimates of wave functions
+m=`expr $n - 1`
+echo m=$m n=$n
+rwfnestimate <<S7
+y
+1
+odd${m}.w
+*
+3
+*
+S7
+
+# Perform self-consistent field calculations
+rmcdhf > outodd_rmcdhf_${n} <<S8
+y
+1
+1
+5
+${n}*
+
+100
+S8
+
+rsave odd${n}
+
+   echo)
+done
+
+#  Perform Breit-correction using CI for n=4. First copy to other file names
+
+n=4
+cp odd${n}.c oddCI${n}.c
+cp odd${n}.w oddCI${n}.w
+
+rci > outodd_rci <<S9
+y
+oddCI${n}
+y
+y
+1.d-6
+y
+n
+n
+y
+4
+1
+1
+S9
+
+#  RIS4 calculation using CI for n=4
+
+ris4 > outodd_ris4 <<S10
+y
+oddCI${n}
+y
+y
+n
+S10
+
+

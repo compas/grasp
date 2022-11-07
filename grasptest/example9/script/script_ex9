@@ -1,0 +1,59 @@
+# GENERATE WAVE FUNCTION
+rnucleus < rnucleus_input
+
+rcsfgenerate < rcsfgenerate_input1
+
+cp rcsfgenerate.log mr.exc
+cp rcsf.out rcsf.inp
+
+rangular < rangular_input
+
+rwfnestimate < rwfnestimate_input1
+
+rmcdhf_mem < rmcdhf_input1
+rsave mr
+
+# n = 3 vv correlation for even state
+rcsfgenerate < rcsfgenerate_input2
+
+cp rcsfgenerate.log even_n3.exc
+cp rcsf.out rcsf.inp
+
+rangular < rangular_input
+
+rwfnestimate < rwfnestimate_input2
+
+rmcdhf_mem < rmcdhf_input2
+rsave even_n3
+
+rci < rci_input1
+
+jj2lsj < jj2lsj_input1
+
+# n = 3 vv correlation for odd state
+rcsfgenerate < rcsfgenerate_input3
+
+cp rcsfgenerate.log odd_n3.exc
+cp rcsf.out rcsf.inp
+
+rangular < rangular_input
+
+rwfnestimate < rwfnestimate_input2
+
+rmcdhf_mem < rmcdhf_input3
+rsave odd_n3
+
+rci < rci_input2
+
+jj2lsj < jj2lsj_input2
+
+# run hfszeeman
+
+hfszeeman95 < hfszeeman95_input1
+hfszeeman95 < hfszeeman95_input2
+
+# rbiotransform and rtranscition_phase
+
+rbiotransform < rbiotransform_input
+rtransition_phase < rtransition_phase_input
+

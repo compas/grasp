@@ -1,4 +1,6 @@
-Edit the disks file!!!
+Edit the disks file.
+First line is the full path to the working directory
+The following lines are the full path to the tmp_pi directory
 
 To run the script
 

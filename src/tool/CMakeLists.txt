@@ -1,5 +1,5 @@
-install(PROGRAMS lscomp.pl DESTINATION bin/)
 install(PROGRAMS rsave DESTINATION bin/)
+install(PROGRAMS lscomp.pl DESTINATION bin/)
 install(PROGRAMS rwfnpyplot DESTINATION bin/)
 
 add_executable(rasfsplit rasfsplit.f90)
@@ -93,4 +93,8 @@ install(TARGETS wfnplot DESTINATION bin/)
 add_executable(rwfntotxt rwfntotxt.f90)
 target_link_libraries_Fortran(rwfntotxt PRIVATE mod 9290)
 install(TARGETS rwfntotxt DESTINATION bin/)
+
+add_executable(fical fical.f90)
+target_link_libraries_Fortran(fical PRIVATE mod 9290)
+install(TARGETS fical DESTINATION bin/)
 

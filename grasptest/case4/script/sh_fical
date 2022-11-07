@@ -1,0 +1,39 @@
+#!/bin/sh
+set -x
+
+# fical spherical nucleus for 150Nd
+
+fical > out_fical_spherical <<S1
+n
+evenCI4
+oddCI4
+y
+y
+both
+meV
+y
+y
+141.907719d0,4.9123d0,2.3d0,0.d0,0.d0,0.d0
+149.920887d0,5.0400d0,2.3d0,0.d0,0.d0,0.d0
+S1
+
+cp evenCI4.oddCI4.cfi spherical_150Nd.fci
+
+fical > out_fical_deformed <<S2
+n
+evenCI4
+oddCI4
+y
+y
+both
+meV
+y
+y
+141.907719d0,4.9123d0,2.3d0,0.d0,0.d0,0.d0
+149.920887d0,5.0400d0,2.3d0,0.d0,0.28d0,0.d0
+S2
+
+cp evenCI4.oddCI4.cfi deformed_150Nd.fci
+
+
+
