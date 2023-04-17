@@ -168,7 +168,8 @@ CONTAINS
 !
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE asf2ls(iw1,ithresh,levmax,IBLKNUM,levels,NCFMIN,NCFMAX)
+      SUBROUTINE asf2ls(iw1,ithresh,levmax,IBLKNUM,levels,NCFMIN,     &
+                        NCFMAX,ioutT)
 !                                                                      *
 !     Expands an atomic state functions from the same block,           *
 !     which is represented in a jj-coupling CSF basis into a basis     *
@@ -178,6 +179,7 @@ CONTAINS
 !                                                                      *
 !     Written by G. Gaigalas,                                          *
 !     NIST                                     last update: May 2011   *
+!     Modified by G. Gaigalas                                   2022   *
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
@@ -201,20 +203,31 @@ CONTAINS
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      integer, intent(in) :: iw1, levmax,IBLKNUM
+      integer, intent(in) :: iw1, levmax,IBLKNUM,ioutT
       integer, intent(in) :: NCFMIN, NCFMAX
       integer, dimension(:), intent(in) :: ithresh
       integer, dimension(Blocks_number,Vectors_number), intent(in) :: levels
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer      :: jj_number, lev, level, LS_number
-      integer      :: LOC, IMINCOMP
+      CHARACTER(LEN=18) :: String
+      integer      :: jj_number, lev, level, LS_number, ijj, iLS
+      integer      :: LOC, IMINCOMP, IDUM
       real(DOUBLE) :: wa_transformation
       real(DOUBLE), dimension(Vectors_number) :: wa
       real(DOUBLE), dimension(Vectors_number) :: wb
 !-----------------------------------------------
       wb = zero
+!GGR      if(ioutT == 1) write(59) ' *   Block Number=',IBLKNUM
+      if(ioutT == 1) write(59,'(A18,I6)') ' *   Block Number=',IBLKNUM
+      if(ioutT == 2) then
+!GGR         read(59) String, IDUM
+         read(59,'(A18,I6)') String, IDUM
+         if(String(1:18) /= ' *   Block Number=' .or.                  &
+                                                  IDUM /= IBLKNUM) then
+            print*, "Error in transformation file *.lsj.T"
+         end if
+      end if
       do LS_number = 1, asf_set_LS%csf_set_LS%nocsf
          if ((asf_set_LS%csf_set_LS%csf(LS_number)%parity == "+" &
             .and.  ISPAR(iw1) == 1)  .or.                        &
@@ -225,7 +238,21 @@ CONTAINS
                if(ithresh(jj_number) == 1 .and.                  &
                  (asf_set_LS%csf_set_LS%csf(LS_number)%totalJ == &
                   ITJPO(jj_number)-1)) then
+                  if(ioutT <= 1)                                       &
                   wa_transformation = traLSjj(jj_number,LS_number)
+!GGR                  if(ioutT == 1) write(59) wa_transformation
+                  if(ioutT == 1) write(59,'(2I6,2X,F16.9)')            &
+                  jj_number-NCFMIN+1,LS_number,wa_transformation
+                  if(ioutT == 2) then
+!GGR                  read(59) wa_transformation
+                     read(59,'(2I6,2X,F16.9)')                         &
+                     ijj, iLS, wa_transformation
+                     if(ijj /= jj_number-NCFMIN+1 .or.                 &
+                        iLS /= LS_number ) then
+                          print*, "Error in jj2lsj transformation file"
+                          stop
+                     end if
+                  end if
                   do lev = 1,levmax
                      level = levels(IBLKNUM,lev)
                      LOC = (level-1)*NCF
@@ -1100,7 +1127,7 @@ CONTAINS
 !***********************************************************************
 !                                                                      *
       SUBROUTINE inscreen(THRESH,levels,number_of_levels,ioutC,ioutj, &
-                                                                UNIQUE)
+                                                          UNIQUE,ioutT)
 !                                                                      *
 !     The input from the screen.                                       *
 !                                                                      *
@@ -1109,6 +1136,7 @@ CONTAINS
 !                                                                      *
 !     Written by G. Gaigalas,                                          *
 !     NIST                                     last update: Dec 2015   *
+!     Modified by G. Gaigalas                                   2022   *
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
@@ -1119,23 +1147,27 @@ CONTAINS
       USE PRNT_C,          ONLY: NVEC
       USE IOUNIT_C,        ONLY: ISTDI, ISTDE
       USE CONS_C,          ONLY: EPS, ZERO
-      USE BLK_C,           ONLY: NEVINBLK, NBLOCK
+!GG      USE BLK_C,           ONLY: NEVINBLK, NBLOCK
+      USE BLK_C,           ONLY: NEVINBLK, NCFINBLK, NBLOCK, TWO_J
       USE m_C,             ONLY: NCORE
       USE def_C,           ONLY: Z, NELEC
       IMPLICIT NONE
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      integer, intent(out)      :: ioutC,ioutj,UNIQUE
+      integer, intent(out)      :: ioutC,ioutj,UNIQUE,ioutT
       real(DOUBLE), intent(out) :: THRESH
       integer,  dimension(Blocks_number), intent(out) :: number_of_levels
       integer, dimension(Blocks_number,Vectors_number), intent(out) :: levels
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer            :: I, II, ISUM, K, NCI, ierr
+      integer            :: NELECDUM, NCFTOTDUM, NWDUM, NBLOCKDUM
+      integer            :: JBDUM, NCFINBLKDUM, NEVINBLKDUM, IATJPDUM
+      integer            :: I, II, ISUM, K, NCI, ierr, JB
       integer            :: IBlock, number_of_levels_tmp
       logical            :: yes, fail, GETYN
+      CHARACTER(LEN=6)   :: G92MIX
       character(len=24)  :: NAME
       character(len=256) :: record, util_csl_file
       integer, dimension(Blocks_number)    :: posi
@@ -1184,6 +1216,7 @@ CONTAINS
          THRESH = 0.001D00
          ioutC = 0
          ioutj = 0
+         ioutT = 0
          DO I = 1, NBLOCK
             number_of_levels(I) = NEVINBLK(I)
             IF(NEVINBLK(I) /= 0) THEN
@@ -1253,7 +1286,7 @@ CONTAINS
             WRITE (ISTDE,'(A,F8.5)') ' should be smaller than:',MINCOMP*0.01
             READ *, EPSNEW
          ELSE
-            WRITE (ISTDE,*) " THe maximum of omitted composition can be 100%"
+            WRITE (ISTDE,*) " The maximum of omitted composition can be 100%"
             GO TO 3
          END IF
          WRITE (ISTDE,*) 'What is the value below which an eigenvector composition'
@@ -1273,6 +1306,21 @@ CONTAINS
                ioutj = 1
             ELSE
                ioutj = 0
+            END IF
+         END IF
+         WRITE (ISTDE,*)                                              &
+         "Do you need the transformation output file *.lsj.T?  (y/n)"
+         YES = GETYN ()
+         IF (YES) THEN
+            ioutT = 1
+         ELSE
+            WRITE (ISTDE,*)                                           &
+            "Will you use the transformation file *.lsj.T?  (y/n)"
+            YES = GETYN ()
+            IF (YES) THEN
+               ioutT = 2
+            ELSE
+               ioutT = 0
             END IF
          END IF
       ENDIF
@@ -1334,6 +1382,68 @@ CONTAINS
          END IF
          WRITE (58,'(2X,A6,A,F5.1,A,I3,A,I7)' )    &
          NAME(1:K-1),'  Z = ',Z ,'  NEL = ',NELEC,'   NCFG ='! ,asf_set_LS%csf_set_LS%nocsf
+      ENDIF
+!
+!     Opening the files   *.lsj.T and
+!
+      IF(ioutT == 1) THEN
+         util_csl_file = NAME(1:K-1)//'.lsj'//'.T'
+!GGR         OPEN(59,FILE=util_csl_file,FORM='unformatted',STATUS='NEW',   &
+         OPEN(59,FILE=util_csl_file,FORM='formatted',STATUS='NEW',   &
+                                                           IOSTAT=IERR)
+         if (ierr /= 0) then
+            print *, 'Error when opening ',util_csl_file
+            stop
+         end if
+!GGR         write (59) 'jj2lsj'
+         write (59,'(A6)') 'jj2lsj'
+!GGR         write (59) NELEC, NCF, NW, NBLOCK
+         write (59,'(4I12)') NELEC, NCF, NW, NBLOCK
+         DO JB = 1, NBLOCK
+             IATJPDUM = TWO_J(JB) +1
+!GGR            write (59) JB, NCFINBLK(JB), NEVINBLK(JB), IATJPDUM
+            write (59,'(4I12)') JB, NCFINBLK(JB), NEVINBLK(JB), IATJPDUM
+         END DO
+      ELSE IF(ioutT == 2) THEN
+         util_csl_file = NAME(1:K-1)//'.lsj'//'.T'
+!GGR         OPEN(59,FILE=util_csl_file,FORM='unformatted',STATUS='OLD',   &
+         OPEN(59,FILE=util_csl_file,FORM='formatted',STATUS='OLD',   &
+                                                           IOSTAT=IERR)
+         IF (IERR /= 0) THEN
+            print *, 'Error when opening ',util_csl_file
+            stop
+         END IF
+!GGR         READ (59, IOSTAT=IERR) G92MIX
+         READ (59, '(A6)', IOSTAT=IERR) G92MIX
+         IF (IERR/=0 .OR. G92MIX/='jj2lsj') THEN
+            WRITE (ISTDE, *) 'Not a jj2lsj Transformation File;'
+            close(59)
+            stop
+         ENDIF
+!GGR         READ (25) NELECDUM, NCFTOTDUM, NWDUM, NBLOCKDUM
+         read (59,'(4I12)') NELECDUM, NCFTOTDUM, NWDUM, NBLOCKDUM
+         if(NELECDUM /= NELEC .or. NCFTOTDUM /= NCF .or. NWDUM /= NW   &
+                                        .or. NBLOCKDUM /= NBLOCK) then
+            print*, NELEC, NCF, NW, NBLOCK
+            print*, NELECDUM, NCFTOTDUM, NWDUM, NBLOCKDUM
+            print*, "Wrong transformation file *.lsj.T"
+            close(59)
+            stop
+         end if
+         DO JB = 1, NBLOCKDUM
+            IATJPDUM = TWO_J(JB) +1
+!GGR            read (59) JBDUM, NCFINBLKDUM, NEVINBLKDUM, IATJPDUM
+            read (59,'(4I12)') JBDUM, NCFINBLKDUM, NEVINBLKDUM, IATJPDUM
+            if(JBDUM /= JB .or. NCFINBLKDUM /= NCFINBLK(JB) .or.       &
+               NEVINBLKDUM /= NEVINBLK(JB) .or.                        &
+                                         IATJPDUM /= TWO_J(JB) +1) then
+               print*, JB,NCFINBLK(JB), NEVINBLK(JB), TWO_J(JB) +1
+               print*, JBDUM, NCFINBLKDUM, NEVINBLKDUM, IATJPDUM
+               print*, "Wrong transformation file *.lsj.T"
+               close(59)
+               stop
+            end if
+         END DO
       ENDIF
       END SUBROUTINE inscreen
 !
@@ -1451,6 +1561,7 @@ CONTAINS
 !     Written by G. Gaigalas,                                          *
 !     NIST                                     last update: Dec 2015   *
 !     Modified by G. Gaigalas,                              May 2021   *
+!     Modified by G. Gaigalas                                   2022   *
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
@@ -1474,7 +1585,7 @@ CONTAINS
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
 !GG NIST
-      integer :: i, j, jj, ii, string_l, IBLKNUM,ioutC,ioutj,UNIQUE
+      integer :: i, j, jj, ii, string_l,IBLKNUM,ioutC,ioutj,UNIQUE,ioutT
       integer :: level, nocsf_min, lev, string_length
       integer :: nocsf_max, sum_nocsf_min, Before_J
 !GG NIST
@@ -1497,7 +1608,8 @@ CONTAINS
       character(LEN=164), dimension(1:Vectors_number) :: string_CSF
 !-----------------------------------------------
       Ssms = ZERO;   g_j = ZERO;   g_JLS = ZERO;    Before_J = 0
-      call inscreen(THRESH,levels,number_of_levels,ioutC,ioutj,UNIQUE)
+      call inscreen(THRESH,levels,number_of_levels,ioutC,ioutj,UNIQUE, &
+                                                                 ioutT)
       allocate(ithresh(NCF))
       do  IBLKNUM = 1, NBLOCK
          if(IBLKNUM == 1) THEN
@@ -1578,7 +1690,8 @@ CONTAINS
 !     perform the transformation
 !
             if(lev == 1) call asf2ls                                    &
-            (iw(1),ithresh,number_of_levels(IBLKNUM),IBLKNUM,levels,NCFMIN,NCFMAX)
+            (iw(1),ithresh,number_of_levels(IBLKNUM),IBLKNUM,levels,   &
+             NCFMIN,NCFMAX,ioutT)
 !
 !     output to the screen jj- coupling
             print *, "Weights of major contributors to ASF in jj-coupling:"

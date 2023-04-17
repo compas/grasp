@@ -22,6 +22,7 @@
 !     VILNIUS                                               May 2017   *
 !                                                                      *
 !     Modified by G. Gaigalas and C. Cychen                     2021   *
+!     Modified by G. Gaigalas                                   2022   *
 !                                                                      *
 !***********************************************************************
 !-----------------------------------------------
@@ -39,11 +40,13 @@
       print *, "jj2lsj: Transformation of ASFs from a jj-coupled CSF basis"
       print *, "        into an LS-coupled CSF basis  (Fortran 95 version)"
       print *, "        (C) Copyright by   G. Gaigalas and Ch. F. Fischer,"
-      print *, "        (2021)."
+      print *, "        (2022)."
       print *, "        Input files: name.c, name.(c)m"
+      print *, "         (optional)  name.lsj.T"
       print *, "        Ouput files: name.lsj.lbl,"
       print *, "         (optional)  name.lsj.c, name.lsj.j,"
-      print *, "                     name.uni.lsj.lbl, name.uni.lsj.sum"
+      print *, "                     name.uni.lsj.lbl, name.uni.lsj.sum,"
+      print *, "                     name.lsj.T"
       print *, " "
 !
 !  Set up the table of logarithms of factorials
