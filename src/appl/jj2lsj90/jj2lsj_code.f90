@@ -2324,7 +2324,7 @@ CONTAINS
 !
 !     4. for each nonequivalent csf_jj find all the csfs_LS
 !
-!	  To avoid the dependency on the number of subshells
+!        To avoid the dependency on the number of subshells
 !         the recursive subroutine is used
       allocate(Li(asf_set_LS%csf_set_LS%nwshells))
       allocate(L_i(asf_set_LS%csf_set_LS%nwshells))
