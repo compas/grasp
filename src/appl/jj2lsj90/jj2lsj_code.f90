@@ -218,35 +218,32 @@ CONTAINS
       real(DOUBLE), dimension(Vectors_number) :: wb
 !-----------------------------------------------
       wb = zero
-!GGR      if(ioutT == 1) write(59) ' *   Block Number=',IBLKNUM
-      if(ioutT == 1) write(59,'(A18,I6)') ' *   Block Number=',IBLKNUM
+      if(ioutT == 1) write(59) ' *   Block Number=',IBLKNUM
       if(ioutT == 2) then
-!GGR         read(59) String, IDUM
-         read(59,'(A18,I6)') String, IDUM
+         read(59) String, IDUM
          if(String(1:18) /= ' *   Block Number=' .or.                  &
                                                   IDUM /= IBLKNUM) then
-            print*, "Error in transformation file *.lsj.T"
+            print*, "Error in transformation file *.lsj.T" 
          end if
       end if
       do LS_number = 1, asf_set_LS%csf_set_LS%nocsf
-         if ((asf_set_LS%csf_set_LS%csf(LS_number)%parity == "+" &
-            .and.  ISPAR(iw1) == 1)  .or.                        &
-            (asf_set_LS%csf_set_LS%csf(LS_number)%parity  == "-" &
+         if(((LS_number/2000)*2000) == LS_number)                      &
+                         print*, "LS_number=",LS_number
+         if ((asf_set_LS%csf_set_LS%csf(LS_number)%parity == "+"       &
+            .and.  ISPAR(iw1) == 1)  .or.                              &
+            (asf_set_LS%csf_set_LS%csf(LS_number)%parity  == "-"       &
             .and.  ISPAR(iw1) == -1)) then
             wa = zero
             do jj_number = NCFMIN, NCFMAX
-               if(ithresh(jj_number) == 1 .and.                  &
-                 (asf_set_LS%csf_set_LS%csf(LS_number)%totalJ == &
+               if(ithresh(jj_number) == 1 .and.                        &
+                 (asf_set_LS%csf_set_LS%csf(LS_number)%totalJ ==       &
                   ITJPO(jj_number)-1)) then
                   if(ioutT <= 1)                                       &
-                  wa_transformation = traLSjj(jj_number,LS_number)
-!GGR                  if(ioutT == 1) write(59) wa_transformation
-                  if(ioutT == 1) write(59,'(2I6,2X,F16.9)')            &
-                  jj_number-NCFMIN+1,LS_number,wa_transformation
+                       wa_transformation = traLSjj(jj_number,LS_number)
+                  if(ioutT == 1) write(59)                             &
+                         jj_number-NCFMIN+1,LS_number,wa_transformation
                   if(ioutT == 2) then
-!GGR                  read(59) wa_transformation
-                     read(59,'(2I6,2X,F16.9)')                         &
-                     ijj, iLS, wa_transformation
+                  read(59) ijj, iLS, wa_transformation
                      if(ijj /= jj_number-NCFMIN+1 .or.                 &
                         iLS /= LS_number ) then
                           print*, "Error in jj2lsj transformation file"
@@ -1126,7 +1123,7 @@ CONTAINS
 !
 !***********************************************************************
 !                                                                      *
-      SUBROUTINE inscreen(THRESH,levels,number_of_levels,ioutC,ioutj, &
+      SUBROUTINE inscreen(THRESH,levels,number_of_levels,ioutC,ioutj,  &
                                                           UNIQUE,ioutT)
 !                                                                      *
 !     The input from the screen.                                       *
@@ -1147,7 +1144,6 @@ CONTAINS
       USE PRNT_C,          ONLY: NVEC
       USE IOUNIT_C,        ONLY: ISTDI, ISTDE
       USE CONS_C,          ONLY: EPS, ZERO
-!GG      USE BLK_C,           ONLY: NEVINBLK, NBLOCK
       USE BLK_C,           ONLY: NEVINBLK, NCFINBLK, NBLOCK, TWO_J
       USE m_C,             ONLY: NCORE
       USE def_C,           ONLY: Z, NELEC
@@ -1308,20 +1304,24 @@ CONTAINS
                ioutj = 0
             END IF
          END IF
-         WRITE (ISTDE,*)                                              &
-         "Do you need the transformation output file *.lsj.T?  (y/n)"
-         YES = GETYN ()
-         IF (YES) THEN
-            ioutT = 1
-         ELSE
-            WRITE (ISTDE,*)                                           &
-            "Will you use the transformation file *.lsj.T?  (y/n)"
+         IF(MINCOMP == ZERO) THEN
+            WRITE (ISTDE,*)                                            &
+            "Do you need the transformation output file *.lsj.T?  (y/n)"
             YES = GETYN ()
             IF (YES) THEN
-               ioutT = 2
+               ioutT = 1
             ELSE
-               ioutT = 0
+               WRITE (ISTDE,*)                                         &
+               "Will you use the transformation file *.lsj.T?  (y/n)"
+               YES = GETYN ()
+               IF (YES) THEN
+                  ioutT = 2
+               ELSE
+                  ioutT = 0
+               END IF
             END IF
+         ELSE
+            ioutT = 0
          END IF
       ENDIF
 !
@@ -1388,40 +1388,33 @@ CONTAINS
 !
       IF(ioutT == 1) THEN
          util_csl_file = NAME(1:K-1)//'.lsj'//'.T'
-!GGR         OPEN(59,FILE=util_csl_file,FORM='unformatted',STATUS='NEW',   &
-         OPEN(59,FILE=util_csl_file,FORM='formatted',STATUS='NEW',   &
+         OPEN(59,FILE=util_csl_file,FORM='unformatted',STATUS='NEW',   &
                                                            IOSTAT=IERR)
          if (ierr /= 0) then
             print *, 'Error when opening ',util_csl_file
             stop
          end if
-!GGR         write (59) 'jj2lsj'
-         write (59,'(A6)') 'jj2lsj'
-!GGR         write (59) NELEC, NCF, NW, NBLOCK
-         write (59,'(4I12)') NELEC, NCF, NW, NBLOCK
+         write (59) 'jj2lsj'
+         write (59) NELEC, NCF, NW, NBLOCK
          DO JB = 1, NBLOCK
-             IATJPDUM = TWO_J(JB) +1
-!GGR            write (59) JB, NCFINBLK(JB), NEVINBLK(JB), IATJPDUM
-            write (59,'(4I12)') JB, NCFINBLK(JB), NEVINBLK(JB), IATJPDUM
+            IATJPDUM = TWO_J(JB) +1
+            write (59) JB, NCFINBLK(JB), NEVINBLK(JB), IATJPDUM
          END DO
       ELSE IF(ioutT == 2) THEN
          util_csl_file = NAME(1:K-1)//'.lsj'//'.T'
-!GGR         OPEN(59,FILE=util_csl_file,FORM='unformatted',STATUS='OLD',   &
-         OPEN(59,FILE=util_csl_file,FORM='formatted',STATUS='OLD',   &
+         OPEN(59,FILE=util_csl_file,FORM='unformatted',STATUS='OLD',   &
                                                            IOSTAT=IERR)
          IF (IERR /= 0) THEN
             print *, 'Error when opening ',util_csl_file
             stop
          END IF
-!GGR         READ (59, IOSTAT=IERR) G92MIX
-         READ (59, '(A6)', IOSTAT=IERR) G92MIX
+         READ (59, IOSTAT=IERR) G92MIX
          IF (IERR/=0 .OR. G92MIX/='jj2lsj') THEN
             WRITE (ISTDE, *) 'Not a jj2lsj Transformation File;'
             close(59)
             stop
          ENDIF
-!GGR         READ (25) NELECDUM, NCFTOTDUM, NWDUM, NBLOCKDUM
-         read (59,'(4I12)') NELECDUM, NCFTOTDUM, NWDUM, NBLOCKDUM
+         READ (59) NELECDUM, NCFTOTDUM, NWDUM, NBLOCKDUM
          if(NELECDUM /= NELEC .or. NCFTOTDUM /= NCF .or. NWDUM /= NW   &
                                         .or. NBLOCKDUM /= NBLOCK) then
             print*, NELEC, NCF, NW, NBLOCK
@@ -1432,8 +1425,7 @@ CONTAINS
          end if
          DO JB = 1, NBLOCKDUM
             IATJPDUM = TWO_J(JB) +1
-!GGR            read (59) JBDUM, NCFINBLKDUM, NEVINBLKDUM, IATJPDUM
-            read (59,'(4I12)') JBDUM, NCFINBLKDUM, NEVINBLKDUM, IATJPDUM
+           read (59) JBDUM, NCFINBLKDUM, NEVINBLKDUM, IATJPDUM
             if(JBDUM /= JB .or. NCFINBLKDUM /= NCFINBLK(JB) .or.       &
                NEVINBLKDUM /= NEVINBLK(JB) .or.                        &
                                          IATJPDUM /= TWO_J(JB) +1) then
@@ -1630,6 +1622,7 @@ CONTAINS
             end do
             if(dabs(sumthrsh) >= dabs(EPSNEW)) ithresh(i) = 1
          end do
+         write(*,*)'The program generates a list of CSFs in LS-coupling'
          call setLS(ithresh,NCFMIN,NCFMAX)
 !
 !     output to *.lsj.c
@@ -1689,9 +1682,13 @@ CONTAINS
 !
 !     perform the transformation
 !
-            if(lev == 1) call asf2ls                                    &
-            (iw(1),ithresh,number_of_levels(IBLKNUM),IBLKNUM,levels,   &
-             NCFMIN,NCFMAX,ioutT)
+            if(lev == 1) then
+               write(*,*)                                              &
+                'The program generates a list of transformation matrix'
+               call asf2ls                                             &
+               (iw(1),ithresh,number_of_levels(IBLKNUM),IBLKNUM,levels,&
+               NCFMIN,NCFMAX,ioutT)
+            end if
 !
 !     output to the screen jj- coupling
             print *, "Weights of major contributors to ASF in jj-coupling:"
@@ -2324,7 +2321,7 @@ CONTAINS
 !
 !     4. for each nonequivalent csf_jj find all the csfs_LS
 !
-!        To avoid the dependency on the number of subshells
+!         To avoid the dependency on the number of subshells
 !         the recursive subroutine is used
       allocate(Li(asf_set_LS%csf_set_LS%nwshells))
       allocate(L_i(asf_set_LS%csf_set_LS%nwshells))
