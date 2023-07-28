@@ -1,4 +1,4 @@
-# General Relativistic Atomic Structure Package
+# GRASP - The General-purpose Relativistic Atomic Structure Package
 
 ![Tests][tests-badge]
 [![][doxygen-badge]][doxygen-url]
