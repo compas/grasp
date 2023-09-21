@@ -58,7 +58,7 @@ This may fail with rank mismatch errors. In this case, for `gfortran` consider:
 
 ```sh
 # Inside build
-cmake -DCMAKE_Fortran_FLAGS="-std=legacy" .
+cmake -DCMAKE_Fortran_FLAGS="-fallow-argument-mismatch" .
 cmake --build . --parallel
 cmake --install .
 ```
