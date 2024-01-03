@@ -28,7 +28,8 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       INTEGER, INTENT(IN)       :: JA1, KA, IRE
-      INTEGER, INTENT(OUT)      :: IAT
+!      INTEGER, INTENT(OUT)      :: IAT
+      INTEGER, INTENT(INOUT)      :: IAT
       REAL(DOUBLE), INTENT(OUT) :: RECC
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
