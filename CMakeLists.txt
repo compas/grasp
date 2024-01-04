@@ -99,18 +99,43 @@ set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
 
 # Additional Fortran compiler flags.
 #
-# -fno-automatic: this was set in the original make_environment_gfortran_UBC file.
+# To set additional compiler flags, you can set CMAKE_Fortran_FLAGS when invoking CMake.
+# For example
 #
-# Note: optimization should be enabled on the Release target automatically.
+#   cmake -DCMAKE_Fortran_FLAGS="-fconvert=big-endian" ..
 #
-# If need be, you can also set up linker flags. E.g.:
+# Note: there is no need to pass optimization flags explicitly (e.g. -O2) -- CMake enables
+# -O2 automatically on the Release target. Similarly, -g is automatically set for the Debug
+# target.
 #
-#     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgfortran")
+# Similarly, additional linker options can be passed via CMAKE_EXE_LINKER_FLAGS, e.g.
 #
-set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fno-automatic")
+#   cmake -DCMAKE_EXE_LINKER_FLAGS="-static-libgfortran" ..
+#
+# Default flags (in addition to CMake defaults):
+#
+#   -fno-automatic / -save: these were set in the original Makefiles
+#
+# To disable GRASP-specific default flags, you can set GRASP_DEFAULT_FLAGS=FALSE when
+# calling CMake with
+#
+#   cmake -DGRASP_DEFAULT_FLAGS=FALSE ..
+#
+set(GRASP_DEFAULT_FLAGS TRUE CACHE BOOL "If TRUE (default), -fno-automatic (gfortran) or -save (ifort) is automatically set in CMAKE_Fortran_FLAGS.")
+if(GRASP_DEFAULT_FLAGS)
+    if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
+        set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fno-automatic")
+    elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
+        set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -save -mkl")
+    else()
+        message(WARNING "GRASP requires -fno-automatic or -save or equivalent, but is unable to determine the correct argument for this compiler (${CMAKE_Fortran_COMPILER_ID})")
+    endif()
+endif()
 
 message("Compiler flags etc. for this GRASP build:")
+message("* GRASP_DEFAULT_FLAGS:             ${GRASP_DEFAULT_FLAGS}")
 message("* CMAKE_BUILD_TYPE:                ${CMAKE_BUILD_TYPE}")
+message("* CMAKE_Fortran_COMPILER_ID:       ${CMAKE_Fortran_COMPILER_ID}")
 message("* CMAKE_Fortran_COMPILER:          ${CMAKE_Fortran_COMPILER}")
 message("* CMAKE_Fortran_COMPILER_VERSION:  ${CMAKE_Fortran_COMPILER_VERSION}")
 message("* CMAKE_Fortran_FLAGS:             ${CMAKE_Fortran_FLAGS}")
