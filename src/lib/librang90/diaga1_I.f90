@@ -4,7 +4,8 @@
       SUBROUTINE DIAGA1(JA1,KA,IRE,IAT,RECC)
       USE vast_kind_param,  ONLY:  DOUBLE
       INTEGER, INTENT(IN)       :: JA1,KA,IRE
-      INTEGER, INTENT(OUT)      :: IAT
+!      INTEGER, INTENT(OUT)      :: IAT
+      INTEGER, INTENT(INOUT)      :: IAT
       REAL(DOUBLE), INTENT(OUT) :: RECC
       END SUBROUTINE
       END INTERFACE
