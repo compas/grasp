@@ -29,6 +29,7 @@ rwfnrotate
 wfnplot
 rwfntotxt
 fical
+rfinetune
 "
 # rcsfratip was not being compiled in the original ${MAKEFILE} for some reason.
 
