@@ -18,7 +18,8 @@ program rmixaccumulate
   character(len=5) :: relorbitals(200)
   character(len=6) :: G92MIX
   character(len=1) :: ciflag,sortflag
-  character(len=200), allocatable  :: conf(:,:), coupling(:,:), spin(:,:)
+!  character(len=200), allocatable  :: conf(:,:), coupling(:,:), spin(:,:)
+  character(len=256), allocatable  :: conf(:,:), coupling(:,:), spin(:,:)
   write(*,*) '***************************************************************************'
   write(*,*) 'Welcome to program rmixaccumulate'
   write(*,*)
