@@ -1,0 +1,41 @@
+jj2lsj2K.f90
+27d26
+< !     Modified by G. Gaigalas                               Jan 2025   *
+45c44
+<       print *, "        (2025)."
+---
+>       print *, "        (2024)."
+
+
+
+jj2lsj_code.f90
+14d13
+< !     Modified by G. Gaigalas                                   2025   *
+3013d3011
+< !     Modified by G. Gaigalas                               Jan 2025   *
+3039,3041c3037
+< !GG begin  2025
+<                       number_plus_1,                        &
+< !GG end    2025
+---
+>                       number_plus_1, number_minus_1,        &
+3095,3099c3091
+< !GG begin  2025
+<       if (N_LS == N_minus + N_plus .and. N_LS == 0) then
+<          wa = one
+<       else if (N_LS == N_minus + N_plus .and. N_LS /= 0) then
+< !GG end    2025
+---
+>       if (N_LS == N_minus + N_plus) then
+3106,3108c3098,3104
+< !GG begin  2025
+<             J_1_i1 = Jcoup(number_plus_1,jj_number)
+< !GG end    2025
+---
+>             number_minus_1  =                                           &
+>                asf_set_LS%csf_set_LS%parent(shell_number-1)%parent_minus
+>             if (number_minus_1 == 0) then
+>                number_minus_1 =                                         &
+>                asf_set_LS%csf_set_LS%parent(shell_number-1)%parent_plus
+>             end if
+>             J_1_i1 =JQS(3,number_minus_1,jj_number)-1
