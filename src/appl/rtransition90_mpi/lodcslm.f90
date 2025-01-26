@@ -13,6 +13,7 @@
 !...Translated by Pacific-Sierra Research 77to90  4.3E  07:21:55   1/ 6/07
 !...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
+!...Modified by Julian Chan 8/16/19
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
@@ -63,7 +64,7 @@
 !
 !   Entry message
 !
-!      WRITE (6, *) 'Loading Configuration Symmetry List File ...'
+!     WRITE (6, *) 'Loading Configuration Symmetry List File ...'
 !
 !   Get the list of subshells
 !
@@ -103,8 +104,8 @@
 !
       IF (NW > 1) THEN
          CALL CONVRT (NW, RECORD, LENTH)
-!         WRITE (6, *) ' there are '//RECORD(1:LENTH)//&
-!            ' relativistic subshells;'
+         WRITE (6, *) ' there are '//RECORD(1:LENTH)//&
+            ' relativistic subshells;'
       ELSE
          WRITE (6, *) ' there is 1 relativistic subshell;'
       ENDIF
@@ -164,6 +165,7 @@
     3 CONTINUE
       NCF = NCF + 1
 !
+   1 CONTINUE !New line
       READ (21, '(A)', IOSTAT=IOS) RECORD
 !**********************************************************************
 !blk*
@@ -177,12 +179,30 @@
 !   Read in the occupations (q) of the peel shells; stop with a
 !   message if an error occurs
 !
+       IF(INDEX(RECORD,'(')/=0) THEN ! New Line
          CALL PRSRCN (RECORD, NCORE, IOCC, IERR)
          IF (IERR /= 0) GO TO 26
+      go to 1 ! New Line
+       ENDIF ! New Line
+
+!
+!   Read the X, J, and (sign of) P quantum numbers
+!
+       IF(INDEX(RECORD,'+')/=0 .OR. INDEX(RECORD,'-')/=0)THEN
+         IF (IOS /= 0) THEN
+            WRITE (6, *) 'LODCSL: Expecting intermediate'
+            WRITE (6, *) ' and final angular momentum'
+            WRITE (6, *) ' quantum number and final parity'
+            WRITE (6, *) ' specification;'
+            GO TO 26
+         ENDIF
+      GO TO 2 !New line
+      ENDIF !New line
+
 !
 !   Read the J_sub and v quantum numbers
 !
-         READ (21, '(A)', IOSTAT=IOS) RECORD
+
          IF (IOS /= 0) THEN
             WRITE (6, *) 'LODCSL: Expecting subshell quantum'
             WRITE (6, *) ' number specification;'
@@ -191,20 +211,12 @@
          LOC = LEN_TRIM(RECORD)
          CALL PARSJL (1, NCORE, RECORD, LOC, IQSUB, NQS, IERR)
          IF (IERR /= 0) GO TO 26
-!
-!   Read the X, J, and (sign of) P quantum numbers
-!
-         READ (21, '(A)', IOSTAT=IOS) RECORD
-         IF (IOS /= 0) THEN
-            WRITE (6, *) 'LODCSL: Expecting intermediate'
-            WRITE (6, *) ' and final angular momentum'
-            WRITE (6, *) ' quantum number and final parity'
-            WRITE (6, *) ' specification;'
-            GO TO 26
-         ENDIF
+       GO TO 1 ! New line
+
 !
 !   Allocate additional storage if necessary
 !
+   2  CONTINUE ! New line
          IF (NCF > NCFD) THEN
             NEWSIZ = NCFD + NCFD/2
             CALL RALLOC (IQA, NNNW, NEWSIZ, 'IQA', 'LODCSLM')
@@ -440,8 +452,8 @@
                   IF (JQS(3,I,J) /= JQS(3,I,NCF)) GO TO 17
                END DO
                DO I = 1, NOPEN - 1
-!                  WRITE (6, *) I
-!                  WRITE (6, *) JCUP(I,J), JCUP(I,NCF)
+!                 WRITE (6, *) I
+!                 WRITE (6, *) JCUP(I,J), JCUP(I,NCF)
                   IF (JCUP(I,J) /= JCUP(I,NCF)) GO TO 17
                END DO
             END DO
@@ -519,8 +531,8 @@
 !   All done; report
 !
       CALL CONVRT (NCF, RECORD, LENTH)
-!      WRITE (6, *) ' there are '//RECORD(1:LENTH)//' relativistic CSFs;'
-!      WRITE (6, *) ' ... load complete;'
+      WRITE (6, *) ' there are '//RECORD(1:LENTH)//' relativistic CSFs;'
+      WRITE (6, *) ' ... load complete;'
 !
 !   Debug printout
 !

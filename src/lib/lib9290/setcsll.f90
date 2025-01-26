@@ -9,6 +9,7 @@
 !...Translated by Pacific-Sierra Research 77to90  4.3E  10:50:34   2/14/04
 !...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
+!...Modified by Julian Chan 8/12/19
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -29,11 +30,12 @@
 !-----------------------------------------------
       INTEGER :: I, NCSF, IOS, IERR
       LOGICAL :: FOUND
-      CHARACTER :: STR*15, CH*2, LINE3*200
+      CHARACTER :: STR*15, CH*2, LINE3*200, ID*8
 !-----------------------------------------------
 ! Locals
 
 ! Look for  <name>
+      Print *, 'Entering SETCSLL'
 
       INQUIRE(FILE=NAME, EXIST=FOUND)
       IF (.NOT.FOUND) THEN
@@ -71,8 +73,11 @@
 
       IOS = 0
       DO WHILE(IOS == 0)
-         READ (NUNIT, '(1A2)', IOSTAT=IOS) CH
-         IF (CH==' *' .OR. IOS/=0) THEN
+         READ (NUNIT, '(A)', IOSTAT=IOS) LINE3
+       IF (INDEX(LINE3,'(')/=0) THEN
+         READ (NUNIT, '(A)', IOSTAT=IOS) LINE3
+       ENDIF
+         IF (INDEX(LINE3,'*')/=0 .OR. IOS/=0) THEN
             !.. a new block has been found
             NBLOCK = NBLOCK + 1
             WRITE (6, *) 'Block ', NBLOCK, ',  ncf = ', NCSF
@@ -81,21 +86,24 @@
                WRITE (6, *) 'Maximum allowed is ', NBLKIN
                STOP
             ENDIF
-            I = LEN_TRIM(LINE3)
-            IDBLK(NBLOCK) = LINE3(I-4:I)
+            IDBLK(nblock) = ID
             NCFBLK(NBLOCK) = NCSF
             NCSF = 0
             IF (IOS == 0) CYCLE
          ELSE
-            READ (NUNIT, *)
-            READ (NUNIT, '(A)') LINE3
-            NCSF = NCSF + 1
+       IF(INDEX(LINE3,'+')/=0 .OR. INDEX(LINE3,'-')/=0)THEN
+           NCSF = NCSF + 1
+                I = LEN_TRIM(LINE3)
+                ID = LINE3(I-4:I)
+         ENDIF
          ENDIF
       END DO
 
 ! Obtain ncftot
 
       NCFTOT = SUM(NCFBLK(:NBLOCK))
+
+     WRITE(*,*) 'NCFBLK NBLOCK',NCFBLK(1),NCFBLK(2),NCFBLK(3),NBLOCK
 
       RETURN
       END SUBROUTINE SETCSLL
