@@ -98,3 +98,7 @@ add_executable(fical fical.f90)
 target_link_libraries_Fortran(fical PRIVATE mod 9290)
 install(TARGETS fical DESTINATION bin/)
 
+add_executable(rfinetune rfinetune.f90)
+target_link_libraries_Fortran(rfinetune PRIVATE mod 9290)
+install(TARGETS rfinetune DESTINATION bin/)
+
