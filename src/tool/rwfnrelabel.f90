@@ -4,9 +4,7 @@
 !                                                                      *
 !   This program relabels orbitals                                     *
 !                                                                      *
-!   Written by Per Jonsson,  Malmo University 27 March 2014            *
-!   Ideally, the parameters should be those found in the file          *
-!   The most commonly used parameters are used.                                                                 *
+!   Written by Yanting Li & Per Jonsson,  Malmo University 14 Oct 2022 *
 !***********************************************************************
 !   M o d u l e s
 !-----------------------------------------------
@@ -28,17 +26,19 @@
       USE setrwfa_I
       IMPLICIT NONE
 
-      INTEGER IFIRST, i, j, k, ndef, ncore_not_used, newnp, norb
+      INTEGER IFIRST, i, j, k, ndef, ncore_not_used, newnp, norb, nsym, nptmp
       LOGICAL GETYN, YES
       CHARACTER*24 NAME
 
       CHARACTER*256 FILNAM
+      CHARACTER(LEN=2), DIMENSION(30) :: sym
+      INTEGER, DIMENSION(30) :: nadd,nfirst
 !
 !
       WRITE(*,*) ' RWFNRELABEL'
       WRITE(*,*) ' This program relabels radial orbitals'
       WRITE(*,*)
-      WRITE(*,*) ' Input file: name.w'
+      WRITE(*,*) ' Input file: isodata,name.c,name.w'
       WRITE(*,*) ' Output file: name_relabel.w'
       WRITE(*,*)
 
@@ -80,20 +80,32 @@
          WRITE(*,1000) K, NP(K),NH(K)
       ENDDO
 
-      WRITE(*,*) 'Total number of orbitals to be relabeled'
-      READ(*,*) NORB
-      DO I = 1,NORB
-         WRITE(*,*) 'Number of the orbital to be relabeled and new n'
-         READ(*,*) IFIRST,NEWNP
-         NP(IFIRST) = NEWNP
+      WRITE(*,*) 'Give the orbital symmetry, the n of the first orbital'
+      WRITE(*,*) 'to change and how many to add to n, e.g. p-,5,8'
+      WRITE(*,*) '(End input by typing **,99,99 )'
+      nsym = 0
+      DO j = 1,30
+         READ(*,*) sym(j),nfirst(j),nadd(j)
+         IF (trim(sym(j)).eq.'**') THEN
+            GOTO 99
+         ENDIF
+         nsym = nsym + 1
+      ENDDO
+99    CONTINUE
+      DO J = 1,nsym
+         DO I = 1,NW
+            IF (NH(I).eq.sym(J).and.NP(I).ge.nfirst(j)) THEN
+               nptmp = NP(I)
+               NP(I) = NP(I) + nadd(J)
+               WRITE(*,*) nptmp, sym(J), "   ", "-->", NP(I), sym(J)
+            ENDIF
+         ENDDO
       ENDDO
 
-
-!
       DO I = 1,NW
          WRITE(36) NP(I),NAK(I),E(I),MF(I)
-         WRITE(36) PZ(I),(PF(J,I),J = 1,MF(I)),(QF(J,I),J = 1,MF(I))
-         WRITE(36) (R(J),J = 1,MF(I))
+         WRITE(36) PZ(I),(PF(K,I),K = 1,MF(I)),(QF(K,I),K = 1,MF(I))
+         WRITE(36) (R(K),K = 1,MF(I))
       ENDDO
 
       WRITE(*,*)
