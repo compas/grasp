@@ -54,6 +54,15 @@ simply call `make`:
 cd build/ && make install
 ```
 
+This may fail with rank mismatch errors. In this case, for `gfortran` consider:
+
+```sh
+# Inside build
+cmake -DCMAKE_Fortran_FLAGS="-fallow-argument-mismatch" .
+cmake --build . --parallel
+cmake --install .
+```
+
 Remarks:
 
 * Running `make install` instructs CMake to actually _install_ the resulting binaries into
