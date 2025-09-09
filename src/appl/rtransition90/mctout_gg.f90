@@ -31,6 +31,7 @@
 !-----------------------------------------------
       USE angdata_I
       USE itjpo_I
+      use ispar_i
       USE oneparticlejj_I
       USE trsort_I
       IMPLICIT NONE
@@ -46,6 +47,7 @@
       REAL(DOUBLE), PARAMETER :: CUTOFF = 1.0D-10
       INTEGER, PARAMETER :: NFILE = 93
       INTEGER, PARAMETER :: NFILE1 = 237
+      INTEGER :: TT ,ss
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -66,7 +68,6 @@
 !
       NFILE2 = NFILE1 + JKP
       CALL ANGDATA (NAME, AVAIL, JKP, NFILE2)
-
 !
 !   If angular data is not available open the scratch file to store the
 !   coefficients; position file
@@ -78,6 +79,11 @@
       IF (AVAIL) RETURN
       WRITE (6, *) 'LK,IOPAR,from MCTOUT'
       WRITE (6, *) LK, IOPAR
+
+      DO I = 1,NBLOCKI 
+         write(330,*) i , NCFI(I), NCFF(I)
+      END DO
+            
 !
 ! Start of the block loops
       DO IBLKI = 1, NBLOCKI
@@ -86,6 +92,7 @@
 !        Sometimes, when there has been an error, status need to be "unknown"
             OPEN(NFILE,STATUS='unknown',FORM='UNFORMATTED')
             NMCT = 0
+
 !
 !
 !   If angular data is not available
@@ -99,6 +106,8 @@
             CALL ALLOC (LABEL, NLABEL, 'LABEL', 'MCTOUT')
             CALL ALLOC (COEFF, NLABEL, 'COEFF', 'MCTOUT')
 
+
+
             IF (IBLKI == 1) THEN
                NCFI0 = 1
             ELSE
@@ -109,9 +118,40 @@
                NCFF0 = NCFI(NBLOCKI) + 1
             ELSE
                NCFF0 = NCFI(NBLOCKI) + NCFF(IBLKF-1) + 1
+
             ENDIF
+            write(330,*) '-----------------------------'
+            write(330,*) 'double do loop: i,j = ', IBLKI,iblkf
+            write(330,*) 'outer indices:   ',NCFI0,NCFI(IBLKI)
+            write(330,*) 'outer symmetries:',&
+            ITJPO(NCFI0)* ISPAR(NCFI0) ,ITJPO(NCFI(IBLKI))* ISPAR(NCFI(IBLKI))
+            write(330,*) 'inner indices:   ',NCFF0,NCFI(NBLOCKI) + NCFF(IBLKF)
+            write(330,*) 'inner symmetries:',&
+            ITJPO(NCFF0)* ISPAR(NCFF0) ,&
+            ITJPO(NCFI(NBLOCKI) + NCFF(IBLKF))* ISPAR(NCFI(NBLOCKI) + NCFF(IBLKF))
+            
+            SS = NCFF(IBLKF-1)
+            TT = NCFF(IBLKF+1)
+            IF (IBLKF == 1) THEN 
+               SS = 1 
+               TT = NCFF(IBLKF)
+            ELSE 
+               SS = NCFF(IBLKF-1) + 1 
+               TT = NCFF(IBLKF) -1
+            END IF 
+
+            write(330,*) 'tnner indices:   ',SS,TT
+            write(330,*) 'tnner symmetries:',&
+            ITJPO(SS)* ISPAR(SS) ,&
+            ITJPO(TT)* ISPAR(TT)
+
+            !ITJPO(NCFF0) * ISPAR(NCFI(NCFI(NBLOCKI) + NCFF(IBLKF)))
+            NCFF0 = SS 
+
             DO IC = NCFI0, NCFI(IBLKI)
-               DO IR = NCFF0, NCFI(NBLOCKI) + NCFF(IBLKF)
+               DO IR = NCFF0, TT
+               !DO IR = SS,TT
+
 !
 !           IR = IC
 !
@@ -162,8 +202,11 @@
                   ENDIF
                   IF (NCR <= 0) CYCLE
                   WRITE (NFILE) IC - NCFI0 + 1, IR - NCFF0 + 1, NCR
-!             WRITE (NFILE) IC,IR,NCR
                   WRITE (NFILE) (LABEL(I),COEFF(I),I=1,NCR)
+
+                  !WRITE (NFILE+345,*) IC - NCFI0 + 1, IR - NCFF0 + 1, NCR
+                  !WRITE (NFILE+345,*) (LABEL(I),COEFF(I),I=1,NCR)
+
                   NMCT = NMCT + NCR
 
 !
@@ -176,9 +219,13 @@
             CALL DALLOC (COEFF,  'COEFF', 'MCTOUT')
 !
             WRITE (*, 301) NMCT, LK, IOPAR
+            WRITE (*,   *) IBLKI,IBLKF
 !
 !   Sort the MCT coefficients by integral labels
-!
+!  
+            WRITE (330, 301) NMCT, LK, IOPAR
+            WRITE (330,   *) IBLKI,IBLKF
+
             CALL TRSORT (NAME, NFILE, NFILE2, LDBPA(2), JKP, IBLKI, IBLKF)
             CLOSE(NFILE, STATUS='delete')
 ! end of the loops for blocks
