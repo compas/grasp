@@ -29,6 +29,9 @@
 !...Translated by Pacific-Sierra Research 77to90  4.3E  12:13:05   2/14/04
 !...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
+!***********************************************************************
+!...Modified by Julian Chan 8/12/19
+!...Please refer to the document: lodcsh2doc.docx for details on changes made
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
@@ -50,6 +53,8 @@
       USE iq_I
       USE jqs_I
       USE jcup_I
+      USE itjpo_I
+      USE ispar_I
       IMPLICIT NONE
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -111,7 +116,9 @@
       NCF = 0
     3 CONTINUE
       NCF = NCF + 1
+!  Read each line of the file
 !
+    1 CONTINUE
       READ (NFILE, '(A)', IOSTAT=IOS) STR
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -121,18 +128,38 @@
       IF (IOS .EQ. 0 .AND. str(1:2) .EQ. ' *' .AND. jb .EQ. LOADALL) &
         READ (nfile, '(A)', IOSTAT = IOS) str
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+!
+!   Determine what kind of line we have;
+!  If line isn't * and isn't EOF, then determine the type of line
+!  Else we've reached end of block or EOF
+!
+!
       IF (IOS==0 .AND. STR(1:2)/=' *') THEN
 !
 !   Read in the occupations (q) of the peel shells; stop with a
 !   message if an error occurs
 !
+       IF(INDEX(STR,'(')/=0) THEN
          CALL PRSRCN (STR, NCORE, IOCC, IERR)
          IF (IERR /= 0) GO TO 28
+      go to 1
+       ENDIF
+!
+!   Read the X, J, and (sign of) P quantum numbers
+!
+        IF(INDEX(STR,'+')/=0 .OR. INDEX(STR,'-')/=0)THEN
+         IF (IOS /= 0) THEN
+            WRITE (ISTDE, *) MYNAME//': Expecting intermediate ', &
+               'and final angular momentum'
+            WRITE (ISTDE, *) 'quantum number and final parity ', &
+               'specification;'
+            GO TO 26
+         ENDIF
+      go to 2
+      ENDIF
 !
 !   Read the J_sub and v quantum numbers
 !
-         READ (nfile,'(A)',IOSTAT = IOS) str
          IF (IOS /= 0) THEN
             WRITE (ISTDE, *) MYNAME//': Expecting subshell quantum', &
                ' number specification;'
@@ -141,21 +168,12 @@
          LOC = LEN_TRIM(STR)
          CALL PARSJL (1, NCORE, STR, LOC, IQSUB, NQS, IERR)
          IF (IERR /= 0) GO TO 27
-!
-!   Read the X, J, and (sign of) P quantum numbers
-!
-         READ (nfile,'(A)',IOSTAT = IOS) str
-         IF (IOS /= 0) THEN
-            WRITE (ISTDE, *) MYNAME//': Expecting intermediate ', &
-               'and final angular momentum'
-            WRITE (ISTDE, *) 'quantum number and final parity ', &
-               'specification;'
-            GO TO 26
-         ENDIF
+      go to 1
 !
 !   Zero out the arrays that store packed integers
 !
-         IQA(:NNNW,NCF) = 0
+       2 CONTINUE
+    IQA(:NNNW,NCF) = 0
          JQSA(:NNNW,1,NCF) = 0
          JQSA(:NNNW,2,NCF) = 0
          JQSA(:NNNW,3,NCF) = 0
@@ -379,11 +397,10 @@
 !
    17    CONTINUE
          NREC = NREC + 3
-
          GO TO 3
 !
-      ELSE                                       ! the record just read is either ' *' or EOF, marking
-            ! the end of a block or end of the file
+      ELSE ! the record just read is either ' *' or EOF, marking
+           ! the end of a block or end of the file
 !
 !   There is always at least one CSF
 !
@@ -406,6 +423,7 @@
          WRITE (ISTDE, *) MYNAME//': ncf=', NCF, 'ncfblock=', NCFBLOCK
          STOP
       ENDIF
+
 !
 !   Check if any subshell is empty; eliminate it from the
 !   list if this is the case; issue a message
@@ -429,11 +447,25 @@
 !
       NCOREL = 0
       NCOREL = SUM(NKJ(:NCORE)+1)
-!      NELEC = NCOREL+NPEEL
       IF (NCOREL + NPEEL /= NELEC) THEN
          WRITE (ISTDE, *) MYNAME//': nelec not equal to that in lodcsh'
          STOP
       ENDIF
+
+      IF (LDBPA(1)) THEN
+         WRITE (*, *) 'From LODCSL:'
+         DO I = 1, NCF
+            WRITE (*, *) 'CSF ', I
+            WRITE (*, *) 'ITJPO: ', ITJPO(I)
+            WRITE (*, *) 'ISPAR: ', ISPAR(I)
+            WRITE (*, *) 'IQ: ', (IQ(J,I),J=1,NW)
+            WRITE (*, *) 'JQS(1): ', (JQS(1,J,I),J=1,NW)
+            WRITE (*, *) 'JQS(2): ', (JQS(2,J,I),J=1,NW)
+            WRITE (*, *) 'JQS(3): ', (JQS(3,J,I),J=1,NW)
+            WRITE (*, *) 'JCUP: ', (JCUP(J,I),J=1,NW - 1)
+         END DO
+      ENDIF
+
       WRITE (6,*)'There are ',NCF,' relativistic CSFs... load complete;'
       RETURN
 !

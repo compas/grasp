@@ -33,6 +33,7 @@
 !...Translated by Pacific-Sierra Research 77to90  4.3E  12:13:05   2/14/04
 !...Modified by Charlotte Froese Fischer
 !                     Gediminas Gaigalas  10/05/17
+!...Modified by Julian Chan 8/16/19
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
@@ -122,6 +123,7 @@
 !GG      NCF = NCF + 1
 !GGGG
 !
+   1 CONTINUE !New line
       READ (NFILE, '(A)', IOSTAT=IOS) STR
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -145,12 +147,30 @@
 !   Read in the occupations (q) of the peel shells; stop with a
 !   message if an error occurs
 !
+       IF(INDEX(STR,'(')/=0) THEN ! New Line
          CALL PRSRCN (STR, NCORE, IOCC, IERR)
          IF (IERR /= 0) GO TO 28
+      go to 1 ! New Line
+       ENDIF ! New Line
+
+!
+!   Read the X, J, and (sign of) P quantum numbers
+!
+        IF(INDEX(STR,'+')/=0 .OR. INDEX(STR,'-')/=0)THEN
+         IF (IOS /= 0) THEN
+            WRITE (ISTDE, *) MYNAME//': Expecting intermediate ', &
+               'and final angular momentum'
+            WRITE (ISTDE, *) 'quantum number and final parity ', &
+               'specification;'
+            GO TO 26
+         ENDIF
+      GO TO 2 !New line
+      ENDIF !New line
+
 !
 !   Read the J_sub and v quantum numbers
 !
-         READ (nfile,'(A)',IOSTAT = IOS) str
+
          IF (IOS /= 0) THEN
             WRITE (ISTDE, *) MYNAME//': Expecting subshell quantum', &
                ' number specification;'
@@ -159,20 +179,12 @@
          LOC = LEN_TRIM(STR)
          CALL PARSJL (1, NCORE, STR, LOC, IQSUB, NQS, IERR)
          IF (IERR /= 0) GO TO 27
-!
-!   Read the X, J, and (sign of) P quantum numbers
-!
-         READ (nfile,'(A)',IOSTAT = IOS) str
-         IF (IOS /= 0) THEN
-            WRITE (ISTDE, *) MYNAME//': Expecting intermediate ', &
-               'and final angular momentum'
-            WRITE (ISTDE, *) 'quantum number and final parity ', &
-               'specification;'
-            GO TO 26
-         ENDIF
+       GO TO 1 ! New line
+
 !
 !   Zero out the arrays that store packed integers
 !
+   2  CONTINUE
          IQA(:NNNW,NCF) = 0
 !GG         JQSA(:NNNW,1,NCF) = 0
 !GG         JQSA(:NNNW,2,NCF) = 0

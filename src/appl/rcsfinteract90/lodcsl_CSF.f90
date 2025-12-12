@@ -11,6 +11,9 @@
 !   Written by  G. Gaigalas                       NIST, December 2015  *
 !                                                                      *
 !***********************************************************************
+!
+!...Modified by Julian Chan 8/16/19
+!
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
@@ -75,6 +78,7 @@
 !
     3 CONTINUE
 !
+   1 CONTINUE !New line
       READ (20, '(A)', IOSTAT=IOS) RECORD
       IF (RECORD(1:2) == ' *') THEN
          NEXT_CSF = .FALSE.
@@ -86,25 +90,16 @@
 !   Read in the occupations (q) of the peel shells; stop with a
 !   message if an error occurs
 !
+       IF(INDEX(RECORD,'(')/=0) THEN ! New Line
          CALL PRSRCN (RECORD, NCORE, IOCC, IERR)
          IF (IERR /= 0) GO TO 26
-!
-!   Read the J_sub and v quantum numbers
-!
-         READ (20, '(A)', IOSTAT=IOS) RECORD
-         IF (IOS /= 0) THEN
-            WRITE (ISTDE, *) 'LODCSL_CSF: Expecting subshell quantum', &
-               ' number specification;'
-            GO TO 26
-         ENDIF
-         C_quant(NCF) = RECORD
-         LOC = LEN_TRIM(RECORD)
-         CALL PARSJL (1, NCORE, RECORD, LOC, IQSUB, NQS, IERR)
-         IF (IERR /= 0) GO TO 26
+      go to 1 ! New Line
+      ENDIF ! New Line
+
 !
 !   Read the X, J, and (sign of) P quantum numbers
 !
-         READ (20, '(A)', IOSTAT=IOS) RECORD
+        IF(INDEX(RECORD,'+')/=0 .OR. INDEX(RECORD,'-')/=0)THEN
          IF (IOS /= 0) THEN
             WRITE (ISTDE, *) 'LODCSL_CSF: Expecting intermediate ', &
                'and final angular momentum'
@@ -129,9 +124,25 @@
                ENDIF
             END DO
          ENDIF
+      GO TO 2 !New line
+      ENDIF !New line
+!
+!   Read the J_sub and v quantum numbers
+!
+         IF (IOS /= 0) THEN
+            WRITE (ISTDE, *) 'LODCSL_CSF: Expecting subshell quantum', &
+               ' number specification;'
+            GO TO 26
+         ENDIF
+         C_quant(NCF) = RECORD
+         LOC = LEN_TRIM(RECORD)
+         CALL PARSJL (1, NCORE, RECORD, LOC, IQSUB, NQS, IERR)
+         IF (IERR /= 0) GO TO 26
+       GO TO 1 ! New line
 !
 !   Zero out the arrays that store packed integers
 !
+   2  CONTINUE !New line
          DO I = 1,NNNW
             IQA(I,NCF)    = 0
             JQSA(I,1,NCF) = 0
